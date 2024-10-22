@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import MovieCard from './components/shared-components/movie-card/MovieCard'
+import VenueCard from './components/shared-components/venue-card/VenueCard'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,6 +13,7 @@ function App() {
       
       <h1>CinemaApp</h1>
       <MovieCard/>
+      <VenueCard/>
       
     </>
   )

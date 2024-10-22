@@ -2,17 +2,17 @@ import "./VenueCard.css"
 
 type VenueCardProps = {
     venue: {
-        id: String,
-        name: String,
-        street: String,
-        streetNumber: String,
+        id: string,
+        name: string,
+        street: string,
+        streetNumber: string,
         city: {
-            id: String,
-            name: String,
-            postalCode: Number,
-            country: String
+            id: string,
+            name: string,
+            postalCode: number,
+            country: string
         },
-        phone: String
+        phone: string
     }
 }
 
@@ -23,7 +23,7 @@ export default function VenueCard({ venue }: VenueCardProps) {
             <div className="movie-card">
                 <img src="https://placehold.co/270x287" alt="Venue Poster" className="movie-card-image" />
                 <div className="movie-card-content">
-                    <h5 className="movie-card-header">{venue.name}</h5>
+                    <h5 className="movie-card-header">{name}</h5>
                     <div className="movie-card-details">
                         <div>{`${street} ${streetNumber}, ${city.name} ${city.postalCode}`}</div>
                     </div>

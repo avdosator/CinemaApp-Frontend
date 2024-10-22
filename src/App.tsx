@@ -18,10 +18,17 @@ function App() {
     phone: "033-225-883"
   }
 
+  const movie = {
+    id:"12",
+    title: "Avatar",
+    duration: 117,
+    genre: "Fantasy"
+  }
+
   return (
     <>
       <h1>CinemaApp</h1>
-      <MovieCard/>
+      <MovieCard movie={movie}/>
       <VenueCard venue={venue}/>
       
     </>

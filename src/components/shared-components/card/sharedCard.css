@@ -1,4 +1,4 @@
-.movie-card {
+.shared-card {
     width: 302px;
     height: 395px;
     border-radius: 24px;
@@ -10,21 +10,21 @@
     align-items: center;
 }
 
-.movie-card-image {
+.shared-card-image {
     width: 270px;
     height: 287px;
     border-radius: 16px;
     margin-top: 16px;
 }
 
-.movie-card-content {
+.shared-card-content {
     text-align: left;
     margin-top: 16px;
     width: 100%;
     padding-left: 30px;
 }
 
-.movie-card-header {
+.shared-card-header {
     font-family: 'Urbanist', sans-serif;
     font-size: 20px;
     font-weight: 700;
@@ -34,7 +34,7 @@
     margin: 0;
 }
 
-.movie-card-details {
+.shared-card-details {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -48,11 +48,4 @@
     /* letter-spacing: 0.005em; */
     margin-top: 8px;
     padding-left: 5px;
-}
-
-.movie-card-separator {
-    width: 1px;
-    height: 20px;
-    background-color: #98A2B3;
-    margin: 0 4px;
 }

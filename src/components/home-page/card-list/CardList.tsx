@@ -1,3 +1,4 @@
+import "../../shared-components/card/sharedCard.css"
 
 type CardListProps = {
     heading: string,
@@ -5,11 +6,10 @@ type CardListProps = {
 }
 
 export default function CardList({ heading, items }: CardListProps) {
-    console.log(heading, items);
     return (
         <>
             <div className="card-list-container">
-                <main>
+                <div className="card-list-wrapper">
                     <section className="card-list-content">
                         <div className="card-list-heading">
                             <h2>{heading}</h2>
@@ -24,7 +24,7 @@ export default function CardList({ heading, items }: CardListProps) {
                         </div>
                     </section>
                     <div className="card-list-pagination">Pagination</div>
-                </main>
+                </div>
             </div>
         </>
     )

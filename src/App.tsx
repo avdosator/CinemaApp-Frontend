@@ -1,19 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import MovieCard from './components/shared-components/movie-card/MovieCard'
 import VenueCard from './components/shared-components/venue-card/VenueCard'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const venue = {
+    id: "12345",
+    name: "Cineplex",
+    street: "Zmaja od Bosne",
+    streetNumber: "20",
+    city: {
+      id: "1",
+      name: "Sarajevo",
+      postalCode: 71000,
+      country: "BiH"
+    },
+    phone: "033-225-883"
+  }
 
   return (
     <>
-      
       <h1>CinemaApp</h1>
       <MovieCard/>
-      <VenueCard/>
+      <VenueCard venue={venue}/>
       
     </>
   )

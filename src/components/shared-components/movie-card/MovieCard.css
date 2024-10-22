@@ -1,0 +1,27 @@
+.movie-card {
+width: 302px;
+height: 395px;
+border-radius: 24px;
+border: 1px solid #E4E7EC;
+}
+
+.movie-card-image {
+width: 270px;
+height: 287px;
+border-radius: 16px;
+}
+
+.movie-card-header {
+font-family: Urbanist;
+font-size: 20px;
+font-weight: 700;
+line-height: 24px;
+letter-spacing: 0.0085em;
+text-align: center;
+}
+
+.movie-card-details {
+
+}
+
+

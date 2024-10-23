@@ -37,6 +37,10 @@
     letter-spacing: -0.0015em;
 }
 
+#bh {
+    color: #B22222;
+}
+
 .navbar-links {
     display: flex;
     gap: 16px;

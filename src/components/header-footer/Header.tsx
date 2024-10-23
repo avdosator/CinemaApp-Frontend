@@ -10,7 +10,7 @@ export default function Header() {
                             <div className="logo-icon">
                                 <img src="https://placehold.co/26x24" alt="Cinebh Icon" />
                             </div>
-                            <div className="logo-text">Cinebh.</div>
+                            <div className="logo-text">Cine<span id="bh">bh.</span></div>
                         </div>
                     </div>
                     <div className="navbar-links">

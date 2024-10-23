@@ -1,0 +1,74 @@
+.navbar {
+    width: 1440px;
+    /* needs to be adjusted */
+    height: 80px;
+    background-color: #1D2939;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #667085;
+}
+
+
+.navbar-content {
+    width: 1256px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.logo-icon img {
+    width: 26px;
+    height: 24px;
+    border-radius: 8px;
+}
+
+.logo-text {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    color: #FFFFFF;
+    letter-spacing: -0.0015em;
+}
+
+/* Placeholder for navbar links */
+.navbar-links {
+    display: flex;
+    gap: 16px;
+    font-family: 'Urbanist', sans-serif;
+}
+
+.navbar-item {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #FFFFFF;
+    text-decoration: none;
+    letter-spacing: 0.005em;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.navbar-item.active {
+    font-weight: 700;
+    color: #FFFFFF;
+    background-color: #344054; 
+    box-shadow: 0px 25px 50px -16px #34405429;
+    border-radius: 4px;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+}

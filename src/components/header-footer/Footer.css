@@ -1,7 +1,7 @@
 .footer {
     width: 1440px; /*will be adjusted*/
     height: 212px;
-    
+    background: linear-gradient(180deg, #B22222 0%, #1A1A1A 100%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,8 +20,8 @@
 .footer-logo {
     display: flex;
     align-items: center;
-    
-
+    gap: 4px;
+    margin-bottom: 16px;
 }
 
 .footer-logo img {
@@ -51,7 +51,7 @@
     line-height: 16px;
     letter-spacing: 0.05em;
     color: #FCFCFD;
-    
+    text-decoration: none;
 }
 
 .divider {

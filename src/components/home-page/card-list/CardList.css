@@ -49,4 +49,7 @@
     width: 100%;
     box-sizing: border-box; /* Makes sure the width includes padding */
   }
-  
+
+  .pagination-sm-container {
+    align-self: flex-end;
+  }

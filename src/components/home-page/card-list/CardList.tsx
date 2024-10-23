@@ -1,4 +1,5 @@
 import "../../shared-components/card/SharedCard.css"
+import PaginationSmall from "../../shared-components/pagination/PaginationSmall"
 import "./CardList.css"
 
 type CardListProps = {
@@ -24,7 +25,9 @@ export default function CardList({ heading, items }: CardListProps) {
                             ))}
                         </div>
                     </section>
-                    <div className="card-list-pagination">Pagination</div>
+                    <div className="pagination-sm-container">
+                        <PaginationSmall />
+                    </div>
                 </div>
             </div>
         </>

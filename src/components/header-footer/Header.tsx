@@ -1,3 +1,4 @@
+import CinebhLogo from "../shared-components/logo/CinebhLogo"
 import "./Header.css"
 
 export default function Header() {
@@ -7,10 +8,7 @@ export default function Header() {
                 <div className="navbar-content">
                     <div className="navbar-logo">
                         <div className="logo-container">
-                            <div className="logo-icon">
-                                <img src="https://placehold.co/26x24" alt="Cinebh Icon" />
-                            </div>
-                            <div className="logo-text">Cine<span id="bh">bh.</span></div>
+                            <CinebhLogo isRed={true}/>
                         </div>
                     </div>
                     <div className="navbar-links">

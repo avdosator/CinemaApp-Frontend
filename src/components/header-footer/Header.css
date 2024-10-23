@@ -22,25 +22,6 @@
     gap: 4px;
 }
 
-.logo-icon img {
-    width: 26px;
-    height: 24px;
-    border-radius: 8px;
-}
-
-.logo-text {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 32px;
-    color: #FFFFFF;
-    letter-spacing: -0.0015em;
-}
-
-#bh {
-    color: #B22222;
-}
-
 .navbar-links {
     display: flex;
     gap: 16px;

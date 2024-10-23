@@ -1,4 +1,5 @@
 import './App.css'
+import Header from './components/header-footer/Header';
 import CardList from './components/shared-components/card-list/CardList';
 import MovieCard from './components/shared-components/card/movie-card/MovieCard'
 import VenueCard from './components/shared-components/card/venue-card/VenueCard'
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <>
-      <h1>CinemaApp</h1>
+      <Header/>
       <CardList heading="Currently showing" items={movies} />
       <CardList heading="Upcoming movies" items={movies} />
       <CardList heading="Venues" items={venues} />

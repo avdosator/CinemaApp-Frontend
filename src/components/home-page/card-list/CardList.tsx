@@ -1,4 +1,5 @@
-import "../../shared-components/card/sharedCard.css"
+import "../../shared-components/card/SharedCard.css"
+import "./CardList.css"
 
 type CardListProps = {
     heading: string,

@@ -1,23 +1,52 @@
 .card-list-container {
-width: 1440px;
-}
-
-.card-list-wrapper {
-
-}
-
-.card-list-content {
-
-}
-
-.card-list-heading {
-
-}
-
-.card-list {
-
-}
-
-.card-list-pagination {
-
-}
+    width: 1440px;
+    /*max-width: 1440px;  Matches the max width of the design */
+    margin: 0;
+    padding: 40px 92px; /* Padding around the entire container */
+    background-color: #FCFCFD;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
+  }
+  
+  .card-list-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card-list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .card-list-heading h2 {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    margin: 0;
+    letter-spacing: 0.0075em;
+    color: #1D2939;
+  }
+  
+  .card-list-heading a {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.015em;
+    color: #B22222; /* Red dark */
+    text-decoration: none;
+  }
+  
+  .card-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box; /* Makes sure the width includes padding */
+  }
+  

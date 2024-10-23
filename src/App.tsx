@@ -1,5 +1,5 @@
 import './App.css'
-import CardList from './components/home-page/card-list/CardList';
+import CardList from './components/shared-components/card-list/CardList';
 import MovieCard from './components/shared-components/card/movie-card/MovieCard'
 import VenueCard from './components/shared-components/card/venue-card/VenueCard'
 
@@ -27,7 +27,6 @@ function App() {
       <CardList heading="Venues" items={venues} />
       {/* <MovieCard movie={movies[1]} />
       <VenueCard venue={venue} /> */}
-
     </>
   )
 }

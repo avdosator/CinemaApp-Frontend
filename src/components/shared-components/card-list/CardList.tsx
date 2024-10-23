@@ -1,5 +1,5 @@
 import "../../shared-components/card/SharedCard.css"
-import PaginationSmall from "../../shared-components/pagination/PaginationSmall"
+import PaginationSmall from "../pagination/PaginationSmall"
 import "./CardList.css"
 
 type CardListProps = {

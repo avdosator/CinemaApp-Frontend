@@ -1,0 +1,43 @@
+.pagination-sm {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.pagination-sm-info {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    color: #1D2939;
+}
+
+.pagination-sm-num {
+    font-weight: 600;
+}
+
+.pagination-sm-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #1D2939;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pagination-sm-arrow:disabled {
+    color: #98A2B3;
+    border: 1px solid #E4E7EC;
+}
+
+.pagination-sm-arrow:not(:disabled):hover {
+    border-color: #344054;
+}
+

@@ -6,7 +6,8 @@ export default function PaginationSmall() {
             <div className="pagination-sm">
                 <span className="pagination-sm-info">Showing
                     <span className="pagination-sm-num"> 4 </span>
-                    out of 10
+                    out of
+                    <span className="pagination-sm-num"> 10 </span>
                 </span>
                 <button className="pagination-sm-arrow" disabled>←</button>
                 <button className="pagination-sm-arrow">→</button>

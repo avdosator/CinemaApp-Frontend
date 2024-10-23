@@ -52,4 +52,5 @@
 
   .pagination-sm-container {
     align-self: flex-end;
+    margin-top: 24px;
   }

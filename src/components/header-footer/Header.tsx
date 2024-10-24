@@ -13,7 +13,7 @@ export default function Header() {
                         </NavLink>
                     </div>
                     <div className="navbar-links">
-                        <NavLink to="#" className="navbar-link-item active">Currently Showing</NavLink>
+                        <NavLink to="/home" className="navbar-link-item" end>Currently Showing</NavLink>
                         <NavLink to="#" className="navbar-link-item">Upcoming Movies</NavLink>
                         <NavLink to="#" className="navbar-link-item">Venues</NavLink>
                     </div>

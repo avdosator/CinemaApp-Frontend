@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import CinebhLogo from "../shared-components/logo/CinebhLogo"
 import "./Footer.css"
 
@@ -9,9 +10,9 @@ export default function Footer() {
                     <CinebhLogo isRed={false}/>
                 </div>
                 <div className="footer-links">
-                    <a href="#">ABOUT US</a>
+                    <NavLink to="/about">ABOUT US</NavLink>
                     <div className="divider"></div>
-                    <a href="#">TICKETS</a>
+                    <NavLink to="/pricing">TICKETS</NavLink>
                 </div>
                 <div className="footer-copyright">
                     <p>Copyright ©Cinebh. Built with love in Sarajevo. All rights reserved.</p>

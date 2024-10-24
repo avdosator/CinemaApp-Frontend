@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import CinebhLogo from "../shared-components/logo/CinebhLogo"
 import "./Header.css"
 
@@ -7,14 +8,14 @@ export default function Header() {
             <nav className="navbar">
                 <div className="navbar-content">
                     <div className="navbar-logo">
-                        <div className="logo-container">
+                        <NavLink to="/" className="logo-container">
                             <CinebhLogo isRed={true}/>
-                        </div>
+                        </NavLink>
                     </div>
                     <div className="navbar-links">
-                        <a href="#" className="navbar-link-item active">Currently Showing</a>
-                        <a href="#" className="navbar-link-item">Upcoming Movies</a>
-                        <a href="#" className="navbar-link-item">Venues</a>
+                        <NavLink to="#" className="navbar-link-item active">Currently Showing</NavLink>
+                        <NavLink to="#" className="navbar-link-item">Upcoming Movies</NavLink>
+                        <NavLink to="#" className="navbar-link-item">Venues</NavLink>
                     </div>
                     <div className="navbar-actions">
                         <div className="notification-btn">

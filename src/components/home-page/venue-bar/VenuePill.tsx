@@ -6,7 +6,7 @@ type VenueButtonProps = {
 
 export default function VenuePill({ label }: VenueButtonProps) {
     return (
-        <div className="venue-button">
+        <div className="venue-pill">
             <span>{label}</span>
         </div>
     );

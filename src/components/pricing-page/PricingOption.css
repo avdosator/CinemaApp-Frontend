@@ -60,6 +60,9 @@
     margin-bottom: 16px;
     line-height: 24px;
     text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .explore-movies-btn {
@@ -98,4 +101,8 @@
     background-color: #B22222;
     color: #E4E7EC;
 
+}
+
+li > svg {
+    fill: #B22222;
 }

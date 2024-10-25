@@ -3,20 +3,24 @@
     background-color: #FCFCFD;
     border: 1px solid #E4E7EC;
     border-radius: 8px;
-    color: #1D2939;
-    font-size: 16px;
-    font-weight: 700;
     margin-right: 10px;
     white-space: nowrap;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* cursor: pointer; */
-    /* transition: background-color 0.2s ease-in-out; */
+    /* -ms-overflow-style: none; 
+    scrollbar-width: none; */
 }
 
 .venue-pill span {
-    
+font-family: Urbanist;
+font-size: 24px;
+font-weight: 700;
+line-height: 32px;
+letter-spacing: -0.0015em;
+text-align: left;
+color: #98A2B3;
+
 }
 
 /* .venue-button:hover {

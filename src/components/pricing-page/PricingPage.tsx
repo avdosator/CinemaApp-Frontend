@@ -40,9 +40,9 @@ export default function PricingPage() {
 
     return (
         <div className="pricing-page">
-            <div className="pricing-header">
-                <h1 className="pricing-header">Pricing</h1>
-                <p className="pricing-description">
+            <div className="pricing-header-section">
+                <h4 className="pricing-header">Pricing</h4>
+                <p>
                     Welcome to our cinema ticket pricing options! We offer three tiers to
                     suit everyone's preferences. Explore our pricing options below and treat
                     yourself to a cinematic adventure like never before!

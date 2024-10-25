@@ -1,7 +1,7 @@
 import CardList from "../shared-components/card-list/CardList";
 import MovieCard from "../shared-components/card/movie-card/MovieCard";
 import VenueCard from "../shared-components/card/venue-card/VenueCard";
-import FeaturedMovieCarousel from "./FeaturedMovieCarousel";
+import FeaturedMovieCarousel from "./featured-movie-carousel/FeaturedMovieCarousel";
 
 
 const movies = [

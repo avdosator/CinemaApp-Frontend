@@ -1,4 +1,4 @@
-import avatarImage from "../../assets/avatar-image.jpg"
+import avatarImage from "../../../assets/avatar-image.jpg"
 import "./FeaturedMovieCarousel.css"
 
 export default function FeaturedMovieCarousel() {

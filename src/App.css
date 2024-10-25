@@ -1,6 +1,6 @@
 
 body {
-    background-color: #FCFCFD; 
+    background-color: #FCFCFD !important; 
     min-height: 100vh;
     margin: 0;
     display: flex;

@@ -1,0 +1,12 @@
+.venue-pill-list {
+    display: flex;
+    padding: 8px 0;
+    gap: 10px;
+    overflow-x: hidden;
+}
+
+.venue-pill-list-container {
+    margin: 32px 0;
+}
+
+

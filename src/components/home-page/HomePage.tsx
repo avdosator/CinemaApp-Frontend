@@ -2,6 +2,7 @@ import CardList from "../shared-components/card-list/CardList";
 import MovieCard from "../shared-components/card/movie-card/MovieCard";
 import VenueCard from "../shared-components/card/venue-card/VenueCard";
 import FeaturedMovieCarousel from "./featured-movie-carousel/FeaturedMovieCarousel";
+import VenuePillList from "./venue-bar/VenuePillList";
 
 
 const movies = [
@@ -22,6 +23,7 @@ export default function HomePage() {
     return (
         <>
             <FeaturedMovieCarousel />
+            <VenuePillList/>
             <CardList heading="Currently showing" items={movies} />
             <CardList heading="Upcoming movies" items={movies} />
             <CardList heading="Venues" items={venues} />

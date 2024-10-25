@@ -14,8 +14,8 @@ export default function CardList({ heading, items }: CardListProps) {
                 <div className="card-list-wrapper">
                     <section className="card-list-content">
                         <div className="card-list-heading">
-                            <h2>{heading}</h2>
-                            <a href="">See All</a>
+                            <h2 className="font-heading-h4">{heading}</h2>
+                            <a className="font-lg-semibold" href="">See All</a>
                         </div>
                         <div className="card-list">
                             {items.map((item, index) => (

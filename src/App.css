@@ -1,21 +1,85 @@
-
 body {
-    background-color: #FCFCFD !important; 
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Urbanist', sans-serif;
-  }
-  
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .main-content {
-    flex: 1; /* Push footer to the bottom */
-  }
-  
-  
+  background-color: #FCFCFD !important;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Urbanist', sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Push footer to the bottom */
+.main-content {
+  flex: 1;
+}
+
+/* Used in more than one element */
+.font-heading-caption {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.font-heading-h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 76px;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+
+.font-heading-h4 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: -0.0025em;
+  text-align: center;
+}
+
+.font-heading-h5 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.0015em;
+  text-align: left;
+}
+
+.font-heading-h6 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.0015em;
+  text-align: left;
+}
+
+.font-md-regular {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  text-align: left;
+}
+
+.font-lg-regular {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  text-align: center;
+}
+
+.font-lg-semibold {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.005em;
+  text-align: left;
+}
+

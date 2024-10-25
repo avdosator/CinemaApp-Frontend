@@ -4,12 +4,12 @@ export default function PaginationSmall() {
     return (
         <>
             <div className="pagination-sm">
-                <span className="pagination-sm-info">Showing
-                    <span className="pagination-sm-num"> 1 </span>
+                <span className="font-lg-regular">Showing
+                    <span className="pagination-sm-num font-lg-semibold"> 1 </span>
                     -
-                    <span className="pagination-sm-num"> 4 </span>
+                    <span className="pagination-sm-num font-lg-semibold"> 4 </span>
                     out of
-                    <span className="pagination-sm-num"> 10 </span>
+                    <span className="pagination-sm-num font-lg-semibold"> 10 </span>
                 </span>
                 <button className="pagination-sm-btn" disabled>
                     <div className="pagination-sm-arrow">

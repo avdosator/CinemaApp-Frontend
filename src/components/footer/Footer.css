@@ -30,15 +30,10 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    margin-bottom: 16px;
 }
 
-.footer-links a {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: 0.05em;
-    text-align: left;
+.font-heading-caption a {
     color: #FCFCFD;
     text-decoration: none;
 }
@@ -51,12 +46,3 @@
     box-sizing: border-box;
 }
 
-.footer-copyright p {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.0025em;
-    color: #FEF2F2;
-    /* background: var(--Dark-Red-50, #FEF2F2); This is copied from figma */
-}

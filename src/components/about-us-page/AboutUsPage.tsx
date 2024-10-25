@@ -4,13 +4,13 @@ export default function AboutUsPage() {
     return (
         <div className="about-page">
             <div className="about-header">
-                <h1>About Us</h1>
+                <h1 className="font-heading-h1">About Us</h1>
             </div>
             <section className="about-content">
-                <div className="about-content-left">
-                    <p>About Our Dream.<br />Our History.<br />Cinema.</p>
+                <div className="about-content-left"> 
+                    <p className="font-heading-h5">About Our Dream.<br />Our History.<br />Cinema.</p>
                 </div>
-                <div className="about-content-right">
+                <div className="about-content-right font-lg-regular"> 
                     <p>
                         Welcome to Cinebh, where movie magic comes to life.<br /> At Cinebh, we're not just about screening films;
                         we're passionate about creating unforgettable cinematic experiences. Since our establishment, we've

@@ -17,8 +17,8 @@ export default function MovieCard({movie}: MovieCardProps) {
             <div className="shared-card">
                 <img src="https://placehold.co/270x287" alt="Movie Poster" className="shared-card-image" />
                 <div className="shared-card-content">
-                    <h5 className="shared-card-header">{title}</h5>
-                    <div className="shared-card-details">
+                    <h6 className="shared-card-header font-heading-h6">{title}</h6>
+                    <div className="shared-card-details font-md-regular">
                         <span>{duration} MIN</span>
                         <div className="movie-card-separator"></div>
                         <span>{genre}</span>

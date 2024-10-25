@@ -14,10 +14,12 @@ export default function VenuePillList() {
     ];
 
     return (
+        <div className="venue-pill-list-container">
         <div className="venue-pill-list">
             {venues.map((venue, index) => (
                 <VenuePill key={index} label={venue} />
             ))}
+        </div>
         </div>
     );
 }

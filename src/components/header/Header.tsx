@@ -13,9 +13,9 @@ export default function Header() {
                         </NavLink>
                     </div>
                     <div className="navbar-links">
-                        <NavLink to="/home" className="navbar-link-item" end>Currently Showing</NavLink>
-                        <NavLink to="#" className="navbar-link-item">Upcoming Movies</NavLink>
-                        <NavLink to="#" className="navbar-link-item">Venues</NavLink>
+                        <NavLink to="/home" className="navbar-link-item font-lg-regular" end>Currently Showing</NavLink>
+                        <NavLink to="#" className="navbar-link-item font-lg-regular">Upcoming Movies</NavLink>
+                        <NavLink to="#" className="navbar-link-item font-lg-regular">Venues</NavLink>
                     </div>
                     <div className="navbar-actions">
                         <div className="notification-btn">

@@ -2,23 +2,8 @@
     display: flex;
     align-items: center;
     gap: 16px;
-}
-
-.pagination-sm-info {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.005em;
-    text-align: center;
     color: #1D2939;
 }
-
-.pagination-sm-num {
-    font-weight: 600;
-}
-
-
 
 .pagination-sm-btn {
     display: flex;
@@ -32,6 +17,7 @@
     font-size: 16px;
     cursor: pointer;
     gap: 4px;
+    fill: #1D2939;
 }
 
 .pagination-sm-arrow {
@@ -40,7 +26,6 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    color: #1D2939;
 }
 
 .pagination-sm-btn:disabled {

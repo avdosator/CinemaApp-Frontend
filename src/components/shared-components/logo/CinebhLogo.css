@@ -4,12 +4,7 @@
     border-radius: 8px;
 }
 
-.logo-text {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 32px;
+.logo-text { 
     color: #FCFCFD;
-    letter-spacing: -0.0015em;
-    text-align: left;
+    margin: 0;
 }

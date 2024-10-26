@@ -1,3 +1,13 @@
+#carouselExampleRide {
+    /* Make carousel take full width of screen  */
+    width: 99.5vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
 .carousel-movie-info {
     position: absolute;
     width: 44%;
@@ -40,5 +50,4 @@
     border-radius: 8px;
     color: #FCFCFD;
     background-color: #B22222;
-
 }

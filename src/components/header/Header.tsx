@@ -1,17 +1,27 @@
 import { NavLink } from "react-router-dom"
 import CinebhLogo from "../shared-components/logo/CinebhLogo"
 import "./Header.css"
+import { useState } from "react";
 
 export default function Header() {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const handleToggle = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     return (
         <>
             <nav className="navbar">
                 <div className="navbar-content">
                     <div className="navbar-logo">
                         <NavLink to="/" className="logo-container">
-                            <CinebhLogo isRed={true}/>
+                            <CinebhLogo isRed={true} />
                         </NavLink>
                     </div>
+                    <button className="navbar-toggler" onClick={handleToggle}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" /></svg>
+                    </button>
                     <div className="navbar-links">
                         <NavLink to="/home" className="navbar-link-item font-lg-regular" end>Currently Showing</NavLink>
                         <NavLink to="#" className="navbar-link-item font-lg-regular">Upcoming Movies</NavLink>
@@ -33,6 +43,13 @@ export default function Header() {
                         </div>
                     </div>
                 </div>
+                {isDropdownOpen && (
+                    <div className="dropdown-links">
+                        <NavLink to="/home" className="dropdown-link-item">Currently Showing</NavLink>
+                        <NavLink to="#" className="dropdown-link-item">Upcoming Movies</NavLink>
+                        <NavLink to="#" className="dropdown-link-item">Venues</NavLink>
+                    </div>
+                )}
             </nav>
         </>
     )

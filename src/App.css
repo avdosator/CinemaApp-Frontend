@@ -10,12 +10,16 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
 }
 
 /* Push footer to the bottom */
 .main-content {
   flex: 1;
+  width: 87%;
+  /* padding: 40px 92px; */
 }
 
 /* Used in more than one element */

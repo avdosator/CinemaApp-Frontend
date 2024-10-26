@@ -71,4 +71,12 @@
     align-items: center;
     height: 46px;
   }
+
+  .card-list {
+    justify-content: center;
+  }
+
+  .pagination-sm-container {
+    align-self: center;
+  }
 }

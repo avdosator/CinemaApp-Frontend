@@ -14,7 +14,7 @@ export default function FeaturedMovieCarousel() {
                     <img src={avatarImage} className="d-block w-100" alt="..." />
                     <div className="carousel-movie-info">
                         <h2 className="carousel-movie-info-heading">Avatar: The Way of Water</h2>
-                        <p className="carousel-movie-info-text">Jake Sully lives with his newfound family formed <br></br> on the extrasolar moon Pandora.</p>
+                        <p className="carousel-movie-info-text font-heading-h6">Jake Sully lives with his newfound family formed <br></br> on the extrasolar moon Pandora.</p>
                         <button className="carousel-movie-info-btn">Buy Ticket</button>
                     </div>
                 </div>

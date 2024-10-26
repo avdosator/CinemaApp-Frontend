@@ -1,75 +1,74 @@
 .card-list-container {
-    width: 100%;
-    /*max-width: 1440px;  Matches the max width of the design */
-    margin: 0;
-     padding: 40px 0; /*Padding around the entire container */
-    background-color: #FCFCFD;
-    color: #1D2939;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    box-sizing: border-box;
-  }
-  
-  .card-list-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-  }
-  
-  .card-list-content {
-    box-sizing: border-box;
-  }
+  width: 100%;
+  /*max-width: 1440px;  Matches the max width of the design */
+  margin: 0;
+  padding: 40px 0;
+  /*Padding around the entire container */
+  background-color: #FCFCFD;
+  color: #1D2939;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+}
 
-  .card-list-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 40px;
-  }
-  
-  .card-list-heading a {
-    letter-spacing: 0.015em;
-    color: #B22222;
-    text-decoration: none;
-  }
-  
+.card-list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.card-list-content {
+  box-sizing: border-box;
+}
+
+.card-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+
+.card-list-heading a {
+  letter-spacing: 0.015em;
+  color: #B22222;
+  text-decoration: none;
+}
+
+.card-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+  /* width: 100%; */
+  box-sizing: border-box;
+  /* Makes sure the width includes padding */
+}
+
+.pagination-sm-container {
+  align-self: flex-end;
+  margin-top: 24px;
+}
+
+@media screen and (max-width: 1440px) {
   .card-list {
-    display: flex;
+    gap: 2px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .card-list {
+    gap: 2px;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 32px;
-    /* width: 100%; */
-    box-sizing: border-box; /* Makes sure the width includes padding */
   }
+}
 
-  .pagination-sm-container {
-    align-self: flex-end;
-    margin-top: 24px;
+@media screen and (max-width: 712px) {
+  .card-list-heading {
+    flex-direction: column;
+    align-items: center;
+    height: 46px;
   }
-
-  @media screen and (max-width: 1440px) {
-    .card-list {
-      gap: 2px;
-    }
-  }
-
-  @media screen and (min-width: 1440px) {
-    .card-list {
-      gap: 2px;
-      justify-content: space-between;
-    }
-  }
-
-  @media screen and (max-width: 712px) {
-    .card-list-heading {
-      flex-direction: column;
-      align-items:start;
-    }
-    .card-list-heading a {
-      padding: 20px 0;
-      /* align-self:center; */
-    }
-  }
+}

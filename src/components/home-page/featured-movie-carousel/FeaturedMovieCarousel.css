@@ -19,7 +19,6 @@
     color: #FCFCFD;
     bottom: 100px;
     left: 100px;
-    text-align: left;
 }
 
 .carousel-movie-info-heading {
@@ -30,15 +29,9 @@
     letter-spacing: -0.005em;
     text-align: left;
     margin: 0;
-
 }
 
 .carousel-movie-info-text {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-    letter-spacing: -0.0015em;
-    text-align: left;
     margin: 0;
 }
 
@@ -50,4 +43,41 @@
     border-radius: 8px;
     color: #FCFCFD;
     background-color: #B22222;
+}
+
+@media screen and (max-width: 992px) {
+    .carousel-movie-info {
+        position: absolute;
+        width: 34%;
+        height: 26%;
+        gap: 8px; 
+        bottom: 150px;
+        left: 100px;
+        text-align: left;
+    }
+
+    .carousel-movie-info-heading {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 40px;
+        letter-spacing: -0.015em;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .carousel-movie-info {
+        top: 120px;
+        left: 30px;
+    }
+
+    .carousel-movie-info-heading {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 20px;
+    }
+
+    .carousel-movie-info-text {
+        display: none;
+    }
+
 }

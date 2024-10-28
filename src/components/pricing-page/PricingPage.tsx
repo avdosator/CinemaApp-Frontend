@@ -1,6 +1,6 @@
 import PricingOption from "./PricingOption";
 import "./PricingPage.css";
-import type { PricingOption as PricingOptionType } from "../../types/PricingOption";
+import type { PricingOptionType } from "../../types/PricingOptionType";
 
 export default function PricingPage() {
     const pricingData: PricingOptionType[] = [
@@ -13,7 +13,7 @@ export default function PricingPage() {
                 "Wide selection",
                 "Accessible locations",
                 "Suitable for everyone",
-            ],
+            ]
         },
         {
             seatType: "Love",
@@ -24,7 +24,7 @@ export default function PricingPage() {
                 "Adjustable armrests",
                 "Cup holders",
                 "Reserved for couples",
-            ],
+            ]
         },
         {
             seatType: "VIP",
@@ -35,8 +35,8 @@ export default function PricingPage() {
                 "Prime viewing",
                 "Personal space",
                 "Luxury extras",
-            ],
-        },
+            ]
+        }
     ];
 
     return (

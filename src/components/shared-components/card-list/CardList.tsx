@@ -5,11 +5,6 @@ import VenueCard from "../card/venue-card/VenueCard";
 import PaginationSmall from "../pagination/PaginationSmall"
 import "./CardList.css"
 
-// type CardListProps = {
-//     heading: string,
-//     items: React.ReactNode[]
-// }
-
 export default function CardList({ elements }: CardListProps) {
     const { heading, movies, venues } = elements;
     return (

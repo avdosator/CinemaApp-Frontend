@@ -4,9 +4,8 @@ import CardList from "../shared-components/card-list/CardList";
 import FeaturedMovieCarousel from "./featured-movie-carousel/FeaturedMovieCarousel";
 import VenuePillList from "./venue-bar/VenuePillList";
 
-
 const movies: MovieCardType[] = [
-    { id: "1", title: "Avatar", duration: 117, genre: "Fantasy" },
+    { id: "1", title: "Avatar12345678910111213145", duration: 117, genre: "Fantasy" },
     { id: "2", title: "Kreator", duration: 120, genre: "Fantasy" },
     { id: "3", title: "Rebel Moon", duration: 140, genre: "Thriller" },
     { id: "4", title: "Napoleon", duration: 155, genre: "Epic" },

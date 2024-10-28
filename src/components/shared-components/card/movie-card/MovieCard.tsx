@@ -2,7 +2,12 @@ import "./MovieCard.css"
 import type { MovieCardProps } from "../../../../types/MovieCardType"
 
 export default function MovieCard({ movie }: MovieCardProps) {
-    const { id, title, duration, genre } = movie;
+    let { id, title, duration, genre } = movie;
+    
+    //if title is too long for card then slice it to fit to card
+    if (title.length >= 26) {
+        title = title.slice(0, 24) + "...";
+    }
     return (
         <>
             <div className="shared-card">

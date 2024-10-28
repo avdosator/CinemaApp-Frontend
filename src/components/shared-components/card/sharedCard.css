@@ -1,0 +1,42 @@
+.shared-card {
+    width: 302px;
+    height: 395px;
+    border-radius: 24px;
+    border: 1px solid #E4E7EC;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 6px -5px rgba(52, 64, 84, 0.08), 0px 10px 15px -4px rgba(52, 64, 84, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shared-card-image {
+    width: 270px;
+    height: 287px;
+    border-radius: 16px;
+    margin-top: 16px;
+}
+
+.shared-card-content {
+    text-align: left;
+    margin-top: 16px;
+    width: 100%;
+    padding-left: 30px;
+}
+
+.shared-card-header {
+    color: #1D2939;
+    margin: 0;
+}
+
+.shared-card-details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    gap: 8px;
+    color: #667085;
+    letter-spacing: 0.0125em;
+    margin-top: 8px;
+    padding-left: 5px;
+}

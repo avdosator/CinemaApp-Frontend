@@ -1,0 +1,10 @@
+.logo-icon img {
+    width: 26px;
+    height: 24px;
+    border-radius: 8px;
+}
+
+.logo-text { 
+    color: #FCFCFD;
+    margin: 0;
+}

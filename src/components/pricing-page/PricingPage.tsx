@@ -1,8 +1,9 @@
 import PricingOption from "./PricingOption";
 import "./PricingPage.css";
+import type { PricingOption as PricingOptionType } from "../../types/PricingOption";
 
 export default function PricingPage() {
-    const pricingData = [
+    const pricingData: PricingOptionType[] = [
         {
             seatType: "Regular",
             price: 7,
@@ -52,9 +53,7 @@ export default function PricingPage() {
                 {pricingData.map((option, index) => (
                     <PricingOption
                         key={index}
-                        seatType={option.seatType}
-                        price={option.price}
-                        features={option.features}
+                        option={option}
                     />
                 ))}
             </div>

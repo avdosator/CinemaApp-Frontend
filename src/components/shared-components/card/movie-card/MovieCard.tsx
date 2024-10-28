@@ -1,17 +1,8 @@
 import "./MovieCard.css"
+import type { MovieCardProps } from "../../../../types/MovieCardType"
 
-type MovieCardProps = {
-    movie: {
-        id: string,
-        title: string,
-        duration: number,
-        genre: string
-        // add other props
-    }
-}
-
-export default function MovieCard({movie}: MovieCardProps) {
-    const {id, title, duration, genre} = movie;
+export default function MovieCard({ movie }: MovieCardProps) {
+    const { id, title, duration, genre } = movie;
     return (
         <>
             <div className="shared-card">

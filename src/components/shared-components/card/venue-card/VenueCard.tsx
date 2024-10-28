@@ -1,20 +1,5 @@
+import { VenueCardProps } from "../../../../types/VenueCardType";
 import "./VenueCard.css"
-
-type VenueCardProps = {
-    venue: {
-        id: string,
-        name: string,
-        street: string,
-        streetNumber: string,
-        city: {
-            id: string,
-            name: string,
-            postalCode: number,
-            country: string
-        },
-        phone: string
-    }
-}
 
 export default function VenueCard({ venue }: VenueCardProps) {
     const { id, name, street, streetNumber, city, phone } = venue;

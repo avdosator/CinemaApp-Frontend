@@ -23,9 +23,20 @@ export default class ApiService {
         try {
             const response = await this.axiosInstance.post(route, body, { headers });
             return response.data;
-        } catch(err) {
+        } catch (err) {
             console.error("POST request failed", err);
             throw err;
+        }
+    }
+
+    static async delete<T>(route: string, headers: Record<string, string> = {}): Promise<T> {
+        try {
+            const response = await this.axiosInstance.delete(route, { headers });
+            return response.data;
+        } catch(err) {
+            console.error("DELETE request failed", err);
+            throw err;
+            
         }
     }
 }

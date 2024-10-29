@@ -8,7 +8,9 @@ const movies: MovieCardType[] = [
     { id: "1", title: "Avatar12345678910111213145", duration: 117, genre: "Fantasy" },
     { id: "2", title: "Kreator", duration: 120, genre: "Fantasy" },
     { id: "3", title: "Rebel Moon", duration: 140, genre: "Thriller" },
-    { id: "4", title: "Napoleon", duration: 155, genre: "Epic" },
+    { id: "4", title: "Gori vatra", duration: 113, genre: "Sci-Fi" },
+    { id: "5", title: "Captain Phillips", duration: 124, genre: "Drama" },
+    { id: "6", title: "Bad boys 2", duration: 135, genre: "Action" },
 ];
 
 const venues: VenueCardType[] = [

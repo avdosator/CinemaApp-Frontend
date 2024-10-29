@@ -1,15 +1,5 @@
+import { PaginationSmallType } from "../../../types/PaginationSmallType"
 import "./PaginationSmall.css"
-
-type PaginationSmallProps = {
-    currentStart: number;
-    currentEnd: number;
-    totalItems: number;
-    onNext: () => void;
-    onPrev: () => void;
-    hasNext: boolean;
-    hasPrev: boolean;
-};
-
 
 export default function PaginationSmall({
     currentStart,
@@ -19,7 +9,7 @@ export default function PaginationSmall({
     onPrev,
     hasNext,
     hasPrev
-}: PaginationSmallProps) {
+}: PaginationSmallType) {
     return (
         <>
             <div className="pagination-sm">

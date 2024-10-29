@@ -1,12 +1,8 @@
+import type { PricingOptionProps } from "../../types/PricingOption";
 import "./PricingOption.css"
 
-type PricingOptionProps = {
-    seatType: string,
-    price: number,
-    features: string[]
-}
-
-export default function PricingOption({ seatType, price, features }: PricingOptionProps) {
+export default function PricingOption({ option }: PricingOptionProps) {
+    const {seatType, price, features} = option;
     const isLoveSeat = seatType === "Love";
 
     return (
@@ -20,6 +16,7 @@ export default function PricingOption({ seatType, price, features }: PricingOpti
                 <ul className="pricing-features">
                     {features.map((feature, index) => (
                         <li className="pricing-feature font-lg-regular" key={index}>
+                            {/* check icon */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="24" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" /></svg>
                             {feature}
                         </li>

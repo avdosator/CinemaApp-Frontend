@@ -1,8 +1,9 @@
 import PricingOption from "./PricingOption";
 import "./PricingPage.css";
+import type { PricingOption as PricingOpt } from "../../types/PricingOption";
 
 export default function PricingPage() {
-    const pricingData = [
+    const pricingData: PricingOpt[] = [
         {
             seatType: "Regular",
             price: 7,
@@ -12,7 +13,7 @@ export default function PricingPage() {
                 "Wide selection",
                 "Accessible locations",
                 "Suitable for everyone",
-            ],
+            ]
         },
         {
             seatType: "Love",
@@ -23,7 +24,7 @@ export default function PricingPage() {
                 "Adjustable armrests",
                 "Cup holders",
                 "Reserved for couples",
-            ],
+            ]
         },
         {
             seatType: "VIP",
@@ -34,8 +35,8 @@ export default function PricingPage() {
                 "Prime viewing",
                 "Personal space",
                 "Luxury extras",
-            ],
-        },
+            ]
+        }
     ];
 
     return (
@@ -52,9 +53,7 @@ export default function PricingPage() {
                 {pricingData.map((option, index) => (
                     <PricingOption
                         key={index}
-                        seatType={option.seatType}
-                        price={option.price}
-                        features={option.features}
+                        option={option}
                     />
                 ))}
             </div>

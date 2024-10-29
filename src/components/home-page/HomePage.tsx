@@ -1,10 +1,10 @@
-import { MovieCardType } from "../../types/MovieCardType";
-import { VenueCardType } from "../../types/VenueCardType";
+import { Movie } from "../../types/Movie";
+import { Venue } from "../../types/Venue";
 import CardList from "../shared-components/card-list/CardList";
 import FeaturedMovieCarousel from "./featured-movie-carousel/FeaturedMovieCarousel";
 import VenuePillList from "./venue-bar/VenuePillList";
 
-const movies: MovieCardType[] = [
+const movies: Movie[] = [
     { id: "1", title: "Avatar12345678910111213145", duration: 117, genre: "Fantasy" },
     { id: "2", title: "Kreator", duration: 120, genre: "Fantasy" },
     { id: "3", title: "Rebel Moon", duration: 140, genre: "Thriller" },
@@ -13,7 +13,7 @@ const movies: MovieCardType[] = [
     { id: "6", title: "Bad boys 2", duration: 135, genre: "Action" },
 ];
 
-const venues: VenueCardType[] = [
+const venues: Venue[] = [
     { id: "1", name: "Cineplex", street: "Zmaja od Bosne", streetNumber: "20", city: { id: "1", name: "Sarajevo", postalCode: 71000, country: "BiH" }, phone: "033-225-883" },
     { id: "2", name: "Meeting Point", street: "Obala Kulina Bana", streetNumber: "12", city: { id: "1", name: "Sarajevo", postalCode: 71000, country: "BiH" }, phone: "033-555-555" },
     { id: "3", name: "Kinoteka", street: "Branilaca Sarajeva", streetNumber: "45", city: { id: "1", name: "Sarajevo", postalCode: 71000, country: "BiH" }, phone: "033-666-666" },

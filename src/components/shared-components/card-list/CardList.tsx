@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { CardListProps } from "../../../types/CardListType"
+import type { CardList } from "../../../types/CardList"
 import "../../shared-components/card/SharedCard.css"
 import MovieCard from "../card/movie-card/MovieCard";
 import VenueCard from "../card/venue-card/VenueCard";
 import PaginationSmall from "../pagination/PaginationSmall"
 import "./CardList.css"
 
-export default function CardList({ elements }: CardListProps) {
-    const { heading, movies, venues } = elements;
+export default function CardList({ heading, movies, venues }: CardList) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const items = movies || venues || [];

@@ -1,4 +1,4 @@
-import { PaginationSmallType } from "../../../types/PaginationSmallType"
+import type { PaginationSmall } from "../../../types/PaginationSmall"
 import "./PaginationSmall.css"
 
 export default function PaginationSmall({
@@ -9,7 +9,7 @@ export default function PaginationSmall({
     onPrev,
     hasNext,
     hasPrev
-}: PaginationSmallType) {
+}: PaginationSmall) {
     return (
         <>
             <div className="pagination-sm">

@@ -1,4 +1,4 @@
-export type VenueCardType = {
+export type Venue = {
     id: string,
     name: string,
     street: string,
@@ -11,8 +11,4 @@ export type VenueCardType = {
     },
     phone: string
     // add more later
-}
-
-export type VenueCardProps = {
-    venue: VenueCardType
 }

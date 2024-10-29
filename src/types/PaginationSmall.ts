@@ -1,4 +1,4 @@
-export type PaginationSmallType = {
+export type PaginationSmall = {
     currentStart: number;
     currentEnd: number;
     totalItems: number;

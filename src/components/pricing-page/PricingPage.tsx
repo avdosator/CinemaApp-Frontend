@@ -1,9 +1,9 @@
 import PricingOption from "./PricingOption";
 import "./PricingPage.css";
-import type { PricingOptionType } from "../../types/PricingOptionType";
+import type { PricingOption as PricingOpt } from "../../types/PricingOption";
 
 export default function PricingPage() {
-    const pricingData: PricingOptionType[] = [
+    const pricingData: PricingOpt[] = [
         {
             seatType: "Regular",
             price: 7,

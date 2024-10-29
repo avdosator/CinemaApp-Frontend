@@ -1,4 +1,4 @@
-import type { PricingOptionProps } from "../../types/PricingOptionType";
+import type { PricingOptionProps } from "../../types/PricingOption";
 import "./PricingOption.css"
 
 export default function PricingOption({ option }: PricingOptionProps) {

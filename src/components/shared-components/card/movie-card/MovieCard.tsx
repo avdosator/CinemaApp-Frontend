@@ -2,7 +2,7 @@ import "./MovieCard.css"
 import type { Movie } from "../../../../types/Movie"
 
 export default function MovieCard({ id, title, duration, genre }: Movie) {
-    
+
     //if title is too long for card then slice it to fit to card
     if (title.length >= 26) {
         title = title.slice(0, 24) + "...";

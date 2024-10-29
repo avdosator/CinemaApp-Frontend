@@ -1,8 +1,7 @@
-import { Movie } from "./Movie"
-import { Venue } from "./Venue"
+import React from "react"
 
-export type CardList = {
+export type CardList<T> = {
     heading: string,
-    movies?: Movie[],
-    venues?: Venue[]
+    elements: T[],
+    CardComponent: React.FC<T>
 }

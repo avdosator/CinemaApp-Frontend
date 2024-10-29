@@ -3,8 +3,10 @@ import type { CardList } from "../../../types/CardList"
 import "../../shared-components/card/SharedCard.css"
 import PaginationSmall from "../pagination/PaginationSmall"
 import "./CardList.css"
+import { Venue } from "../../../types/Venue";
+import { Movie } from "../../../types/Movie";
 
-export default function CardList<T>({ heading, elements, CardComponent }: CardList<T>) {
+export default function CardList<T extends Movie | Venue>({ heading, elements, CardComponent }: CardList<T>) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const totalItems = elements.length;

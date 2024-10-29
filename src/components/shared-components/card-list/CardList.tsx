@@ -15,7 +15,7 @@ export default function CardList({ elements }: CardListProps) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const currentStart = (currentPage - 1) * itemsPerPage + 1;
     const currentEnd = Math.min(currentPage * itemsPerPage, totalItems);
-    
+    let lastPageStyle = currentEnd === totalItems && (totalItems % 4) > 0 ? { justifyContent: "start", gap: "10px" } : {};
 
     const handleNextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -35,8 +35,14 @@ export default function CardList({ elements }: CardListProps) {
                             <h2 className="font-heading-h4">{heading}</h2>
                             <a className="font-lg-semibold" href="">See All</a>
                         </div>
-                        <div className="card-list" >
-                            
+                        <div className="card-list" style={lastPageStyle} >
+                            {displayedItems.map(item => (
+                                "title" in item ? (
+                                    <MovieCard key={item.id} movie={item} />
+                                ) : (
+                                    <VenueCard key={item.id} venue={item} />
+                                )
+                            ))}
                         </div>
                     </section>
                     <div className="pagination-sm-container">

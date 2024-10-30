@@ -1,7 +1,8 @@
 import avatarImage from "../../../assets/avatar-image.jpg"
+import { Movie } from "../../../types/Movie"
 import "./FeaturedMovieCarousel.css"
 
-export default function FeaturedMovieCarousel() {
+export default function FeaturedMovieCarousel({ movies }: { movies: Movie[] }) {
     return (
         <div id="carouselExampleRide" className="carousel slide" data-bs-ride="true">
             <div className="carousel-indicators">

@@ -2,6 +2,7 @@ export type Movie = {
     id: string,
     title: string,
     durationInMinutes: number,
+    synopsis: string,
     genres: [
         {
             id: string,

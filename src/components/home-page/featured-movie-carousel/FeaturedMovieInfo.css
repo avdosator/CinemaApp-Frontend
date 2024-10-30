@@ -1,0 +1,12 @@
+.badge {
+    width: 80px;
+    height: 32px;
+    background-color: #E4E7EC;
+    color: #344054;
+    text-align: center;
+    border-radius: 8px 8px 8px 8px;
+}
+
+.badge::first-letter {
+    text-transform: capitalize;
+}

@@ -18,7 +18,7 @@ export default function FeaturedMovieCarousel({ movies }: { movies: Movie[] }) {
             </div>
             <div className="carousel-inner">
                 {movies.map((movie, index) => (
-                    <FeaturedMovieInfo key={index} index={index} title={movie.title} synopsis={movie.synopsis}/>
+                    <FeaturedMovieInfo key={index} index={index} title={movie.title} synopsis={movie.synopsis} genre={movie.genres[0].name}/>
                 ))}
 
                 {/* <div className="carousel-item" data-bs-interval="1000">

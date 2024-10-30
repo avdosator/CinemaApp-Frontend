@@ -10,8 +10,8 @@ export type Movie = {
     ],
     projections: [
         {
-            id: "string",
-            status: "string"
+            id: string,
+            status: string
         }
     ]
     // add other props

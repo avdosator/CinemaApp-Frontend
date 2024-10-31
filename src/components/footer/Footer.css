@@ -46,3 +46,13 @@
     box-sizing: border-box;
 }
 
+@media screen and (max-width: 420px) {
+    .footer-copyright {
+        width: 80%;
+    }
+    
+    .footer-copyright p {
+        text-align: center;
+    }
+}
+

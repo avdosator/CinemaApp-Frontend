@@ -11,7 +11,7 @@ export default function CardList<T extends Movie | Venue>({ heading, elements, C
     const itemsPerPage = 4;
     const totalItems = elements.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const currentStart = (currentPage - 1) * itemsPerPage + 1;
+    const currentStart = totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
     const currentEnd = Math.min(currentPage * itemsPerPage, totalItems);
     let lastPageStyle = currentEnd === totalItems && (totalItems % 4) > 0 ? { justifyContent: "start", gap: "10px" } : {};
 

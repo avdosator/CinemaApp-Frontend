@@ -1,0 +1,6 @@
+.movie-card-big-list {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    margin: 24px 0px;
+}

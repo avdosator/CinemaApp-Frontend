@@ -1,7 +1,6 @@
 .date-reminder {
     color: #667085;
     margin: 16px 0;
-<<<<<<< HEAD
 }
 
 .currently-showing-caption {
@@ -14,7 +13,4 @@
     display: flex;
     justify-content: center;
     margin-bottom: 32px;
-=======
-
->>>>>>> a266ae0 (Add style to CurrentlyShowingPage)
 }

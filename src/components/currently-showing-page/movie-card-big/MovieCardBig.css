@@ -1,0 +1,78 @@
+.movie-card-big {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #E4E7EC;
+    border-radius: 24px;
+    box-shadow: 0px 2px 4px -2px #34405414, 0px 4px 6px -1px #34405414;
+    display: flex;
+}
+
+.movie-card-big-left {
+    width: 50%;
+    display: flex;
+}
+
+.movie-card-big-img {
+    width: 270px;
+    height: 287px;
+    border-radius: 16px;
+}
+
+.movie-card-big-info {
+    margin-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 16px;
+}
+
+.movie-card-big-info p {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.movie-card-big-title {
+    color: #1D2939;
+}
+
+.movie-card-big-data {
+    display: flex;
+}
+
+.divider {
+    width: 20px;
+    height: 0px;
+    border: 1px solid #B22222;
+    opacity: 0px;
+    rotate: -90deg;
+    align-self: center;
+}
+
+.movie-card-big-genre-container {
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.movie-card-big-right {
+    margin-left: 24px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card-big-showtime-label {
+    margin-top: 10px;
+    color: #B22222;
+
+}
+
+.movie-card-big-showtime-badges {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+}

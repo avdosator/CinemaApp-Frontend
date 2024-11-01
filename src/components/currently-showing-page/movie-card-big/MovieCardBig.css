@@ -76,3 +76,78 @@
     gap: 16px;
     margin-top: 10px;
 }
+
+@media screen and (max-width: 1160px) {
+    .movie-card-big-genre-container {
+        width: 100%;
+        gap: 2px;
+    }
+
+    .movie-card-big-data {
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .movie-card-big-showtime-badges {
+        width: 100%;
+        gap: 2px;
+    }
+
+    .movie-card-big-data {
+        flex-wrap: wrap;
+    }
+
+    .movie-card-big-right {
+        margin-left: 80px;
+
+    }
+
+    .movie-card-big-showtime-label {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 912px) {
+    .movie-card-big-left {
+        width: 100%;
+    }
+
+    .movie-card-big-right {
+        margin-left: 16px;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .movie-card-big {
+        flex-wrap: wrap;
+    }
+
+    .movie-card-big-right {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width:550px) {
+    .movie-card-big {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .movie-card-big-left {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .movie-card-big-right {
+        margin-top: 10px;
+    }
+
+    .movie-card-big-info {
+        margin-left: 0;
+        margin-top: 10px;
+        align-items: center;
+    }
+}

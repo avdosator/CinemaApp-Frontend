@@ -68,3 +68,13 @@
     color: #344054 !important;
 }
 
+@media (max-width: 880px) {
+    .dropdown-menu-inputs {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .dropdown-menu-input {
+        min-width: 176px;
+
+    }
+}

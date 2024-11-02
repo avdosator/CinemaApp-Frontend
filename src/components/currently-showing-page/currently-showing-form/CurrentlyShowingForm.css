@@ -27,11 +27,9 @@
     color:#667085
 }
 
-.currently-showing-form form {
-}
-
 .form-element {
     padding: 12px 0;
     box-sizing: content-box;
     border-radius: 8px;
+    border: 1px solid #667085;
 }

@@ -1,0 +1,37 @@
+.form-container {
+    width: 100%;
+}
+
+.currently-showing-form form {
+    display: block;
+    width: 100%;
+    color: #667085;
+}
+
+.search-movies-input {
+    width: 100%;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.dropdown-menu-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.dropdown-menu-input {
+    width: 25%;
+    text-align: left;
+    color:#667085
+}
+
+.currently-showing-form form {
+}
+
+.form-element {
+    padding: 12px 0;
+    box-sizing: content-box;
+    border-radius: 8px;
+}

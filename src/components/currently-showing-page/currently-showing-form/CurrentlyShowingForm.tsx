@@ -1,7 +1,64 @@
 import "./CurrentlyShowingForm.css"
 import DatePickerList from "../../shared-components/date-picker/date-picker-list/DatePickerList";
+import Select, {  SingleValue, ActionMeta } from "react-select";
+import { useState } from "react";
+
+type OptionType = {
+    value: string;
+    label: string;
+};
+
+const cityOptions: OptionType[] = [
+    { value: "", label: "All Cities" },
+    { value: "Sarajevo", label: "Sarajevo" },
+    { value: "Sarajevo", label: "Mostar" }
+];
+
+const venueOptions: OptionType[] = [
+    { value: "", label: "All Cinemas" },
+    { value: "Cineplex", label: "Cineplex" },
+    { value: "Cinema City", label: "Cinema City" },
+    { value: "Cinestar", label: "Cinestar" }
+];
+
+const genreOptions: OptionType[] = [
+    { value: "", label: "All Genres" },
+    { value: "Drama", label: "Drama" },
+    { value: "War", label: "War" }
+];
+
+const timeOptions: OptionType[] = [
+    { value: "", label: "All Projections" },
+    { value: "12:00", label: "12:00" },
+    { value: "14:00", label: "14:00" }
+];
+
+
 
 export default function CurrentlyShowingForm() {
+    
+    const [selectedCity, setSelectedCity] = useState<OptionType | null>(null);
+    const [selectedVenue, setSelectedVenue] = useState<OptionType | null>(null);
+    const [selectedGenre, setSelectedGenre] = useState<OptionType | null>(null);
+    const [selectedTime, setSelectedTime] = useState<OptionType | null>(null);
+
+
+    const handleCityChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
+        setSelectedCity(newValue);
+    };
+
+    const handleVenueChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
+        setSelectedVenue(newValue);
+    };
+
+    const handleGenreChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
+        setSelectedGenre(newValue);
+    };
+
+    const handleTimeChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
+        setSelectedTime(newValue);
+    };
+
     return (
         <div className="form-container">
             <div className="currently-showing-form">
@@ -10,31 +67,42 @@ export default function CurrentlyShowingForm() {
                         <input type="text" className="search-movies-input font-lg-regular form-element" placeholder="Search Movies" />
                     </div>
                     <div className="dropdown-menu-inputs">
-                        <select name="city" id="city" className="dropdown-menu-input form-element">
-                            <option value="">All cities</option>
-                            <option value="Sarajevo">Sarajevo</option>
-                            <option value="Mostar">Mostar</option>
-                        </select>
-                        <select name="venue" id="venue" className="dropdown-menu-input form-element">
-                            <option value="">All Cinemas</option>
-                            <option value="Cineplexx">Cineplexx</option>
-                            <option value="Cinestar">Cinestar</option>
-                        </select>
-                        <select name="genre" id="genre" className="dropdown-menu-input form-element">
-                            <option value="">All Genres</option>
-                            <option value="Action">Action</option>
-                            <option value="War">War</option>
-                            <option value="Drama">Drama</option>
-                            <option value="Thriller">Thriller</option>
-                        </select>
-                        <select name="projectionTime" id="projectionTime" className="dropdown-menu-input form-element">
-                            <option value="">All Projection Times</option>
-                            <option value="14:00">14:00</option>
-                            <option value="16:00">16:00</option>
-                            <option value="18:00">18:00</option>
-                            <option value="20:00">20:00</option>
-                            <option value="22:00">22:00</option>
-                        </select>
+                        <Select<OptionType, false>
+                            options={cityOptions}
+                            placeholder="All Cities"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                        />
+                        <Select<OptionType, false>
+                            options={venueOptions}
+                            placeholder="All Cinemas"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={selectedVenue}
+                            onChange={handleVenueChange}
+                        />
+                        <Select<OptionType, false>
+                            options={genreOptions}
+                            placeholder="All Genres"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={selectedGenre}
+                            onChange={handleGenreChange}
+                        />
+                        <Select<OptionType, false>
+                            options={timeOptions}
+                            placeholder="All Projections"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={selectedTime}
+                            onChange={handleTimeChange}
+                        />
                     </div>
                 </form>
             </div>

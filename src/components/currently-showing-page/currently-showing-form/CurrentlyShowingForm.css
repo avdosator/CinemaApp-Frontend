@@ -43,7 +43,7 @@
     box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414 !important;
 }
 
-.dropdown__placeholder, .dropdown__dropdown-indicator, .dropdown__option {
+.dropdown__placeholder, .dropdown__dropdown-indicator, .dropdown__option, .dropdown__clear-indicator {
     color: #667085 !important;
 }
 
@@ -64,7 +64,7 @@
     border-color: #344054 !important;
 }
 
-.dropdown__single-value, .dropdown__clear-indicator {
+.dropdown__single-value {
     color: #344054 !important;
 }
 

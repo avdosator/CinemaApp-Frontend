@@ -1,4 +1,4 @@
 export type Genre = {
     id: string,
-    name: string,
+    name: string
 }

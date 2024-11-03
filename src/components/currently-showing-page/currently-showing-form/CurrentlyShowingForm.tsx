@@ -1,6 +1,6 @@
 import "./CurrentlyShowingForm.css"
 import DatePickerList from "../../shared-components/date-picker/date-picker-list/DatePickerList";
-import Select, {  SingleValue, ActionMeta } from "react-select";
+import Select, { SingleValue } from "react-select";
 import { useState } from "react";
 
 type OptionType = {
@@ -28,43 +28,43 @@ const genreOptions: OptionType[] = [
 ];
 
 const timeOptions: OptionType[] = [
-    { value: "", label: "All Projections" },
+    { value: "", label: "All Projection Times" },
     { value: "12:00", label: "12:00" },
     { value: "14:00", label: "14:00" }
 ];
 
-
+type FormData = {
+    title: string,
+    city: OptionType | null,
+    venue: OptionType | null,
+    genre: OptionType | null,
+    time: OptionType | null
+}
 
 export default function CurrentlyShowingForm() {
-    
-    const [selectedCity, setSelectedCity] = useState<OptionType | null>(null);
-    const [selectedVenue, setSelectedVenue] = useState<OptionType | null>(null);
-    const [selectedGenre, setSelectedGenre] = useState<OptionType | null>(null);
-    const [selectedTime, setSelectedTime] = useState<OptionType | null>(null);
+    let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null });
 
-
-    const handleCityChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-        setSelectedCity(newValue);
-    };
-
-    const handleVenueChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-        setSelectedVenue(newValue);
-    };
-
-    const handleGenreChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-        setSelectedGenre(newValue);
-    };
-
-    const handleTimeChange = (newValue: SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => {
-        setSelectedTime(newValue);
-    };
+    const handleChange = (name: string, value: string | SingleValue<OptionType>) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+        
+    }
+    console.log(formData);
 
     return (
         <div className="form-container">
             <div className="currently-showing-form">
                 <form className="font-lg-regular">
                     <div className="search-movies">
-                        <input type="text" className="search-movies-input font-lg-regular form-element" placeholder="Search Movies" />
+                        <input type="text"
+                            className="search-movies-input font-lg-regular form-element"
+                            placeholder="Search Movies"
+                            name="title"
+                            value={formData.title}
+                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                        />
                     </div>
                     <div className="dropdown-menu-inputs">
                         <Select<OptionType, false>
@@ -73,8 +73,9 @@ export default function CurrentlyShowingForm() {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={selectedCity}
-                            onChange={handleCityChange}
+                            value={formData.city}
+                            onChange={(newValue) => handleChange("city", newValue)}
+                            name="city"
                         />
                         <Select<OptionType, false>
                             options={venueOptions}
@@ -82,8 +83,9 @@ export default function CurrentlyShowingForm() {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={selectedVenue}
-                            onChange={handleVenueChange}
+                            value={formData.venue}
+                            onChange={(newValue) => handleChange("venue", newValue)}
+                            name="venue"
                         />
                         <Select<OptionType, false>
                             options={genreOptions}
@@ -91,8 +93,9 @@ export default function CurrentlyShowingForm() {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={selectedGenre}
-                            onChange={handleGenreChange}
+                            value={formData.genre}
+                            onChange={(newValue) => handleChange("genre", newValue)}
+                            name="genre"
                         />
                         <Select<OptionType, false>
                             options={timeOptions}
@@ -100,8 +103,9 @@ export default function CurrentlyShowingForm() {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={selectedTime}
-                            onChange={handleTimeChange}
+                            value={formData.time}
+                            onChange={(newValue) => handleChange("time", newValue)}
+                            name="time"
                         />
                     </div>
                 </form>

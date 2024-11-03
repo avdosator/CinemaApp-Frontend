@@ -2,32 +2,28 @@ import "./CurrentlyShowingForm.css"
 import DatePickerList from "../../shared-components/date-picker/date-picker-list/DatePickerList";
 import Select, { SingleValue } from "react-select";
 import { useState } from "react";
+import { SelectOptionType } from "../../../types/SelectOptionType";
 
-type OptionType = {
-    value: string;
-    label: string;
-};
-
-const cityOptions: OptionType[] = [
+const cityOptions: SelectOptionType[] = [
     { value: "", label: "All Cities" },
     { value: "Sarajevo", label: "Sarajevo" },
     { value: "Sarajevo", label: "Mostar" }
 ];
 
-const venueOptions: OptionType[] = [
+const venueOptions: SelectOptionType[] = [
     { value: "", label: "All Cinemas" },
     { value: "Cineplex", label: "Cineplex" },
     { value: "Cinema City", label: "Cinema City" },
     { value: "Cinestar", label: "Cinestar" }
 ];
 
-const genreOptions: OptionType[] = [
+const genreOptions: SelectOptionType[] = [
     { value: "", label: "All Genres" },
     { value: "Drama", label: "Drama" },
     { value: "War", label: "War" }
 ];
 
-const timeOptions: OptionType[] = [
+const timeOptions: SelectOptionType[] = [
     { value: "", label: "All Projection Times" },
     { value: "12:00", label: "12:00" },
     { value: "14:00", label: "14:00" }
@@ -35,16 +31,16 @@ const timeOptions: OptionType[] = [
 
 type FormData = {
     title: string,
-    city: OptionType | null,
-    venue: OptionType | null,
-    genre: OptionType | null,
-    time: OptionType | null
+    city: SelectOptionType | null,
+    venue: SelectOptionType | null,
+    genre: SelectOptionType | null,
+    time: SelectOptionType | null
 }
 
 export default function CurrentlyShowingForm() {
     let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null });
 
-    const handleChange = (name: string, value: string | SingleValue<OptionType>) => {
+    const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {
         setFormData((prevData) => ({
             ...prevData,
             [name]: value
@@ -67,7 +63,7 @@ export default function CurrentlyShowingForm() {
                         />
                     </div>
                     <div className="dropdown-menu-inputs">
-                        <Select<OptionType, false>
+                        <Select<SelectOptionType, false>
                             options={cityOptions}
                             placeholder="All Cities"
                             className="dropdown-menu-input"
@@ -77,7 +73,7 @@ export default function CurrentlyShowingForm() {
                             onChange={(newValue) => handleChange("city", newValue)}
                             name="city"
                         />
-                        <Select<OptionType, false>
+                        <Select<SelectOptionType, false>
                             options={venueOptions}
                             placeholder="All Cinemas"
                             className="dropdown-menu-input"
@@ -87,7 +83,7 @@ export default function CurrentlyShowingForm() {
                             onChange={(newValue) => handleChange("venue", newValue)}
                             name="venue"
                         />
-                        <Select<OptionType, false>
+                        <Select<SelectOptionType, false>
                             options={genreOptions}
                             placeholder="All Genres"
                             className="dropdown-menu-input"
@@ -97,7 +93,7 @@ export default function CurrentlyShowingForm() {
                             onChange={(newValue) => handleChange("genre", newValue)}
                             name="genre"
                         />
-                        <Select<OptionType, false>
+                        <Select<SelectOptionType, false>
                             options={timeOptions}
                             placeholder="All Projections"
                             className="dropdown-menu-input"

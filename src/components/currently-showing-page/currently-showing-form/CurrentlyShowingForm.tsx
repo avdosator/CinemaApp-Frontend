@@ -3,26 +3,18 @@ import DatePickerList from "../../shared-components/date-picker/date-picker-list
 import Select, { SingleValue } from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faLocationPin, faClock } from '@fortawesome/free-solid-svg-icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectOptionType } from "../../../types/SelectOptionType";
-
-const cityOptions: SelectOptionType[] = [
-    { value: "", label: "All Cities" },
-    { value: "Sarajevo", label: "Sarajevo" },
-    { value: "Sarajevo", label: "Mostar" }
-];
+import ApiService from "../../../service/ApiService";
+import { PageResponse } from "../../../types/PageResponse";
+import { City } from "../../../types/City";
+import { Genre } from "../../../types/Genre";
 
 const venueOptions: SelectOptionType[] = [
     { value: "", label: "All Cinemas" },
     { value: "Cineplex", label: "Cineplex" },
     { value: "Cinema City", label: "Cinema City" },
     { value: "Cinestar", label: "Cinestar" }
-];
-
-const genreOptions: SelectOptionType[] = [
-    { value: "", label: "All Genres" },
-    { value: "Drama", label: "Drama" },
-    { value: "War", label: "War" }
 ];
 
 const timeOptions: SelectOptionType[] = [
@@ -42,6 +34,15 @@ type FormData = {
 
 export default function CurrentlyShowingForm() {
     let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
+    let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
+    let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+
+    useEffect(() => {
+        ApiService.get<PageResponse<City>>("/cities")
+            .then(response => { setCityOptions(response.content.map(city => ({ value: city.name, label: city.name }))); });
+        ApiService.get<PageResponse<Genre>>("/genres")
+            .then(response => { setGenreOptions(response.content.map(genre => ({ value: genre.name, label: genre.name }))); });
+    }, []);
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {
         setFormData((prevData) => ({

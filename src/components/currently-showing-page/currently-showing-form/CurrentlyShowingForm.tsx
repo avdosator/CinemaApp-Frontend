@@ -9,13 +9,7 @@ import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import { City } from "../../../types/City";
 import { Genre } from "../../../types/Genre";
-
-const venueOptions: SelectOptionType[] = [
-    { value: "", label: "All Cinemas" },
-    { value: "Cineplex", label: "Cineplex" },
-    { value: "Cinema City", label: "Cinema City" },
-    { value: "Cinestar", label: "Cinestar" }
-];
+import { Venue } from "../../../types/Venue";
 
 const timeOptions: SelectOptionType[] = [
     { value: "", label: "All Projection Times" },
@@ -36,12 +30,25 @@ export default function CurrentlyShowingForm() {
     let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+    let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>();
 
     useEffect(() => {
-        ApiService.get<PageResponse<City>>("/cities")
-            .then(response => { setCityOptions(response.content.map(city => ({ value: city.name, label: city.name }))); });
-        ApiService.get<PageResponse<Genre>>("/genres")
-            .then(response => { setGenreOptions(response.content.map(genre => ({ value: genre.name, label: genre.name }))); });
+        Promise.all([
+            ApiService.get<City[]>("/cities"),
+            ApiService.get<PageResponse<Venue>>("/venues"),
+            ApiService.get<Genre[]>("/genres")
+        ])
+        .then(([citiesResponse, venuesResponse, genresResponse]) => {
+            const cities = citiesResponse || [];
+            setCityOptions(cities.map(city => ({ value: city.name, label: city.name })));
+    
+            const venues = venuesResponse.content || [];
+            setVenueOptions(venues.map(venue => ({ value: venue.name, label: venue.name })));
+    
+            const genres = genresResponse || [];
+            setGenreOptions(genres.map(genre => ({ value: genre.name, label: genre.name })));
+        })
+        .catch(error => console.error("Error fetching data:", error));
     }, []);
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {

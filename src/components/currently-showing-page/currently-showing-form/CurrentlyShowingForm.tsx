@@ -34,11 +34,12 @@ type FormData = {
     city: SelectOptionType | null,
     venue: SelectOptionType | null,
     genre: SelectOptionType | null,
-    time: SelectOptionType | null
+    time: SelectOptionType | null,
+    date: string
 }
 
 export default function CurrentlyShowingForm() {
-    let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null });
+    let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {
         setFormData((prevData) => ({
@@ -46,6 +47,13 @@ export default function CurrentlyShowingForm() {
             [name]: value
         }));
         
+    }
+
+    const handleDateChange = (date: string) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            date: date
+        }))
     }
     console.log(formData);
 
@@ -107,7 +115,7 @@ export default function CurrentlyShowingForm() {
                 </form>
             </div>
             <div className="date-picker-container">
-                <DatePickerList />
+                <DatePickerList pickDate={handleDateChange} />
             </div>
         </div>
     )

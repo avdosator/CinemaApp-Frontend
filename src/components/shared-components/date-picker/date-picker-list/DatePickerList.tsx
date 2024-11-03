@@ -1,13 +1,14 @@
 import "./DatePickerList.css"
 import DatePickerBtn from "../date-picker-btn/DatePickerBtn"
 
-export default function DatePickerList() {
+export default function DatePickerList({pickDate}: {pickDate: (date: string) => void}) {
     const today = new Date();
     const dates = Array.from({ length: 10 }, (_, i) => {
         const date = new Date(today);
         date.setDate(today.getDate() + i);
         return {
-            formattedDate: date.toDateString().substring(4, 10),
+            isoDate: date.toISOString().split('T')[0],  // Format date as "YYYY-MM-DD"
+            displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),  // Format for display
             dayLabel: i === 0 ? "Today" : date.toDateString().substring(0, 4),
         };
     });
@@ -15,7 +16,11 @@ export default function DatePickerList() {
     return (
         <div className="date-picker-list">
             {dates.map((item, index) => (
-                <DatePickerBtn key={index} date={item.formattedDate} day={item.dayLabel} />
+                <DatePickerBtn key={index}
+                 date={item.displayDate} 
+                 day={item.dayLabel} 
+                 pickDate={() => pickDate(item.isoDate) } 
+                 />
             ))}
         </div>
     )

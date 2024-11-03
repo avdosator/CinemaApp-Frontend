@@ -12,10 +12,16 @@
 
 .btn-date {
     color: #1D2939;
-    border: 1px solid #FFFFFF;
 }
 
 .btn-day {
     color: #667085;
-    border: 1px solid #FFFFFF;
+}
+
+.date-picker-btn.selected {
+    background-color: #B22222;
+}
+
+.selected div {
+    color: #FCFCFD;
 }

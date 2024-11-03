@@ -1,7 +1,12 @@
 import "./DatePickerList.css"
 import DatePickerBtn from "../date-picker-btn/DatePickerBtn"
 
-export default function DatePickerList({pickDate}: {pickDate: (date: string) => void}) {
+type DatePickerListProps = {
+    pickDate: (date: string) => void;
+    selectedDate: string;
+};
+
+export default function DatePickerList({pickDate, selectedDate}: DatePickerListProps) {
     const today = new Date();
     const dates = Array.from({ length: 10 }, (_, i) => {
         const date = new Date(today);
@@ -19,7 +24,8 @@ export default function DatePickerList({pickDate}: {pickDate: (date: string) => 
                 <DatePickerBtn key={index}
                  date={item.displayDate} 
                  day={item.dayLabel} 
-                 pickDate={() => pickDate(item.isoDate) } 
+                 pickDate={() => pickDate(item.isoDate) }
+                 selected={selectedDate === item.isoDate}
                  />
             ))}
         </div>

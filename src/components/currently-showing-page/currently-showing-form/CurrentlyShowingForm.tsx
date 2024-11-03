@@ -137,7 +137,7 @@ export default function CurrentlyShowingForm() {
                 </form>
             </div>
             <div className="date-picker-container">
-                <DatePickerList pickDate={handleDateChange} />
+                <DatePickerList pickDate={handleDateChange} selectedDate={formData.date} />
             </div>
         </div>
     )

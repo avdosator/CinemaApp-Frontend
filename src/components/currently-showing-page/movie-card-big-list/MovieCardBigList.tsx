@@ -1,13 +1,13 @@
 import "./MovieCardBigList.css"
 import MovieCardBig from "../movie-card-big/MovieCardBig";
+import { Movie } from "../../../types/Movie";
 
-export default function MovieCardBigList() {
-    const array: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    return (  
-            <div className="movie-card-big-list">
-                {array.map((item, index) => (
-                    <MovieCardBig key={index} />
-                ))}
-            </div>
+export default function MovieCardBigList({ movies }: { movies: Movie[] }) {
+    return (
+        <div className="movie-card-big-list">
+            {movies.map((item, index) => (
+                <MovieCardBig key={index} movie={item} />
+            ))}
+        </div>
     )
 }

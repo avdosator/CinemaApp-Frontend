@@ -9,9 +9,9 @@ export default class ApiService {
         }
     });
 
-    static async get<T>(route: string, headers: Record<string, string> = {}): Promise<T> {
+    static async get<T>(route: string, params: Record<string, any> = {}, headers: Record<string, string> = {}): Promise<T> {
         try {
-            const response: AxiosResponse<T> = await this.axiosInstance.get(route, { headers });
+            const response: AxiosResponse<T> = await this.axiosInstance.get(route, { params, headers });
             return response.data;
         } catch (err) {
             console.error("GET request failed", err);

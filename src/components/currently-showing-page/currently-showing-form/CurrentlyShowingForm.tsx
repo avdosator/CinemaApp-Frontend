@@ -11,12 +11,6 @@ import { City } from "../../../types/City";
 import { Genre } from "../../../types/Genre";
 import { Venue } from "../../../types/Venue";
 
-const timeOptions: SelectOptionType[] = [
-    { value: "", label: "All Projection Times" },
-    { value: "12:00", label: "12:00" },
-    { value: "14:00", label: "14:00" }
-];
-
 type FormData = {
     title: string,
     city: SelectOptionType | null,
@@ -31,14 +25,16 @@ export default function CurrentlyShowingForm() {
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>();
+    let [projectionOptions, setProjectionOptions] = useState<SelectOptionType[]>();
 
     useEffect(() => {
         Promise.all([
             ApiService.get<City[]>("/cities"),
             ApiService.get<PageResponse<Venue>>("/venues"),
-            ApiService.get<Genre[]>("/genres")
+            ApiService.get<Genre[]>("/genres"),
+            ApiService.get<string[]>("projections/start-times")
         ])
-        .then(([citiesResponse, venuesResponse, genresResponse]) => {
+        .then(([citiesResponse, venuesResponse, genresResponse, projectionsResponse]) => {
             const cities = citiesResponse || [];
             setCityOptions(cities.map(city => ({ value: city.id, label: city.name })));
     
@@ -47,6 +43,9 @@ export default function CurrentlyShowingForm() {
     
             const genres = genresResponse || [];
             setGenreOptions(genres.map(genre => ({ value: genre.id, label: genre.name })));
+
+            const projectionTimes = projectionsResponse || []; 
+            setProjectionOptions(projectionTimes.map(projection => ({value: projection, label: projection})));
         })
         .catch(error => console.error("Error fetching data:", error));
     }, []);
@@ -123,7 +122,7 @@ export default function CurrentlyShowingForm() {
                         <div className="input-wrapper">
                             <FontAwesomeIcon icon={faClock} className="input-icon" />
                             <Select<SelectOptionType, false>
-                                options={timeOptions}
+                                options={projectionOptions}
                                 placeholder="All Projection Times"
                                 className="dropdown-menu-input"
                                 classNamePrefix="dropdown"

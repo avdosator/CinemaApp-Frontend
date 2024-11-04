@@ -40,13 +40,13 @@ export default function CurrentlyShowingForm() {
         ])
         .then(([citiesResponse, venuesResponse, genresResponse]) => {
             const cities = citiesResponse || [];
-            setCityOptions(cities.map(city => ({ value: city.name, label: city.name })));
+            setCityOptions(cities.map(city => ({ value: city.id, label: city.name })));
     
             const venues = venuesResponse.content || [];
-            setVenueOptions(venues.map(venue => ({ value: venue.name, label: venue.name })));
+            setVenueOptions(venues.map(venue => ({ value: venue.id, label: venue.name })));
     
             const genres = genresResponse || [];
-            setGenreOptions(genres.map(genre => ({ value: genre.name, label: genre.name })));
+            setGenreOptions(genres.map(genre => ({ value: genre.id, label: genre.name })));
         })
         .catch(error => console.error("Error fetching data:", error));
     }, []);

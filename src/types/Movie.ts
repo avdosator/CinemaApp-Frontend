@@ -1,4 +1,5 @@
 import { Genre } from "./Genre"
+import { Projection } from "./Projection"
 
 export type Movie = {
     id: string,

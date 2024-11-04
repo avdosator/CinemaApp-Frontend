@@ -5,4 +5,5 @@ export type PageResponse<T> = {
     totalElements: number;
     totalPages: number;
     empty: boolean;
+    last: boolean
 }

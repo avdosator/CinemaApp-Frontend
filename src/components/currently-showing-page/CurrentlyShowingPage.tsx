@@ -77,10 +77,13 @@ export default function CurrentlyShowingPage() {
     }
 
     const handleDateChange = (date: string) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            date: date
-        }));
+        setFormData({ title: "", city: null, venue: null, genre: null, time: null, date: date });
+
+        // Reset pagination to first page
+        setPage(0);
+
+        // Fetch movies with only the date filter applied
+        fetchMovies({ title: "", city: null, venue: null, genre: null, time: null, date: date }, 0);
     }
 
     // Handle "Load More" button click to fetch the next page
@@ -97,7 +100,7 @@ export default function CurrentlyShowingPage() {
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>
-            <MovieCardBigList />
+            <MovieCardBigList movies={movies} />
             {/* Conditionally render the div with the button */}
             {!isLastPage && (
                 <div className="load-more-btn">

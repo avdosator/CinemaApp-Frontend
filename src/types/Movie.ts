@@ -1,4 +1,5 @@
 import { Genre } from "./Genre"
+import { Photo } from "./Photo"
 import { Projection } from "./Projection"
 
 export type Movie = {

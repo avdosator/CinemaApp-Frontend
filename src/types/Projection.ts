@@ -1,3 +1,5 @@
+import { Hall } from "./Hall"
+
 export type Projection = {
     id: string,
     hall: Hall,

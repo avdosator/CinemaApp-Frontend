@@ -10,18 +10,16 @@ import { PageResponse } from "../../../types/PageResponse";
 import { City } from "../../../types/City";
 import { Genre } from "../../../types/Genre";
 import { Venue } from "../../../types/Venue";
+import { CurrentlyShowingFormData } from "../../../types/CurrentlyShowingFormData";
 
-type FormData = {
-    title: string,
-    city: SelectOptionType | null,
-    venue: SelectOptionType | null,
-    genre: SelectOptionType | null,
-    time: SelectOptionType | null,
-    date: string
+type CurrentlyShowingFormProps = {
+    handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
+    handleDateChange: (date: string) => void,
+    formData: CurrentlyShowingFormData
 }
 
-export default function CurrentlyShowingForm() {
-    let [formData, setFormData] = useState<FormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
+export default function CurrentlyShowingForm({handleChange, handleDateChange, formData}: CurrentlyShowingFormProps) {
+    
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>();
@@ -50,21 +48,7 @@ export default function CurrentlyShowingForm() {
         .catch(error => console.error("Error fetching data:", error));
     }, []);
 
-    const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    }
-
-    const handleDateChange = (date: string) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            date: date
-        }));
-    }
-    console.log(formData);
-
+    
     return (
         <div className="form-container">
             <div className="currently-showing-form">

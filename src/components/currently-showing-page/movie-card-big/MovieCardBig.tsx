@@ -4,8 +4,6 @@ import TimeBadge from "../../shared-components/time-badge/TimeBadge";
 import { Movie } from "../../../types/Movie";
 
 export default function MovieCardBig({ movie }: { movie: Movie }) {
-    const showtimes = ["12:00", "14:00", "16:00", "18:00", "20:00"];
-    const genres = ["Fantasy", "Action", "Adventure", "Sci Fi",];
 
     return (
         <div className="movie-card-big">

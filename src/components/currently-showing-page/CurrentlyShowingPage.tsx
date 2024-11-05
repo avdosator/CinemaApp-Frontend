@@ -57,9 +57,8 @@ export default function CurrentlyShowingPage() {
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
-        if (formData.title) {
             debouncedFetchMovies(formData);
-        }
+        
     }, [formData.title]);
 
     // Clean up debounced function on unmount
@@ -95,14 +94,14 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing(9)</h4>
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : ""}</h4>
             <CurrentlyShowingForm handleChange={handleChange} handleDateChange={handleDateChange} formData={formData} />
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>
             <MovieCardBigList movies={movies} />
             {/* Conditionally render the div with the button */}
-            {!isLastPage && (
+            {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">
                     <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
                 </div>

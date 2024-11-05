@@ -2,8 +2,14 @@ import "./MovieCardBig.css"
 import GenreBadge from "../../shared-components/genre-badge/GenreBadge";
 import TimeBadge from "../../shared-components/time-badge/TimeBadge";
 import { Movie } from "../../../types/Movie";
+import { useState } from "react";
 
 export default function MovieCardBig({ movie }: { movie: Movie }) {
+    const [selectedTime, setSelectedTime] = useState<string | null>(null); // Track selected time
+
+    const handleTimeSelection = (time: string) => {
+        setSelectedTime(time);
+    };
 
     // Find the latest date of all movie projections
     const latestEndDate: Date = movie.projections.reduce((latest, projection) => {
@@ -41,7 +47,7 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
                     {[...new Set(movie.projections.flatMap(projection => projection.startTime))]
                         .sort((a, b) => a.localeCompare(b)) // Sort the times in ascending order
                         .map((time, index) => (
-                            <TimeBadge key={index} label={time} />
+                            <TimeBadge key={index} label={time} isSelected={time === selectedTime} onClick={() => handleTimeSelection(time)} />
                         ))}
                 </div>
             </section>

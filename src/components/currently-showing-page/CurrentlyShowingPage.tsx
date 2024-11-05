@@ -147,7 +147,8 @@ export default function CurrentlyShowingPage() {
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
-        debouncedFetchMovies(formData);  
+        debouncedFetchMovies(formData);
+
     }, [formData.title]);
 
     // Clean up debounced function on unmount

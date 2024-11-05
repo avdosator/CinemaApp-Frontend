@@ -19,6 +19,14 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
     // Convert to "DD.MM.YYYY" format
     const formattedDate = latestEndDate.toString().split("-").reverse().join(".");
 
+    // Find the latest date of all movie projections
+    const latestEndDate: Date = movie.projections.reduce((latest, projection) => {
+        return projection.endDate.toString() > latest.endDate.toString() ? projection : latest;
+    }).endDate;
+
+    // Convert to "DD.MM.YYYY" format
+    const formattedDate = latestEndDate.toString().split("-").reverse().join(".");
+
     return (
         <div className="movie-card-big">
             <section className="movie-card-big-left">

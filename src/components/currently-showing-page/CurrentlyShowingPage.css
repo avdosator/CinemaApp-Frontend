@@ -12,8 +12,5 @@
 .load-more-btn {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     margin-bottom: 32px;
-=======
->>>>>>> b994841 (Create reusable button component)
 }

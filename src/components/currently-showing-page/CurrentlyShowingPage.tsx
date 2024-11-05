@@ -17,12 +17,13 @@ export default function CurrentlyShowingPage() {
     let [formData, setFormData] = useState<CurrentlyShowingFormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
+    const PAGE_SIZE: number = 9;
 
     const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number) => {
         const today = new Date();
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
-            size: 9,
+            size: PAGE_SIZE,
             startDate: today.toISOString().split('T')[0],
             endDate: new Date(today.setDate(today.getDate() + 9)).toISOString().split('T')[0],
             city: data.city?.value,

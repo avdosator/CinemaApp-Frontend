@@ -10,6 +10,7 @@ import { SingleValue } from "react-select";
 import { PageResponse } from "../../types/PageResponse";
 import { CurrentlyShowingFormData } from "../../types/CurrentlyShowingFormData";
 import debounce from "lodash.debounce";
+import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
 
 export default function CurrentlyShowingPage() {
     let [movies, setMovies] = useState<Movie[]>([]);
@@ -57,8 +58,7 @@ export default function CurrentlyShowingPage() {
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
-            debouncedFetchMovies(formData);
-        
+        debouncedFetchMovies(formData);
     }, [formData.title]);
 
     // Clean up debounced function on unmount
@@ -94,12 +94,13 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : ""}</h4>
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
             <CurrentlyShowingForm handleChange={handleChange} handleDateChange={handleDateChange} formData={formData} />
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>
-            <MovieCardBigList movies={movies} />
+            {movies.length === 0 ? (<NoMoviesPreview />) : (<MovieCardBigList movies={movies} />)}
+            {/* <MovieCardBigList movies={movies} /> */}
             {/* Conditionally render the div with the button */}
             {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">

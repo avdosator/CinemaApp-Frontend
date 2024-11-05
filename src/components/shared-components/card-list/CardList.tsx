@@ -16,6 +16,10 @@ export default function CardList<T extends Movie | Venue>({ heading, elements, r
     const currentEnd = Math.min(currentPage * itemsPerPage, totalItems);
     let lastPageStyle = currentEnd === totalItems && (totalItems % 4) > 0 ? { justifyContent: "start", gap: "10px" } : {};
 
+    // Inspect why this route is type string | () => void
+    // let headingWords: string[] = heading.split(" ");
+    // let route: string = (headingWords.length > 1 ? `${headingWords[0].toLowerCase}-${headingWords[1].toLowerCase}` : headingWords[0].toLowerCase) as string;
+
     const handleNextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };

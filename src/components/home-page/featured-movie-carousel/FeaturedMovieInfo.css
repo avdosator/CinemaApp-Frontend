@@ -11,6 +11,10 @@
     text-transform: capitalize;
 }
 
+.carousel-image {
+    max-height: 700px;
+}
+
 .carousel-movie-info {
     position: absolute;
     width: 44%;
@@ -53,7 +57,7 @@
         position: absolute;
         width: 34%;
         height: 26%;
-        gap: 8px; 
+        gap: 8px;
         bottom: 150px;
         left: 100px;
         text-align: left;
@@ -64,6 +68,10 @@
         font-weight: 600;
         line-height: 40px;
         letter-spacing: -0.015em;
+    }
+
+    .carousel-image {
+        max-height: 500px;
     }
 }
 
@@ -83,4 +91,7 @@
         display: none;
     }
 
+    .carousel-image {
+        max-height: 350px;
+    }
 }

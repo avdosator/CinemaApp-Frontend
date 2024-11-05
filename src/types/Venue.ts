@@ -7,7 +7,7 @@ export type Venue = {
     street: string,
     streetNumber: string,
     city: City,
-    halls: Hall[],
+    halls?: Hall[],
     phone: string
     // add more later
 }

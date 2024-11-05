@@ -152,7 +152,12 @@ export default function CurrentlyShowingPage() {
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
+<<<<<<< HEAD
         debouncedFetchMovies(formData);
+=======
+            debouncedFetchMovies(formData);
+        
+>>>>>>> 90ef9cf (Use movies length for number in heading and hide Load More button if movies array is empty)
     }, [formData.title]);
 
     // Clean up debounced function on unmount
@@ -188,6 +193,7 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
+<<<<<<< HEAD
             <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
             <CurrentlyShowingForm
                 handleChange={handleChange}
@@ -197,6 +203,10 @@ export default function CurrentlyShowingPage() {
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
                 timeOptions={projectionTimeOptions} />
+=======
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : ""}</h4>
+            <CurrentlyShowingForm handleChange={handleChange} handleDateChange={handleDateChange} formData={formData} />
+>>>>>>> 90ef9cf (Use movies length for number in heading and hide Load More button if movies array is empty)
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>

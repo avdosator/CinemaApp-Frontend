@@ -5,6 +5,14 @@ import { Movie } from "../../../types/Movie";
 
 export default function MovieCardBig({ movie }: { movie: Movie }) {
 
+    // Find the latest date of all movie projections
+    const latestEndDate: Date = movie.projections.reduce((latest, projection) => {
+        return projection.endDate.toString() > latest.endDate.toString() ? projection : latest;
+    }).endDate;
+
+    // Convert to "DD.MM.YYYY" format
+    const formattedDate = latestEndDate.toString().split("-").reverse().join(".");
+
     return (
         <div className="movie-card-big">
             <section className="movie-card-big-left">
@@ -23,7 +31,7 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
                             <GenreBadge key={index} label={genre.name} />
                         ))}
                     </div>
-                    <p className="font-md-italic-regular">Playing in cinema until 14.09.2024.</p>
+                    <p className="font-md-italic-regular">{`Playing in cinema until ${formattedDate}`}</p>
                 </div>
             </section>
             <section className="movie-card-big-right">

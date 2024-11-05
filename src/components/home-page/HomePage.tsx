@@ -30,9 +30,9 @@ export default function HomePage() {
         <>
             <FeaturedMovieCarousel movies={activeMovies.slice(0, 3)} />
             <VenuePillList />
-            <CardList heading="Currently showing" elements={activeMovies} CardComponent={MovieCard} />
-            <CardList heading="Upcoming movies" elements={upcomingMovies} CardComponent={MovieCard} />
-            <CardList heading="Venues" elements={venues} CardComponent={VenueCard} />
+            <CardList heading="Currently showing" elements={activeMovies} route="/currently-showing" CardComponent={MovieCard} />
+            <CardList heading="Upcoming movies" elements={upcomingMovies} route="/upcoming" CardComponent={MovieCard} />
+            <CardList heading="Venues" elements={venues} route="/venues" CardComponent={VenueCard} />
         </>
     )
 }

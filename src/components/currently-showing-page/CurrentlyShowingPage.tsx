@@ -11,21 +11,26 @@ import { PageResponse } from "../../types/PageResponse";
 import { CurrentlyShowingFormData } from "../../types/CurrentlyShowingFormData";
 import debounce from "lodash.debounce";
 import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
+import { useNavigate } from "react-router-dom";
 
 export default function CurrentlyShowingPage() {
+    const navigate = useNavigate();
     let [movies, setMovies] = useState<Movie[]>([]);
-    let [formData, setFormData] = useState<CurrentlyShowingFormData>({ title: "", city: null, venue: null, genre: null, time: null, date: "" });
+    let [formData, setFormData] = useState<CurrentlyShowingFormData>({ title: "", city: null, venue: null, genre: null, time: null, date: new Date().toISOString().split('T')[0] });
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
     const PAGE_SIZE: number = 9;
 
     const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number) => {
         const today = new Date();
+        const startDate = today.toISOString().split('T')[0];
+        const endDate = new Date(today.setDate(today.getDate() + 9)).toISOString().split('T')[0];
+
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
-            startDate: today.toISOString().split('T')[0],
-            endDate: new Date(today.setDate(today.getDate() + 9)).toISOString().split('T')[0],
+            startDate: startDate,
+            endDate: endDate,
             city: data.city?.value,
             venue: data.venue?.value,
             genre: data.genre?.value,
@@ -35,6 +40,16 @@ export default function CurrentlyShowingPage() {
         if (data.title) {
             params.title = data.title;
         }
+
+        // Convert params object to URL search params for ApiService and URL update
+        const urlParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined) urlParams.append(key, value.toString());
+        });
+
+        // Update the URL in the address bar
+        navigate(`/currently-showing?${urlParams.toString()}`, { replace: true });
+
         ApiService.get<PageResponse<Movie>>("/movies", params)
             .then(response => {
                 setMovies(prevMovies =>
@@ -55,7 +70,7 @@ export default function CurrentlyShowingPage() {
         // Fetch immediately when non-title fields change
         setPage(0);
         fetchMovies(formData, 0);
-    }, [formData.city, formData.venue, formData.genre, formData.time, formData.date]);
+    }, [formData.city, formData.venue, formData.genre, formData.time, formData.date, page]);
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
@@ -101,7 +116,6 @@ export default function CurrentlyShowingPage() {
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>
             {movies.length === 0 ? (<NoMoviesPreview />) : (<MovieCardBigList movies={movies} />)}
-            {/* <MovieCardBigList movies={movies} /> */}
             {/* Conditionally render the div with the button */}
             {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">

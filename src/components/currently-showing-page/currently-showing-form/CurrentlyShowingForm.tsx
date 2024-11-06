@@ -82,7 +82,7 @@ export default function CurrentlyShowingForm({
                         <div className="input-wrapper">
                             <FontAwesomeIcon icon={faClock} className="input-icon" />
                             <Select<SelectOptionType, false>
-                                options={projectionOptions}
+                                options={timeOptions}
                                 placeholder="All Projection Times"
                                 className="dropdown-menu-input"
                                 classNamePrefix="dropdown"

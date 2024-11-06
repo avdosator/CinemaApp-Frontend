@@ -14,8 +14,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.7",
+    "date-fns": "^4.1.0",
+    "date-range": "^0.0.2",
     "lodash.debounce": "^4.0.8",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
+    "react-date-range": "^2.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.2"

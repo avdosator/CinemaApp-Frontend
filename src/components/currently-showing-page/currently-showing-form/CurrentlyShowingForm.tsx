@@ -94,7 +94,7 @@ export default function CurrentlyShowingForm({
                         <div className="input-wrapper" onFocus={() => handleFocus("clock")} onBlur={handleBlur}>
                             <FontAwesomeIcon icon={faClock} className={`input-icon ${focusedIcon === "clock" ? "focused-icon" : ""}`} />
                             <Select<SelectOptionType, false>
-                                options={projectionOptions}
+                                options={timeOptions}
                                 placeholder="All Projection Times"
                                 className="dropdown-menu-input"
                                 classNamePrefix="dropdown"

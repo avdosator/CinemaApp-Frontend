@@ -24,7 +24,7 @@ export default function Header() {
                     </button>
                     <div className="navbar-links">
                         <NavLink to="/currently-showing" className="navbar-link-item font-lg-regular">Currently Showing</NavLink>
-                        <NavLink to="#" className="navbar-link-item font-lg-regular">Upcoming Movies</NavLink>
+                        <NavLink to="/upcoming-movies" className="navbar-link-item font-lg-regular">Upcoming Movies</NavLink>
                         <NavLink to="#" className="navbar-link-item font-lg-regular">Venues</NavLink>
                     </div>
                     <div className="navbar-actions">
@@ -45,8 +45,8 @@ export default function Header() {
                 </div>
                 {isDropdownOpen && (
                     <div className="dropdown-links">
-                        <NavLink to="/home" className="dropdown-link-item">Currently Showing</NavLink>
-                        <NavLink to="#" className="dropdown-link-item">Upcoming Movies</NavLink>
+                        <NavLink to="/currently-showing" className="dropdown-link-item">Currently Showing</NavLink>
+                        <NavLink to="/upcoming-movies" className="dropdown-link-item">Upcoming Movies</NavLink>
                         <NavLink to="#" className="dropdown-link-item">Venues</NavLink>
                     </div>
                 )}

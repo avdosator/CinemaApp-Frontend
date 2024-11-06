@@ -3,7 +3,6 @@
   /*max-width: 1440px;  Matches the max width of the design */
   margin: 0;
   padding: 40px 0;
-  /*Padding around the entire container */
   background-color: #FCFCFD;
   color: #1D2939;
   display: flex;
@@ -44,7 +43,6 @@
   margin-top: 32px;
   /* width: 100%; */
   box-sizing: border-box;
-  /* Makes sure the width includes padding */
 }
 
 .pagination-sm-container {

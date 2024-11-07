@@ -19,7 +19,7 @@
 
 .search-movies-input:focus {
     border-color: #344054 !important;
-    outline: none;
+    outline: inset 1px #B22222;    
 }
 
 .dropdown-menu-inputs {
@@ -80,7 +80,7 @@
 }
 
 .dropdown__control--is-focused {
-    border-color: #344054 !important;
+    border-color: #B22222 !important;
 }
 
 

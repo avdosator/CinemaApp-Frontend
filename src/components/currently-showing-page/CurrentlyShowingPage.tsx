@@ -93,8 +93,8 @@ export default function CurrentlyShowingPage() {
         const params: Record<string, string> = {
             page: pageNumber.toString(),
             size: PAGE_SIZE.toString(),
-            START_DATE,
-            END_DATE
+            startDate: START_DATE,
+            endDate: END_DATE
         };
         if (data.title) params.title = data.title;
         if (data.city?.value) params.city = data.city.value;
@@ -189,7 +189,7 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing({movies.length})</h4>
             <CurrentlyShowingForm
                 handleChange={handleChange}
                 handleDateChange={handleDateChange}

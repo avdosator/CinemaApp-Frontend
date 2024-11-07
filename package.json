@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.2.64",
+    "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",

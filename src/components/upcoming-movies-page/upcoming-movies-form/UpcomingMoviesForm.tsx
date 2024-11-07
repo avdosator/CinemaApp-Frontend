@@ -1,7 +1,36 @@
-import { faBuilding, faLocationPin, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons";
-import Select from "react-select/base";
+import "./UpcomingMoviesForm.css"
+import { faBuilding, faCalendar, faLocationPin, faMagnifyingGlass, faVideo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Select, { SingleValue } from "react-select";
+import { SelectOptionType } from "../../../types/SelectOptionType";
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange, Range, RangeKeyDict } from 'react-date-range';
+import { useState } from "react";
+import { UpcomingMoviesFormData } from "../../../types/CurrentlyShowingFormData";
+import { enGB } from "date-fns/locale";
 
-export default function UpcomingMoviesForm() {
+type UpcomingMoviesFormProps = {
+    handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
+    handleDateChange: (startDate: string, endDate: string) => void,
+    formData: UpcomingMoviesFormData,
+    cityOptions?: SelectOptionType[]; // Marked as optional with '?'
+    genreOptions?: SelectOptionType[];
+    venueOptions?: SelectOptionType[];
+}
+
+export default function UpcomingMoviesForm({ handleChange, handleDateChange, formData, cityOptions, genreOptions, venueOptions }: UpcomingMoviesFormProps) {
+    const [calendarState, setCalendarState] = useState<Range[]>([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection',
+            // color: "#FDE3E3"
+        }
+    ]);
+    const [open, setOpen] = useState(false);
+    console.log(calendarState);
+
     return (
         <form className="font-lg-regular upcoming-movies-form">
             <div className="input-wrapper">
@@ -16,7 +45,7 @@ export default function UpcomingMoviesForm() {
             </div>
             <div className="dropdown-menu-inputs">
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faLocationPin} className="input-icon" />
+                    <FontAwesomeIcon icon={faLocationPin} className="upcoming-input-icon" />
                     <Select<SelectOptionType, false>
                         options={cityOptions}
                         placeholder="All Cities"
@@ -29,7 +58,7 @@ export default function UpcomingMoviesForm() {
                     />
                 </div>
                 <div className="input-wrapper">
-                <FontAwesomeIcon icon={faBuilding} className="input-icon"  />
+                    <FontAwesomeIcon icon={faBuilding} className="upcoming-input-icon" />
                     <Select<SelectOptionType, false>
                         options={venueOptions}
                         placeholder="All Cinemas"
@@ -42,7 +71,7 @@ export default function UpcomingMoviesForm() {
                     />
                 </div>
                 <div className="input-wrapper">
-                <FontAwesomeIcon icon={faVideo} className="input-icon" /> 
+                    <FontAwesomeIcon icon={faVideo} className="upcoming-input-icon" />
                     <Select<SelectOptionType, false>
                         options={genreOptions}
                         placeholder="All Genres"
@@ -53,6 +82,41 @@ export default function UpcomingMoviesForm() {
                         onChange={(newValue) => handleChange("genre", newValue)}
                         name="genre"
                     />
+                </div>
+                <div className="input-wrapper">
+                    <FontAwesomeIcon icon={faCalendar} className="upcoming-input-icon" />
+                    <Select<SelectOptionType, false>
+                        options={[]}
+                        placeholder="Date Range"
+                        className="dropdown-menu-input"
+                        classNamePrefix="dropdown"
+                        isClearable={true}
+                        value={formData.genre}
+                        onChange={(newValue) => handleChange("genre", newValue)}
+                        name="date"
+                        onMenuOpen={() => setOpen(!open)}
+                    />
+                    {open && (
+                        <div className="date-picker">
+                            <DateRange
+                                editableDateInputs={false}
+                                onChange={(item: RangeKeyDict) => setCalendarState([item.selection])}
+                                moveRangeOnFirstSelection={false}
+                                ranges={calendarState}
+                                className="custom-date-range font-lg-regular"
+                                showMonthAndYearPickers={false}
+                                color="#FDE3E3"
+                                locale={enGB}
+                                rangeColors={["#FDE3E3"]}
+                                dateDisplayFormat="yyyy/mm/dd"
+                            />
+                            <div className="date-range-buttons">
+                                <button className="cancel-button" >Cancel</button>
+                                <button className="apply-button" >Apply</button>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
                 {/* <div className="input-wrapper">
                     <FontAwesomeIcon icon={faClock} className="input-icon" />

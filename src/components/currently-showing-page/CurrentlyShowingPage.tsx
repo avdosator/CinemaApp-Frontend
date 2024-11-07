@@ -184,7 +184,7 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing({movies.length})</h4>
             <CurrentlyShowingForm
                 handleChange={handleChange}
                 handleDateChange={handleDateChange}

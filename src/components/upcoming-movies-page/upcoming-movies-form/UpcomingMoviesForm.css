@@ -100,3 +100,27 @@
     border-radius: 50px !important;
 }
 
+.date-range-buttons {
+    justify-content: flex-end;
+    display: flex;
+    gap: 12px;
+    padding-right: 8px;
+    padding-bottom: 4px;
+}
+
+.date-picker-cancel {
+    padding: 8px 16px;
+    color: #B22222;
+    background-color: #FCFCFD !important;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+}
+
+.date-picker-apply {
+    padding: 8px 16px;
+    color: #FCFCFD;
+    background-color: #B22222 !important;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+}
+

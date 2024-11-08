@@ -106,6 +106,11 @@ export default function UpcomingMoviesPage() {
             venue: data.venue?.value,
             genre: data.genre?.value,
         };
+        if (data.dateRange) {
+            const [startDate, endDate] = data.dateRange.split('/');
+            params.startDate = startDate;
+            params.endDate = endDate;
+        }
         if (data.title) {
             params.title = data.title;
         }

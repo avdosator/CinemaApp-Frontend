@@ -19,22 +19,32 @@ type UpcomingMoviesFormProps = {
     venueOptions?: SelectOptionType[];
 }
 
-export default function UpcomingMoviesForm({ handleChange, handleDateChange, formData, cityOptions, genreOptions, venueOptions }: UpcomingMoviesFormProps) {
-    const [calendarState, setCalendarState] = useState<Range[]>([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection',
-            // color: "#FDE3E3"
-        }
-    ]);
+type IconName = "magnifyingGlass" | "locationPin" | "building" | "video" | "clock" | "calendar" | null;
+
+export default function UpcomingMoviesForm({
+    handleChange,
+    handleDateChange,
+    formData,
+    cityOptions,
+    genreOptions,
+    venueOptions }: UpcomingMoviesFormProps) {
+    const [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection', }]);
     const [open, setOpen] = useState(false);
-    console.log(calendarState);
+
+    const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
+
+    const handleFocus = (iconName: IconName) => {
+        setFocusedIcon(iconName);
+    };
+
+    const handleBlur = () => {
+        setFocusedIcon(null);
+    };
 
     return (
         <form className="font-lg-regular upcoming-movies-form">
-            <div className="input-wrapper">
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="input-icon" />
+            <div className="input-wrapper" onFocus={() => handleFocus("magnifyingGlass")} onBlur={handleBlur}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${focusedIcon === "magnifyingGlass" ? "focused-icon" : ""}`} />
                 <input type="text"
                     className="search-movies-input font-lg-regular"
                     placeholder="Search Movies"
@@ -44,8 +54,8 @@ export default function UpcomingMoviesForm({ handleChange, handleDateChange, for
                 />
             </div>
             <div className="dropdown-menu-inputs">
-                <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faLocationPin} className="upcoming-input-icon" />
+                <div className="input-wrapper" onFocus={() => handleFocus("locationPin")} onBlur={handleBlur}>
+                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${focusedIcon === "locationPin" ? "focused-icon" : ""}`} />
                     <Select<SelectOptionType, false>
                         options={cityOptions}
                         placeholder="All Cities"
@@ -57,8 +67,8 @@ export default function UpcomingMoviesForm({ handleChange, handleDateChange, for
                         name="city"
                     />
                 </div>
-                <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faBuilding} className="upcoming-input-icon" />
+                <div className="input-wrapper" onFocus={() => handleFocus("building")} onBlur={handleBlur}>
+                    <FontAwesomeIcon icon={faBuilding} className={`input-icon ${focusedIcon === "building" ? "focused-icon" : ""}`} />
                     <Select<SelectOptionType, false>
                         options={venueOptions}
                         placeholder="All Cinemas"
@@ -70,8 +80,8 @@ export default function UpcomingMoviesForm({ handleChange, handleDateChange, for
                         name="venue"
                     />
                 </div>
-                <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faVideo} className="upcoming-input-icon" />
+                <div className="input-wrapper" onFocus={() => handleFocus("video")} onBlur={handleBlur}>
+                    <FontAwesomeIcon icon={faVideo} className={`input-icon ${focusedIcon === "video" ? "focused-icon" : ""}`} />
                     <Select<SelectOptionType, false>
                         options={genreOptions}
                         placeholder="All Genres"
@@ -83,8 +93,8 @@ export default function UpcomingMoviesForm({ handleChange, handleDateChange, for
                         name="genre"
                     />
                 </div>
-                <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faCalendar} className="upcoming-input-icon" />
+                <div className="input-wrapper" onFocus={() => handleFocus("calendar")} onBlur={handleBlur}>
+                    <FontAwesomeIcon icon={faCalendar} className={`input-icon ${focusedIcon === "calendar" ? "focused-icon" : ""}`} />
                     <Select<SelectOptionType, false>
                         options={[]}
                         placeholder="Date Range"
@@ -105,10 +115,10 @@ export default function UpcomingMoviesForm({ handleChange, handleDateChange, for
                                 ranges={calendarState}
                                 className="custom-date-range font-lg-regular"
                                 showMonthAndYearPickers={false}
-                                color="#FDE3E3"
+                                // color="#FDE3E3"
                                 locale={enGB}
                                 rangeColors={["#FDE3E3"]}
-                                dateDisplayFormat="yyyy/mm/dd"
+                                dateDisplayFormat="yyyy-mm-dd"
                             />
                             <div className="date-range-buttons">
                                 <button className="cancel-button" >Cancel</button>

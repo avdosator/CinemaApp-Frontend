@@ -2,9 +2,10 @@ import "./CurrentlyShowingForm.css"
 import DatePickerList from "../../shared-components/date-picker/date-picker-list/DatePickerList";
 import Select, { SingleValue } from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faLocationPin, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faLocationPin, faClock, faBuilding, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { SelectOptionType } from "../../../types/SelectOptionType";
 import { CurrentlyShowingFormData } from "../../../types/CurrentlyShowingFormData";
+import { useState } from "react";
 
 type CurrentlyShowingFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
@@ -16,6 +17,8 @@ type CurrentlyShowingFormProps = {
     timeOptions?: SelectOptionType[];
 }
 
+type IconName = "magnifyingGlass" | "locationPin" | "building" | "video" | "clock" | "calendar" | null;
+
 export default function CurrentlyShowingForm({
     handleChange,
     handleDateChange,
@@ -24,13 +27,22 @@ export default function CurrentlyShowingForm({
     genreOptions,
     venueOptions,
     timeOptions }: CurrentlyShowingFormProps) {
+    const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
+
+    const handleFocus = (iconName: IconName) => {
+        setFocusedIcon(iconName);
+    };
+
+    const handleBlur = () => {
+        setFocusedIcon(null);
+    };
 
     return (
         <div className="form-container">
             <div className="currently-showing-form">
                 <form className="font-lg-regular">
-                    <div className="input-wrapper">
-                        <FontAwesomeIcon icon={faMagnifyingGlass} className="input-icon" />
+                    <div className="input-wrapper" onFocus={() => handleFocus("magnifyingGlass")} onBlur={handleBlur}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${focusedIcon === "magnifyingGlass" ? "focused-icon" : ""}`} />
                         <input type="text"
                             className="search-movies-input font-lg-regular"
                             placeholder="Search Movies"
@@ -40,8 +52,8 @@ export default function CurrentlyShowingForm({
                         />
                     </div>
                     <div className="dropdown-menu-inputs">
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className="input-icon" />
+                        <div className="input-wrapper" onFocus={() => handleFocus("locationPin")} onBlur={handleBlur}>
+                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${focusedIcon === "locationPin" ? "focused-icon" : ""}`} />
                             <Select<SelectOptionType, false>
                                 options={cityOptions}
                                 placeholder="All Cities"
@@ -53,8 +65,8 @@ export default function CurrentlyShowingForm({
                                 name="city"
                             />
                         </div>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className="input-icon" />
+                        <div className="input-wrapper" onFocus={() => handleFocus("building")} onBlur={handleBlur}>
+                            <FontAwesomeIcon icon={faBuilding} className={`input-icon ${focusedIcon === "building" ? "focused-icon" : ""}`} />
                             <Select<SelectOptionType, false>
                                 options={venueOptions}
                                 placeholder="All Cinemas"
@@ -66,8 +78,8 @@ export default function CurrentlyShowingForm({
                                 name="venue"
                             />
                         </div>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className="input-icon" />
+                        <div className="input-wrapper" onFocus={() => handleFocus("video")} onBlur={handleBlur}>
+                            <FontAwesomeIcon icon={faVideo} className={`input-icon ${focusedIcon === "video" ? "focused-icon" : ""}`} />
                             <Select<SelectOptionType, false>
                                 options={genreOptions}
                                 placeholder="All Genres"
@@ -79,8 +91,8 @@ export default function CurrentlyShowingForm({
                                 name="genre"
                             />
                         </div>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faClock} className="input-icon" />
+                        <div className="input-wrapper" onFocus={() => handleFocus("clock")} onBlur={handleBlur}>
+                            <FontAwesomeIcon icon={faClock} className={`input-icon ${focusedIcon === "clock" ? "focused-icon" : ""}`} />
                             <Select<SelectOptionType, false>
                                 options={timeOptions}
                                 placeholder="All Projection Times"

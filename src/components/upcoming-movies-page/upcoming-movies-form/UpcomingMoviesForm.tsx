@@ -6,13 +6,13 @@ import { SelectOptionType } from "../../../types/SelectOptionType";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange, Range, RangeKeyDict } from 'react-date-range';
+import { format } from 'date-fns';
 import { useState } from "react";
 import { UpcomingMoviesFormData } from "../../../types/CurrentlyShowingFormData";
-import { enGB } from "date-fns/locale";
 
 type UpcomingMoviesFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
-    handleDateChange: (startDate: string, endDate: string) => void,
+    // handleDateChange: (startDate: string, endDate: string) => void,
     formData: UpcomingMoviesFormData,
     cityOptions?: SelectOptionType[]; // Marked as optional with '?'
     genreOptions?: SelectOptionType[];
@@ -23,15 +23,37 @@ type IconName = "magnifyingGlass" | "locationPin" | "building" | "video" | "cloc
 
 export default function UpcomingMoviesForm({
     handleChange,
-    handleDateChange,
     formData,
     cityOptions,
     genreOptions,
     venueOptions }: UpcomingMoviesFormProps) {
     const [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection', }]);
     const [open, setOpen] = useState(false);
-
     const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
+    const [formattedDateRange, setFormattedDateRange] = useState('');
+
+    const handleApply = () => {
+        const { startDate, endDate } = calendarState[0];
+        if (startDate && endDate) {
+            // const formattedStart = format(startDate, 'yyyy/MM/dd');
+            // const formattedEnd = format(endDate, 'yyyy/MM/dd');
+            const formattedRangeDisplay = `${format(startDate, 'yyyy/MM/dd')} - ${format(endDate, 'yyyy/MM/dd')}`;
+
+            // ISO format for backend, combined into a single string
+            const formattedRangeISO = `${format(startDate, 'yyyy-MM-dd')}/${format(endDate, 'yyyy-MM-dd')}`;
+            setFormattedDateRange(formattedRangeDisplay);
+            handleChange("dateRange", formattedRangeISO);
+        }
+        setOpen(false); // Close the date picker
+    };
+
+    const handleSelectValueChange = (newValue: SingleValue<SelectOptionType>): void => {
+        if (newValue === null) { // Check if cleared
+            handleChange("dateRange", ""); // Clear date range in parent formData
+            setFormattedDateRange(""); // Clear local date range display for placeholder
+        }
+    }
+
 
     const handleFocus = (iconName: IconName) => {
         setFocusedIcon(iconName);
@@ -64,7 +86,6 @@ export default function UpcomingMoviesForm({
                         isClearable={true}
                         value={formData.city}
                         onChange={(newValue) => handleChange("city", newValue)}
-                        name="city"
                     />
                 </div>
                 <div className="input-wrapper" onFocus={() => handleFocus("building")} onBlur={handleBlur}>
@@ -77,7 +98,6 @@ export default function UpcomingMoviesForm({
                         isClearable={true}
                         value={formData.venue}
                         onChange={(newValue) => handleChange("venue", newValue)}
-                        name="venue"
                     />
                 </div>
                 <div className="input-wrapper" onFocus={() => handleFocus("video")} onBlur={handleBlur}>
@@ -90,7 +110,6 @@ export default function UpcomingMoviesForm({
                         isClearable={true}
                         value={formData.genre}
                         onChange={(newValue) => handleChange("genre", newValue)}
-                        name="genre"
                     />
                 </div>
                 <div className="input-wrapper" onFocus={() => handleFocus("calendar")} onBlur={handleBlur}>
@@ -101,10 +120,10 @@ export default function UpcomingMoviesForm({
                         className="dropdown-menu-input"
                         classNamePrefix="dropdown"
                         isClearable={true}
-                        value={formData.genre}
-                        onChange={(newValue) => handleChange("genre", newValue)}
-                        name="date"
-                        onMenuOpen={() => setOpen(!open)}
+                        value={formData.dateRange ? { value: "dateRange", label: formattedDateRange } : null}
+                        onChange={(newValue) => handleSelectValueChange(newValue)}
+                        menuIsOpen={false} // Controls whether the dropdown shows
+                        onMenuOpen={() => setOpen(true)}
                     />
                     {open && (
                         <div className="date-picker">
@@ -115,32 +134,17 @@ export default function UpcomingMoviesForm({
                                 ranges={calendarState}
                                 className="custom-date-range font-lg-regular"
                                 showMonthAndYearPickers={false}
-                                // color="#FDE3E3"
-                                locale={enGB}
                                 rangeColors={["#FDE3E3"]}
-                                dateDisplayFormat="yyyy-mm-dd"
+                                dateDisplayFormat="yyyy/MM/dd"
                             />
                             <div className="date-range-buttons">
-                                <button className="cancel-button" >Cancel</button>
-                                <button className="apply-button" >Apply</button>
+                                <button className="date-picker-cancel font-sm-semibold" onClick={() => setOpen(false)} >Cancel</button>
+                                <button className="date-picker-apply font-sm-semibold" onClick={handleApply} >Apply</button>
                             </div>
                         </div>
                     )}
 
                 </div>
-                {/* <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faClock} className="input-icon" />
-                    <Select<SelectOptionType, false>
-                        options={timeOptions}
-                        placeholder="All Projection Times"
-                        className="dropdown-menu-input"
-                        classNamePrefix="dropdown"
-                        isClearable={true}
-                        value={formData.time}
-                        onChange={(newValue) => handleChange("time", newValue)}
-                        name="time"
-                    />
-                </div> */}
             </div>
         </form>
     )

@@ -45,6 +45,7 @@ export default function UpcomingMoviesForm({
             handleChange("dateRange", formattedRangeISO);
         }
         setOpen(false); // Close the date picker
+        handleBlur();
     };
 
     const handleSelectValueChange = (newValue: SingleValue<SelectOptionType>): void => {
@@ -138,7 +139,7 @@ export default function UpcomingMoviesForm({
                                 dateDisplayFormat="yyyy/MM/dd"
                             />
                             <div className="date-range-buttons">
-                                <button className="date-picker-cancel font-sm-semibold" onClick={() => setOpen(false)} >Cancel</button>
+                                <button className="date-picker-cancel font-sm-semibold" onClick={() => { setOpen(false); handleBlur()}} >Cancel</button>
                                 <button className="date-picker-apply font-sm-semibold" onClick={handleApply} >Apply</button>
                             </div>
                         </div>

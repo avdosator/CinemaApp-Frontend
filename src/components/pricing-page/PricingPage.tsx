@@ -53,7 +53,7 @@ export default function PricingPage() {
                 {pricingData.map((option, index) => (
                     <PricingOption
                         key={index}
-                        option={option}
+                        {...option}
                     />
                 ))}
             </div>

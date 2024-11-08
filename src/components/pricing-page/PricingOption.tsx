@@ -1,8 +1,7 @@
-import type { PricingOptionProps } from "../../types/PricingOption";
+import type { PricingOption } from "../../types/PricingOption";
 import "./PricingOption.css"
 
-export default function PricingOption({ option }: PricingOptionProps) {
-    const {seatType, price, features} = option;
+export default function PricingOption({ seatType, price, features }: PricingOption) {
     const isLoveSeat = seatType === "Love";
 
     return (

@@ -17,9 +17,10 @@
     color:  #667085;
 }
 
+
 .search-movies-input:focus {
-    border-color: #344054 !important;
-    outline: inset 1px #B22222;    
+    border: 1px solid #B22222 !important;
+    outline: none 1px #B22222 !important;
 }
 
 .dropdown-menu-inputs {
@@ -83,6 +84,9 @@
     border-color: #B22222 !important;
 }
 
+.focused-icon {
+    color: #B22222 !important;
+}
 
 @media (max-width: 880px) {
     .dropdown-menu-inputs {

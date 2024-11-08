@@ -21,8 +21,8 @@ export default function UpcomingMoviesPage() {
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
     const PAGE_SIZE: string = "9";
-    const START_DATE: string = calculateDateString(7);
-    const END_DATE: string = calculateDateString(100);
+    const START_DATE: string = calculateDateString(1);
+    const END_DATE: string = calculateDateString(200);
 
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -33,8 +33,7 @@ export default function UpcomingMoviesPage() {
         city: searchParams.get("city") ? { value: searchParams.get("city")!, label: "" } : null,
         venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
         genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
-        startDate: searchParams.get("startDate") ? searchParams.get("startDate")! : START_DATE,
-        endDate: searchParams.get("endDate") ? searchParams.get("endDate")! : END_DATE,
+        dateRange: searchParams.get("dateRange") ? searchParams.get("dateRange")! : ""
     });
 
     useEffect(() => {
@@ -78,15 +77,18 @@ export default function UpcomingMoviesPage() {
         const params: Record<string, string> = {
             page: pageNumber.toString(),
             size: PAGE_SIZE,
-            startDate: formData.startDate,
-            endDate: formData.endDate
+            startDate: START_DATE,
+            endDate: END_DATE
         };
         if (data.title) params.title = data.title;
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
-        if (data.startDate) params.startDate = data.startDate;
-        if (data.endDate) params.endDate = data.endDate;
+        if (data.dateRange) {
+            const [startDate, endDate] = data.dateRange.split("/");
+            params.startDate = startDate;
+            params.endDate = endDate;
+        }
 
         setSearchParams(params);
     };
@@ -96,12 +98,17 @@ export default function UpcomingMoviesPage() {
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
+            startDate: START_DATE,
+            endDate: END_DATE,
             city: data.city?.value,
             venue: data.venue?.value,
             genre: data.genre?.value,
-            startDate: data?.startDate,
-            endDate: data?.endDate
         };
+        if (data.dateRange) {
+            const [startDate, endDate] = data.dateRange.split('/');
+            params.startDate = startDate;
+            params.endDate = endDate;
+        }
         if (data.title) {
             params.title = data.title;
         }
@@ -131,7 +138,7 @@ export default function UpcomingMoviesPage() {
         setPage(0);
         updateSearchParams(formData, 0);
         fetchMovies(formData, 0);
-    }, [formData.city, formData.venue, formData.genre, formData.startDate, formData.endDate, page]);
+    }, [formData.city, formData.venue, formData.genre, formData.dateRange]);
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
@@ -152,39 +159,29 @@ export default function UpcomingMoviesPage() {
         }));
     }
 
-    const handleDateChange = (startDate: string, endDate: string) => {
-        setFormData({ title: "", city: null, venue: null, genre: null, startDate: startDate, endDate: endDate });
-
-        // Reset pagination to first page
-        setPage(0);
-
-        // Fetch movies with only the date filter applied
-        fetchMovies({ title: "", city: null, venue: null, genre: null, startDate: startDate, endDate: endDate }, 0);
-    }
-
-    // Handle "Load More" button click to fetch the next page
     const handleLoadMore = () => {
         const nextPage = page + 1;
         setPage(nextPage);
         fetchMovies(formData, nextPage);
     };
 
-
     return (
         <>
             <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
             <UpcomingMoviesForm
                 handleChange={handleChange}
-                handleDateChange={handleDateChange}
+                // handleDateChange={handleDateChange}
                 formData={formData}
                 cityOptions={cityOptions}
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
             />
             <UpcomingMoviesList movies={movies} />
-            <div className="load-more-btn">
-                <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
-            </div>
+            {!isLastPage && movies.length > 0 && (
+                <div className="load-more-btn">
+                    <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
+                </div>
+            )}
         </>
     )
 }

@@ -137,6 +137,7 @@ export default function UpcomingMoviesForm({
                                 showMonthAndYearPickers={false}
                                 rangeColors={["#FDE3E3"]}
                                 dateDisplayFormat="yyyy/MM/dd"
+                                minDate={new Date(new Date().setDate(new Date().getDate() + 1))}
                             />
                             <div className="date-range-buttons">
                                 <button className="date-picker-cancel font-sm-semibold" onClick={() => { setOpen(false); handleBlur()}} >Cancel</button>

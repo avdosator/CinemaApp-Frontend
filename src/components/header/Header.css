@@ -39,14 +39,8 @@
     border-radius: 4px;
 } */
 
-.navbar-link-item.active {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    letter-spacing: 0.005em;
-    text-align: center;
-    color: #FFFFFF;
-    text-decoration: solid underline #FFFFFF 1px;
+.navbar-link-item.active-link {
+    text-decoration: solid underline 1px;
     box-shadow: 0px 25px 50px -16px #34405429;
 
 }
@@ -80,7 +74,6 @@
 
 .notification-icon {
     fill: #FCFCFD;
-    /* Icon color */
 }
 
 .notification-dot {
@@ -104,13 +97,8 @@
 }
 
 .user-name {
-    font-family: 'Urbanist', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
     color: #FCFCFD;
     margin-right: 2px;
-    letter-spacing: 0.005em;
 }
 
 .dropdown-icon-container {

@@ -19,7 +19,7 @@ import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPrev
 export default function UpcomingMoviesPage() {
     let [searchParams, setSearchParams] = useSearchParams();
     let [movies, setMovies] = useState<Movie[]>([]);
-    let [page, setPage] = useState(0); 
+    let [page, setPage] = useState(0);
     let [isLastPage, setIsLastPage] = useState(false);
     const PAGE_SIZE: string = "9";
     const START_DATE: string = calculateDateString(1);
@@ -176,7 +176,7 @@ export default function UpcomingMoviesPage() {
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
             />
-            {movies.length === 0 ? (<NoMoviesPreview />) : (<UpcomingMoviesList movies={movies} />)}
+            {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date range" />) : (<UpcomingMoviesList movies={movies} />)}
             {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">
                     <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />

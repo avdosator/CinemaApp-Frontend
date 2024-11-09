@@ -203,7 +203,7 @@ export default function CurrentlyShowingPage() {
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>
-            {movies.length === 0 ? (<NoMoviesPreview />) : (<MovieCardBigList movies={movies} />)}
+            {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date" />) : (<MovieCardBigList movies={movies} />)}
             {/* Conditionally render the div with the button */}
             {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">

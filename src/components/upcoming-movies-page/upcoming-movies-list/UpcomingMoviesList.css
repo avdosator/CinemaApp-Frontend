@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    /* column-gap: 0.694%; */
     column-gap: 10px;
     row-gap: 24px;
     box-sizing: border-box;
@@ -12,7 +11,6 @@
 
 .upcoming-movies-list .shared-card {
     border: none !important;
-    /* margin-top: 24px; */
 }
 
 @media screen and (max-width: 1439px) {

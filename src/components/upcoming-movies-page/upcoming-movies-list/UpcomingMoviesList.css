@@ -2,8 +2,29 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    /* column-gap: 0.694%; */
+    column-gap: 10px;
+    row-gap: 24px;
     box-sizing: border-box;
     margin: 24px 0;
-    justify-content: flex-start;
+    justify-content: space-between;
+}
+
+.upcoming-movies-list .shared-card {
+    border: none !important;
+    /* margin-top: 24px; */
+}
+
+.flex-dummy {
+    height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+@media screen and (max-width: 1439px) {
+    .upcoming-movies-list {
+        justify-content: space-around;
+    }
 }

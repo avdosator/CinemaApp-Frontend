@@ -14,7 +14,7 @@
 }
 
 .search-movies-input::placeholder {
-    color:  #667085;
+    color: #667085;
 }
 
 
@@ -44,7 +44,8 @@
 .input-icon {
     position: absolute;
     left: 10px;
-     top: 50%; /* Vertically center the icon */
+    top: 50%;
+    /* Vertically center the icon */
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
@@ -63,7 +64,10 @@
     box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414 !important;
 }
 
-.dropdown__placeholder, .dropdown__dropdown-indicator, .dropdown__option, .dropdown__clear-indicator {
+.dropdown__placeholder,
+.dropdown__dropdown-indicator,
+.dropdown__option,
+.dropdown__clear-indicator {
     color: #667085 !important;
 }
 
@@ -88,13 +92,47 @@
     color: #B22222 !important;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1120px) {
     .dropdown-menu-inputs {
         flex-wrap: wrap;
-        justify-content: center;
     }
-    .dropdown-menu-input {
-        min-width: 180px;
 
+    .dropdown-menu-inputs {
+        align-items: start;
+        flex-direction: row;
+        justify-content: start;
+        column-gap: 0;
+    }
+
+    .input-wrapper {
+        width: 50%;
+    }
+
+    .input-wrapper:first-child {
+        /* Your styles here */
+        width: 100%;
+    }
+
+    .dropdown-menu-inputs .input-wrapper:first-child {
+        width: 50%;
+    }
+
+    /* Hide icon of select element that is below of opened select */
+    .dropdown__control--is-focused {
+        z-index: 3 !important;
+    }
+
+    .dropdown__menu {
+        z-index: 3 !important;
+    }
+
+    .input-wrapper:focus-within .input-icon {
+        z-index: 4 !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .input-wrapper {
+        width: 100% !important;
     }
 }

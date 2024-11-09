@@ -15,14 +15,6 @@
     /* margin-top: 24px; */
 }
 
-.flex-dummy {
-    height: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-
 @media screen and (max-width: 1439px) {
     .upcoming-movies-list {
         justify-content: space-around;

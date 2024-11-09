@@ -14,12 +14,13 @@ import { Venue } from "../../types/Venue";
 import debounce from "lodash.debounce";
 import { SingleValue } from "react-select";
 import UpcomingMoviesForm from "./upcoming-movies-form/UpcomingMoviesForm";
+import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
 
 export default function UpcomingMoviesPage() {
     let [searchParams, setSearchParams] = useSearchParams();
     let [movies, setMovies] = useState<Movie[]>([]);
-    let [page, setPage] = useState(0); // Current page number
-    let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
+    let [page, setPage] = useState(0); 
+    let [isLastPage, setIsLastPage] = useState(false);
     const PAGE_SIZE: string = "9";
     const START_DATE: string = calculateDateString(1);
     const END_DATE: string = calculateDateString(200);
@@ -170,13 +171,12 @@ export default function UpcomingMoviesPage() {
             <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
             <UpcomingMoviesForm
                 handleChange={handleChange}
-                // handleDateChange={handleDateChange}
                 formData={formData}
                 cityOptions={cityOptions}
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
             />
-            <UpcomingMoviesList movies={movies} />
+            {movies.length === 0 ? (<NoMoviesPreview />) : (<UpcomingMoviesList movies={movies} />)}
             {!isLastPage && movies.length > 0 && (
                 <div className="load-more-btn">
                     <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />

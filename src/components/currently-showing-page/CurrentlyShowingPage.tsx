@@ -22,9 +22,8 @@ export default function CurrentlyShowingPage() {
     let [movies, setMovies] = useState<Movie[]>([]);
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
-    const PAGE_SIZE: number = 9;
-    const START_DATE: string = calculateDateString(0);
-    const END_DATE: string = calculateDateString(9);
+    const PAGE_SIZE: string = "9";
+    const END_DATE: string = calculateDateString(10);
 
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -38,7 +37,7 @@ export default function CurrentlyShowingPage() {
         venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
         genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
         time: searchParams.get("time") ? { value: searchParams.get("time")!, label: "" } : null,
-        date: searchParams.get("date") || new Date().toISOString().split('T')[0]
+        date: searchParams.get("selectedDate") || new Date().toISOString().split('T')[0]
     });
 
     useEffect(() => {
@@ -93,15 +92,13 @@ export default function CurrentlyShowingPage() {
         const params: Record<string, string> = {
             page: pageNumber.toString(),
             size: PAGE_SIZE.toString(),
-            startDate: START_DATE,
-            endDate: END_DATE
+            date: data.date || END_DATE
         };
         if (data.title) params.title = data.title;
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
         if (data.time?.value) params.time = data.time.value;
-        if (data.date) params.date = data.date;
 
         setSearchParams(params);
     };
@@ -111,19 +108,17 @@ export default function CurrentlyShowingPage() {
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
-            startDate: START_DATE,
-            endDate: END_DATE,
+            date: data?.date,
             city: data.city?.value,
             venue: data.venue?.value,
             genre: data.genre?.value,
             time: data.time?.value,
-            date: data?.date
         };
         if (data.title) {
             params.title = data.title;
         }
 
-        ApiService.get<PageResponse<Movie>>("/movies", params)
+        ApiService.get<PageResponse<Movie>>("/movies/active", params)
             .then(response => {
                 setMovies(prevMovies =>
                     pageNumber === 0 ? response.content : [...prevMovies, ...response.content]
@@ -148,12 +143,11 @@ export default function CurrentlyShowingPage() {
         setPage(0);
         updateSearchParams(formData, 0);
         fetchMovies(formData, 0);
-    }, [formData.city, formData.venue, formData.genre, formData.time, formData.date, page]);
+    }, [formData.city, formData.venue, formData.genre, formData.time, formData.date]);
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms
         debouncedFetchMovies(formData);
-
     }, [formData.title]);
 
     // Clean up debounced function on unmount
@@ -189,7 +183,7 @@ export default function CurrentlyShowingPage() {
 
     return (
         <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing({movies.length})</h4>
+            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
             <CurrentlyShowingForm
                 handleChange={handleChange}
                 handleDateChange={handleDateChange}
@@ -198,8 +192,6 @@ export default function CurrentlyShowingPage() {
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
                 timeOptions={projectionTimeOptions} />
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : ""}</h4>
-            <CurrentlyShowingForm handleChange={handleChange} handleDateChange={handleDateChange} formData={formData} />
             <div className="font-md-italic-regular date-reminder">
                 Quick reminder that our cinema schedule is on a ten-day update cycle.
             </div>

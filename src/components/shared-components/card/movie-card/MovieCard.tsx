@@ -16,7 +16,7 @@ export default function MovieCard({ id, title, durationInMinutes, genres, photos
                     <div className="shared-card-details font-md-regular">
                         <span>{durationInMinutes} MIN</span>
                         <div className="movie-card-separator"></div>
-                        <span>{genres[0].name[0].toUpperCase() + genres[0].name.slice(1)}</span> {/* capitalize genre string */}
+                        <span className="movie-card-genre">{genres[0].name}</span>
                     </div>
                 </div>
             </div>

@@ -91,7 +91,6 @@ export default function UpcomingMoviesPage() {
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
-
         setSearchParams(params);
     };
 
@@ -106,11 +105,6 @@ export default function UpcomingMoviesPage() {
             venue: data.venue?.value,
             genre: data.genre?.value,
         };
-        if (data.dateRange) {
-            const [startDate, endDate] = data.dateRange.split('/');
-            params.startDate = startDate;
-            params.endDate = endDate;
-        }
         if (data.title) {
             params.title = data.title;
         }

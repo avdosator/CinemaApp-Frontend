@@ -1,5 +1,6 @@
 import { City } from "./City"
 import { Hall } from "./Hall"
+import { Photo } from "./Photo"
 
 export type Venue = {
     id: string,
@@ -8,6 +9,7 @@ export type Venue = {
     streetNumber: string,
     city: City,
     halls?: Hall[],
+    photo: Photo,
     phone: string
     // add more later
 }

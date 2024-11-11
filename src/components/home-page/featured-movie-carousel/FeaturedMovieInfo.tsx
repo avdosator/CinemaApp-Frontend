@@ -11,7 +11,7 @@ type FeaturedMovieInfoProps = {
 
 export default function FeaturedMovieInfo({ index, title, synopsis, genre, photo }: FeaturedMovieInfoProps) {
     return (
-        <div className={`carousel-item ${index === 0 ? "active" : ""}`} data-bs-interval="3000">
+        <div className={`carousel-item ${index === 0 ? "active" : ""}`} data-bs-interval="50000">
             <img src={photo.url} className="d-block w-100 carousel-image" alt="..." />
             <div className="carousel-movie-info">
                 <div className="badge font-md-regular">{genre}</div>

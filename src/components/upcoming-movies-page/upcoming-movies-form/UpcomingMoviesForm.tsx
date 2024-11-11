@@ -9,6 +9,7 @@ import { DateRange, Range, RangeKeyDict } from 'react-date-range';
 import { format } from 'date-fns';
 import { useState } from "react";
 import { UpcomingMoviesFormData } from "../../../types/CurrentlyShowingFormData";
+import { calculateDateString } from "../../../utils/utils";
 
 type UpcomingMoviesFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
@@ -28,29 +29,43 @@ export default function UpcomingMoviesForm({
     genreOptions,
     venueOptions }: UpcomingMoviesFormProps) {
     const [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection', }]);
-    const [open, setOpen] = useState(false);
+    const [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
     const [formattedDateRange, setFormattedDateRange] = useState('');
+    const START_DATE: string = calculateDateString(1);
+    const END_DATE: string = calculateDateString(200);
 
     const handleApply = () => {
         const { startDate, endDate } = calendarState[0];
-        if (startDate && endDate) {
-            // const formattedStart = format(startDate, 'yyyy/MM/dd');
-            // const formattedEnd = format(endDate, 'yyyy/MM/dd');
-            const formattedRangeDisplay = `${format(startDate, 'yyyy/MM/dd')} - ${format(endDate, 'yyyy/MM/dd')}`;
+        console.log(startDate);
+        console.log(endDate);
 
-            // ISO format for backend, combined into a single string
-            const formattedRangeISO = `${format(startDate, 'yyyy-MM-dd')}/${format(endDate, 'yyyy-MM-dd')}`;
-            setFormattedDateRange(formattedRangeDisplay);
-            handleChange("dateRange", formattedRangeISO);
+        if (!startDate || !endDate) {
+            // Display a message, highlight the picker, or simply ignore the "Apply" click
+            alert("Please select both a start and end date.");
+            return;
         }
-        setOpen(false); // Close the date picker
+
+        const formattedRangeDisplay = `${format(startDate, 'yyyy/MM/dd')} - ${format(endDate, 'yyyy/MM/dd')}`;
+        setFormattedDateRange(formattedRangeDisplay);
+
+        // ISO format for `formData` and backend requests
+        const isoStartDate = format(startDate, 'yyyy-MM-dd');
+        const isoEndDate = format(endDate, 'yyyy-MM-dd');
+
+        // Update the parent component's formData with startDate and endDate
+        handleChange("startDate", isoStartDate);
+        handleChange("endDate", isoEndDate);
+
+        setIsDatePickerOpened(false); // Close the date picker
         handleBlur();
     };
 
     const handleSelectValueChange = (newValue: SingleValue<SelectOptionType>): void => {
-        if (newValue === null) { // Check if cleared
-            handleChange("dateRange", ""); // Clear date range in parent formData
+        // when date is cleared, reset date value to defaults
+        if (newValue === null) { 
+            handleChange("startDate", "");
+            handleChange("endDate", "");
             setFormattedDateRange(""); // Clear local date range display for placeholder
         }
     }
@@ -121,12 +136,12 @@ export default function UpcomingMoviesForm({
                         className="dropdown-menu-input"
                         classNamePrefix="dropdown"
                         isClearable={true}
-                        value={formData.dateRange ? { value: "dateRange", label: formattedDateRange } : null}
+                        value={formData.startDate && formData.endDate ? { value: "dateRange", label: formattedDateRange } : null}
                         onChange={(newValue) => handleSelectValueChange(newValue)}
                         menuIsOpen={false} // Controls whether the dropdown shows
-                        onMenuOpen={() => setOpen(true)}
+                        onMenuOpen={() => setIsDatePickerOpened(true)}
                     />
-                    {open && (
+                    {isDatePickerOpened && (
                         <div className="date-picker">
                             <DateRange
                                 editableDateInputs={false}
@@ -140,7 +155,7 @@ export default function UpcomingMoviesForm({
                                 minDate={new Date(new Date().setDate(new Date().getDate() + 1))}
                             />
                             <div className="date-range-buttons">
-                                <button className="date-picker-cancel font-sm-semibold" onClick={() => { setOpen(false); handleBlur()}} >Cancel</button>
+                                <button className="date-picker-cancel font-sm-semibold" onClick={() => { setIsDatePickerOpened(false); handleBlur() }} >Cancel</button>
                                 <button className="date-picker-apply font-sm-semibold" onClick={handleApply} >Apply</button>
                             </div>
                         </div>

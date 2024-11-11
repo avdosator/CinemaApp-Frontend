@@ -21,7 +21,7 @@ export default function UpcomingMoviesPage() {
     let [movies, setMovies] = useState<Movie[]>([]);
     let [page, setPage] = useState(0);
     let [isLastPage, setIsLastPage] = useState(false);
-    const PAGE_SIZE: string = "9";
+    const PAGE_SIZE: string = "12";
     const START_DATE: string = calculateDateString(1);
     const END_DATE: string = calculateDateString(200);
 
@@ -34,7 +34,9 @@ export default function UpcomingMoviesPage() {
         city: searchParams.get("city") ? { value: searchParams.get("city")!, label: "" } : null,
         venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
         genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
-        dateRange: searchParams.get("dateRange") ? searchParams.get("dateRange")! : ""
+        // dateRange: searchParams.get("dateRange") ? searchParams.get("dateRange")! : "",
+         startDate: searchParams.get("startDate") ? searchParams.get("startDate")! : "",
+         endDate: searchParams.get("startDate") ? searchParams.get("endDate")! : ""
     });
 
     useEffect(() => {
@@ -78,19 +80,14 @@ export default function UpcomingMoviesPage() {
         const params: Record<string, string> = {
             page: pageNumber.toString(),
             size: PAGE_SIZE,
-            startDate: START_DATE,
-            endDate: END_DATE
+            startDate: data.startDate || START_DATE,
+            endDate:data.endDate || END_DATE
         };
         if (data.title) params.title = data.title;
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
-        if (data.dateRange) {
-            const [startDate, endDate] = data.dateRange.split("/");
-            params.startDate = startDate;
-            params.endDate = endDate;
-        }
-
+        
         setSearchParams(params);
     };
 
@@ -99,22 +96,17 @@ export default function UpcomingMoviesPage() {
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
-            startDate: START_DATE,
-            endDate: END_DATE,
+            startDate: data.startDate || START_DATE,
+            endDate: data.endDate || END_DATE,
             city: data.city?.value,
             venue: data.venue?.value,
             genre: data.genre?.value,
         };
-        if (data.dateRange) {
-            const [startDate, endDate] = data.dateRange.split('/');
-            params.startDate = startDate;
-            params.endDate = endDate;
-        }
         if (data.title) {
             params.title = data.title;
         }
 
-        ApiService.get<PageResponse<Movie>>("/movies", params)
+        ApiService.get<PageResponse<Movie>>("/movies/upcoming", params)
             .then(response => {
                 setMovies(prevMovies =>
                     pageNumber === 0 ? response.content : [...prevMovies, ...response.content]
@@ -139,7 +131,7 @@ export default function UpcomingMoviesPage() {
         setPage(0);
         updateSearchParams(formData, 0);
         fetchMovies(formData, 0);
-    }, [formData.city, formData.venue, formData.genre, formData.dateRange]);
+    }, [formData.city, formData.venue, formData.genre, formData.startDate, formData.endDate]);
 
     useEffect(() => {
         // On title change call fetchMovies after 500ms

@@ -15,6 +15,7 @@ import debounce from "lodash.debounce";
 import { SingleValue } from "react-select";
 import UpcomingMoviesForm from "./upcoming-movies-form/UpcomingMoviesForm";
 import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
+import { format } from "date-fns";
 
 export default function UpcomingMoviesPage() {
     let [searchParams, setSearchParams] = useSearchParams();
@@ -34,10 +35,13 @@ export default function UpcomingMoviesPage() {
         city: searchParams.get("city") ? { value: searchParams.get("city")!, label: "" } : null,
         venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
         genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
-        // dateRange: searchParams.get("dateRange") ? searchParams.get("dateRange")! : "",
-         startDate: searchParams.get("startDate") ? searchParams.get("startDate")! : "",
-         endDate: searchParams.get("startDate") ? searchParams.get("endDate")! : ""
+        startDate: searchParams.get("startDate") ? searchParams.get("startDate")! : "",
+        endDate: searchParams.get("startDate") ? searchParams.get("endDate")! : ""
     });
+
+    // Determine the initial `formattedDateRange` to pass to `UpcomingMoviesForm`
+    const initialFormattedDateRange = formData.startDate && formData.endDate ?
+        `${format(new Date(formData.startDate), 'yyyy/MM/dd')} - ${format(new Date(formData.endDate), 'yyyy/MM/dd')}` : "";
 
     useEffect(() => {
         Promise.all([
@@ -81,13 +85,13 @@ export default function UpcomingMoviesPage() {
             page: pageNumber.toString(),
             size: PAGE_SIZE,
             startDate: data.startDate || START_DATE,
-            endDate:data.endDate || END_DATE
+            endDate: data.endDate || END_DATE
         };
         if (data.title) params.title = data.title;
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
-        
+
         setSearchParams(params);
     };
 
@@ -167,6 +171,8 @@ export default function UpcomingMoviesPage() {
                 cityOptions={cityOptions}
                 genreOptions={genreOptions}
                 venueOptions={venueOptions}
+                initialFormattedDateRange={initialFormattedDateRange}
+                
             />
             {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date range" />) : (<UpcomingMoviesList movies={movies} />)}
             {!isLastPage && movies.length > 0 && (

@@ -7,7 +7,7 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange, Range, RangeKeyDict } from 'react-date-range';
 import { format } from 'date-fns';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UpcomingMoviesFormData } from "../../../types/CurrentlyShowingFormData";
 import { calculateDateString } from "../../../utils/utils";
 
@@ -15,9 +15,10 @@ type UpcomingMoviesFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
     // handleDateChange: (startDate: string, endDate: string) => void,
     formData: UpcomingMoviesFormData,
-    cityOptions?: SelectOptionType[]; // Marked as optional with '?'
-    genreOptions?: SelectOptionType[];
-    venueOptions?: SelectOptionType[];
+    cityOptions?: SelectOptionType[], // Marked as optional with '?'
+    genreOptions?: SelectOptionType[],
+    venueOptions?: SelectOptionType[],
+    initialFormattedDateRange: string,
 }
 
 type IconName = "magnifyingGlass" | "locationPin" | "building" | "video" | "clock" | "calendar" | null;
@@ -27,13 +28,16 @@ export default function UpcomingMoviesForm({
     formData,
     cityOptions,
     genreOptions,
-    venueOptions }: UpcomingMoviesFormProps) {
+    venueOptions,
+    initialFormattedDateRange }: UpcomingMoviesFormProps) {
     const [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection', }]);
     const [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
-    const [formattedDateRange, setFormattedDateRange] = useState('');
-    const START_DATE: string = calculateDateString(1);
-    const END_DATE: string = calculateDateString(200);
+    const [formattedDateRange, setFormattedDateRange] = useState(initialFormattedDateRange);
+
+    useEffect(() => {
+        setFormattedDateRange(initialFormattedDateRange); // Set initial display value if range is set
+    }, [initialFormattedDateRange]);
 
     const handleApply = () => {
         const { startDate, endDate } = calendarState[0];
@@ -63,7 +67,7 @@ export default function UpcomingMoviesForm({
 
     const handleSelectValueChange = (newValue: SingleValue<SelectOptionType>): void => {
         // when date is cleared, reset date value to defaults
-        if (newValue === null) { 
+        if (newValue === null) {
             handleChange("startDate", "");
             handleChange("endDate", "");
             setFormattedDateRange(""); // Clear local date range display for placeholder
@@ -136,7 +140,7 @@ export default function UpcomingMoviesForm({
                         className="dropdown-menu-input"
                         classNamePrefix="dropdown"
                         isClearable={true}
-                        value={formData.startDate && formData.endDate ? { value: "dateRange", label: formattedDateRange } : null}
+                        value={formattedDateRange ? { value: "dateRange", label: formattedDateRange } : null}
                         onChange={(newValue) => handleSelectValueChange(newValue)}
                         menuIsOpen={false} // Controls whether the dropdown shows
                         onMenuOpen={() => setIsDatePickerOpened(true)}

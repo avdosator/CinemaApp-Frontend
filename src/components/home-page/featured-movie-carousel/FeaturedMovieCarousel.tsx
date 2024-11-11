@@ -17,14 +17,18 @@ export default function FeaturedMovieCarousel({ movies }: { movies: Movie[] }) {
                 ))}
             </div>
             <div className="carousel-inner">
-                {movies.map((movie, index) => (
-                    <FeaturedMovieInfo key={index}
-                        index={index}
-                        title={movie.title}
-                        synopsis={movie.synopsis}
-                        genre={movie.genres[0].name}
-                        photo={movie.photos[0]} />
-                ))}
+                {movies.map((movie, index) => {
+                    const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
+                    return (
+                        <FeaturedMovieInfo key={index}
+                            index={index}
+                            title={movie.title}
+                            synopsis={movie.synopsis}
+                            genre={movie.genres[0].name}
+                            photo={coverPhoto!} />
+                    )
+
+                })}
             </div>
         </div>
     )

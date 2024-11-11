@@ -10,6 +10,7 @@ export type Movie = {
     pgRating: string,
     durationInMinutes: number,
     synopsis: string,
+    coverPhotoId: string,
     genres: Genre[],
     projections: Projection[],
     photos: Photo[]

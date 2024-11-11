@@ -1,0 +1,15 @@
+.time-badge {
+    background-color: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414;
+    color: #1D2939;
+    padding: 12px;
+}
+
+.time-badge.selected {
+    background-color:  #B22222;
+    border: 1px solid #B22222;
+    color: #FCFCFD;
+
+}

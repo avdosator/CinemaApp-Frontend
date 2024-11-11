@@ -34,16 +34,21 @@
     box-shadow: 0px 25px 50px -16px #34405429;
 }
 
-.navbar-link-item:hover {
-    /* background-color: rgba(255, 255, 255, 0.1); */
+/* .navbar-link-item:hover {
+    /* background-color: rgba(255, 255, 255, 0.1); 
     border-radius: 4px;
-}
+} */
 
 .navbar-link-item.active {
-    font-weight: 700;
-    /* background-color: #b4b6ba1a; */
-    /* text-decoration: solid underline #FFFFFF 1px; */
-    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: solid underline #FFFFFF 1px;
+    box-shadow: 0px 25px 50px -16px #34405429;
+
 }
 
 .navbar-actions {
@@ -148,7 +153,8 @@
         /* Adjust based on navbar height */
         width: 100%;
         background-color: #1D2939;
-        z-index: 10; /* Add this to ensure it appears above the banner */
+        z-index: 10;
+        /* Add this to ensure it appears above the banner */
     }
 
     .dropdown-link-item {

@@ -1,0 +1,16 @@
+.date-reminder {
+    color: #667085;
+    margin: 16px 0;
+}
+
+.currently-showing-caption {
+    margin: 40px 0px 24px 0px;
+    text-align: left;
+    color: #1D2939;
+}
+
+.load-more-btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}

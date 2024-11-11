@@ -1,0 +1,10 @@
+.tertiary-btn-lg {
+    /* height: 48px; */
+    background-color: inherit;
+    color: #B22222;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    text-decoration: underline 1px solid;
+    align-self: center;
+}

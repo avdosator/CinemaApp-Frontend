@@ -18,15 +18,13 @@ export default function FeaturedMovieCarousel({ movies }: { movies: Movie[] }) {
             </div>
             <div className="carousel-inner">
                 {movies.map((movie, index) => (
-                    <FeaturedMovieInfo key={index} index={index} title={movie.title} synopsis={movie.synopsis} genre={movie.genres[0].name}/>
+                    <FeaturedMovieInfo key={index}
+                        index={index}
+                        title={movie.title}
+                        synopsis={movie.synopsis}
+                        genre={movie.genres[0].name}
+                        photo={movie.photos[0]} />
                 ))}
-
-                {/* <div className="carousel-item" data-bs-interval="1000">
-                    <img src="https://placehold.co/1440x809" className="d-block w-100" alt="..." />
-                </div>
-                <div className="carousel-item" data-bs-interval="1000">
-                    <img src="https://placehold.co/1440x811" className="d-block w-100" alt="..." />
-                </div> */}
             </div>
         </div>
     )

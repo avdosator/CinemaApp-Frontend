@@ -5,13 +5,14 @@ import PaginationSmall from "../pagination/PaginationSmall"
 import "./CardList.css"
 import { Venue } from "../../../types/Venue";
 import { Movie } from "../../../types/Movie";
+import { Link } from "react-router-dom";
 
-export default function CardList<T extends Movie | Venue>({ heading, elements, CardComponent }: CardList<T>) {
+export default function CardList<T extends Movie | Venue>({ heading, elements, route, CardComponent }: CardList<T>) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 4;
     const totalItems = elements.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const currentStart = (currentPage - 1) * itemsPerPage + 1;
+    const currentStart = totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
     const currentEnd = Math.min(currentPage * itemsPerPage, totalItems);
     let lastPageStyle = currentEnd === totalItems && (totalItems % 4) > 0 ? { justifyContent: "start", gap: "10px" } : {};
 
@@ -31,7 +32,7 @@ export default function CardList<T extends Movie | Venue>({ heading, elements, C
                     <section className="card-list-content">
                         <div className="card-list-heading">
                             <h2 className="font-heading-h4">{heading}</h2>
-                            <a className="font-lg-semibold" href="">See All</a>
+                            <Link className="font-lg-semibold" to={route}>See All</Link>
                         </div>
                         <div className="card-list" style={lastPageStyle} >
                             {displayedItems.map(item => (

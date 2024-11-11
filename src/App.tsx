@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import HomePage from './components/home-page/HomePage';
 import AboutUsPage from './components/about-us-page/AboutUsPage';
 import PricingPage from './components/pricing-page/PricingPage';
+import CurrentlyShowingPage from './components/currently-showing-page/CurrentlyShowingPage';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/home' element={<HomePage />} />
+            <Route path='/currently-showing' element={<CurrentlyShowingPage />} />
             <Route path='/about' element={<AboutUsPage />} />
             <Route path='/pricing' element={<PricingPage />} />
           </Routes>

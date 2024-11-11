@@ -1,19 +1,17 @@
+import { Genre } from "./Genre"
+import { Photo } from "./Photo"
+import { Projection } from "./Projection"
+
 export type Movie = {
     id: string,
     title: string,
+    language: string,
+    director: string,
+    pgRating: string,
     durationInMinutes: number,
     synopsis: string,
-    genres: [
-        {
-            id: string,
-            name: string
-        }
-    ],
-    projections: [
-        {
-            id: string,
-            status: string
-        }
-    ]
+    genres: Genre[],
+    projections: Projection[],
+    photos: Photo[]
     // add other props
 }

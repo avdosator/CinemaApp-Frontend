@@ -1,0 +1,15 @@
+.date-picker-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+@media screen and (max-width: 1430px) {
+    .date-picker-list {
+        justify-content: flex-start;
+        gap: 16px;
+        justify-content: center;
+    }
+
+}

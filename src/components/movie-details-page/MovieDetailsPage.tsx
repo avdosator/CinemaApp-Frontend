@@ -1,3 +1,5 @@
+import PaginationSmall from "../shared-components/pagination/PaginationSmall";
+
 export default function MovieDetailsPage() {
     return (
         <div>
@@ -22,15 +24,16 @@ export default function MovieDetailsPage() {
                     <div>
                         genres.map(genre = (GenreBadge) )
                     </div>
-                    <p className="movie-synopsis">Synopsis</p>
+                    <p className="movie-synopsis font-lg-regular" style={{color: "#1D2939"}}>Synopsis</p>
                     <div className="movie-director">
                         Director
                     </div>
-                    <div className="writers-container">
-                        Writers
+                    <div className="writers-container font-lg-regular">
+                        <span style={{color: "667085"}}>Writers:</span>
+                        <span style={{ color: "#1D2939"}}> James Cameron, Cameron James</span>
                     </div>
                     <div className="actors-container">
-                        <h3>Cast</h3>
+                        <h6 className="font-heading-h6" style={{color: "#667085"}}>Cast</h6>
                         <div>Actors.map</div>
                     </div>
                 </div>
@@ -39,12 +42,14 @@ export default function MovieDetailsPage() {
                 </div>
             </section>
             <section className="movie-rating-container">
-                <h3>Rating</h3>
+                <h6 className="font-heading-h6" style={{color: "#667085"}}>Rating</h6>
                 <div>imdb rating badge</div>
                 <div>rt rating badge</div>
             </section>
             <section className="movie-card-small-list">
-
+                <h5 className="font-heading-h6" style={{color: "#1D2939"}}>See also</h5>
+                <div>cardlist</div>
+                <PaginationSmall />
             </section>
         </div>
     )

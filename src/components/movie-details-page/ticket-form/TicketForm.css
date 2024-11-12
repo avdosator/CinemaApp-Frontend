@@ -1,13 +1,4 @@
 .ticket-form-container {
-    /* width: 620px;
-    height: 562px; */
-    color: #FCFCFD;
-    border: 1px solid #E4E7EC;
-    border-radius: 16px;
-    box-shadow: 0px 25px 50px -16px #34405429;
-}
-
-.ticket-form-container {
     gap: 4px;
 }
 

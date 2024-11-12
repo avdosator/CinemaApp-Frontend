@@ -1,8 +1,11 @@
-export default function MovieCardSmall() {
+import { Movie } from "../../../../types/Movie";
+
+export default function MovieCardSmall({movie}: {movie: Movie}) {
+    const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
     return (
         <div className="movie-card-small">
-            <img src="#" alt="" className="movie-card-small-img" />
-            <h5 className="font-lg-semibold" style={{color: "#1D2939"}}>Avatar</h5>
+            <img src={coverPhoto?.url} alt="" className="movie-card-small-img" />
+            <h5 className="font-lg-semibold" style={{color: "#1D2939"}}>{movie.title}</h5>
         </div>
     )
 }

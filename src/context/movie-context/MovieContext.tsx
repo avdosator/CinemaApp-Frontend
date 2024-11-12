@@ -23,7 +23,7 @@ export default function MovieProvider({ children }: { children: ReactNode }) {
 
 export function useActiveMovies(): Movie[] | undefined {
     const context = useContext(ActiveMoviesContext);
-    if (!context) {
+    if (context === undefined) {
         throw new Error("useMovies must be used within a CategoryProvider");
     }
     return context;

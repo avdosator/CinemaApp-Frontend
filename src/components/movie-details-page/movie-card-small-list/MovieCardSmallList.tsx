@@ -4,9 +4,10 @@ import { Movie } from "../../../types/Movie";
 import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import PaginationSmall from "../../shared-components/pagination/PaginationSmall";
+import { useActiveMovies } from "../../../context/movie-context/MovieContext";
 
 export default function MovieCardSmallList() {
-    const [movies, setMovies] = useState<Movie[]>([]);
+    const [movies, setMovies] = useState<Movie[] | undefined>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const totalItems = movies.length;
@@ -15,11 +16,7 @@ export default function MovieCardSmallList() {
     const currentEnd = Math.min(currentPage * itemsPerPage, totalItems);
     let lastPageStyle = currentEnd === totalItems && (totalItems % 4) > 0 ? { justifyContent: "start", gap: "10px" } : {};
 
-    useEffect(() => {
-        ApiService.get<PageResponse<Movie>>("/movies/active")
-            .then(response => setMovies(response.content))
-            .catch(error => console.error("Error fetching data:", error));
-    }, []);
+    setMovies(useActiveMovies()?.content);
 
     const handleNextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);

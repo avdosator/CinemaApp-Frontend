@@ -3,26 +3,26 @@ import { PageResponse } from "../../types/PageResponse"
 import { Movie } from "../../types/Movie"
 import ApiService from "../../service/ApiService";
 
-const MovieContext = createContext<PageResponse<Movie> | undefined>(undefined);
+const ActiveMoviesContext = createContext<Movie[] | undefined>(undefined);
 
 export default function MovieProvider({ children }: { children: ReactNode }) {
-    let [movies, setMovies] = useState<PageResponse<Movie> | undefined>(undefined);
+    let [movies, setMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
         ApiService.get<PageResponse<Movie>>("/movies/active")
-            .then(response => setMovies(response))
+            .then(response => setMovies(response.content))
             .catch(error => console.error("Error fetching data:", error));
     }, [])
 
     return (
-        <MovieContext.Provider value= { movies } >
-        { children }
-        </MovieContext.Provider >
+        <ActiveMoviesContext.Provider value={movies} >
+            {children}
+        </ActiveMoviesContext.Provider >
     )
 }
 
-export function useMovies(): PageResponse<Movie> | undefined {
-    const context = useContext(MovieContext);
+export function useActiveMovies(): Movie[] | undefined {
+    const context = useContext(ActiveMoviesContext);
     if (!context) {
         throw new Error("useMovies must be used within a CategoryProvider");
     }

@@ -8,8 +8,8 @@ export default function MovieRatingBadge({ rating, label }: { rating: number, la
             <FontAwesomeIcon icon={faStarRegular} />
             </div>
             <div className="movie-rating-info">
-                <div className="font-md-semibold" style={{ color: "#101828" }}>rating</div>
-                <div className="font-sm-regular" style={{ color: "#667085" }}>label</div>
+                <div className="font-md-semibold" style={{ color: "#101828" }}>{rating}</div>
+                <div className="font-sm-regular" style={{ color: "#667085" }}>{label}</div>
             </div>
         </div>
     )

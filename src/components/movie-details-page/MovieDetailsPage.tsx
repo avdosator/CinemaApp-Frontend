@@ -6,6 +6,7 @@ import TicketForm from "./ticket-form/TicketForm";
 import { useEffect, useState } from "react";
 import { Movie } from "../../types/Movie";
 import ApiService from "../../service/ApiService";
+import GenreBadge from "../shared-components/genre-badge/GenreBadge";
 
 export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();
@@ -32,20 +33,21 @@ export default function MovieDetailsPage() {
             </section>
             <section className="movie-info-ticket-container">
                 <div className="movie-info-container">
-                    <h4 className="font-heading-h4" style={{ color: "#1D2939" }}>Avatar</h4>
+                    <h4 className="font-heading-h4" style={{ color: "#1D2939" }}>{movie?.title}</h4>
                     <div className="font-lg-regular" style={{ color: "#1D2939" }}>
-                        <span>PG rating</span>
+                        <span>{movie?.pgRating}</span>
                         <VerticalDivider />
-                        <span>language</span>
+                        <span>{movie?.language}</span>
                         <VerticalDivider />
-                        <span>duration</span>
+                        <span>{`${movie?.durationInMinutes} Min`}</span>
                         <VerticalDivider />
-                        <span>Projection date: yyyy/MM/dd - yyyy/MM/dd</span>
+                        <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
                     </div>
                     <div>
-                        genres.map(genre = (GenreBadge) )
+                        {movie?.genres.map(genre => (<GenreBadge key={genre.id} label={genre.name} />))}
                     </div>
                     <p className="movie-synopsis font-lg-regular" style={{ color: "#1D2939" }}>
+                        {movie?.synopsis}
                         Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what
                         was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home. Several years
                         after the Na'vi repelled the RDA invasion Jake Sully and his family are living on Pandora. Things seem peaceful but
@@ -53,10 +55,10 @@ export default function MovieDetailsPage() {
                     </p>
                     <div className="movie-director" style={{ color: "#667085" }}>
                         Director
-                        <span style={{ color: "#1D2939" }}>Director name</span>
+                        <span style={{ color: "#1D2939" }}>{movie?.director}</span>
                     </div>
                     <div className="writers-container font-lg-regular" style={{ color: "667085" }}>
-                        Writers: writers.map
+                        Writers:
                         <span style={{ color: "#1D2939" }}> James Cameron, Cameron James</span>
                     </div>
                     <div className="actors-container">

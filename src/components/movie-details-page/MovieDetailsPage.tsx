@@ -38,7 +38,9 @@ export default function MovieDetailsPage() {
                         <div>Actors.map(div actor)</div>
                     </div>
                 </div>
-                <TicketForm />
+                <div className="ticket-container">
+                    <TicketForm />
+                </div>
             </section>
             <section className="movie-rating-container">
                 <h6 className="font-heading-h6" style={{ color: "#667085" }}>Rating</h6>

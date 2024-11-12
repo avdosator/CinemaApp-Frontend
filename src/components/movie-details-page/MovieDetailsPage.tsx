@@ -1,9 +1,24 @@
+import { useParams } from "react-router-dom";
 import VerticalDivider from "../shared-components/divider/VerticalDivider";
-import PaginationSmall from "../shared-components/pagination/PaginationSmall";
+import MovieCardSmallList from "./movie-card-small-list/MovieCardSmallList";
 import MovieRatingBadge from "./movie-rating-badge/MovieRatingBadge";
 import TicketForm from "./ticket-form/TicketForm";
+import { useEffect, useState } from "react";
+import { Movie } from "../../types/Movie";
+import ApiService from "../../service/ApiService";
 
 export default function MovieDetailsPage() {
+    const { id } = useParams<{ id: string }>();
+    const [movie, setMovie] = useState<Movie | null>(null);
+
+    useEffect(() => {
+        if (id) {
+            ApiService.get<Movie>(`/movies/${id}`)
+                .then(response => setMovie(response))
+                .catch(error => console.error("Error fetching movie", error));
+        }
+    }, [id]);
+
     return (
         <div className="movie-details">
             <h5 className="font-heading-h5" style={{ color: "#1D2939" }}>Movie Details</h5>
@@ -60,10 +75,10 @@ export default function MovieDetailsPage() {
                 <MovieRatingBadge rating={9.5} label="IMDB Rating" />
                 <MovieRatingBadge rating={8.2} label="Rotten Tomatoes" />
             </section>
-            <section className="movie-card-small-list">
-                <h5 className="font-heading-h6" style={{ color: "#1D2939" }}>See also</h5>
-                <div>cardlist</div>
-                <PaginationSmall />
+            <section className="">
+
+                <MovieCardSmallList />
+
             </section>
         </div>
     )

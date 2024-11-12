@@ -22,6 +22,7 @@ export default function DatePickerList({pickDate, selectedDate}: DatePickerListP
         <div className="date-picker-list">
             {dates.map((item, index) => (
                 <DatePickerBtn key={index}
+                 size="large"
                  date={item.displayDate} 
                  day={item.dayLabel} 
                  pickDate={() => pickDate(item.isoDate) }

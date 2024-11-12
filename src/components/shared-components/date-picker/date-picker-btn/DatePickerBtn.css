@@ -1,4 +1,4 @@
-.date-picker-btn {
+.date-picker-btn-large {
     padding: 16px 32px;
     background-color: #FFFFFF;
     border: 1px solid #E4E7EC;
@@ -10,6 +10,10 @@
     align-items: center;
 }
 
+.date-picker-btn-small {
+    
+}
+
 .btn-date {
     color: #1D2939;
 }
@@ -18,7 +22,7 @@
     color: #667085;
 }
 
-.date-picker-btn.selected {
+.date-picker-btn-lg.selected {
     background-color: #B22222;
 }
 

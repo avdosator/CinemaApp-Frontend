@@ -1,0 +1,6 @@
+.vertical-divider {
+    height: 0px;
+    opacity: 0px;
+    rotate: -90deg;
+    align-self: center;
+}

@@ -6,3 +6,23 @@
     border-radius: 16px;
     box-shadow: 0px 25px 50px -16px #34405429;
 }
+
+.ticket-form-container {
+    gap: 4px;
+}
+
+.ticket-btns button {
+    width: 278px;
+    border-radius: 8px;
+    padding: 12px 20px;
+}
+
+.ticket-btn-reserve {
+    border: 1px solid #B22222;
+    color: #B22222;
+}
+
+.ticket-btn-buy {
+    background-color: #B22222;
+    color: #FCFCFD;
+}

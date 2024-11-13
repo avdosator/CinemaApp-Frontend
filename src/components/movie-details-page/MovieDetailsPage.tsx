@@ -37,7 +37,7 @@ export default function MovieDetailsPage() {
                     <section className="movie-info-ticket-container">
                         <div className="movie-info-container">
                             <h4 className="font-heading-h4" style={{ color: "#1D2939" }}>{movie?.title}</h4>
-                            <div className="font-lg-regular" style={{ color: "#1D2939" }}>
+                            <div className="font-lg-regular basic-movie-info">
                                 <span>{movie?.pgRating}</span>
                                 <VerticalDivider />
                                 <span>{movie?.language}</span>
@@ -46,7 +46,7 @@ export default function MovieDetailsPage() {
                                 <VerticalDivider />
                                 <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
                             </div>
-                            <div>
+                            <div className="movie-genres-container">
                                 {movie?.genres.map(genre => (<GenreBadge key={genre.id} label={genre.name} />))}
                             </div>
                             <p className="movie-synopsis font-lg-regular" style={{ color: "#1D2939" }}>
@@ -57,8 +57,8 @@ export default function MovieDetailsPage() {
                                 the RDA has other plans, invading and capturing Pandora. Sully forms a guerrilla group to try to expel the invaders.
                             </p>
                             <div className="movie-director" style={{ color: "#667085" }}>
-                                Director
-                                <span style={{ color: "#1D2939" }}>{movie?.director}</span>
+                                Director: 
+                                <span style={{ color: "#1D2939" }}>{ movie?.director}</span>
                             </div>
                             <div className="writers-container font-lg-regular" style={{ color: "#667085" }}>
                                 Writers: {movie?.writers.map((writer, index) => (

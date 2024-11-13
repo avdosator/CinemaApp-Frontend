@@ -50,6 +50,7 @@
 }
 
 .movie-info-ticket-container {
+    margin: 36px 0px 16px 0px;
     width: 100%;
     display: flex;
     gap: 16px;
@@ -62,8 +63,31 @@
     align-items: start;
 }
 
+.basic-movie-info {
+    display: flex;
+    color:#1D2939;
+    /* gap: 12px; */
+}
+
+.movie-synopsis {
+    margin-top: 24px;
+    text-align: start;
+    margin-bottom: 0px;
+}
+
+.movie-genres-container {
+    margin-top: 14px;
+    display: flex;
+    gap: 16px;
+}
+
 .movie-director {
+    margin-top: 24px;
     color: #667085;
+}
+
+.writers-container {
+    margin-top: 14px;
 }
 
 .ticket-container {

@@ -28,7 +28,7 @@ export default function MovieDetailsPage() {
 
                 </div>
                 <div className="movie-photos-container">
-
+                    {movie?.photos.map(photo => (<img src={photo.url}></img>))}
                 </div>
             </section>
             <section className="movie-info-ticket-container">
@@ -57,9 +57,12 @@ export default function MovieDetailsPage() {
                         Director
                         <span style={{ color: "#1D2939" }}>{movie?.director}</span>
                     </div>
-                    <div className="writers-container font-lg-regular" style={{ color: "667085" }}>
-                        Writers:
-                        <span style={{ color: "#1D2939" }}> James Cameron, Cameron James</span>
+                    <div className="writers-container font-lg-regular" style={{ color: "#667085" }}>
+                        Writers: {movie?.writers.map((writer, index) => (
+                            (<span key={index} style={{ color: "#1D2939" }}>
+                                {writer}{index < movie.writers.length - 1 ? ', ' : ''}
+                            </span>)
+                        ))}
                     </div>
                     <div className="actors-container">
                         <VerticalDivider width="24px" border="1.5px solid #B22222" />

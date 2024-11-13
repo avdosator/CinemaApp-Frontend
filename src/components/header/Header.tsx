@@ -24,12 +24,12 @@ export default function Header() {
                     </button>
                     <div className="navbar-links">
                         <NavLink
-                            to="/currently-showing"
+                            to="/movies/currently-showing"
                             className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
                             Currently Showing
                         </NavLink>
                         <NavLink
-                            to="/upcoming-movies"
+                            to="/movies/upcoming"
                             className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
                             Upcoming Movies
                         </NavLink>

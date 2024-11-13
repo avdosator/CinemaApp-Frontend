@@ -9,7 +9,7 @@ export default function MovieCard({ id, title, durationInMinutes, genres, photos
         title = title.slice(0, 24) + "...";
     }
     return (
-        <Link to={`/movies/${id}`}>
+        <Link to={`/movies/${id}`} className="no-style-link">
             <div className="shared-card">
                 <img src={photos[0].url} alt="Movie Poster" className="shared-card-image" />
                 <div className="shared-card-content">

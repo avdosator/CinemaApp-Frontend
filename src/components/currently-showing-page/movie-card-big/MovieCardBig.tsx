@@ -21,7 +21,7 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
     const formattedDate = latestEndDate.toString().split("-").reverse().join(".");
 
     return (
-        <Link to={`/movies/${movie.id}`}>
+        <Link to={`/movies/${movie.id}`} className="no-style-link">
             <div className="movie-card-big">
                 <section className="movie-card-big-left">
                     <img src={movie.photos[0].url} alt="" className="movie-card-big-img" />

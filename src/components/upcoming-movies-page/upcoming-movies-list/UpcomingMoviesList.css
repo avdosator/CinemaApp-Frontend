@@ -1,0 +1,20 @@
+.upcoming-movies-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 24px;
+    box-sizing: border-box;
+    margin: 24px 0;
+    justify-content: space-between;
+}
+
+.upcoming-movies-list .shared-card {
+    border: none !important;
+}
+
+@media screen and (max-width: 1439px) {
+    .upcoming-movies-list {
+        justify-content: space-around;
+    }
+}

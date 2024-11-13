@@ -23,9 +23,21 @@ export default function Header() {
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" /></svg>
                     </button>
                     <div className="navbar-links">
-                        <NavLink to="/currently-showing" className="navbar-link-item font-lg-regular">Currently Showing</NavLink>
-                        <NavLink to="#" className="navbar-link-item font-lg-regular">Upcoming Movies</NavLink>
-                        <NavLink to="#" className="navbar-link-item font-lg-regular">Venues</NavLink>
+                        <NavLink
+                            to="/currently-showing"
+                            className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
+                            Currently Showing
+                        </NavLink>
+                        <NavLink
+                            to="/upcoming-movies"
+                            className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
+                            Upcoming Movies
+                        </NavLink>
+                        <NavLink
+                            to="#"
+                            className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
+                            Venues
+                        </NavLink>
                     </div>
                     <div className="navbar-actions">
                         <div className="notification-btn">
@@ -35,7 +47,7 @@ export default function Header() {
                             <span className="notification-dot"></span>
                         </div>
                         <div className="user-btn">
-                            <span className="user-name">Jean Doe</span>
+                            <span className="font-lg-semibold user-name">Jean Doe</span>
                             {/* Maybe this needs to be some dropdown */}
                             <a href="#" className="dropdown-icon-container">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="dropdown-icon" width="14" height="16" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" /></svg>
@@ -45,8 +57,8 @@ export default function Header() {
                 </div>
                 {isDropdownOpen && (
                     <div className="dropdown-links">
-                        <NavLink to="/home" className="dropdown-link-item">Currently Showing</NavLink>
-                        <NavLink to="#" className="dropdown-link-item">Upcoming Movies</NavLink>
+                        <NavLink to="/currently-showing" className="dropdown-link-item">Currently Showing</NavLink>
+                        <NavLink to="/upcoming-movies" className="dropdown-link-item">Upcoming Movies</NavLink>
                         <NavLink to="#" className="dropdown-link-item">Venues</NavLink>
                     </div>
                 )}

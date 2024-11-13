@@ -1,0 +1,126 @@
+.upcoming-movies-form {
+    width: 100%;
+}
+
+.date-picker {
+    position: absolute;
+    top: 100%;
+    /* Places it just below the input wrapper */
+    left: -35px;
+    /* Ensures it appears on top of other elements */
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #E4E7EC;
+    border-radius: 24px;
+    padding: 10px;
+    box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414;
+}
+
+.custom-date-range .rdrDateDisplayWrapper {
+    border: none !important;
+    border-radius: inherit !important;
+    background-color: #FCFCFD !important;
+}
+
+.rdrDateInput.rdrDateDisplayItem {
+    width: 50% !important;
+    height: 48px !important;
+    border: 1px solid #D0D5DD;
+    border-radius: 12px !important;
+    box-shadow: none;
+    padding: 4px 8px 8px 8px;
+}
+
+.rdrDateInput.rdrDateDisplayItem input, .rdrMonthAndYearPickers {
+    font-family: Urbanist;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: left;
+    color:#1D2939;
+}
+
+.rdrMonth {
+    width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+ .rdrWeekDays {
+    padding: 0px 10px !important;
+} 
+
+/* Resolve problem with default 8 dates in a row */
+.rdrDays {
+    width: 98% !important;
+    margin-left: 12px !important;
+    left: 100px !important;
+    justify-content: flex-start !important;
+    gap: 5px !important;
+
+}
+
+.rdrDay {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.rdrStartEdge, .rdrEndEdge {
+    background-color: #B22222 !important;
+    height: 100%;
+    align-self: center;
+    border-radius: 50% !important;
+}
+
+/* color of today's number */
+.rdrDayToday .rdrDayNumber > span {
+    color: #B22222 !important;
+}
+
+/* when today is selected as start or end date, change color of its number  */
+.rdrDayToday:has(.rdrStartEdge, .rdrEndEdge) .rdrDayNumber > span {
+    color: #FCFCFD !important;
+}
+
+.rdrMonthAndYearWrapper {
+    width: 100% !important;
+}
+
+/* remove underline under todays date */
+.rdrDayToday .rdrDayNumber span:after {
+    display: none !important;
+}
+
+/* style for dates between picked */
+.rdrInRange {
+    height: 100% !important;
+    width: 100% !important;
+    align-self: center;
+    border-radius: 50px !important;
+}
+
+.date-range-buttons {
+    justify-content: flex-end;
+    display: flex;
+    gap: 12px;
+    padding-right: 8px;
+    padding-bottom: 4px;
+}
+
+.date-picker-cancel {
+    padding: 8px 16px;
+    color: #B22222;
+    background-color: #FCFCFD !important;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+}
+
+.date-picker-apply {
+    padding: 8px 16px;
+    color: #FCFCFD;
+    background-color: #B22222 !important;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+}
+

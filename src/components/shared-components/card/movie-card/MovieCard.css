@@ -4,3 +4,7 @@
     background-color: #98A2B3;
     margin: 0 4px;
 }
+
+.movie-card-genre {
+    text-transform: capitalize;
+}

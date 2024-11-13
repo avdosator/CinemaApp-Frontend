@@ -57,8 +57,8 @@ export default function MovieDetailsPage() {
                                 the RDA has other plans, invading and capturing Pandora. Sully forms a guerrilla group to try to expel the invaders.
                             </p>
                             <div className="movie-director" style={{ color: "#667085" }}>
-                                Director: 
-                                <span style={{ color: "#1D2939" }}>{ movie?.director}</span>
+                                Director:
+                                <span style={{ color: "#1D2939" }}>{movie?.director}</span>
                             </div>
                             <div className="writers-container font-lg-regular" style={{ color: "#667085" }}>
                                 Writers: {movie?.writers.map((writer, index) => (
@@ -68,15 +68,17 @@ export default function MovieDetailsPage() {
                                 ))}
                             </div>
                             <div className="actors-container">
-                                <VerticalDivider width="24px" border="1.5px solid #B22222" />
-                                <h6 className="font-heading-h6" style={{ color: "#667085" }}>Cast</h6>
+                                <div className="actors-heading">
+                                    <VerticalDivider width="24px" border="1.5px solid #B22222" />
+                                    <h6 className="font-heading-h6" style={{ color: "#667085" }}>Cast</h6>
+                                </div>
                                 <div className="movie-actors">
                                     {movie?.actors.map((actor, index) => {
                                         const [name, movieName] = actor.split("/")
                                         return (
                                             <div key={index} className="movie-actor">
                                                 <div className="font-md-semibold" style={{ color: "#101828" }}>{name}</div>
-                                                <div className="font-sm--regular" style={{ color: "#667085" }}>{movieName}</div>
+                                                <div className="font-sm-regular" style={{ color: "#667085" }}>{movieName}</div>
                                             </div>
                                         )
                                     })}

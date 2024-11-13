@@ -90,6 +90,34 @@
     margin-top: 14px;
 }
 
+.actors-container {
+    width: 100%;
+}
+
+.actors-heading {
+    margin-top: 32px;
+    display: flex;
+    justify-content: start;
+}
+
+.actors-heading h6 {
+    margin-bottom: 0;
+}
+
+.movie-actors {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.movie-actor {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .ticket-container {
     /* width: 620px;
     height: 562px; */

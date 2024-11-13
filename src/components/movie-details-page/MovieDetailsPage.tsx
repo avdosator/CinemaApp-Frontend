@@ -23,7 +23,7 @@ export default function MovieDetailsPage() {
 
     return (
         <div className="movie-details">
-            <h5 className="font-heading-h5" style={{ color: "#1D2939" }}>Movie Details</h5>
+            <h5 className="font-heading-h5 movie-details-heading">Movie Details</h5>
             {movie && (
                 <>
                     <section className="video-photo-container">
@@ -31,7 +31,7 @@ export default function MovieDetailsPage() {
 
                         </div>
                         <div className="movie-photos-container">
-                            {movie?.photos.map(photo => (<img src={photo.url}></img>))}
+                            {movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))}
                         </div>
                     </section>
                     <section className="movie-info-ticket-container">
@@ -74,7 +74,7 @@ export default function MovieDetailsPage() {
                                     {movie?.actors.map((actor, index) => {
                                         const [name, movieName] = actor.split("/")
                                         return (
-                                            <div className="movie-actor">
+                                            <div key={index} className="movie-actor">
                                                 <div className="font-md-semibold" style={{ color: "#101828" }}>{name}</div>
                                                 <div className="font-sm--regular" style={{ color: "#667085" }}>{movieName}</div>
                                             </div>

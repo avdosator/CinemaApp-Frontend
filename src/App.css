@@ -22,6 +22,11 @@ body {
   /* padding: 40px 92px; */
 }
 
+.no-style-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Used in more than one element */
 .font-heading-caption {
   font-size: 12px;

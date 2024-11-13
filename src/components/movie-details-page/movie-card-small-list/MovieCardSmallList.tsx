@@ -1,3 +1,4 @@
+import "./MovieCardSmallList.css"
 import { useState } from "react";
 import MovieCardSmall from "../../shared-components/card/movie-card-small/MovieCardSmall";
 import { Movie } from "../../../types/Movie";

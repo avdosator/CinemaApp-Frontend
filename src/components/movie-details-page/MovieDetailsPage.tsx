@@ -86,7 +86,7 @@ export default function MovieDetailsPage() {
                             </div>
                         </div>
                         <div className="ticket-container">
-                            <TicketForm />
+                            <TicketForm movie={movie} />
                         </div>
                     </section>
                     <section className="movie-rating-container">
@@ -100,8 +100,7 @@ export default function MovieDetailsPage() {
                         </div>
                     </section>
                     <section className="movie-card-small-container">
-
-                        <MovieCardSmallList />
+                            <MovieCardSmallList />
 
                     </section>
                 </>

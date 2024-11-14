@@ -15,6 +15,7 @@
     height: 287px;
     border-radius: 16px;
     margin-top: 16px;
+    /* object-fit: cover; */
 }
 
 .shared-card-content {

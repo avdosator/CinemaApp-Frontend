@@ -39,6 +39,7 @@
 .movie-details-image {
     width: 302px;
     height: 168px;
+    object-fit: cover;
 }
 
 .movie-details-image:nth-of-type(2) {

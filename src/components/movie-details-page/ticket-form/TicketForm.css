@@ -1,5 +1,30 @@
 .ticket-form-container {
-    gap: 4px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.projection-times {
+    display: flex;
+    gap: 16px;
+}
+
+.ticket-btns-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.horizontal-line {
+    height: 1px;
+    background-color: #E4E7EC;
+    margin: 0px -24px 20px -24px;
 }
 
 .ticket-btns button {
@@ -11,9 +36,11 @@
 .ticket-btn-reserve {
     border: 1px solid #B22222;
     color: #B22222;
+    background-color: #FCFCFD;
 }
 
 .ticket-btn-buy {
     background-color: #B22222;
     color: #FCFCFD;
+    border: none;
 }

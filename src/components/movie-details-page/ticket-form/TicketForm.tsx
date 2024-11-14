@@ -26,10 +26,12 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                 {/* <TimeBadge label="16:00" isSelected={false} onClick={() => { }} />
                 <TimeBadge label="18:00" isSelected={false} onClick={() => { }} /> */}
             </div>
-            <div className="horizontal-line"></div>
-            <div className="ticket-btns font-lg-semibold">
-                <button className="ticket-btn-reserve">Reserve Ticket</button>
-                <button className="ticket-btn-buy">Buy Ticket</button>
+            <div className="ticket-btns-container">
+                <div className="horizontal-line"></div>
+                <div className="ticket-btns font-lg-semibold">
+                    <button className="ticket-btn-reserve">Reserve Ticket</button>
+                    <button className="ticket-btn-buy">Buy Ticket</button>
+                </div>
             </div>
         </form>
     )

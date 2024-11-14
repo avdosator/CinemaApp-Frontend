@@ -4,3 +4,9 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.movie-card-small-list {
+    display: flex;
+    justify-content: start;
+    gap: 24px;
+}

@@ -90,12 +90,16 @@ export default function MovieDetailsPage() {
                         </div>
                     </section>
                     <section className="movie-rating-container">
-                        <VerticalDivider width="24px" border="1.5px solid #B22222" />
-                        <h6 className="font-heading-h6" style={{ color: "#667085" }}>Rating</h6>
-                        <MovieRatingBadge rating={movie?.imdbRating} label="IMDB Rating" />
-                        <MovieRatingBadge rating={movie?.rottenTomatoesRating} label="Rotten Tomatoes" />
+                        <div className="ratings-heading">
+                            <VerticalDivider width="24px" border="1.5px solid #B22222" />
+                            <h6 className="font-heading-h6" style={{ color: "#667085" }}>Rating</h6>
+                        </div>
+                        <div className="movie-rating-badges">
+                            <MovieRatingBadge rating={movie?.imdbRating} label="IMDB Rating" />
+                            <MovieRatingBadge rating={movie?.rottenTomatoesRating} label="Rotten Tomatoes" />
+                        </div>
                     </section>
-                    <section className="">
+                    <section className="movie-card-small-container">
 
                         <MovieCardSmallList />
 

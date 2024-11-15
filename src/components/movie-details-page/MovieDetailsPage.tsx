@@ -51,10 +51,10 @@ export default function MovieDetailsPage() {
                             </div>
                             <p className="movie-synopsis font-lg-regular" style={{ color: "#1D2939" }}>
                                 {movie?.synopsis}
-                                Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what
+                                {/* Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what
                                 was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home. Several years
                                 after the Na'vi repelled the RDA invasion Jake Sully and his family are living on Pandora. Things seem peaceful but
-                                the RDA has other plans, invading and capturing Pandora. Sully forms a guerrilla group to try to expel the invaders.
+                                the RDA has other plans, invading and capturing Pandora. Sully forms a guerrilla group to try to expel the invaders. */}
                             </p>
                             <div className="movie-director" style={{ color: "#667085" }}>
                                 Director:
@@ -99,9 +99,8 @@ export default function MovieDetailsPage() {
                             <MovieRatingBadge rating={movie?.rottenTomatoesRating} label="Rotten Tomatoes" />
                         </div>
                     </section>
-                    <section className="movie-card-small-container">
+                    <section>
                         <MovieCardSmallList />
-
                     </section>
                 </>
             )}

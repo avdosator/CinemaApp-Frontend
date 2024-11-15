@@ -1,15 +1,7 @@
-/* .vertical-divider {
-    height: 0px;
-    rotate: -90deg;
-    align-self: center;
-} */
-
 .vertical-line {
-    /* width: 1px; */
-    /* height: 16px; */
-    /* background-color: #FCFCFD; */
     align-self: center;
     margin: 0;
     opacity: 1;
     border: none !important;
+    letter-spacing: 0 !important;
 }

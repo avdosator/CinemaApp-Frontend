@@ -2,6 +2,7 @@ import "./MovieCard.css"
 import "../SharedCard.css"
 import type { Movie } from "../../../../types/Movie"
 import { Link } from "react-router-dom";
+import VerticalLine from "../../divider/VerticalLine";
 
 export default function MovieCard({ id, title, durationInMinutes, genres, photos }: Movie) {
 
@@ -19,7 +20,7 @@ export default function MovieCard({ id, title, durationInMinutes, genres, photos
                     <h6 className="shared-card-header font-heading-h6">{title}</h6>
                     <div className="shared-card-details font-md-regular">
                         <span>{durationInMinutes} MIN</span>
-                        <div className="movie-card-separator"></div>
+                        <VerticalLine width="1px" height="20px" color="#98A2B3" />
                         <span className="movie-card-genre">{genres[0].name}</span>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import "./MovieDetailsPage.css"
 import { useParams } from "react-router-dom";
-import VerticalDivider from "../shared-components/divider/VerticalDivider";
+import VerticalLine from "../shared-components/divider/VerticalLine";
 import MovieCardSmallList from "./movie-card-small-list/MovieCardSmallList";
 import MovieRatingBadge from "./movie-rating-badge/MovieRatingBadge";
 import TicketForm from "./ticket-form/TicketForm";
@@ -39,11 +39,11 @@ export default function MovieDetailsPage() {
                             <h4 className="font-heading-h4" style={{ color: "#1D2939" }}>{movie?.title}</h4>
                             <div className="font-lg-regular basic-movie-info">
                                 <span>{movie?.pgRating}</span>
-                                <VerticalDivider />
+                                <VerticalLine />
                                 <span>{movie?.language}</span>
-                                <VerticalDivider />
+                                <VerticalLine />
                                 <span>{`${movie?.durationInMinutes} Min`}</span>
-                                <VerticalDivider />
+                                <VerticalLine />
                                 <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
                             </div>
                             <div className="movie-genres-container">
@@ -69,7 +69,7 @@ export default function MovieDetailsPage() {
                             </div>
                             <div className="actors-container">
                                 <div className="actors-heading">
-                                    <VerticalDivider width="24px" border="1.5px solid #B22222" />
+                                    <VerticalLine width="1px" height="24px" />
                                     <h6 className="font-heading-h6" style={{ color: "#667085" }}>Cast</h6>
                                 </div>
                                 <div className="movie-actors">
@@ -91,7 +91,7 @@ export default function MovieDetailsPage() {
                     </section>
                     <section className="movie-rating-container">
                         <div className="ratings-heading">
-                            <VerticalDivider width="24px" border="1.5px solid #B22222" />
+                            <VerticalLine width="1px" height="24px" />
                             <h6 className="font-heading-h6" style={{ color: "#667085" }}>Rating</h6>
                         </div>
                         <div className="movie-rating-badges">
@@ -100,7 +100,7 @@ export default function MovieDetailsPage() {
                         </div>
                     </section>
                     <section className="movie-card-small-container">
-                            <MovieCardSmallList />
+                        <MovieCardSmallList />
 
                     </section>
                 </>

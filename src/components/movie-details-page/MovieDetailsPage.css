@@ -65,7 +65,7 @@
 }
 
 .ticket-container {
-     width: 50%; 
+    width: 50%;
     /* height: 562px; */
     color: #FCFCFD;
     border: 1px solid #E4E7EC;
@@ -76,7 +76,8 @@
 
 .basic-movie-info {
     display: flex;
-    color:#1D2939;
+    gap: 8px;
+    color: #1D2939;
     /* gap: 12px; */
 }
 
@@ -109,9 +110,11 @@
     margin-top: 32px;
     display: flex;
     justify-content: start;
+    gap: 8px;
 }
 
-.actors-heading h6 {
+.actors-heading h6,
+.ratings-heading h6 {
     margin-bottom: 0;
 }
 
@@ -135,12 +138,10 @@
     margin-bottom: 24px;
     display: flex;
     justify-content: start;
+    gap: 8px;
 }
 
 .movie-rating-badges {
     display: flex;
     gap: 24px;
 }
-
-
-

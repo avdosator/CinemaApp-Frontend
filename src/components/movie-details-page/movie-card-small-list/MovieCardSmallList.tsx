@@ -30,6 +30,11 @@ export default function MovieCardSmallList() {
             <h5 className="font-heading-h6" style={{ color: "#1D2939" }}>See also</h5>
             <div className="movie-card-small-list" style={lastPageStyle}>
                 {displayedItems.map(item => (<MovieCardSmall key={item.id} movie={item} />))}
+                <div className="movie-card-small flex-dummy"></div>
+                <div className="movie-card-small flex-dummy"></div>
+                <div className="movie-card-small flex-dummy"></div>
+                <div className="movie-card-small flex-dummy"></div>
+                <div className="movie-card-small flex-dummy"></div>
             </div>
             <div className="pagination-sm-container">
                 <PaginationSmall

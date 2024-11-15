@@ -77,7 +77,7 @@
 
 .basic-movie-info {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     color: #1D2939;
     /* gap: 12px; */
 }

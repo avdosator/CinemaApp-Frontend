@@ -33,7 +33,7 @@ export default function MovieDetailsPage() {
                                 width="100%"
                                 height="100%"
                                 src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             >
                             </iframe>
                         </div>
@@ -48,9 +48,9 @@ export default function MovieDetailsPage() {
                                 <span>{movie?.pgRating}</span>
                                 <VerticalLine />
                                 <span>{movie?.language}</span>
-                                <VerticalLine />
+                                <VerticalLine width="0.5px" />
                                 <span>{`${movie?.durationInMinutes} Min`}</span>
-                                <VerticalLine />
+                                <VerticalLine  />
                                 <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
                             </div>
                             <div className="movie-genres-container">

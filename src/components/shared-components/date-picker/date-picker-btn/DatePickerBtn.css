@@ -22,10 +22,10 @@
     color: #667085;
 }
 
-.date-picker-btn-lg.selected {
+.date-picker-btn-large.selected-date-btn {
     background-color: #B22222;
 }
 
-.selected div {
+.selected-date-btn div {
     color: #FCFCFD;
 }

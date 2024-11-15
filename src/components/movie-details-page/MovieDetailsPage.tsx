@@ -28,7 +28,14 @@ export default function MovieDetailsPage() {
                 <>
                     <section className="video-photo-container">
                         <div className="video-container">
-
+                            <iframe
+                                id="movie-trailer"
+                                width="100%"
+                                height="100%"
+                                src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            >
+                            </iframe>
                         </div>
                         <div className="movie-photos-container">
                             {movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))}

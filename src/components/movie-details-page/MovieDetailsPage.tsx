@@ -16,7 +16,10 @@ export default function MovieDetailsPage() {
     useEffect(() => {
         if (id) {
             ApiService.get<Movie>(`/movies/${id}`)
-                .then(response => setMovie(response))
+                .then(response => {
+                    setMovie(response);
+                    window.scrollTo(0, 0);
+                })
                 .catch(error => console.error("Error fetching movie", error));
         }
     }, [id]);
@@ -34,6 +37,7 @@ export default function MovieDetailsPage() {
                                 height="100%"
                                 src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                loading="eager"
                             >
                             </iframe>
                         </div>
@@ -50,7 +54,7 @@ export default function MovieDetailsPage() {
                                 <span>{movie?.language}</span>
                                 <VerticalLine width="0.5px" />
                                 <span>{`${movie?.durationInMinutes} Min`}</span>
-                                <VerticalLine  />
+                                <VerticalLine />
                                 <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
                             </div>
                             <div className="movie-genres-container">
@@ -58,10 +62,6 @@ export default function MovieDetailsPage() {
                             </div>
                             <p className="movie-synopsis font-lg-regular" style={{ color: "#1D2939" }}>
                                 {movie?.synopsis}
-                                {/* Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what
-                                was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home. Several years
-                                after the Na'vi repelled the RDA invasion Jake Sully and his family are living on Pandora. Things seem peaceful but
-                                the RDA has other plans, invading and capturing Pandora. Sully forms a guerrilla group to try to expel the invaders. */}
                             </p>
                             <div className="movie-director" style={{ color: "#667085" }}>
                                 Director:

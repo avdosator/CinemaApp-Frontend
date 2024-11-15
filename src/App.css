@@ -27,6 +27,16 @@ body {
   color: inherit;
 }
 
+.logo {
+  width: 129px;
+  height: 32px;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+}
+
 /* Used in more than one element */
 .font-heading-caption {
   font-size: 12px;

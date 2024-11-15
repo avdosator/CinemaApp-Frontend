@@ -4,6 +4,7 @@ import TimeBadge from "../../shared-components/time-badge/TimeBadge";
 import { Movie } from "../../../types/Movie";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import VerticalLine from "../../shared-components/divider/VerticalLine";
 
 export default function MovieCardBig({ movie }: { movie: Movie }) {
     const [selectedTime, setSelectedTime] = useState<string | null>(null); // Track selected time
@@ -29,9 +30,9 @@ export default function MovieCardBig({ movie }: { movie: Movie }) {
                         <h4 className="movie-card-big-title font-heading-h4">{movie.title}</h4>
                         <div className="movie-card-big-data">
                             <span className="body-lg-regular">{movie.pgRating}</span>
-                            <div className="divider"></div>
+                            <VerticalLine width="1px" height="20px" color="#B22222" />
                             <span className="body-lg-regular">{movie.language}</span>
-                            <div className="divider"></div>
+                            <VerticalLine width="1px" height="20px" color="#B22222" />
                             <span className="body-lg-regular">{movie.durationInMinutes} Min</span>
                         </div>
                         <div className="movie-card-big-genre-container">

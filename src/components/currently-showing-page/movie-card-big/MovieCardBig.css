@@ -39,6 +39,7 @@
 
 .movie-card-big-data {
     display: flex;
+    gap: 8px;
 }
 
 .divider {

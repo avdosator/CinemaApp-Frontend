@@ -9,17 +9,39 @@ import DatePickerBtnSmall from "../../shared-components/date-picker/date-picker-
 import { useState } from "react";
 import { MovieDetailsFormData } from "../../../types/FormData";
 
-export default function TicketForm({ movie }: { movie: Movie }) {
-    let [formData, setFormData] = useState<MovieDetailsFormData>(
-        {
-            city: null,
-            venue: null,
-            date: "",
-            time: ""
-        }
-    );
+type DatePickerBtnSmall = {
+    isoDate: string,
+    displayDate: string,
+    dayLabel: string
+}
 
-    const cityOptions: SelectOptionType[] = [{ value: "1", label: "Sarajevo" }, { value: "2", label: "Mostar" }];
+const generateDates = (endDate: Date): DatePickerBtnSmall[] => {
+    const today = new Date();
+
+    // Generate array of objects from today to endDate
+    const dates = [];
+    let currentDate = new Date(today);
+
+    while (currentDate <= endDate) {
+        dates.push({
+            isoDate: currentDate.toISOString().split('T')[0], // Format as "YYYY-MM-DD"
+            displayDate: currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            dayLabel: dates.length === 0 ? "Today" : currentDate.toDateString().substring(0, 4),
+        });
+
+        // Increment currentDate by 1 day
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+}
+
+export default function TicketForm({ movie }: { movie: Movie }) {
+    let [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: "", time: "" });
+    
+    const dates = generateDates(new Date(movie.projections[0].endDate));
+
+    const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];
+    const venueOptions: SelectOptionType[] = [{value: "venuId", label: "Cinema City Mostar"}];
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
         setFormData((prevData) => ({
@@ -52,7 +74,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                     <div className="input-wrapper">
                         <FontAwesomeIcon icon={faBuilding} className="input-icon" />
                         <Select<SelectOptionType, false>
-                            options={cityOptions}
+                            options={venueOptions}
                             placeholder="Choose Cinema"
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
@@ -64,7 +86,9 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                     </div>
                 </div>
                 <div className="date-picker-btn-container">
-                    <DatePickerBtnSmall date={"Dec 22"} day={"tue"} selected={false} />
+                    {dates.map((date, index) => (
+                        (<DatePickerBtnSmall key={index} date={date.displayDate} day={date.dayLabel} selected={false} />)
+                    ))}
                 </div>
             </div>
             <div className="movie-projecton-times">

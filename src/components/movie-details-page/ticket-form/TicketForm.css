@@ -12,6 +12,11 @@
 
 .date-picker-btn-container {
     margin-top: 14px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    white-space: nowrap;
+    scrollbar-width: none;
 }
 
 .projection-times {

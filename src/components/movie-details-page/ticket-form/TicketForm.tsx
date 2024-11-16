@@ -9,14 +9,9 @@ import DatePickerBtnSmall from "../../shared-components/date-picker/date-picker-
 import { useState } from "react";
 import { MovieDetailsFormData } from "../../../types/FormData";
 import { IconType } from "../../../types/IconType";
+import { DatePickerBtnType } from "../../../types/DatePickerBtn";
 
-type DatePickerBtnSmall = {
-    isoDate: string,
-    displayDate: string,
-    dayLabel: string
-}
-
-const generateDates = (endDate: Date): DatePickerBtnSmall[] => {
+const generateDates = (endDate: Date): DatePickerBtnType[] => {
     const today = new Date();
 
     // Generate array of objects from today to endDate

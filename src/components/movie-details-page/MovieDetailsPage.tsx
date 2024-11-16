@@ -97,8 +97,12 @@ export default function MovieDetailsPage() {
                             </div>
                         </div>
                         <div className="ticket-container">
-                            {/* <TicketForm movie={movie} /> */}
-                            <UpcomingMovieInfo title={movie.title} />
+                            {movie.projections.some(projection => projection.status === "active") ?
+                                (<TicketForm movie={movie} />) :
+                                movie.projections.some(projection => projection.status === "upcoming") ?
+                                    (< UpcomingMovieInfo title={movie.title} />) :
+                                    null
+                            }
                         </div>
                     </section>
                     <section className="movie-rating-container">

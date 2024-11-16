@@ -37,7 +37,7 @@ export default function CurrentlyShowingPage() {
         venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
         genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
         time: searchParams.get("time") ? { value: searchParams.get("time")!, label: "" } : null,
-        date: searchParams.get("selectedDate") || new Date().toISOString().split('T')[0]
+        date: searchParams.get("date") || new Date().toISOString().split('T')[0]
     });
 
     useEffect(() => {

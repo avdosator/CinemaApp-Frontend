@@ -41,7 +41,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
     const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
     
     const dates = generateDates(new Date(movie.projections[0].endDate));
-
+    
+    // this should be generated based on cities and venues where each movie has projection
     const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];
     const venueOptions: SelectOptionType[] = [{value: "venuId", label: "Cinema City Mostar"}];
 
@@ -97,7 +98,12 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                 </div>
                 <div className="date-picker-btn-container">
                     {dates.map((date, index) => (
-                        (<DatePickerBtnSmall key={index} date={date.displayDate} day={date.dayLabel} selected={false} />)
+                        (<DatePickerBtnSmall 
+                            key={index} 
+                            date={date.displayDate} 
+                            day={date.dayLabel} 
+                            pickDate={() => handleChange("date", date.isoDate)}
+                            selected={formData.date === date.isoDate} />)
                     ))}
                 </div>
             </div>
@@ -106,7 +112,10 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                 <div className="projection-times">
                     {movie.projections.map(projection => {
                         return projection.startTime.map((time, index) => (
-                            (<TimeBadge key={index} label={time} isSelected={false} onClick={() => { }} />)
+                            (<TimeBadge key={index} 
+                                label={time} 
+                                isSelected={formData.time === time} 
+                                onClick={() => handleChange("time", time)} />)
                         ))
                     })}
                 </div>

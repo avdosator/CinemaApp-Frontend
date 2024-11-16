@@ -9,6 +9,7 @@ import { Movie } from "../../types/Movie";
 import ApiService from "../../service/ApiService";
 import GenreBadge from "../shared-components/genre-badge/GenreBadge";
 import { format } from "date-fns";
+import UpcomingMovieInfo from "./upcoming-movie-info/UpcomingMovieInfo";
 
 export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();
@@ -32,7 +33,7 @@ export default function MovieDetailsPage() {
                 <>
                     <section className="video-photo-container">
                         <div className="video-container">
-                            <iframe
+                            {/* <iframe
                                 id="movie-trailer"
                                 width="100%"
                                 height="100%"
@@ -40,7 +41,7 @@ export default function MovieDetailsPage() {
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 loading="eager"
                             >
-                            </iframe>
+                            </iframe> */}
                         </div>
                         <div className="movie-photos-container">
                             {movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))}
@@ -96,7 +97,8 @@ export default function MovieDetailsPage() {
                             </div>
                         </div>
                         <div className="ticket-container">
-                            <TicketForm movie={movie} />
+                            {/* <TicketForm movie={movie} /> */}
+                            <UpcomingMovieInfo title={movie.title} />
                         </div>
                     </section>
                     <section className="movie-rating-container">

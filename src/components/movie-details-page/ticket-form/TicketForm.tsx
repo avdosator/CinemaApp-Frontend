@@ -12,16 +12,15 @@ import { IconType } from "../../../types/IconType";
 import { generateDatePickerBtnInputs } from "../../../utils/utils";
 import { DatePickerBtnType } from "../../../types/DatePickerBtn";
 
-
 export default function TicketForm({ movie }: { movie: Movie }) {
-    const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: "", time: "" });
+    const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: new Date().toISOString().split('T')[0], time: "" });
     const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
-    
+
     const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(movie.projections[0].endDate));
-    
+
     // this should be generated based on cities and venues where each movie has projection
     const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];
-    const venueOptions: SelectOptionType[] = [{value: "venuId", label: "Cinema City Mostar"}];
+    const venueOptions: SelectOptionType[] = [{ value: "venuId", label: "Cinema City Mostar" }];
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
         setFormData((prevData) => ({
@@ -75,10 +74,10 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                 </div>
                 <div className="date-picker-btn-container">
                     {dates.map((date, index) => (
-                        (<DatePickerBtnSmall 
-                            key={index} 
-                            date={date.displayDate} 
-                            day={date.dayLabel} 
+                        (<DatePickerBtnSmall
+                            key={index}
+                            date={date.displayDate}
+                            day={date.dayLabel}
                             pickDate={() => handleChange("date", date.isoDate)}
                             selected={formData.date === date.isoDate} />)
                     ))}
@@ -89,9 +88,9 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                 <div className="projection-times">
                     {movie.projections.map(projection => {
                         return projection.startTime.map((time, index) => (
-                            (<TimeBadge key={index} 
-                                label={time} 
-                                isSelected={formData.time === time} 
+                            (<TimeBadge key={index}
+                                label={time}
+                                isSelected={formData.time === time}
                                 onClick={() => handleChange("time", time)} />)
                         ))
                     })}

@@ -6,78 +6,36 @@
     align-items: center;
 }
 
+.upcoming-movie-main-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-bottom: 5%;
+}
+
 .upcoming-movie-info-heading {
     color: #344054;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
-.notification-drawing-container {
-    position: relative;
+.notify-me-container {
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
-.circle {
-    border-radius: 50%;
-    position: absolute;
-}
-
-.circle-s {
-    background-color: #D0D5DD;
-    height: 10px;
-    width: 10px;
-}
-
-#circle-s-left {
-    top: 91px;
-    left: 14px;
-}
-
-#circle-s-right {
-    top: 99px;
-    right: 0px;
-}
-
-.circle-m {
-    background-color: #667085;
-    height: 15px;
-    width: 15px;
-}
-
-#circle-m-top {
-    top: 2px;
-    left: 136px;
-}
-
-#circle-m-left {
-    background-color: #344054;
-    top: 144px;
-    left: 15px;
-}
-
-#circle-m-right {
-    top: 144px;
-    left: 164px;
-}
-
-.circle-l {
-    background-color: #667085CC;
-    height: 29px;
-    width: 29px;
-}
-
-#circle-l-top {
-    top: 0px;
-    left: 27px;
-}
-
-.circle-xl {
-    width: 142px;
-    height: 142px;
+.horizontal-divider {
+    height: 1px;
     background-color: #E4E7EC;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0px -24px 20px -24px;
+}
+
+.notify-me-container p {
+    color: #1D2939;
+     margin-bottom: 0px; 
+     align-self: center;
+     margin-top: 8px;
 }
 
 .notify-me-btn {

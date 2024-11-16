@@ -8,7 +8,7 @@ import ApiService from "../../service/ApiService";
 import { SelectOptionType } from "../../types/SelectOptionType";
 import { SingleValue } from "react-select";
 import { PageResponse } from "../../types/PageResponse";
-import { CurrentlyShowingFormData } from "../../types/CurrentlyShowingFormData";
+import { CurrentlyShowingFormData } from "../../types/FormData";
 import debounce from "lodash.debounce";
 import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
 import { useSearchParams } from "react-router-dom";
@@ -87,7 +87,7 @@ export default function CurrentlyShowingPage() {
             .catch(error => console.error("Error fetching data:", error));
     }, []);
 
-    const updateSearchParams = (data: CurrentlyShowingFormData, pageNumber: number) => {
+    const updateSearchParams = (data: CurrentlyShowingFormData, pageNumber: number): void => {
 
         const params: Record<string, string> = {
             page: pageNumber.toString(),
@@ -103,7 +103,7 @@ export default function CurrentlyShowingPage() {
         setSearchParams(params);
     };
 
-    const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number) => {
+    const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number): void => {
 
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
@@ -128,7 +128,7 @@ export default function CurrentlyShowingPage() {
             .catch(error => console.log(error));
     }
 
-    const debouncedFetchMovies = debounce((data: CurrentlyShowingFormData) => {
+    const debouncedFetchMovies = debounce((data: CurrentlyShowingFormData): void => {
         setPage(0);
         // Update formData for title changes
         setFormData(prevData => ({ ...prevData, title: data.title }));
@@ -157,14 +157,14 @@ export default function CurrentlyShowingPage() {
         };
     }, [debouncedFetchMovies]);
 
-    const handleChange = (name: string, value: string | SingleValue<SelectOptionType>) => {
+    const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
         setFormData((prevData) => ({
             ...prevData,
             [name]: value
         }));
     }
 
-    const handleDateChange = (date: string) => {
+    const handleDateChange = (date: string): void => {
         setFormData({ title: "", city: null, venue: null, genre: null, time: null, date: date });
 
         // Reset pagination to first page
@@ -175,7 +175,7 @@ export default function CurrentlyShowingPage() {
     }
 
     // Handle "Load More" button click to fetch the next page
-    const handleLoadMore = () => {
+    const handleLoadMore = (): void => {
         const nextPage = page + 1;
         setPage(nextPage);
         fetchMovies(formData, nextPage);

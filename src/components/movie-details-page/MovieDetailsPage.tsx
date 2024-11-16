@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Movie } from "../../types/Movie";
 import ApiService from "../../service/ApiService";
 import GenreBadge from "../shared-components/genre-badge/GenreBadge";
+import { format } from "date-fns";
 
 export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();
@@ -55,7 +56,9 @@ export default function MovieDetailsPage() {
                                 <VerticalLine width="0.5px" />
                                 <span>{`${movie?.durationInMinutes} Min`}</span>
                                 <VerticalLine />
-                                <span>{`Projection date: ${movie?.projections[0].startDate} - ${movie?.projections[0].endDate}`}</span>
+                                <span>
+                                    {`Projection date: ${format(movie?.projections[0].startDate, "yyyy/MM/dd")} - ${format(movie?.projections[0].endDate, "yyyy/MM/dd")}`}
+                                </span>
                             </div>
                             <div className="movie-genres-container">
                                 {movie?.genres.map(genre => (<GenreBadge key={genre.id} label={genre.name} />))}

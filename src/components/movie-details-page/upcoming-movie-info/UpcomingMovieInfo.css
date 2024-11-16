@@ -75,6 +75,9 @@
     width: 142px;
     height: 142px;
     background-color: #E4E7EC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .notify-me-btn {
@@ -89,14 +92,8 @@
 
 .signup-anchor {
     color: #1D2939;
-font-size: 16px;
-font-weight: 600;
-line-height: 24px;
-letter-spacing: 0.005em;
-text-align: left;
-text-decoration-line: underline;
-text-decoration-style: solid;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
+    text-decoration: 0.5px solid underline;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
 
 }

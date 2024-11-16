@@ -6,6 +6,14 @@
     justify-content: space-between;
 }
 
+.ticket-inputs {
+    margin: 0 !important;
+}
+
+.date-picker-btn-container {
+    margin-top: 14px;
+}
+
 .projection-times {
     display: flex;
     gap: 16px;

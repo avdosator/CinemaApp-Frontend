@@ -9,33 +9,15 @@ import DatePickerBtnSmall from "../../shared-components/date-picker/date-picker-
 import { useState } from "react";
 import { MovieDetailsFormData } from "../../../types/FormData";
 import { IconType } from "../../../types/IconType";
+import { generateDatePickerBtnInputs } from "../../../utils/utils";
 import { DatePickerBtnType } from "../../../types/DatePickerBtn";
 
-const generateDates = (endDate: Date): DatePickerBtnType[] => {
-    const today = new Date();
-
-    // Generate array of objects from today to endDate
-    const dates = [];
-    let currentDate = new Date(today);
-
-    while (currentDate <= endDate) {
-        dates.push({
-            isoDate: currentDate.toISOString().split('T')[0], // Format as "YYYY-MM-DD"
-            displayDate: currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-            dayLabel: dates.length === 0 ? "Today" : currentDate.toDateString().substring(0, 4),
-        });
-
-        // Increment currentDate by 1 day
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dates;
-}
 
 export default function TicketForm({ movie }: { movie: Movie }) {
     const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: "", time: "" });
     const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
     
-    const dates = generateDates(new Date(movie.projections[0].endDate));
+    const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(movie.projections[0].endDate));
     
     // this should be generated based on cities and venues where each movie has projection
     const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];

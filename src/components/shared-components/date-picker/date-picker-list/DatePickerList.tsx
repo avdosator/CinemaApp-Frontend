@@ -1,6 +1,7 @@
 import "./DatePickerList.css"
 import DatePickerBtn from "../date-picker-btn/DatePickerBtn"
 import { DatePickerBtnType } from "../../../../types/DatePickerBtn";
+import { generateDatePickerBtnInputs } from "../../../../utils/utils";
 
 type DatePickerListProps = {
     pickDate: (date: string) => void;
@@ -8,16 +9,8 @@ type DatePickerListProps = {
 };
 
 export default function DatePickerList({ pickDate, selectedDate }: DatePickerListProps) {
-    const today = new Date();
-    const dates: DatePickerBtnType[] = Array.from({ length: 10 }, (_, i) => {
-        const date = new Date(today);
-        date.setDate(today.getDate() + i);
-        return {
-            isoDate: date.toISOString().split('T')[0],  // Format date as "YYYY-MM-DD"
-            displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),  // Format for display
-            dayLabel: i === 0 ? "Today" : date.toDateString().substring(0, 4),
-        };
-    });
+    // Generate 10 DatePickerBtn inputs starting from today
+    const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(Date.now() + 9 * 24 * 60 * 60 * 1000));
 
     return (
         <div className="date-picker-list">

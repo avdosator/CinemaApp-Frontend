@@ -3,17 +3,32 @@ import TimeBadge from "../../shared-components/time-badge/TimeBadge";
 import { Movie } from "../../../types/Movie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faLocationPin } from "@fortawesome/free-solid-svg-icons";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 import { SelectOptionType } from "../../../types/SelectOptionType";
 import DatePickerBtnSmall from "../../shared-components/date-picker/date-picker-btn-small/DatePickerBtnSmall";
+import { useState } from "react";
+import { MovieDetailsFormData } from "../../../types/FormData";
 
 export default function TicketForm({ movie }: { movie: Movie }) {
-    //const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>();
+    let [formData, setFormData] = useState<MovieDetailsFormData>(
+        {
+            city: null,
+            venue: null,
+            date: "",
+            time: ""
+        }
+    );
 
-    movie.projections[0]
     const cityOptions: SelectOptionType[] = [{ value: "1", label: "Sarajevo" }, { value: "2", label: "Mostar" }];
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
     }
 
@@ -29,8 +44,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={null}
-                            onChange={(newvalue) => console.log(newvalue)}
+                            value={formData.city}
+                            onChange={(newvalue) => handleChange("city", newvalue)}
                             name="city"
                         />
                     </div>
@@ -42,9 +57,9 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                             className="dropdown-menu-input"
                             classNamePrefix="dropdown"
                             isClearable={true}
-                            value={null}
-                            onChange={(newvalue) => console.log(newvalue)}
-                            name="city"
+                            value={formData.venue}
+                            onChange={(newvalue) => handleChange("venue", newvalue)}
+                            name="venue"
                         />
                     </div>
                 </div>

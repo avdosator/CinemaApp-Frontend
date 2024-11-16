@@ -33,6 +33,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    row-gap: inherit;
     /* box-sizing: border-box; */
 }
 

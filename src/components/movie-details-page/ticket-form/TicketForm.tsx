@@ -8,6 +8,7 @@ import { SelectOptionType } from "../../../types/SelectOptionType";
 import DatePickerBtnSmall from "../../shared-components/date-picker/date-picker-btn-small/DatePickerBtnSmall";
 import { useState } from "react";
 import { MovieDetailsFormData } from "../../../types/FormData";
+import { IconType } from "../../../types/IconType";
 
 type DatePickerBtnSmall = {
     isoDate: string,
@@ -36,7 +37,8 @@ const generateDates = (endDate: Date): DatePickerBtnSmall[] => {
 }
 
 export default function TicketForm({ movie }: { movie: Movie }) {
-    let [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: "", time: "" });
+    const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: "", time: "" });
+    const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
     
     const dates = generateDates(new Date(movie.projections[0].endDate));
 
@@ -54,12 +56,20 @@ export default function TicketForm({ movie }: { movie: Movie }) {
         e.preventDefault();
     }
 
+    const handleFocus = (iconName: IconType): void => {
+        setFocusedIcon(iconName);
+    };
+
+    const handleBlur = (): void => {
+        setFocusedIcon(null);
+    };
+
     return (
         <form className="ticket-form-container" onSubmit={handleSubmit}>
             <div>
                 <div className="dropdown-menu-inputs ticket-inputs">
-                    <div className="input-wrapper">
-                        <FontAwesomeIcon icon={faLocationPin} className="input-icon" />
+                    <div className="input-wrapper" onFocus={() => handleFocus("locationPin")} onBlur={handleBlur}>
+                        <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${focusedIcon === "locationPin" ? "focused-icon" : ""}`} />
                         <Select<SelectOptionType, false>
                             options={cityOptions}
                             placeholder="Choose city"
@@ -71,8 +81,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                             name="city"
                         />
                     </div>
-                    <div className="input-wrapper">
-                        <FontAwesomeIcon icon={faBuilding} className="input-icon" />
+                    <div className="input-wrapper" onFocus={() => handleFocus("building")} onBlur={handleBlur}>
+                        <FontAwesomeIcon icon={faBuilding} className={`input-icon ${focusedIcon === "building" ? "focused-icon" : ""}`} />
                         <Select<SelectOptionType, false>
                             options={venueOptions}
                             placeholder="Choose Cinema"

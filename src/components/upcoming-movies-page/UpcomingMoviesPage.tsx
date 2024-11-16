@@ -7,7 +7,7 @@ import TertiaryButton from "../shared-components/buttons/TertiaryButton";
 import { SelectOptionType } from "../../types/SelectOptionType";
 import { calculateDateString } from "../../utils/utils";
 import { useSearchParams } from "react-router-dom";
-import { UpcomingMoviesFormData } from "../../types/CurrentlyShowingFormData";
+import { UpcomingMoviesFormData } from "../../types/FormData";
 import { Genre } from "../../types/Genre";
 import { City } from "../../types/City";
 import { Venue } from "../../types/Venue";

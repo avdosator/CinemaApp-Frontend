@@ -44,7 +44,10 @@ export default function MovieDetailsPage() {
                             </iframe>
                         </div>
                         <div className="movie-photos-container">
-                            {movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))}
+                        {movie.photos.length === 1 ?
+                                (<img src={movie.photos[0].url} className="only-movie-image" />) :
+                                movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))
+                            }
                         </div>
                     </section>
                     <section className="movie-info-ticket-container">

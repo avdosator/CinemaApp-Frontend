@@ -1,5 +1,4 @@
 import { Venue } from "../../../../types/Venue";
-import "./VenueCard.css"
 
 export default function VenueCard({ name, street, streetNumber, city, photo }: Venue) {
 

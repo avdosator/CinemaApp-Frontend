@@ -33,6 +33,7 @@
 .ticket-btns {
     display: flex;
     justify-content: space-between;
+    /* column-gap: 3.77% ; */
 }
 
 .horizontal-line {
@@ -70,3 +71,4 @@
     color: #FCFCFD;
     border: none;
 }
+

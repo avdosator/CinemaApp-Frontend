@@ -1,5 +1,5 @@
 import "./MovieCard.css"
-import "../SharedCard.css"
+import "../Card.css"
 import type { Movie } from "../../../../types/Movie"
 import { Link } from "react-router-dom";
 import VerticalLine from "../../divider/VerticalLine";

@@ -64,7 +64,13 @@ export default function MovieDetailsPage() {
                             <div className="movie-genres-container">
                                 {movie?.genres.map(genre => (<GenreBadge key={genre.id} label={genre.name} />))}
                             </div>
-                            <p className="movie-synopsis font-lg-regular" style={{ color: "#1D2939" }}>
+                            <p
+                                className="movie-synopsis font-lg-regular"
+                                style={{
+                                    color: "#1D2939",
+                                    marginBottom: movie?.synopsis.length < 300 ? "92px" : "0px"
+                                }}
+                            >
                                 {movie?.synopsis}
                             </p>
                             <div className="movie-director" style={{ color: "#667085" }}>

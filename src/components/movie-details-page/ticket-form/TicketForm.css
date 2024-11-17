@@ -14,7 +14,8 @@
     margin-top: 14px;
     display: flex;
     gap: 16px;
-    overflow-x: auto; /* Allow horizontal scrolling */
+    overflow-x: auto;
+    /* Allow horizontal scrolling */
     white-space: nowrap;
     scrollbar-width: none;
 }
@@ -44,6 +45,18 @@
     width: 278px;
     border-radius: 8px;
     padding: 12px 20px;
+}
+
+.ticket-btn-reserve-disabled {
+    border: 1px solid #D0D5DD;
+    background-color: #FCFCFD;
+    color: #D0D5DD;
+}
+
+.ticket-btn-buy-disabled {
+    background-color: #D0D5DD;
+    color: #FCFCFD;
+    border: none;
 }
 
 .ticket-btn-reserve {

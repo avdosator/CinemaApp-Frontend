@@ -41,6 +41,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
         setFocusedIcon(null);
     };
 
+    const isFormComplete = formData.city && formData.venue && formData.date && formData.time;
+
     return (
         <form className="ticket-form-container" onSubmit={handleSubmit}>
             <div>
@@ -99,8 +101,18 @@ export default function TicketForm({ movie }: { movie: Movie }) {
             <div className="ticket-btns-container">
                 <div className="horizontal-line"></div>
                 <div className="ticket-btns font-lg-semibold">
-                    <button className="ticket-btn-reserve">Reserve Ticket</button>
-                    <button className="ticket-btn-buy">Buy Ticket</button>
+                    <button
+                        className={isFormComplete ? "ticket-btn-reserve" : "ticket-btn-reserve-disabled"}
+                        disabled={!isFormComplete}
+                    >
+                        Reserve Ticket
+                    </button>
+                    <button
+                        className={isFormComplete ? "ticket-btn-buy" : "ticket-btn-buy-disabled"}
+                        disabled={!isFormComplete}
+                    >
+                        Buy Ticket
+                    </button>
                 </div>
             </div>
         </form>

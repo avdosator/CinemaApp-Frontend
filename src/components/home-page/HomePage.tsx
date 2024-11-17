@@ -17,7 +17,7 @@ export default function HomePage() {
     useEffect(() => {
         ApiService.get<PageResponse<Movie>>("/movies/active").then(response => setActiveMovies(response.content));
         ApiService.get<PageResponse<Movie>>("/movies/upcoming").then(response => setUpcomingMovies(response.content));
-        ApiService.get<PageResponse<Venue>>("/venues").then(response => {setVenues(response.content)});
+        ApiService.get<PageResponse<Venue>>("/venues").then(response => { setVenues(response.content) });
     }, [])
     return (
         <>

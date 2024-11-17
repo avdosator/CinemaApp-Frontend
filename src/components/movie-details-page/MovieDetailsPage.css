@@ -37,6 +37,13 @@
     /* box-sizing: border-box; */
 }
 
+.only-movie-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
 .movie-details-image {
     width: 302px;
     height: 168px;

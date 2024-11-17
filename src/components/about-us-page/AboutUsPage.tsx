@@ -1,6 +1,8 @@
 import "./AboutUsPage.css"
 
 export default function AboutUsPage() {
+    window.scrollTo(0, 0);
+    
     return (
         <div className="about-page">
             <div className="about-header">

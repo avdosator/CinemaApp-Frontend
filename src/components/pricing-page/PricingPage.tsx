@@ -3,6 +3,7 @@ import "./PricingPage.css";
 import type { PricingOption as PricingOpt } from "../../types/PricingOption";
 
 export default function PricingPage() {
+    window.scrollTo(0, 0);
     const pricingData: PricingOpt[] = [
         {
             seatType: "Regular",

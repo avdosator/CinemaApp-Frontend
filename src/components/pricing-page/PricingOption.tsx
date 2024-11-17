@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { PricingOption } from "../../types/PricingOption";
 import "./PricingOption.css"
 
@@ -23,7 +24,7 @@ export default function PricingOption({ seatType, price, features }: PricingOpti
                 </ul>
             </div>
             <div className="pricing-btn-container">
-                <button className="explore-movies-btn">Explore Movies</button>
+                <Link to="/movies/currently-showing" className="explore-movies-btn no-style-link">Explore Movies</Link>
             </div>
         </div>
     );

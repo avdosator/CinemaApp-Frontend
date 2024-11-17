@@ -33,7 +33,7 @@ export default function MovieDetailsPage() {
                 <>
                     <section className="video-photo-container">
                         <div className="video-container">
-                            {/* <iframe
+                            <iframe
                                 id="movie-trailer"
                                 width="100%"
                                 height="100%"
@@ -41,7 +41,7 @@ export default function MovieDetailsPage() {
                                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 loading="eager"
                             >
-                            </iframe> */}
+                            </iframe>
                         </div>
                         <div className="movie-photos-container">
                             {movie?.photos.map(photo => (<img key={photo.id} src={photo.url} className="movie-details-image"></img>))}

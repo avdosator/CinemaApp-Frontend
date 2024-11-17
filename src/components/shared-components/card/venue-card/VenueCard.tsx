@@ -1,7 +1,7 @@
 import { Venue } from "../../../../types/Venue";
 import "./VenueCard.css"
 
-export default function VenueCard({ id, name, street, streetNumber, city, photo }: Venue) {
+export default function VenueCard({ name, street, streetNumber, city, photo }: Venue) {
 
     //if venue details are too long for card then slice it to fit to card
     let details = `${street} ${streetNumber}, ${city.name} ${city.postalCode}`;

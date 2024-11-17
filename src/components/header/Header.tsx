@@ -34,7 +34,7 @@ export default function Header() {
                             Upcoming Movies
                         </NavLink>
                         <NavLink
-                            to="#"
+                            to="/venues"
                             className={({ isActive }) => `navbar-link-item font-lg-regular ${isActive ? "active-link font-lg-underline-semibold" : ""}`}>
                             Venues
                         </NavLink>

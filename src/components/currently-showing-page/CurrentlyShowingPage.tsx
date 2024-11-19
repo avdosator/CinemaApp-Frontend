@@ -210,6 +210,5 @@ export default function CurrentlyShowingPage() {
                     </div>
                 )}
             </>)
-
     )
 }

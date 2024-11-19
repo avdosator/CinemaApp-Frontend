@@ -16,12 +16,14 @@ import { City } from "../../types/City";
 import { Genre } from "../../types/Genre";
 import { Venue } from "../../types/Venue";
 import { calculateDateString } from "../../utils/utils";
+import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
 
 export default function CurrentlyShowingPage() {
     let [searchParams, setSearchParams] = useSearchParams();
     let [movies, setMovies] = useState<Movie[]>([]);
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
+    let [isLoading, setIsLoading] = useState<boolean>(true);
     const PAGE_SIZE: string = "9";
     const END_DATE: string = calculateDateString(10);
 
@@ -105,6 +107,7 @@ export default function CurrentlyShowingPage() {
 
     const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number): void => {
 
+        setIsLoading(true);
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
@@ -124,6 +127,7 @@ export default function CurrentlyShowingPage() {
                     pageNumber === 0 ? response.content : [...prevMovies, ...response.content]
                 );
                 setIsLastPage(response.last);
+                setIsLoading(false);
             })
             .catch(error => console.log(error));
     }
@@ -182,26 +186,30 @@ export default function CurrentlyShowingPage() {
     };
 
     return (
-        <>
-            <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
-            <CurrentlyShowingForm
-                handleChange={handleChange}
-                handleDateChange={handleDateChange}
-                formData={formData}
-                cityOptions={cityOptions}
-                genreOptions={genreOptions}
-                venueOptions={venueOptions}
-                timeOptions={projectionTimeOptions} />
-            <div className="font-md-italic-regular date-reminder">
-                Quick reminder that our cinema schedule is on a ten-day update cycle.
-            </div>
-            {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date" />) : (<MovieCardBigList movies={movies} />)}
-            {/* Conditionally render the div with the button */}
-            {!isLastPage && movies.length > 0 && (
-                <div className="load-more-btn">
-                    <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
+        isLoading ?
+            (<LoadingIndicator />)
+            :
+            (<>
+                <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
+                <CurrentlyShowingForm
+                    handleChange={handleChange}
+                    handleDateChange={handleDateChange}
+                    formData={formData}
+                    cityOptions={cityOptions}
+                    genreOptions={genreOptions}
+                    venueOptions={venueOptions}
+                    timeOptions={projectionTimeOptions} />
+                <div className="font-md-italic-regular date-reminder">
+                    Quick reminder that our cinema schedule is on a ten-day update cycle.
                 </div>
-            )}
-        </>
+                {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date" />) : (<MovieCardBigList movies={movies} />)}
+                {/* Conditionally render the div with the button */}
+                {!isLastPage && movies.length > 0 && (
+                    <div className="load-more-btn">
+                        <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
+                    </div>
+                )}
+            </>)
+
     )
 }

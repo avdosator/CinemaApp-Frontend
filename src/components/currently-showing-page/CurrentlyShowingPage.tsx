@@ -186,10 +186,10 @@ export default function CurrentlyShowingPage() {
     };
 
     return (
-        isLoading ?
-            (<LoadingIndicator />)
-            :
-            (<>
+        isLoading ? (
+            <LoadingIndicator />
+        ) : (
+            <>
                 <h4 className="font-heading-h4 currently-showing-caption">Currently showing{movies.length !== 0 ? `(${movies.length})` : "(0)"}</h4>
                 <CurrentlyShowingForm
                     handleChange={handleChange}
@@ -209,6 +209,7 @@ export default function CurrentlyShowingPage() {
                         <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
                     </div>
                 )}
-            </>)
+            </>
+        )
     )
 }

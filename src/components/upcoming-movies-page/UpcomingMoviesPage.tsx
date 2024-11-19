@@ -166,10 +166,10 @@ export default function UpcomingMoviesPage() {
     };
 
     return (
-        isLoading ?
-            (<LoadingIndicator />)
-            :
-            (<>
+        isLoading ? (
+            <LoadingIndicator />
+        ) : (
+            <>
                 <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
                 <UpcomingMoviesForm
                     handleChange={handleChange}
@@ -186,6 +186,7 @@ export default function UpcomingMoviesPage() {
                         <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
                     </div>
                 )}
-            </>)
+            </>
+        )
     )
 }

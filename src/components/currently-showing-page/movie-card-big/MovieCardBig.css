@@ -39,15 +39,7 @@
 
 .movie-card-big-data {
     display: flex;
-}
-
-.divider {
-    width: 20px;
-    height: 0px;
-    border: 1px solid #B22222;
-    opacity: 0px;
-    rotate: -90deg;
-    align-self: center;
+    gap: 8px;
 }
 
 .movie-card-big-genre-container {

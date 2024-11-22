@@ -1,0 +1,29 @@
+.date-picker-btn-small {
+    width: 78px;
+    height: 72px;
+    padding: 6px;
+    background-color: #FFFFFF;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 auto; /* prevent shrinking */
+}
+
+.btn-day-small, .btn-date-small {
+    color: #1D2939;
+}
+
+.selected-date-btn-small {
+    color: #1D2939;
+}
+
+.date-picker-btn-small.selected-date-btn-small {
+    background-color: #B22222;
+}
+
+.selected-date-btn-small div {
+    color: #FCFCFD;
+}

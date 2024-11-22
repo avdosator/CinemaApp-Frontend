@@ -1,0 +1,17 @@
+.movie-card-small-container {
+    width: 100%;
+    margin: 48px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.movie-card-small-list {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 14px;
+    row-gap: 2px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}

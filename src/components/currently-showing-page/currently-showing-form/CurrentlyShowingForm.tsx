@@ -4,8 +4,9 @@ import Select, { SingleValue } from "react-select";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faLocationPin, faClock, faBuilding, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { SelectOptionType } from "../../../types/SelectOptionType";
-import { CurrentlyShowingFormData } from "../../../types/CurrentlyShowingFormData";
+import { CurrentlyShowingFormData } from "../../../types/FormData";
 import { useState } from "react";
+import { IconType } from "../../../types/IconType";
 
 type CurrentlyShowingFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,
@@ -17,7 +18,6 @@ type CurrentlyShowingFormProps = {
     timeOptions?: SelectOptionType[];
 }
 
-type IconName = "magnifyingGlass" | "locationPin" | "building" | "video" | "clock" | "calendar" | null;
 
 export default function CurrentlyShowingForm({
     handleChange,
@@ -27,9 +27,9 @@ export default function CurrentlyShowingForm({
     genreOptions,
     venueOptions,
     timeOptions }: CurrentlyShowingFormProps) {
-    const [focusedIcon, setFocusedIcon] = useState<IconName>(null);
+    const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
 
-    const handleFocus = (iconName: IconName) => {
+    const handleFocus = (iconName: IconType) => {
         setFocusedIcon(iconName);
     };
 

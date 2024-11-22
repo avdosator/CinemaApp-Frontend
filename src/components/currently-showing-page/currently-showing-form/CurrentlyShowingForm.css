@@ -67,7 +67,8 @@
 .dropdown__placeholder,
 .dropdown__dropdown-indicator,
 .dropdown__option,
-.dropdown__clear-indicator {
+.dropdown__clear-indicator,
+.dropdown__single-value {
     color: #667085 !important;
 }
 

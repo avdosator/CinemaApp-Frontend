@@ -14,8 +14,14 @@ export type UpcomingMoviesFormData = {
     city: SelectOptionType | null,
     venue: SelectOptionType | null,
     genre: SelectOptionType | null,
-    // dateRange: string,
      startDate: string,
      endDate: string
+}
+
+export type MovieDetailsFormData = {
+    city: SelectOptionType | null,
+    venue: SelectOptionType | null,
+    date: string,
+    time: string
 }
 

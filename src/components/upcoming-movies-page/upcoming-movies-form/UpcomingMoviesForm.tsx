@@ -8,8 +8,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange, Range, RangeKeyDict } from 'react-date-range';
 import { format } from 'date-fns';
 import { useEffect, useState } from "react";
-import { UpcomingMoviesFormData } from "../../../types/CurrentlyShowingFormData";
-import { calculateDateString } from "../../../utils/utils";
+import { UpcomingMoviesFormData } from "../../../types/FormData";
 
 type UpcomingMoviesFormProps = {
     handleChange: (name: string, value: string | SingleValue<SelectOptionType>) => void,

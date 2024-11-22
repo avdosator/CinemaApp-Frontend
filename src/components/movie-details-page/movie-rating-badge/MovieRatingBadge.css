@@ -1,0 +1,19 @@
+.movie-rating-badge {
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    background-color: #FCFCFD;
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+
+.star-icon {
+    align-self: center;
+    fill: #B22222;
+}
+
+.movie-rating-info {
+    display: flex;
+    flex-direction: column;
+}

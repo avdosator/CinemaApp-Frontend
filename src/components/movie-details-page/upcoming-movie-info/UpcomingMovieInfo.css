@@ -1,0 +1,57 @@
+.upcoming-movie-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upcoming-movie-main-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-bottom: 5%;
+}
+
+.upcoming-movie-info-heading {
+    color: #344054;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.notify-me-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal-divider {
+    height: 1px;
+    background-color: #E4E7EC;
+    margin: 0px -24px 20px -24px;
+}
+
+.notify-me-container p {
+    color: #1D2939;
+     margin-bottom: 0px; 
+     align-self: center;
+     margin-top: 8px;
+}
+
+.notify-me-btn {
+    width: 100%;
+    color: #FCFCFD;
+    background-color: #B22222;
+    border-radius: 8px;
+    border: none;
+    padding: 12px 20px 12px 20px;
+    text-align: center;
+}
+
+.signup-anchor {
+    color: #1D2939;
+    text-decoration: 0.5px solid underline;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}

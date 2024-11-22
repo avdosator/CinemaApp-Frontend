@@ -1,0 +1,74 @@
+.ticket-form-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ticket-inputs {
+    margin: 0 !important;
+}
+
+.date-picker-btn-container {
+    margin-top: 14px;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    /* Allow horizontal scrolling */
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.projection-times {
+    display: flex;
+    gap: 16px;
+}
+
+.ticket-btns-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-btns {
+    display: flex;
+    justify-content: space-between;
+    /* column-gap: 3.77% ; */
+}
+
+.horizontal-line {
+    height: 1px;
+    background-color: #E4E7EC;
+    margin: 0px -24px 20px -24px;
+}
+
+.ticket-btns button {
+    width: 278px;
+    border-radius: 8px;
+    padding: 12px 20px;
+}
+
+.ticket-btn-reserve-disabled {
+    border: 1px solid #D0D5DD;
+    background-color: #FCFCFD;
+    color: #D0D5DD;
+}
+
+.ticket-btn-buy-disabled {
+    background-color: #D0D5DD;
+    color: #FCFCFD;
+    border: none;
+}
+
+.ticket-btn-reserve {
+    border: 1px solid #B22222;
+    color: #B22222;
+    background-color: #FCFCFD;
+}
+
+.ticket-btn-buy {
+    background-color: #B22222;
+    color: #FCFCFD;
+    border: none;
+}
+

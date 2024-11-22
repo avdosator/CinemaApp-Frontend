@@ -15,13 +15,6 @@
     align-items: center;
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-}
-
 .navbar-links {
     display: flex;
     gap: 16px;

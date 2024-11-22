@@ -11,7 +11,9 @@ export default function VenueCard({ id, name, street, streetNumber, city, photo 
     return (
         <>
             <div className="shared-card">
-                <img src={photo.url} alt="Venue Poster" className="shared-card-image" />
+                <div className="shared-card-img-container">
+                    <img src={photo.url} alt="Venue Poster" className="shared-card-image" />
+                </div>
                 <div className="shared-card-content">
                     <h6 className="shared-card-header font-heading-h6">{name}</h6>
                     <div className="shared-card-details">

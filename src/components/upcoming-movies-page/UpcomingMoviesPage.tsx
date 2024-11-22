@@ -16,12 +16,14 @@ import { SingleValue } from "react-select";
 import UpcomingMoviesForm from "./upcoming-movies-form/UpcomingMoviesForm";
 import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
 import { format } from "date-fns";
+import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
 
 export default function UpcomingMoviesPage() {
     let [searchParams, setSearchParams] = useSearchParams();
     let [movies, setMovies] = useState<Movie[]>([]);
-    let [page, setPage] = useState(0);
-    let [isLastPage, setIsLastPage] = useState(false);
+    let [page, setPage] = useState<number>(0);
+    let [isLastPage, setIsLastPage] = useState<boolean>(false);
+    let [isLoading, setIsLoading] = useState<boolean>(true);
     const PAGE_SIZE: string = "12";
     const START_DATE: string = calculateDateString(1);
     const END_DATE: string = calculateDateString(200);
@@ -96,6 +98,7 @@ export default function UpcomingMoviesPage() {
 
     const fetchMovies = (data: UpcomingMoviesFormData, pageNumber: number) => {
 
+        setIsLoading(true);
         const params: Record<string, string | undefined | number> = {
             page: pageNumber,
             size: PAGE_SIZE,
@@ -115,6 +118,7 @@ export default function UpcomingMoviesPage() {
                     pageNumber === 0 ? response.content : [...prevMovies, ...response.content]
                 );
                 setIsLastPage(response.last);
+                setIsLoading(false);
             })
             .catch(error => console.log(error));
     }
@@ -162,23 +166,27 @@ export default function UpcomingMoviesPage() {
     };
 
     return (
-        <>
-            <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
-            <UpcomingMoviesForm
-                handleChange={handleChange}
-                formData={formData}
-                cityOptions={cityOptions}
-                genreOptions={genreOptions}
-                venueOptions={venueOptions}
-                initialFormattedDateRange={initialFormattedDateRange}
-                
-            />
-            {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date range" />) : (<UpcomingMoviesList movies={movies} />)}
-            {!isLastPage && movies.length > 0 && (
-                <div className="load-more-btn">
-                    <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
-                </div>
-            )}
-        </>
+        isLoading ? (
+            <LoadingIndicator />
+        ) : (
+            <>
+                <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
+                <UpcomingMoviesForm
+                    handleChange={handleChange}
+                    formData={formData}
+                    cityOptions={cityOptions}
+                    genreOptions={genreOptions}
+                    venueOptions={venueOptions}
+                    initialFormattedDateRange={initialFormattedDateRange}
+
+                />
+                {movies.length === 0 ? (<NoMoviesPreview infoText="No movies to preview for current date range" />) : (<UpcomingMoviesList movies={movies} />)}
+                {!isLastPage && movies.length > 0 && (
+                    <div className="load-more-btn">
+                        <TertiaryButton label="Load More" size="large" onClick={handleLoadMore} />
+                    </div>
+                )}
+            </>
+        )
     )
 }

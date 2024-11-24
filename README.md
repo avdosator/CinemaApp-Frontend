@@ -15,27 +15,38 @@ This is the frontend part of the CinemaApp, built using **React**. It provides a
 
 ## Setup and Installation
 
-1. Ensure that **Node.js** is installed on your system.
+1. **Ensure that Node.js is installed on your system.**
 
-2. Clone the frontend repository:
+2. **Clone the frontend repository**:
 
     ```bash
     git clone https://github.com/avdosator/CinemaApp-Frontend
     ```
 
-3. Navigate to the project directory:
+3. **Navigate to the project directory**:
 
     ```bash
     cd CinemaApp-frontend
     ```
 
-4. Install dependencies:
+4. **Install dependencies**:
 
     ```bash
     npm install
     ```
 
-5. Start the Vite development server:
+5. **Configure API Base URL**:
+
+    - Create a `.env` file in the project's root directory (if it doesn't already exist).
+    - Add the following line to define the backend API base URL:
+
+        ```env
+        VITE_API_BASE_URL=http://localhost:8080/api
+        ```
+
+    - Ensure this URL matches the backend's base path. Adjust it if the backend is hosted on a different server or port.
+
+6. **Start the Vite development server**:
 
     ```bash
     npm run dev

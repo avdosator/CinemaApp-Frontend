@@ -1,16 +1,18 @@
 .sign-up-form-container {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     gap: 16px;
+    /* margin-bottom: 32px; */
 }
 
 .auth-container-heading {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
+    gap: 30%;
 }
 
 .auth-back-btn {
@@ -27,10 +29,21 @@
 
 .auth-heading {
     color: #D0D5DD;
+    margin-bottom: 0px;
+}
+
+.sign-up-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .sign-up-input-group {
     width: 100%;
+}
+
+.sign-up-form-label {
+    color: #FCFCFD;
 }
 
 .sign-up-input-group input {

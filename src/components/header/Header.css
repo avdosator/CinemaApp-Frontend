@@ -94,6 +94,15 @@
     margin-right: 2px;
 }
 
+.navbar-sign-in-btn {
+    background-color: #1D2939;
+    border: 1px solid #FCFCFD;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #FCFCFD;
+    text-decoration: none;
+}
+
 .dropdown-icon-container {
     width: 24px;
     height: 24px;

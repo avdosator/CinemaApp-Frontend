@@ -11,25 +11,6 @@
     /* backdrop-filter: blur(15px) try what this is for */
 }
 
-.auth-container-heading {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.auth-back-btn {
-    width: 36px;
-    height: 40px;
-    background-color: #FCFCFD1A;
-    /* #D0D5DD arrow color */
-    backdrop-filter: blur(4px)
-}
-
-.auth-heading {
-    color: #D0D5DD;
-}
-
 .signup-redirect-btn {
     font-weight: 600 !important;
     text-decoration-line: underline;

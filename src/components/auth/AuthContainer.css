@@ -1,5 +1,5 @@
 .auth-container {
-    width: 528px;
+    /* width: 528px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -7,8 +7,22 @@
     align-items: center;
     padding: 80px 64px;
     column-gap: 24px;
-    background-color: #1D2939;
-    /* backdrop-filter: blur(15px) try what this is for */
+    background-color: #1D2939; */
+     /* backdrop-filter: blur(15px) */
+
+     position: absolute; /* Ensure it can overlap the footer */
+     top: 80px; /* Adjust based on your navbar height */
+     right: 0; /* Center horizontally */
+     width: 528px; /* Maintain the width as it is */
+     height: calc(100vh - 80px); /* Full screen height minus the navbar height */
+     display: flex;
+     flex-direction: column;
+     justify-content: start;
+     align-items: center;
+     padding: 80px 64px;
+     column-gap: 24px;
+     background-color: #1D2939;
+     z-index: 10; /* Ensure it stays above other elements like the footer */
 }
 
 .signup-redirect-btn {

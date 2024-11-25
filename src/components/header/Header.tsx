@@ -39,7 +39,7 @@ export default function Header() {
                             Venues
                         </NavLink>
                     </div>
-                    <Link to="#" className="navbar-sign-in-btn font-lg-semibold">Sign In</Link>
+                    <Link to="/sign-up" className="navbar-sign-in-btn font-lg-semibold">Sign In</Link>
                     {/* 
                     <div className="navbar-actions">
                         

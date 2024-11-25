@@ -1,3 +1,4 @@
+import "./AuthContainer.css"
 import logoNavbar from "../../assets/logo-navbar.png"
 
 export default function AuthContainer() {

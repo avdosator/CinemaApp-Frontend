@@ -1,18 +1,20 @@
 .auth-container {
-     backdrop-filter: blur(15px);
-     position: absolute;
-     top: 80px; /* Adjust based on your navbar height */
-     right: 0;
-     width: 528px;
-     height: calc(100vh - 80px); /* Full screen height minus the navbar height */
-     display: flex;
-     flex-direction: column;
-     justify-content: space-between;
-     align-items:center;
-     padding: 48px 64px;
-     gap: 16px;
-     background-color: #1D2939;
-     z-index: 10; /* Ensure it stays above other elements */
+    backdrop-filter: blur(15px);
+    position: absolute;
+    top: 80px; /* Adjust based on your navbar height */
+    right: 0;
+    width: 528px;
+    display: flex;
+    /* If content is higher than screen height, make it scrollable  */
+    max-height: calc(100vh - 80px); /* Limit height to fit within the viewport */
+    overflow-y: auto; /* Enable scrolling when content overflows */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 64px;
+    gap: 16px;
+    background-color: #1D2939;
+    z-index: 10; /* Ensure it stays above other elements */
 }
 
 #or-divider {
@@ -34,5 +36,6 @@
 }
 
 .other-login-ways {
-    display: none; /* This will be available after implementation */
+    display: none;
+    /* This will be available after implementation */
 }

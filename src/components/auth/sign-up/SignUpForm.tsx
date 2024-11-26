@@ -2,6 +2,7 @@ import "./SignUpForm.css"
 import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
+import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
 
 type SignupFormType = {
     email: string,
@@ -153,10 +154,7 @@ export default function SignUpForm() {
                     {errors.confirmPassword && <div className="font-sm-regular sign-up-error">{errors.confirmPassword.message}</div>}
                 </div>
                 <div className="sign-up-form-options">
-                    <div id="inputPreview">
-                        <input name="rememberMeCheck" id="rememberMeCheck" type="checkbox" className="css-checkbox" />
-                        <label htmlFor="rememberMeCheck" className="font-lg-semibold " style={{ color: "#98A2B3" }}>Remember me</label>
-                    </div>
+                    <CustomCheckbox />
                     <Link to="forgot-password-btn" className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</Link>
                 </div>
                 <button type="submit" className="sign-up-form-btn font-lg-semibold" disabled={isSubmitting}>Sign Up</button>

@@ -48,6 +48,10 @@
 
 .sign-up-input-group input {
     width: 100% !important;
+    border-radius: 8px;
+    border: 1px solid #E4E7EC;
+    height: 48px;
+    text-align: left;
 }
 
 .sign-up-form-options {

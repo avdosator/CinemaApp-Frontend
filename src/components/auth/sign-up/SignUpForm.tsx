@@ -13,15 +13,15 @@ export default function SignUpForm() {
             <form action="" className="sign-up-form">
                 <div id="sign-up-email-container" className="sign-up-input-group">
                     <label htmlFor="" className="sign-up-form-label font-lg-semibold">Email</label>
-                    <input type="text" />
+                    <input type="text" className="font-lg-regular" />
                 </div>
                 <div id="sign-up-password-container" className="sign-up-input-group">
                     <label htmlFor="" className="sign-up-form-label font-lg-semibold">Password</label>
-                    <input type="text" name="" id="" />
+                    <input type="text" name="" id="" className="font-lg-regular" />
                 </div>
                 <div id="sign-up-confirm-password-container" className="sign-up-input-group">
                     <label htmlFor="" className="sign-up-form-label font-lg-semibold">Confirm Password</label>
-                    <input type="text" name="" id="" />
+                    <input type="text" name="" id="" className="font-lg-regular" />
                 </div>
                 <div className="sign-up-form-options">
                     <div>

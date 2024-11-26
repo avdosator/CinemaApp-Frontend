@@ -10,14 +10,16 @@
 .auth-container-heading {
     width: 100%;
     display: flex;
-    justify-content: start;
+    /* justify-content: start; */
     align-items: center;
-    gap: 30%;
+    position: relative;
 }
 
 .auth-back-btn {
     width: 36px;
     height: 40px;
+    position: absolute; /* Keeps the arrow fixed on the left */
+    left: 0; /* Aligns it to the left edge of the container */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,8 +30,12 @@
 }
 
 .auth-heading {
+    /* color: #D0D5DD;
+    margin-bottom: 0px; */
+    flex-grow: 1; /* Makes the heading take available space */
+    text-align: center; /* Centers the heading text horizontally */
     color: #D0D5DD;
-    margin-bottom: 0px;
+    margin: 0; /* Ensures no extra space around the heading */
 }
 
 .sign-up-form {
@@ -46,12 +52,41 @@
     color: #FCFCFD;
 }
 
+.sign-up-input-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: visible;
+}
+
 .sign-up-input-group input {
     width: 100% !important;
     border-radius: 8px;
     border: 1px solid #E4E7EC;
-    height: 48px;
+    padding: 12px 12px;
+    padding-left: 35px;
     text-align: left;
+    color: #101828;
+}
+
+.sign-up-input-group input::placeholder {
+    color: #667085;
+}
+
+.sign-up-input-group input:focus {
+    border: 1px solid #B22222 !important;
+    outline: none 1px #B22222 !important;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    /* Vertically center the icon */
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    color: #344054 !important;
+    z-index: 1;
 }
 
 .sign-up-form-options {
@@ -72,4 +107,56 @@
     color: #FCFCFD;
     border-radius: 8px;
     border: none;
+}
+
+.css-checkbox {
+    position: absolute;
+    overflow: hidden;
+    height: 0px;
+    width: 0px;
+    /* margin: -1px;
+    padding: 0;
+    border: 0; */
+}
+
+#inputPreview {
+    display: flex;
+    /* gap: 20px; */
+    justify-content: center;
+}
+
+.css-checkbox+label {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.css-checkbox+label::before {
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FCFCFD;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+.css-checkbox:checked+label::after {
+    content: " ";
+    background-image: url("../../../assets/check-solid.svg");
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: center center;
+    background-color: #101828;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
 }

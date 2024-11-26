@@ -1,36 +1,36 @@
 .auth-container {
-    /* width: 528px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    padding: 80px 64px;
-    column-gap: 24px;
-    background-color: #1D2939; */
-     /* backdrop-filter: blur(15px) */
-
-     position: absolute; /* Ensure it can overlap the footer */
+     backdrop-filter: blur(15px);
+     position: absolute;
      top: 80px; /* Adjust based on your navbar height */
-     right: 0; /* Center horizontally */
-     width: 528px; /* Maintain the width as it is */
+     right: 0;
+     width: 528px;
      height: calc(100vh - 80px); /* Full screen height minus the navbar height */
      display: flex;
      flex-direction: column;
-     justify-content: start;
-     align-items: center;
-     padding: 80px 64px;
-     column-gap: 24px;
+     justify-content: space-between;
+     align-items:center;
+     padding: 48px 64px;
+     gap: 16px;
      background-color: #1D2939;
-     z-index: 10; /* Ensure it stays above other elements like the footer */
+     z-index: 10; /* Ensure it stays above other elements */
+}
+
+#or-divider {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.auth-horizontal-line {
+    width: 45%;
+    height: 1px;
+    align-self: center;
+    background-color: #98A2B3;
 }
 
 .signup-redirect-btn {
     font-weight: 600 !important;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
+    margin-left: 8px;
 }
 
 .other-login-ways {

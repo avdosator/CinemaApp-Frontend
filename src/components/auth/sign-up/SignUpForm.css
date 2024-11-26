@@ -66,6 +66,7 @@
     padding-left: 35px;
     text-align: left;
     color: #101828;
+    box-sizing: border-box;
 }
 
 .sign-up-input-group input::placeholder {
@@ -73,8 +74,8 @@
 }
 
 .sign-up-input-group input:focus {
-    border: 1px solid #B22222 !important;
-    outline: none 1px #B22222 !important;
+    border: 1px solid #E4E7EC;
+    outline: none;
 }
 
 .show-password-icon {
@@ -93,6 +94,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.sign-up-error {
+    margin-top: 4px;
+    color: #FDA29B;
 }
 
 .forgot-password-link {

@@ -18,8 +18,10 @@
 .auth-back-btn {
     width: 36px;
     height: 40px;
-    position: absolute; /* Keeps the arrow fixed on the left */
-    left: 0; /* Aligns it to the left edge of the container */
+    position: absolute;
+    /* Keeps the arrow fixed on the left */
+    left: 0;
+    /* Aligns it to the left edge of the container */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,10 +34,13 @@
 .auth-heading {
     /* color: #D0D5DD;
     margin-bottom: 0px; */
-    flex-grow: 1; /* Makes the heading take available space */
-    text-align: center; /* Centers the heading text horizontally */
+    flex-grow: 1;
+    /* Makes the heading take available space */
+    text-align: center;
+    /* Centers the heading text horizontally */
     color: #D0D5DD;
-    margin: 0; /* Ensures no extra space around the heading */
+    margin: 0;
+    /* Ensures no extra space around the heading */
 }
 
 .sign-up-form {
@@ -86,7 +91,8 @@
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
-    color: #344054 !important;
+    /* color: #344054 !important; */
+    fill: #667085;
     z-index: 1;
 }
 
@@ -101,8 +107,55 @@
     color: #FDA29B;
 }
 
-.populated-field-icon {
+/* Style for colors based on input validity */
+
+/* General styles for inputs */
+.sign-up-input-group {
+    color: #344054;
+}
+
+/* Populated state */
+.sign-up-input-group.populated {
+    color: #B22222;
+}
+
+.sign-up-input-group.populated input {
+    border: 1px solid #B22222;
+}
+
+.sign-up-input-group.populated .input-icon {
     fill: #B22222;
+}
+
+/* Error state */
+.sign-up-input-group.error {
+    color: #FDA29B;
+}
+
+.sign-up-input-group.error input {
+    border: 1px solid #FDA29B;
+    color: #FDA29B;
+}
+
+.sign-up-input-group.error .input-icon,
+.sign-up-input-group.error .show-password-icon {
+    fill: #FDA29B;
+}
+
+.show-password-icon.error-icon {
+    fill: #FDA29B;
+}
+
+.sign-up-input-group.error .sign-up-error {
+    color: #FDA29B;
+}
+
+.sign-up-input-group.error .sign-up-form-label {
+    color: #FDA29B;
+}
+
+.error-icon {
+    fill: #FDA29B;
 }
 
 .forgot-password-link {

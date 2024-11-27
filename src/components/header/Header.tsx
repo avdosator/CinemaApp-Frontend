@@ -1,12 +1,17 @@
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import logoNavbar from "../../assets/logo-navbar.png"
 import "./Header.css"
 import { useState } from "react";
+import AuthContainer from "../auth/AuthContainer";
 
 export default function Header() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
 
-    const handleToggle = () => {
+    const openAuthModal = (): void => setIsAuthModalOpen(true);
+    const closeAuthModal = (): void => setIsAuthModalOpen(false);
+
+    const handleToggle = (): void => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
@@ -39,7 +44,9 @@ export default function Header() {
                             Venues
                         </NavLink>
                     </div>
-                    <Link to="/sign-up" className="navbar-sign-in-btn font-lg-semibold">Sign In</Link>
+                    <button onClick={openAuthModal} className="navbar-sign-in-btn font-lg-semibold">
+                        Sign In
+                    </button>
                     {/* 
                     <div className="navbar-actions">
                         
@@ -67,6 +74,7 @@ export default function Header() {
                     </div>
                 )}
             </nav>
+            {isAuthModalOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
         </>
     )
 }

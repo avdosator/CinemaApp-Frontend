@@ -6,6 +6,11 @@
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #667085;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*Places it above other content, including the auth-container */
+    z-index: 20;
 }
 
 .navbar-content {

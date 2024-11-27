@@ -27,20 +27,15 @@
     align-items: center;
     border-radius: 6px;
     background-color: #FCFCFD1A;
-    /* #D0D5DD arrow color */
     backdrop-filter: blur(4px)
 }
 
 .auth-heading {
-    /* color: #D0D5DD;
-    margin-bottom: 0px; */
-    flex-grow: 1;
     /* Makes the heading take available space */
+    flex-grow: 1;
     text-align: center;
-    /* Centers the heading text horizontally */
     color: #D0D5DD;
     margin: 0;
-    /* Ensures no extra space around the heading */
 }
 
 .sign-up-form {
@@ -127,35 +122,24 @@
     fill: #B22222;
 }
 
-/* Error state */
-.sign-up-input-group.error {
-    color: #FDA29B;
-}
 
+/* Error state */
 .sign-up-input-group.error input {
     border: 1px solid #FDA29B;
     color: #FDA29B;
 }
 
 .sign-up-input-group.error .input-icon,
-.sign-up-input-group.error .show-password-icon {
-    fill: #FDA29B;
-}
-
-.show-password-icon.error-icon {
-    fill: #FDA29B;
-}
-
-.sign-up-input-group.error .sign-up-error {
-    color: #FDA29B;
-}
-
-.sign-up-input-group.error .sign-up-form-label {
-    color: #FDA29B;
-}
-
+.sign-up-input-group.error .show-password-icon,
+.show-password-icon.error-icon,
 .error-icon {
     fill: #FDA29B;
+}
+
+.sign-up-input-group.error .sign-up-error,
+.sign-up-input-group.error .sign-up-form-label,
+.sign-up-input-group.error {
+    color: #FDA29B;
 }
 
 .forgot-password-link {
@@ -170,56 +154,4 @@
     color: #FCFCFD;
     border-radius: 8px;
     border: none;
-}
-
-.css-checkbox {
-    position: absolute;
-    overflow: hidden;
-    height: 0px;
-    width: 0px;
-    /* margin: -1px;
-    padding: 0;
-    border: 0; */
-}
-
-#inputPreview {
-    display: flex;
-    /* gap: 20px; */
-    justify-content: center;
-}
-
-.css-checkbox+label {
-    position: relative;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-}
-
-.css-checkbox+label::before {
-    content: " ";
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-    width: 20px;
-    height: 20px;
-    border: 2px solid #FCFCFD;
-    border-radius: 2px;
-    box-shadow: none;
-}
-
-.css-checkbox:checked+label::after {
-    content: " ";
-    background-image: url("../../../assets/check-solid.svg");
-    background-repeat: no-repeat;
-    background-size: 15px 15px;
-    background-position: center center;
-    background-color: #101828;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: transparent;
-    height: 20px;
-    width: 20px;
 }

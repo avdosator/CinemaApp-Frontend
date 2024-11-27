@@ -1,3 +1,5 @@
+import "./CustomCheckbox.css"
+
 export default function CustomCheckbox() {
     return (
         <div id="inputPreview">

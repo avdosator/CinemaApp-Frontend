@@ -1,0 +1,159 @@
+/* sign-in-form-container and sign-up-form-container */
+.auth-form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* prebaceno iz signnup forme - sljedece 3 klase, obrisati tamo pa probati */
+.auth-container-heading {
+    width: 100%;
+    display: flex;
+    /* justify-content: start; */
+    align-items: center;
+    position: relative;
+}
+
+.auth-back-btn {
+    width: 36px;
+    height: 40px;
+    position: absolute;
+    /* Keeps the arrow fixed on the left */
+    left: 0;
+    /* Aligns it to the left edge of the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    background-color: #FCFCFD1A;
+    backdrop-filter: blur(4px)
+}
+
+.auth-heading {
+    /* Makes the heading take available space */
+    flex-grow: 1;
+    text-align: center;
+    color: #D0D5DD;
+    margin: 0;
+}
+
+/* isto ima i u signup i signin */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-input-group {
+    width: 100%;
+}
+
+.auth-form-label {
+    color: #FCFCFD;
+}
+
+.auth-input-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: visible;
+}
+
+.auth-input-group input {
+    width: 100% !important;
+    border-radius: 8px;
+    border: 1px solid #E4E7EC;
+    padding: 12px 12px;
+    padding-left: 35px;
+    text-align: left;
+    color: #101828;
+    box-sizing: border-box;
+}
+
+.auth-input-group input::placeholder {
+    color: #667085;
+}
+
+.auth-input-group input:focus {
+    border: 1px solid #E4E7EC;
+    outline: none;
+}
+
+.auth-error {
+    margin-top: 4px;
+    color: #FDA29B;
+}
+
+/* nije obrisano iz signupform.css */
+.show-password-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    /* Vertically center the icon */
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    /* color: #344054 !important; */
+    fill: #667085;
+    z-index: 1;
+}
+
+.auth-form-options {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.forgot-password-link {
+    color: #98A2B3;
+}
+
+.auth-form-btn {
+    text-align: center;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #B22222;
+    color: #FCFCFD;
+    border-radius: 8px;
+    border: none;
+}
+
+/* Style for colors based on input validity */
+
+/* General styles for inputs */
+.auth-input-group {
+    color: #344054;
+}
+
+/* Populated state */
+.auth-input-group.populated {
+    color: #B22222;
+}
+
+.auth-input-group.populated input {
+    border: 1px solid #B22222;
+}
+
+.auth-input-group.populated .input-icon {
+    fill: #B22222;
+}
+
+
+/* Error state */
+.auth-input-group.error input {
+    border: 1px solid #FDA29B;
+    color: #FDA29B;
+}
+
+.auth-input-group.error .input-icon,
+.auth-input-group.error .show-password-icon,
+.show-password-icon.error-icon,
+.error-icon {
+    fill: #FDA29B;
+}
+
+.auth-input-group.error .auth-error,
+.auth-input-group.error .auth-form-label,
+.auth-input-group.error {
+    color: #FDA29B;
+}

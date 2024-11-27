@@ -23,7 +23,7 @@ function App() {
               <Route path='/movies/*' element={<MovieRoutes />} />
               <Route path='/about' element={<AboutUsPage />} />
               <Route path='/pricing' element={<PricingPage />} />
-              <Route path='/sign-up' element={<AuthContainer />} />
+              {/* <Route path='/sign-up' element={<AuthContainer />} /> */}
             </Routes>
           </div>
           <Footer />

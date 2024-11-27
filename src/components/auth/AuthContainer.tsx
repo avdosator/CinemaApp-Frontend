@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import SignUpForm from "./sign-up/SignUpForm"
 import SignInForm from "./sign-in/SignInForm"
 
-export default function AuthContainer() {
+export default function AuthContainer({ closeAuthContainer }: { closeAuthContainer: () => void }) {
     return (
         <div className="auth-container">
             <div className="logo">
@@ -25,7 +25,9 @@ export default function AuthContainer() {
                 <div className="google-login-btn"></div>
                 <div className="mac-login-btn"></div>
             </div>
-            <Link to="#" className="font-lg-underline-semibold no-style-link" style={{ color: "#FCFCFD" }}>Continue without signing In</Link>
+            <button onClick={closeAuthContainer} className="font-lg-underline-semibold no-style-link close-auth-container-btn" >
+                Continue without signing In
+            </button>
         </div>
     )
 }

@@ -1,20 +1,24 @@
 .auth-container {
     backdrop-filter: blur(15px);
-    position: absolute;
-    top: 80px; /* Adjust based on your navbar height */
+    position: fixed;
+    /* Adjust based on navbar height */
+    top: 80px;
     right: 0;
     width: 528px;
     display: flex;
-    /* If content is higher than screen height, make it scrollable  */
     height: calc(100vh - 80px);
-    overflow-y: auto; /* Enable scrolling when content overflows */
+    /* Enable scrolling when content overflows */
+    overflow-y: auto;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 48px 64px;
+    padding: 64px 64px;
     gap: 16px;
     background-color: #1D2939;
-    z-index: 10; /* Ensure it stays above other elements */
+    /* Ensure it stays above other elements */
+    z-index: 10;
+    scrollbar-width: none;
+    /* scrollbar-color: #98A2B3 transparent; Firefox */
 }
 
 #or-divider {
@@ -38,4 +42,10 @@
 .other-login-ways {
     display: none;
     /* This will be available after implementation */
+}
+
+.close-auth-container-btn {
+    color: #FCFCFC;
+    background-color: inherit;
+    border: none;
 }

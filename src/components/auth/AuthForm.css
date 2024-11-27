@@ -22,6 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
     border-radius: 6px;
     background-color: #FCFCFD1A;
     backdrop-filter: blur(4px)
@@ -55,11 +56,15 @@
     overflow: visible;
 }
 
+.auth-form-label {
+    margin-bottom: 2px;
+}
+
 .auth-input-group input {
     width: 100% !important;
     border-radius: 8px;
     border: 1px solid #E4E7EC;
-    padding: 12px 12px;
+    padding: 6px 12px;
     padding-left: 35px;
     text-align: left;
     color: #101828;
@@ -107,6 +112,7 @@
     text-align: center;
     width: 100%;
     padding: 12px 20px;
+    margin-top: 16px;
     background-color: #B22222;
     color: #FCFCFD;
     border-radius: 8px;

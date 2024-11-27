@@ -1,4 +1,5 @@
 .auth-container {
+    /* This property does not work until opacity is less than 1, but provided opacity in figma is 1 */
     backdrop-filter: blur(15px);
     position: fixed;
     /* Adjust based on navbar height */
@@ -12,9 +13,8 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 64px 64px;
-    gap: 16px;
-    background-color: #1D2939;
+    padding: 32px 54px;
+    background-color: rgba(29, 41, 57, 1);
     /* Ensure it stays above other elements */
     z-index: 10;
     scrollbar-width: none;

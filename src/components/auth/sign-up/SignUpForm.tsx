@@ -1,8 +1,6 @@
 import "../AuthForm.css"
-import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
-import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
 
 type SignupFormType = {
     email: string,

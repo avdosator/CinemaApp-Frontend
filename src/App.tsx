@@ -7,7 +7,6 @@ import AboutUsPage from './components/about-us-page/AboutUsPage';
 import PricingPage from './components/pricing-page/PricingPage';
 import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
-import AuthContainer from './components/auth/AuthContainer';
 
 function App() {
 
@@ -23,7 +22,6 @@ function App() {
               <Route path='/movies/*' element={<MovieRoutes />} />
               <Route path='/about' element={<AboutUsPage />} />
               <Route path='/pricing' element={<PricingPage />} />
-              {/* <Route path='/sign-up' element={<AuthContainer />} /> */}
             </Routes>
           </div>
           <Footer />

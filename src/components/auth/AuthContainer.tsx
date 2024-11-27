@@ -1,7 +1,6 @@
 import "./AuthContainer.css"
 import logoNavbar from "../../assets/logo-navbar.png"
 import { Link } from "react-router-dom"
-import SignUpForm from "./sign-up/SignUpForm"
 import SignInForm from "./sign-in/SignInForm"
 
 export default function AuthContainer({ closeAuthContainer }: { closeAuthContainer: () => void }) {
@@ -10,8 +9,8 @@ export default function AuthContainer({ closeAuthContainer }: { closeAuthContain
             <div className="logo">
                 <img src={logoNavbar} className="logo-img" alt="" />
             </div>
-            <SignUpForm />
-            {/* <SignInForm /> */}
+            {/* <SignUpForm closeAuthContainer={closeAuthContainer} /> */}
+            <SignInForm closeAuthContainer={closeAuthContainer} />
             <div className="font-lg-regular" style={{ color: "#FCFCFD" }}>
                 <span>Don't have an account yet?</span>
                 <Link to="#" className="signup-redirect-btn font-lg-regular font-lg-underline-semibold no-style-link">Sign up</Link>

@@ -37,6 +37,12 @@ body {
   height: 100%;
 }
 
+.blurred-background {
+  opacity: 0.7;
+  pointer-events: none; 
+  transition: all 0.3s ease;
+}
+
 /* Used in more than one element */
 .font-heading-caption {
   font-size: 12px;

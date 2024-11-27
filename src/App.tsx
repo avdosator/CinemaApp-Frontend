@@ -7,15 +7,22 @@ import AboutUsPage from './components/about-us-page/AboutUsPage';
 import PricingPage from './components/pricing-page/PricingPage';
 import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
+import { useState } from 'react';
+import AuthContainer from './components/auth/AuthContainer';
 
 function App() {
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
+
+  const openAuthModal = (): void => setIsAuthOpen(true);
+  const closeAuthModal = (): void => setIsAuthOpen(false);
+
 
   return (
     <>
       <MovieProvider>
         <div className='app-container'>
-          <Header />
-          <div className='main-content'>
+          <Header openAuthModal={openAuthModal} closeAuthModal={closeAuthModal} />
+          <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
             <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/home' element={<HomePage />} />
@@ -26,6 +33,7 @@ function App() {
           </div>
           <Footer />
         </div>
+        {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
       </MovieProvider>
     </>
   )

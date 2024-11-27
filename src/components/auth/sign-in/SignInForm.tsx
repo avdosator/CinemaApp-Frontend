@@ -101,7 +101,7 @@ export default function SignInForm({closeAuthContainer}: {closeAuthContainer: ()
                     <CustomCheckbox />
                     <Link to="#" className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</Link>
                 </div>
-                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign Up</button>
+                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>
             </form>
         </div>
 

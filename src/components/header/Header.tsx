@@ -4,12 +4,17 @@ import "./Header.css"
 import { useState } from "react";
 import AuthContainer from "../auth/AuthContainer";
 
-export default function Header() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+type HeaderProps = {
+    openAuthModal: () => void,
+    closeAuthModal: () => void
+}
 
-    const openAuthModal = (): void => setIsAuthModalOpen(true);
-    const closeAuthModal = (): void => setIsAuthModalOpen(false);
+export default function Header({openAuthModal, closeAuthModal}: HeaderProps) {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    // const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+
+    // const openAuthModal = (): void => setIsAuthModalOpen(true);
+    // const closeAuthModal = (): void => setIsAuthModalOpen(false);
 
     const handleToggle = (): void => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -74,7 +79,6 @@ export default function Header() {
                     </div>
                 )}
             </nav>
-            {isAuthModalOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
         </>
     )
 }

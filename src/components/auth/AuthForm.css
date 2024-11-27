@@ -1,4 +1,3 @@
-/* sign-in-form-container and sign-up-form-container */
 .auth-form-container {
     width: 100%;
     display: flex;
@@ -6,11 +5,9 @@
     gap: 16px;
 }
 
-/* prebaceno iz signnup forme - sljedece 3 klase, obrisati tamo pa probati */
 .auth-container-heading {
     width: 100%;
     display: flex;
-    /* justify-content: start; */
     align-items: center;
     position: relative;
 }
@@ -38,7 +35,6 @@
     margin: 0;
 }
 
-/* isto ima i u signup i signin */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -84,7 +80,6 @@
     color: #FDA29B;
 }
 
-/* nije obrisano iz signupform.css */
 .show-password-icon {
     position: absolute;
     right: 16px;
@@ -116,6 +111,19 @@
     color: #FCFCFD;
     border-radius: 8px;
     border: none;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    /* Vertically center the icon */
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    /* color: #344054 !important; */
+    fill: #667085;
+    z-index: 1;
 }
 
 /* Style for colors based on input validity */

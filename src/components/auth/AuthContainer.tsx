@@ -2,6 +2,7 @@ import "./AuthContainer.css"
 import logoNavbar from "../../assets/logo-navbar.png"
 import { Link } from "react-router-dom"
 import SignUpForm from "./sign-up/SignUpForm"
+import SignInForm from "./sign-in/SignInForm"
 
 export default function AuthContainer() {
     return (
@@ -10,6 +11,7 @@ export default function AuthContainer() {
                 <img src={logoNavbar} className="logo-img" alt="" />
             </div>
             <SignUpForm />
+            {/* <SignInForm /> */}
             <div className="font-lg-regular" style={{ color: "#FCFCFD" }}>
                 <span>Don't have an account yet?</span>
                 <Link to="#" className="signup-redirect-btn font-lg-regular font-lg-underline-semibold no-style-link">Sign up</Link>

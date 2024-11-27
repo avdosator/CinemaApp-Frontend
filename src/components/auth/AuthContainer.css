@@ -6,7 +6,7 @@
     width: 528px;
     display: flex;
     /* If content is higher than screen height, make it scrollable  */
-    max-height: calc(100vh - 80px); /* Limit height to fit within the viewport */
+    height: calc(100vh - 80px);
     overflow-y: auto; /* Enable scrolling when content overflows */
     flex-direction: column;
     justify-content: space-between;

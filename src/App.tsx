@@ -21,7 +21,7 @@ function App() {
     <>
       <MovieProvider>
         <div className='app-container'>
-          <Header openAuthModal={openAuthModal} closeAuthModal={closeAuthModal} />
+          <Header openAuthModal={openAuthModal} />
           <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
             <Routes>
               <Route path='/' element={<HomePage />} />

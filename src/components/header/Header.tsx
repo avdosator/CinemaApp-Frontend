@@ -2,19 +2,13 @@ import { NavLink } from "react-router-dom"
 import logoNavbar from "../../assets/logo-navbar.png"
 import "./Header.css"
 import { useState } from "react";
-import AuthContainer from "../auth/AuthContainer";
 
 type HeaderProps = {
-    openAuthModal: () => void,
-    closeAuthModal: () => void
+    openAuthModal: () => void
 }
 
-export default function Header({openAuthModal, closeAuthModal}: HeaderProps) {
+export default function Header({ openAuthModal }: HeaderProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    // const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
-
-    // const openAuthModal = (): void => setIsAuthModalOpen(true);
-    // const closeAuthModal = (): void => setIsAuthModalOpen(false);
 
     const handleToggle = (): void => {
         setIsDropdownOpen(!isDropdownOpen);

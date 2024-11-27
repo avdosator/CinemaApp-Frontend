@@ -1,6 +1,6 @@
 import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type SignupFormType = {
     email: string,
@@ -10,6 +10,16 @@ type SignupFormType = {
 
 export default function SignUpForm({ closeAuthContainer }: { closeAuthContainer: () => void }) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<SignupFormType>();
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
+    const toggleShowPassword = (): void => {
+        setShowPassword(prevPassword => !prevPassword);
+    }
+
+    const toggleShowConfirmPassword = (): void => {
+        setShowConfirmPassword(prevPassword => !prevPassword);
+    }
 
     const emailValue: string | undefined = watch("email");
     const passwordValue: string | undefined = watch("password");
@@ -96,13 +106,14 @@ export default function SignUpForm({ closeAuthContainer }: { closeAuthContainer:
                                 },
                                 onChange: () => clearErrors("confirmPassword")
                             })}
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             id="password"
                             className="font-lg-regular"
                             placeholder="Password"
                         />
                         <svg
+                            onClick={toggleShowPassword}
                             className={`show-password-icon ${errors.password && passwordValue ? "error-icon" : ""}`}
                             fill={
                                 errors.password && passwordValue
@@ -130,13 +141,14 @@ export default function SignUpForm({ closeAuthContainer }: { closeAuthContainer:
                                 },
                                 validate: (value) => value === passwordValue || "Passwords do not match."
                             })}
-                            type="password"
+                            type={showConfirmPassword ? "text" : "password"}
                             name="confirmPassword"
                             id="confirmPassword"
                             className="font-lg-regular"
                             placeholder="Retype Password"
                         />
                         <svg
+                            onClick={toggleShowConfirmPassword}
                             className={`show-password-icon ${errors.confirmPassword && confirmPasswordValue ? "error-icon" : ""}`}
                             fill={
                                 errors.confirmPassword && confirmPasswordValue

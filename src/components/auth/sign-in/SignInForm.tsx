@@ -9,7 +9,12 @@ type SignInFormType = {
     password: string,
 }
 
-export default function SignInForm({ closeAuthContainer }: { closeAuthContainer: () => void }) {
+type SignInFormProps = {
+    closeAuthContainer: () => void,
+    switchToSignUpForm: () => void
+}
+
+export default function SignInForm({ closeAuthContainer, switchToSignUpForm }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -111,6 +116,21 @@ export default function SignInForm({ closeAuthContainer }: { closeAuthContainer:
                 </div>
                 <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>
             </form>
+            <div className="font-lg-regular" style={{ color: "#FCFCFD" }}>
+                <span>Don't have an account yet?</span>
+                <button onClick={switchToSignUpForm} id="sign-up-redirection" className="font-lg-regular font-lg-underline-semibold no-style-link">
+                    Sign up
+                </button>
+            </div>
+            <div className="font-lg-regular" id="or-divider" style={{ color: "#FCFCFD" }}>
+                <span className="auth-horizontal-line"></span>
+                <span>Or</span>
+                <span className="auth-horizontal-line"></span>
+            </div>
+            <div className="other-login-ways">
+                <div className="google-login-btn"></div>
+                <div className="mac-login-btn"></div>
+            </div>
         </div>
 
     )

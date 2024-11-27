@@ -165,6 +165,11 @@ export default function SignUpForm({ closeAuthContainer }: { closeAuthContainer:
                 </div>
                 <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign Up</button>
             </form>
+            {/* Add that --- or --- divider after implementing integration with google */}
+            <div className="other-login-ways">
+                <div className="google-login-btn"></div>
+                <div className="mac-login-btn"></div>
+            </div>
         </div>
     )
 }

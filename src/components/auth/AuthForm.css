@@ -132,6 +132,11 @@
     z-index: 1;
 }
 
+#sign-up-redirection {
+    border: none;
+    background-color: inherit;
+}
+
 /* Style for colors based on input validity */
 
 /* General styles for inputs */

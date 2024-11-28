@@ -23,6 +23,7 @@ export default function AuthContainer({ closeAuthContainer }: { closeAuthContain
                 <SignUpForm closeAuthContainer={closeAuthContainer} />
             )} */}
             <PasswordResetContainer />
+            {/* Don't show this element if passwordReset is rendered */}
             <button onClick={closeAuthContainer} className="font-lg-underline-semibold no-style-link close-auth-container-btn" >
                 Continue without signing In
             </button>

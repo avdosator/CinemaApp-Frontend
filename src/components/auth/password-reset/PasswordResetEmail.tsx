@@ -42,12 +42,12 @@ export default function PasswordResetEmail() {
                             id="email"
                             className="font-lg-regular"
                             placeholder="Email Address"
-                            style={{paddingTop: "12px", paddingBottom: "12px"}}
+                            style={{ paddingTop: "12px", paddingBottom: "12px" }}
                         />
                     </div>
                     {errors.email && <div className="font-sm-regular auth-error">{errors.email.message}</div>}
                 </div>
-                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>
+                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Continue</button>
             </form>
         </div>
     )

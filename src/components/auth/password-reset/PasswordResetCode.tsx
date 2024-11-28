@@ -1,10 +1,13 @@
+import "./PasswordResetCode.css"
+import "./PasswordResetEmail.css"
+
 export default function PasswordResetCode() {
     return (
         <div className="password-reset-code-container">
             <p className="font-md-regular password-reset-email-info">
                 We have sent code to your email j******e@gmail.com. Please, enter the code below to verify.
             </p>
-            <form>
+            <form className="password-reset-code-form">
                 <div className="password-reset-code-inputs">
                     <input type="number" className="password-reset-code-input" />
                     <input type="number" className="password-reset-code-input" />

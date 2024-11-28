@@ -1,5 +1,6 @@
 import PasswordResetEmail from "./PasswordResetEmail";
 import "../AuthForm.css"
+import PasswordResetCode from "./PasswordResetCode";
 
 export default function PasswordResetContainer() {
     return (
@@ -10,7 +11,8 @@ export default function PasswordResetContainer() {
                 </button>
                 <h5 className="font-heading-h5 auth-heading">Password Reset</h5>
             </div>
-                <PasswordResetEmail />
+                {/* <PasswordResetEmail /> */}
+                <PasswordResetCode />
         </div>
     )
 }

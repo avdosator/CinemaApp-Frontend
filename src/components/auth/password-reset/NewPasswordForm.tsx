@@ -9,7 +9,11 @@ type NewPasswordForm = {
     confirmPassword: string
 }
 
-export default function NewPasswordForm() {
+type NewPasswordFormProps = {
+    email: string
+}
+
+export default function NewPasswordForm({ email }: NewPasswordFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<NewPasswordForm>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -45,7 +49,8 @@ export default function NewPasswordForm() {
     const onSubmit: SubmitHandler<NewPasswordForm> = async (formData) => {
         try {
             // send request
-            console.log(formData)
+            console.log(formData);
+            console.log(email);
         } catch (error) {
             setError("password", {
                 message: "This password is already taken"
@@ -60,8 +65,8 @@ export default function NewPasswordForm() {
     };
 
     return (
-        <div className="new-password-form-container">
-            <p className="font-md-regular password-reset-email-info">
+        <div className="auth-form-container">
+            <p className="font-md-regular password-reset-info">
                 Please, enter and confirm your new password.
             </p>
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>

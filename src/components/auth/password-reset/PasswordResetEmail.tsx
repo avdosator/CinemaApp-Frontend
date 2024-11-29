@@ -1,7 +1,11 @@
 import "./PasswordResetEmail.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 
-export default function PasswordResetEmail() {
+type PasswordResetEmailProps = {
+    onValidEmail: (email: string) => void,
+}
+
+export default function PasswordResetEmail({ onValidEmail }: PasswordResetEmailProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<{ email: string }>();
 
     const emailValue: string | undefined = watch("email");
@@ -10,6 +14,7 @@ export default function PasswordResetEmail() {
         try {
             // send request
             console.log(formData);
+            onValidEmail(formData.email);
         } catch (error) {
             setError("email", { message: "Invalid request" });
         }
@@ -20,8 +25,8 @@ export default function PasswordResetEmail() {
         return error ? "error" : "populated";
     };
     return (
-        <div className="password-reset-email-container">
-            <p className="font-md-regular password-reset-email-info">
+        <div className="auth-form-container" >
+            <p className="font-md-regular password-reset-info">
                 Provide your account’s email for which you want to reset your password.
             </p>
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>

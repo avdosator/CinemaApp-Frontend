@@ -8,7 +8,7 @@ import PricingPage from './components/pricing-page/PricingPage';
 import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
 import { useState } from 'react';
-import AuthContainer from './components/auth/AuthContainer';
+import AuthContainer from './components/auth/auth-container/AuthContainer';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);

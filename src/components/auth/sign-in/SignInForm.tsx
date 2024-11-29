@@ -1,8 +1,8 @@
 import "../AuthForm.css"
-import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
 import { useState } from "react";
+import AuthHeading from "../AuthHeading";
 
 type SignInFormType = {
     email: string,
@@ -11,10 +11,11 @@ type SignInFormType = {
 
 type SignInFormProps = {
     closeAuthContainer: () => void,
-    switchToSignUpForm: () => void
+    switchToSignUpForm: () => void,
+    forgotPassword: () => void
 }
 
-export default function SignInForm({ closeAuthContainer, switchToSignUpForm }: SignInFormProps) {
+export default function SignInForm({ switchToSignUpForm, forgotPassword }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -47,12 +48,7 @@ export default function SignInForm({ closeAuthContainer, switchToSignUpForm }: S
 
     return (
         <div className="auth-form-container">
-            <div className="auth-container-heading">
-                <button className="auth-back-btn" onClick={closeAuthContainer}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="#D0D5DD" width="18" height="24" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" /></svg>
-                </button>
-                <h5 className="font-heading-h5 auth-heading">Welcome Back</h5>
-            </div>
+            {/* <AuthHeading onBack={closeAuthContainer} headingText="Welcome Back" /> */}
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)} >
                 <div className={`auth-input-group ${getContainerClass(emailValue, !!errors.email)}`}>
                     <label htmlFor="email" className="auth-form-label font-lg-semibold">Email</label>
@@ -112,7 +108,7 @@ export default function SignInForm({ closeAuthContainer, switchToSignUpForm }: S
                 </div>
                 <div className="auth-form-options">
                     <CustomCheckbox />
-                    <Link to="#" className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</Link>
+                    <button onClick={forgotPassword} className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</button>
                 </div>
                 <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>
             </form>

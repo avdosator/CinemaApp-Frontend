@@ -1,4 +1,3 @@
-import "./PasswordResetEmail.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type PasswordResetEmailProps = {

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./PasswordResetCode.css"
-import "./PasswordResetEmail.css"
-import "../AuthForm.css"
+import "../../AuthForm.css"
 
 type PasswordResetCodeProps = {
     email: string,
@@ -104,7 +103,11 @@ export default function PasswordResetCode({ email, onCodeVerified }: PasswordRes
                 </p>
                 {
                     resendTimer > 0
-                        ? (<p className="font-md-regular password-reset-info">{`You can resend email in ${resendTimer} seconds.`}</p>)
+                        ? (
+                            <p className="font-md-regular password-reset-info">
+                            You can resend email in <span className="font-md-semibold resend-timer" style={{ color: "#FCFCFD", display: "inline-block", width: "23px", textAlign: "center" }}>{resendTimer}</span> seconds.
+                            </p>
+                        )
                         : (<button className="font-lg-semibold resend-email-btn" onClick={handleResendEmail}>Resend</button>)
                 }
 

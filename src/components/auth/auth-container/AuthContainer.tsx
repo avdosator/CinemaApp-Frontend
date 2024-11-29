@@ -1,10 +1,10 @@
 import "./AuthContainer.css"
-import logoNavbar from "../../assets/logo-navbar.png"
+import logoNavbar from "../../../assets/logo-navbar.png"
 import SignInForm from "../sign-in/SignInForm"
 import SignUpForm from "../sign-up/SignUpForm"
 import { useState } from "react";
 import PasswordResetEmail from "../password-reset/PasswordResetEmail";
-import PasswordResetCode from "../password-reset/PasswordResetCode";
+import PasswordResetCode from "../password-reset/password-reset-code/PasswordResetCode";
 import NewPasswordForm from "../password-reset/NewPasswordForm";
 import AuthHeading from "../AuthHeading";
 import { authStepHeadings, backActions } from "../authConfig";

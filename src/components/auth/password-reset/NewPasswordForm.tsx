@@ -1,6 +1,5 @@
-import "./NewPasswordForm.css"
 import "../AuthForm.css"
-import "./PasswordResetEmail.css"
+import "./PasswordReset.css"
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 

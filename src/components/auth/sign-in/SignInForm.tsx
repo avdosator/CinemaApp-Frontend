@@ -18,10 +18,15 @@ type SignInFormProps = {
 export default function SignInForm({ switchToSignUpForm, forgotPassword, success }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
 
     const toggleShowPassword = (): void => {
         setShowPassword(prevPassword => !prevPassword);
     }
+
+    const handleRememberMeChange = (checked: boolean) => {
+        setRememberMe(checked);
+    };
 
     const emailValue: string | undefined = watch("email");
     const passwordValue: string | undefined = watch("password");
@@ -30,6 +35,7 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
         try {
             // send request
             console.log(formData);
+            console.log(rememberMe);
             success();
         } catch (error) {
             setError("email", {
@@ -108,7 +114,7 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
                     {errors.password && <div className="font-sm-regular auth-error">{errors.password.message}</div>}
                 </div>
                 <div className="auth-form-options">
-                    <CustomCheckbox />
+                    <CustomCheckbox checked={rememberMe} onChange={handleRememberMeChange} />
                     <button onClick={forgotPassword} className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</button>
                 </div>
                 <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>

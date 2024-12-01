@@ -50,3 +50,19 @@
     background-color: inherit;
     border: none;
 }
+
+.auth-container-effect {
+    position: relative;
+}
+
+.auth-container-effect.fade-in {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.auth-container-effect.fade-out {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}

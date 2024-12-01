@@ -1,0 +1,60 @@
+.successful-auth-icon {
+    width: 42px;
+    height: 64px;
+    color: #FFFFFF;
+}
+
+#circle-sm-right {
+    top: 99px;
+    right: 0px;
+}
+
+#circle-sm-left {
+    top: 91px;
+    left: 14px;
+}
+
+#circle-md-top {
+    top: 2px;
+    left: 136px;
+}
+
+#circle-md-right {
+    top: 144px;
+    left: 164px;
+}
+
+#circle-md-bottom {
+    background-color: #344054;
+    top: 144px;
+    left: 15px;
+}
+
+#circle-md-left {
+    background-color: #F9FAFB29;
+    top: 45px;
+    left: 1px;
+}
+
+#circle-lg-top {
+    background-color: #667085CC;
+    top: 0px;
+    left: 27px;
+}
+
+#circle-lg-right {
+    background-color: #F9FAFB29;
+    right: 17px;
+    top: 10px;
+}
+
+#circle-lg-bottom {
+    background-color: #F9FAFB29;
+    bottom: 1px;
+    left: 60px;
+}
+
+#main-circle {
+    background-color: #F9FAFB29;
+    top: 20px;
+}

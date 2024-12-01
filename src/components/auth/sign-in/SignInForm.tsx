@@ -2,7 +2,6 @@ import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
 import { useState } from "react";
-import AuthHeading from "../AuthHeading";
 
 type SignInFormType = {
     email: string,
@@ -12,10 +11,11 @@ type SignInFormType = {
 type SignInFormProps = {
     closeAuthContainer: () => void,
     switchToSignUpForm: () => void,
-    forgotPassword: () => void
+    forgotPassword: () => void,
+    success: () => void
 }
 
-export default function SignInForm({ switchToSignUpForm, forgotPassword }: SignInFormProps) {
+export default function SignInForm({ switchToSignUpForm, forgotPassword, success }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -29,7 +29,8 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword }: SignI
     const onSubmit: SubmitHandler<SignInFormType> = async (formData) => {
         try {
             // send request
-            console.log(formData)
+            console.log(formData);
+            success();
         } catch (error) {
             setError("email", {
                 message: "This email is already taken"

@@ -2,7 +2,6 @@ import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import PasswordToggleIcon from "../password-reset/PasswordToggleIcon";
-import AuthHeading from "../AuthHeading";
 
 type SignupFormType = {
     email: string,
@@ -10,13 +9,11 @@ type SignupFormType = {
     confirmPassword: string
 }
 
-// type SignUpFormProps = {
-//     closeAuthContainer: () => void,
-//     backToSignIn: () => void
+type SignUpFormProps = {
+    success: () => void
+}
 
-// }
-
-export default function SignUpForm() {
+export default function SignUpForm({success}: SignUpFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<SignupFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -54,7 +51,8 @@ export default function SignUpForm() {
     const onSubmit: SubmitHandler<SignupFormType> = async (formData) => {
         try {
             // send request
-            console.log(formData)
+            console.log(formData);
+            success();
         } catch (error) {
             setError("email", {
                 message: "This email is already taken"

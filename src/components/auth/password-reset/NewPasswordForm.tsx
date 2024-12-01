@@ -9,10 +9,11 @@ type NewPasswordForm = {
 }
 
 type NewPasswordFormProps = {
-    email: string
+    email: string,
+    success: () => void
 }
 
-export default function NewPasswordForm({ email }: NewPasswordFormProps) {
+export default function NewPasswordForm({ email, success }: NewPasswordFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<NewPasswordForm>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -50,6 +51,7 @@ export default function NewPasswordForm({ email }: NewPasswordFormProps) {
             // send request
             console.log(formData);
             console.log(email);
+            success();
         } catch (error) {
             setError("password", {
                 message: "This password is already taken"

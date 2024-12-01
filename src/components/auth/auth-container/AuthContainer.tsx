@@ -8,9 +8,11 @@ import PasswordResetCode from "../password-reset/password-reset-code/PasswordRes
 import NewPasswordForm from "../password-reset/NewPasswordForm";
 import AuthHeading from "../AuthHeading";
 import { authStepHeadings, backActions } from "../authConfig";
+import AuthSuccess from "../successful-action/AuthSuccess";
+import { faVideo, faLock, faFilm } from "@fortawesome/free-solid-svg-icons";
 
 export default function AuthContainer({ closeAuthContainer }: { closeAuthContainer: () => void }) {
-    const [authStep, setAuthStep] = useState<"signIn" | "signUp" | "passwordResetEmail" | "passwordResetCode" | "newPassword">("signIn");
+    const [authStep, setAuthStep] = useState<"signIn" | "signUp" | "passwordResetEmail" | "passwordResetCode" | "newPassword" | "successfulSignIn" | "successfulSignUp" | "successfulPasswordChange">("signIn");
     const [resetCodeEmail, setResetCodeEmail] = useState<string>("");
 
     const backButtonActions = backActions(closeAuthContainer, setAuthStep);
@@ -28,17 +30,30 @@ export default function AuthContainer({ closeAuthContainer }: { closeAuthContain
                         closeAuthContainer={closeAuthContainer}
                         switchToSignUpForm={() => setAuthStep("signUp")}
                         forgotPassword={() => setAuthStep("passwordResetEmail")}
+                        success={() => setAuthStep("successfulSignIn")}
                     />
                 );
             case "signUp":
-                return (<SignUpForm />);
+                return (<SignUpForm success={() => setAuthStep("successfulSignUp")} />);
             case "passwordResetEmail":
                 return (<PasswordResetEmail onValidEmail={handleEmailSubmit} />);
             case "passwordResetCode":
                 return (
                     <PasswordResetCode email={resetCodeEmail} onCodeVerified={() => setAuthStep("newPassword")} />);
             case "newPassword":
-                return (<NewPasswordForm email={resetCodeEmail} />);
+                return (<NewPasswordForm email={resetCodeEmail} success={() => setAuthStep("successfulPasswordChange")} />);
+            case "successfulSignIn":
+                return (<AuthSuccess text="Please, wait. You will be directed to the homepage." icon={faVideo} />);
+            case "successfulSignUp":
+                return (
+                    <AuthSuccess
+                        text="Start exploring latest movies, venues, and ticket options!"
+                        icon={faFilm}
+                        btn={true}
+                        closeAuthContainer={closeAuthContainer}
+                    />);
+            case "successfulPasswordChange":
+                return (<AuthSuccess text="Please, wait. You will be directed to the homepage." icon={faLock} />);
         }
     };
 

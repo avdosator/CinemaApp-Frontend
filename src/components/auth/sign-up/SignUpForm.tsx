@@ -2,6 +2,10 @@ import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import PasswordToggleIcon from "../password-reset/PasswordToggleIcon";
+import { AuthResponse } from "../../../types/AuthResponse";
+import ApiService from "../../../service/ApiService";
+import { jwtDecode } from "jwt-decode";
+import { User } from "../../../types/User";
 
 type SignupFormType = {
     email: string,
@@ -13,7 +17,7 @@ type SignUpFormProps = {
     success: () => void
 }
 
-export default function SignUpForm({success}: SignUpFormProps) {
+export default function SignUpForm({ success }: SignUpFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<SignupFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
@@ -49,10 +53,22 @@ export default function SignUpForm({success}: SignUpFormProps) {
     }, [passwordValue, trigger]);
 
     const onSubmit: SubmitHandler<SignupFormType> = async (formData) => {
+        const createUserData = {
+            email: formData.email,
+            password: formData.password
+        }
         try {
-            // send request
-            console.log(formData);
+            const response = await ApiService.post<AuthResponse>("/users", createUserData);
+            const { jwt, expiresIn } = response;
+            const expiryDate = new Date().getTime() + expiresIn;
+            localStorage.setItem("authToken", jwt);
+            localStorage.setItem("authTokenExpiry", expiryDate.toString());
+            const decodedJwt: { sub: string } = jwtDecode(jwt);
+            const userEmail : string = decodedJwt.sub;
+            const user = await ApiService.get<User>(`/users/${encodeURIComponent(userEmail)}`);
+            console.log(user);
             success();
+
         } catch (error) {
             setError("email", {
                 message: "This email is already taken"

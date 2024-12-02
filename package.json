@@ -16,6 +16,7 @@
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "date-range": "^0.0.2",
+    "jwt-decode": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "react": "^18.3.1",
     "react-date-range": "^2.0.1",

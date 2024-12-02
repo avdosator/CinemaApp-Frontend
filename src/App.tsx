@@ -9,6 +9,7 @@ import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
 import { useState } from 'react';
 import AuthContainer from './components/auth/auth-container/AuthContainer';
+import UserProvider from './context/UserContext';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -19,22 +20,24 @@ function App() {
 
   return (
     <>
-      <MovieProvider>
-        <div className='app-container'>
-          <Header openAuthModal={openAuthModal} />
-          <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
-            <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/home' element={<HomePage />} />
-              <Route path='/movies/*' element={<MovieRoutes />} />
-              <Route path='/about' element={<AboutUsPage />} />
-              <Route path='/pricing' element={<PricingPage />} />
-            </Routes>
+      <UserProvider >
+        <MovieProvider>
+          <div className='app-container'>
+            <Header openAuthModal={openAuthModal} />
+            <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
+              <Routes>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/home' element={<HomePage />} />
+                <Route path='/movies/*' element={<MovieRoutes />} />
+                <Route path='/about' element={<AboutUsPage />} />
+                <Route path='/pricing' element={<PricingPage />} />
+              </Routes>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-        {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
-      </MovieProvider>
+          {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
+        </MovieProvider>
+      </UserProvider>
     </>
   )
 }

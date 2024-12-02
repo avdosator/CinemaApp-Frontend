@@ -6,6 +6,7 @@ import { AuthResponse } from "../../../types/AuthResponse";
 import ApiService from "../../../service/ApiService";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
+import { useUser } from "../../../context/UserContext";
 
 type SignupFormType = {
     email: string,
@@ -21,6 +22,8 @@ export default function SignUpForm({ success }: SignUpFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<SignupFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
+    const { setCurrentUser } = useUser();
 
     const toggleShowPassword = (): void => {
         setShowPassword(prevPassword => !prevPassword);
@@ -64,12 +67,12 @@ export default function SignUpForm({ success }: SignUpFormProps) {
             localStorage.setItem("authToken", jwt);
             localStorage.setItem("authTokenExpiry", expiryDate.toString());
             const decodedJwt: { sub: string } = jwtDecode(jwt);
-            const userEmail : string = decodedJwt.sub;
+            const userEmail: string = decodedJwt.sub;
             const user = await ApiService.get<User>(`/users/${encodeURIComponent(userEmail)}`);
-            console.log(user);
+            setCurrentUser(user);
             success();
-
-        } catch (error) {
+        } catch (error: any) {
+            console.log(error.message);
             setError("email", {
                 message: "This email is already taken"
             });

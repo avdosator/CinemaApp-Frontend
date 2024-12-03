@@ -10,9 +10,13 @@ import MovieRoutes from './routes/MovieRoutes';
 import { useState } from 'react';
 import AuthContainer from './components/auth/auth-container/AuthContainer';
 import UserProvider from './context/UserContext';
+import useTokenValidation from './custom-hooks/useTokenValidation';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
+  const [isSessionExpired, setIsSessionExpired] = useState(false);
+
+  useTokenValidation(setIsSessionExpired);
 
   const openAuthModal = (): void => setIsAuthOpen(true);
   const closeAuthModal = (): void => setIsAuthOpen(false);

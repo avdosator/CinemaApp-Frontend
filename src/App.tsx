@@ -11,6 +11,7 @@ import { useState } from 'react';
 import AuthContainer from './components/auth/auth-container/AuthContainer';
 import UserProvider from './context/UserContext';
 import useTokenValidation from './custom-hooks/useTokenValidation';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -34,7 +35,16 @@ function App() {
                 <Route path='/home' element={<HomePage />} />
                 <Route path='/movies/*' element={<MovieRoutes />} />
                 <Route path='/about' element={<AboutUsPage />} />
-                <Route path='/pricing' element={<PricingPage />} />
+                {/* <Route path='/pricing' element={<PricingPage />} /> */}
+                {/* Protected Route */}
+              <Route
+                path="/pricing"
+                element={
+                  <ProtectedRoute openLoginForm={openAuthModal}>
+                    <PricingPage />
+                  </ProtectedRoute>
+                }
+              />
               </Routes>
             </div>
             <Footer />

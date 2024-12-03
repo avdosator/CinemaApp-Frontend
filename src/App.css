@@ -19,6 +19,9 @@ body {
 .main-content {
   flex: 1;
   width: 87%;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
   /* padding: 40px 92px; */
 }
 

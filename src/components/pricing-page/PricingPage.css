@@ -25,7 +25,7 @@
     gap:10px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 965px) {
     .pricing-options {
         flex-wrap: wrap;
         justify-content: center;

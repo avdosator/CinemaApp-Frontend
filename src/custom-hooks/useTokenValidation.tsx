@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { useUser } from "../context/UserContext";
+import { useEffect, useState } from "react";
 
 // Custom hook that checks if jwt is expired
-export default function useTokenValidation(setIsSessionExpired: (expired: boolean) => void) {
-    const { setCurrentUser } = useUser();
+export default function useTokenValidation(setIsSessionExpired: (expired: boolean) => void): boolean {
+    const [isTokenExpired, setIsTokenExpired] = useState<boolean>(false);
 
     useEffect(() => {
         const checkTokenExpiration = () => {
@@ -21,13 +20,17 @@ export default function useTokenValidation(setIsSessionExpired: (expired: boolea
                         console.log("Token expired, updating UI...");
                         localStorage.removeItem("authToken"); // Clear the token
                         localStorage.removeItem("authTokenExpiry");
-                        setCurrentUser(null); // Reset user state in context
+                        setIsTokenExpired(true);
                         setIsSessionExpired(true); // Notify the app that the session has expired
                     }
+                } else {
+                    setIsTokenExpired(true);
+                    setIsSessionExpired(true);
                 }
+
             } catch (error: any) {
                 console.error("Error checking token expiration:", error);
-                setCurrentUser(null); // Safeguard in case of an unexpected issue
+                setIsTokenExpired(true); // Safeguard in case of an unexpected issue
                 setIsSessionExpired(true);
             }
 
@@ -36,5 +39,7 @@ export default function useTokenValidation(setIsSessionExpired: (expired: boolea
         // Initial check on mount
         checkTokenExpiration();
 
-    }, [setCurrentUser, setIsSessionExpired]);
+    }, [setIsSessionExpired]);
+
+    return isTokenExpired;
 }

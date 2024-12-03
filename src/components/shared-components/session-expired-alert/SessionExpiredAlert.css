@@ -1,0 +1,17 @@
+.session-expired-alert {
+    width: 400px;
+    height: 250px;
+    padding: 32px 32px;
+    background-color: rgba(29, 41, 57, 1);
+    border-radius: 16px;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-self: center;
+    align-items: center;
+    gap: 16px;
+    position: fixed;
+    /* top: 50%; */
+    /* left: 50%; */
+}

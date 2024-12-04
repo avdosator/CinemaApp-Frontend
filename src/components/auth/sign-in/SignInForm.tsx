@@ -60,8 +60,9 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             // Get user by email from payload
             const decodedJwt: { sub: string } = jwtDecode(jwt);
             const userEmail: string = decodedJwt.sub;
-            const user = await ApiService.get<User>(`/users/${encodeURIComponent(userEmail)}`);
+            const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
             setCurrentUser(user);
+            localStorage.setItem("userId", user.id);
             success();
         } catch (error: any) {
             console.error(error);

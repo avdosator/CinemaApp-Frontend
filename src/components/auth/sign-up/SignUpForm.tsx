@@ -68,8 +68,9 @@ export default function SignUpForm({ success }: SignUpFormProps) {
             localStorage.setItem("authTokenExpiry", expiryDate.toString());
             const decodedJwt: { sub: string } = jwtDecode(jwt);
             const userEmail: string = decodedJwt.sub;
-            const user = await ApiService.get<User>(`/users/${encodeURIComponent(userEmail)}`);
+            const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
             setCurrentUser(user);
+            localStorage.setItem("userId", user.id);
             success();
         } catch (error: any) {
             console.log(error.message);

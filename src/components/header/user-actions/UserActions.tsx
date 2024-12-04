@@ -1,11 +1,27 @@
 import { useState } from "react";
 import "./UserActions.css"
+import { useUser } from "../../../context/UserContext";
+import ApiService from "../../../service/ApiService";
 
 export default function UserActions({ name }: { name: string }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
+    const {setCurrentUser} = useUser();
 
     const toggleDropdown = () => {
         setIsDropdownVisible((prev) => !prev);
+    };
+
+    const handleLogout = () => {
+        const refreshToken = localStorage.getItem("refreshToken");
+        const userId = localStorage.getItem("userId");
+        if(refreshToken) {
+            ApiService.post<String>("/auth/logout", {refreshToken, userId })
+            .then(response => console.log(response))
+            .catch(error => console.error(error));
+        }
+        setCurrentUser(null);
+        localStorage.clear();
+        console.log("User logged out");
     };
 
     return (
@@ -24,7 +40,7 @@ export default function UserActions({ name }: { name: string }) {
             </button>
             {isDropdownVisible && (
                 <div className="user-actions-dropdown-menu">
-                    <button className="dropdown-item font-lg-regular">Log Out</button>
+                    <button className="dropdown-item font-lg-regular" onClick={handleLogout}>Log Out</button>
                 </div>
             )}
         </div>

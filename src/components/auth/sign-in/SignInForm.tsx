@@ -46,11 +46,16 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
         }
         try {
             const response = await ApiService.post<AuthResponse>("/auth/login", loginUser);
-            console.log(response);
             const { jwt, expiresIn, refreshToken } = response;
             const expiryDate = new Date().getTime() + expiresIn;
             localStorage.setItem("authToken", jwt);
             localStorage.setItem("authTokenExpiry", expiryDate.toString());
+            const decodedJwt: { sub: string } = jwtDecode(jwt);
+            const userEmail: string = decodedJwt.sub;
+            const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
+            setCurrentUser(user);
+            localStorage.setItem("userId", user.id);
+            success();
 
             // When rememberMe is true that means that we want to handle longer authentication with refresh token
             if (rememberMe && refreshToken) {
@@ -58,12 +63,7 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             }
 
             // Get user by email from payload
-            const decodedJwt: { sub: string } = jwtDecode(jwt);
-            const userEmail: string = decodedJwt.sub;
-            const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
-            setCurrentUser(user);
-            localStorage.setItem("userId", user.id);
-            success();
+
         } catch (error: any) {
             console.error(error);
             // setError("email", {

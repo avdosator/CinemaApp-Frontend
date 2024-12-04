@@ -57,3 +57,25 @@
     justify-content: center;
     align-items: center;
 }
+
+.user-actions-dropdown-menu {
+    position: absolute;
+    top: 74px;
+    right: 100px;
+    color: #FCFCFD;
+    background-color: #1D2939;
+    border: 1px solid #344054;
+    border-radius: 8px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+}
+
+.dropdown-item:hover {
+    font-weight: 600;
+}

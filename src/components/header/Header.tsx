@@ -3,7 +3,7 @@ import logoNavbar from "../../assets/logo-navbar.png"
 import "./Header.css"
 import { useState } from "react";
 import { useUser } from "../../context/UserContext";
-import UserActions from "./UserActions";
+import UserActions from "./user-actions/UserActions";
 
 type HeaderProps = {
     openAuthModal: () => void

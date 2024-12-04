@@ -37,13 +37,13 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
                                 const response: RefreshTokenResponse = await ApiService.post<RefreshTokenResponse>(
                                     "/auth/refresh-token",
                                     { refreshToken, userId });
-                                const { newJwt, newExpiresIn } = response;
-                                const expiryDate = new Date().getTime() + newExpiresIn;
-                                localStorage.setItem("authToken", newJwt);
+                                const { jwt, expiresIn } = response;
+                                const expiryDate = new Date().getTime() + expiresIn;
+                                localStorage.setItem("authToken", jwt);
                                 localStorage.setItem("authTokenExpiry", expiryDate.toString());
                                 setIsTokenExpired(false);
                                 setIsSessionExpired(false);
-                                console.log("Token refreshed successfully.");
+                                console.log("token refreshed successfuly")
                             } catch (error) {
                                 console.error("Failed to refresh token:",);
                                 clearLocalStorage();
@@ -77,6 +77,7 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
             localStorage.removeItem("authToken");
             localStorage.removeItem("authTokenExpiry");
             localStorage.removeItem("refreshToken");
+            localStorage.removeItem("userId");
         };
 
         // Initial check on mount

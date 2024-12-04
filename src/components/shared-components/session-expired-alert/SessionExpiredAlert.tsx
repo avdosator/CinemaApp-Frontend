@@ -13,7 +13,7 @@ export default function SessionExpiredAlert({ openLoginForm }: SessionExpiredAle
                 <img src={logoNavbar} className="logo-img" alt="" />
             </div>
             <p className="font-lg-semibold" style={{ color: "#FCFCFC", margin: "0" }}>You need to be logged in for this content.</p>
-            <button className="auth-form-btn" onClick={openLoginForm} style={{width: "30%", marginTop: "0px"}}>Log In</button>
+            <button className="auth-form-btn" onClick={openLoginForm} style={{ width: "30%", marginTop: "0px" }}>Log In</button>
             <Link className="font-lg-underline-semibold no-style-link close-auth-container-btn" to="/home">
                 Return to Home page
             </Link>

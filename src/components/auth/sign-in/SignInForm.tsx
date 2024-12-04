@@ -2,6 +2,11 @@ import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
 import { useState } from "react";
+import ApiService from "../../../service/ApiService";
+import { AuthResponse } from "../../../types/AuthResponse";
+import { jwtDecode } from "jwt-decode";
+import { User } from "../../../types/User";
+import { useUser } from "../../../context/UserContext";
 
 type SignInFormType = {
     email: string,
@@ -20,6 +25,8 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
 
+    const { setCurrentUser } = useUser();
+
     const toggleShowPassword = (): void => {
         setShowPassword(prevPassword => !prevPassword);
     }
@@ -32,18 +39,38 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
     const passwordValue: string | undefined = watch("password");
 
     const onSubmit: SubmitHandler<SignInFormType> = async (formData) => {
+        const loginUser = {
+            email: formData.email,
+            password: formData.password,
+            rememberMe: rememberMe
+        }
         try {
-            // send request
-            console.log(formData);
-            console.log(rememberMe);
+            const response = await ApiService.post<AuthResponse>("/auth/login", loginUser);
+            console.log(response);
+            const { jwt, expiresIn, refreshToken } = response;
+            const expiryDate = new Date().getTime() + expiresIn;
+            localStorage.setItem("authToken", jwt);
+            localStorage.setItem("authTokenExpiry", expiryDate.toString());
+
+            // When rememberMe is true that means that we want to handle longer authentication with refresh token
+            if (rememberMe && refreshToken) {
+                localStorage.setItem("refreshToken", refreshToken);
+            }
+
+            // Get user by email from payload
+            const decodedJwt: { sub: string } = jwtDecode(jwt);
+            const userEmail: string = decodedJwt.sub;
+            const user = await ApiService.get<User>(`/users/${encodeURIComponent(userEmail)}`);
+            setCurrentUser(user);
             success();
-        } catch (error) {
-            setError("email", {
-                message: "This email is already taken"
-            });
-            setError("password", {
-                message: "This password is already taken"
-            })
+        } catch (error: any) {
+            console.error(error);
+            // setError("email", {
+            //     message: "This email is already taken"
+            // });
+            // setError("password", {
+            //     message: "This password is already taken"
+            // })
         }
     };
 

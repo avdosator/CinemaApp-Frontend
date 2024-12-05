@@ -70,8 +70,8 @@ export default function PasswordResetCode({ email, response, onCodeVerified }: P
 
     const handleResendEmail = (): void => {
         if (resendTimer === 0) {
-            // Simulate resending email
-            console.log("Resending email...");
+            ApiService.post<string>("/auth/forgot-password", { email })
+                .then(response => alert(response));
             setResendTimer(120); // Reset timer
         }
     };

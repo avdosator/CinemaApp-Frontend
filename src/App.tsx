@@ -14,8 +14,6 @@ import ProtectedRoute from './routes/ProtectedRoute';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const [isSessionExpired, setIsSessionExpired] = useState<boolean>(false);
-
 
   const openAuthModal = (): void => setIsAuthOpen(true);
   const closeAuthModal = (): void => setIsAuthOpen(false);

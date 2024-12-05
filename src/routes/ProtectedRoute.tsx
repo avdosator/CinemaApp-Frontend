@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useUser } from "../context/UserContext"
 import useTokenValidation from "../custom-hooks/useTokenValidation";
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import SessionExpiredAlert from "../components/shared-components/session-expired-alert/SessionExpiredAlert";
 
 type ProtectedRouteProps = {
@@ -13,13 +13,17 @@ export default function ProtectedRoute({ openLoginForm, children }: ProtectedRou
     const { currentUser, setCurrentUser } = useUser();
     const [showSessionExpired, setShowSessionExpired] = useState<boolean>(false);
 
-
     const handleSessionExpired = useCallback((expired: boolean) => {
         if (expired) {
             setCurrentUser(null);
             setShowSessionExpired(true);
         }
     }, [setCurrentUser, setShowSessionExpired]);
+
+    // Reset `showSessionExpired` on location change
+    useEffect(() => {
+        setShowSessionExpired(false);
+    }, [location.pathname]);
 
     // set user to null if token is expired
     const isTokenExpired = useTokenValidation({

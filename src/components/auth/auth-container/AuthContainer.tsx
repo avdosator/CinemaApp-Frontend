@@ -11,7 +11,11 @@ import { authStepHeadings, backActions } from "../authConfig";
 import AuthSuccess from "../successful-action/AuthSuccess";
 import { faVideo, faLock, faFilm } from "@fortawesome/free-solid-svg-icons";
 
-export default function AuthContainer({ closeAuthContainer }: { closeAuthContainer: () => void }) {
+type AuthContainerProps = {
+    closeAuthContainer: () => void
+}
+
+export default function AuthContainer({ closeAuthContainer }: AuthContainerProps) {
     const [authStep, setAuthStep] = useState<"signIn" | "signUp" | "passwordResetEmail" | "passwordResetCode" | "newPassword" | "successfulSignIn" | "successfulSignUp" | "successfulPasswordChange">("signIn");
     const [resetCodeEmail, setResetCodeEmail] = useState<string>("");
 

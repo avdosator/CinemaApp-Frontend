@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ApiService from "../service/ApiService";
 import { RefreshTokenResponse } from "../types/RefreshTokenResponse";
+import { useLocation } from "react-router-dom";
 
 type useTokenValidationProps = {
     setIsSessionExpired: (expired: boolean) => void,
@@ -10,6 +11,7 @@ type useTokenValidationProps = {
 // Custom hook that checks if jwt is expired
 export default function useTokenValidation({ setIsSessionExpired, userId }: useTokenValidationProps): boolean {
     const [isTokenExpired, setIsTokenExpired] = useState<boolean>(false);
+    const location = useLocation();
 
     useEffect(() => {
         if (!userId) {
@@ -83,7 +85,7 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
         // Initial check on mount
         checkTokenExpiration();
 
-    }, [setIsSessionExpired]);
+    }, [userId, setIsSessionExpired, location.pathname]);
 
     return isTokenExpired;
 }

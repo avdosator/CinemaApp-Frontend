@@ -1,12 +1,13 @@
 import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApiService from "../../../service/ApiService";
 import { AuthResponse } from "../../../types/AuthResponse";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
 import { useUser } from "../../../context/UserContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type SignInFormType = {
     email: string,
@@ -20,11 +21,12 @@ type SignInFormProps = {
     success: () => void
 }
 
-export default function SignInForm({ switchToSignUpForm, forgotPassword, success }: SignInFormProps) {
+export default function SignInForm({ switchToSignUpForm, forgotPassword, success, closeAuthContainer }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
-
+    const location = useLocation();
+    const navigate = useNavigate();
     const { setCurrentUser } = useUser();
 
     const toggleShowPassword = (): void => {
@@ -50,6 +52,8 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             const expiryDate = new Date().getTime() + expiresIn;
             localStorage.setItem("authToken", jwt);
             localStorage.setItem("authTokenExpiry", expiryDate.toString());
+
+            // Get user by email from payload
             const decodedJwt: { sub: string } = jwtDecode(jwt);
             const userEmail: string = decodedJwt.sub;
             const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
@@ -62,7 +66,12 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
                 localStorage.setItem("refreshToken", refreshToken);
             }
 
-            // Get user by email from payload
+            setTimeout(() => {
+                closeAuthContainer();
+                navigate(location.pathname, {replace: true});
+
+            }, 2000);
+
 
         } catch (error: any) {
             console.error(error);

@@ -15,7 +15,6 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
 
     useEffect(() => {
         if (!userId) {
-            console.log("No userId provided, treating token as expired.");
             setIsTokenExpired(true);
             setIsSessionExpired(true);
         }
@@ -32,7 +31,6 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
 
                     // If the token is expired
                     if (now >= expiresAt) {
-                        console.log("Token expired, checking for refresh token...");
 
                         if (refreshToken) {
                             try {
@@ -45,7 +43,6 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
                                 localStorage.setItem("authTokenExpiry", expiryDate.toString());
                                 setIsTokenExpired(false);
                                 setIsSessionExpired(false);
-                                console.log("token refreshed successfuly")
                             } catch (error) {
                                 console.error("Failed to refresh token:",);
                                 clearLocalStorage();
@@ -53,13 +50,11 @@ export default function useTokenValidation({ setIsSessionExpired, userId }: useT
                                 setIsSessionExpired(true);
                             }
                         } else {
-                            console.log("No refresh token, logging out...");
                             clearLocalStorage();
                             setIsTokenExpired(true);
                             setIsSessionExpired(true);
                         }
                     } else {
-                        console.log("Token is still valid.");
                         setIsTokenExpired(false);
                         setIsSessionExpired(false);
                     }

@@ -38,7 +38,7 @@ export default function AuthContainer({ closeAuthContainer }: AuthContainerProps
                     />
                 );
             case "signUp":
-                return (<SignUpForm success={() => setAuthStep("successfulSignUp")} />);
+                return (<SignUpForm success={() => setAuthStep("successfulSignUp")} closeAuthContainer={closeAuthContainer} />);
             case "passwordResetEmail":
                 return (<PasswordResetEmail onValidEmail={handleEmailSubmit} />);
             case "passwordResetCode":

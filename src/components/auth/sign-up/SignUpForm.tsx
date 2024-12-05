@@ -7,6 +7,7 @@ import ApiService from "../../../service/ApiService";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
 import { useUser } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 type SignupFormType = {
     email: string,
@@ -15,13 +16,15 @@ type SignupFormType = {
 }
 
 type SignUpFormProps = {
-    success: () => void
+    success: () => void,
+    closeAuthContainer: () => void
 }
 
-export default function SignUpForm({ success }: SignUpFormProps) {
+export default function SignUpForm({ success, closeAuthContainer }: SignUpFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<SignupFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const { setCurrentUser } = useUser();
 
@@ -72,6 +75,10 @@ export default function SignUpForm({ success }: SignUpFormProps) {
             setCurrentUser(user);
             localStorage.setItem("userId", user.id);
             success();
+            setTimeout(() => {
+                closeAuthContainer();
+                navigate("/home");
+            }, 2000);
         } catch (error: any) {
             console.log(error.message);
             setError("email", {

@@ -1,7 +1,7 @@
 import "../AuthForm.css"
 import { SubmitHandler, useForm } from "react-hook-form";
 import CustomCheckbox from "../custom-checkbox/CustomCheckbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ApiService from "../../../service/ApiService";
 import { AuthResponse } from "../../../types/AuthResponse";
 import { jwtDecode } from "jwt-decode";
@@ -65,14 +65,10 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             if (rememberMe && refreshToken) {
                 localStorage.setItem("refreshToken", refreshToken);
             }
-
             setTimeout(() => {
                 closeAuthContainer();
-                navigate(location.pathname, {replace: true});
-
+                navigate(location.pathname, { replace: true });
             }, 2000);
-
-
         } catch (error: any) {
             console.error(error);
             // setError("email", {

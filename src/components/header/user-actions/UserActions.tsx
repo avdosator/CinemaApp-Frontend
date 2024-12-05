@@ -16,12 +16,11 @@ export default function UserActions({ name }: { name: string }) {
         const userId = localStorage.getItem("userId");
         if(refreshToken) {
             ApiService.post<String>("/auth/logout", {refreshToken, userId })
-            .then(response => console.log(response))
+            .then(response => console.log(response)) // do we need to do anything with response
             .catch(error => console.error(error));
         }
         setCurrentUser(null);
         localStorage.clear();
-        console.log("User logged out");
     };
 
     return (

@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import "./PasswordResetCode.css"
 import "../../AuthForm.css"
+import ApiService from "../../../../service/ApiService";
 
 type PasswordResetCodeProps = {
     email: string,
+    response: string,
     onCodeVerified: () => void
 }
 
-export default function PasswordResetCode({ email, onCodeVerified }: PasswordResetCodeProps) {
+export default function PasswordResetCode({ email, response, onCodeVerified }: PasswordResetCodeProps) {
     const [formData, setFormData] = useState<string[]>(["", "", "", ""]);
     const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
     const [resendTimer, setResendTimer] = useState<number>(120);
-    const [error, setError] = useState<string | null>(null);
-
-    const isCodeComplete = formData.every((digit) => digit !== "");
+    const [resetCodeError, setResetCodeError] = useState<string | null>(null);
 
     // Start the timer on component mount
     useEffect(() => {
@@ -49,22 +49,22 @@ export default function PasswordResetCode({ email, onCodeVerified }: PasswordRes
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const code = formData.join(""); // Combine all inputs into a single string
 
         if (code.length < 4) {
-            setError("Please enter a complete 4-digit code.");
+            setResetCodeError("Please enter a complete 4-digit code.");
             return;
         }
 
         try {
-            // API request for code verification
-            console.log(`Verifying code: ${code}`);
-            console.log(email);
-            onCodeVerified();
+            const response: string = await ApiService.post<string>("/auth/verify-reset-code", { email, resetCode: code });
+            if (response === "Code is valid") {
+                onCodeVerified();
+            }
         } catch (error) {
-            setError("Invalid code. Please try again.");
+            setResetCodeError("Invalid code. Please try again.");
         }
     };
 
@@ -79,7 +79,7 @@ export default function PasswordResetCode({ email, onCodeVerified }: PasswordRes
     return (
         <div className="auth-form-container">
             <p className="font-md-regular password-reset-info">
-                We have sent code to your email j******e@gmail.com. Please, enter the code below to verify.
+                {response}
             </p>
             <form className="password-reset-code-form" onSubmit={handleSubmit}>
                 <div className="password-reset-code-inputs">
@@ -97,20 +97,21 @@ export default function PasswordResetCode({ email, onCodeVerified }: PasswordRes
                         />
                     ))}
                 </div>
-                {error && !isCodeComplete && <div className="font-sm-regular auth-error">{error}</div>}
+                {resetCodeError && <div className="font-sm-regular auth-error">{resetCodeError}</div>}
                 <p className="font-md-regular password-reset-info">
                     Didn't receive the email?
                 </p>
                 {
                     resendTimer > 0
-                        ? (
-                            <p className="font-md-regular password-reset-info">
-                                You can resend email in
-                                <span className="font-md-semibold resend-timer">{resendTimer}</span>
-                                seconds.
-                            </p>
-                        )
-                        : (<button className="font-lg-semibold resend-email-btn" onClick={handleResendEmail}>Resend</button>)
+                        ? (<p className="font-md-regular password-reset-info">
+                            You can resend email in
+                            <span className="font-md-semibold resend-timer">{resendTimer}</span>
+                            seconds.
+                        </p>)
+                        :
+                        (<button className="font-lg-semibold resend-email-btn" onClick={handleResendEmail}>
+                            Resend
+                        </button>)
                 }
 
                 <button type="submit" className="auth-form-btn font-lg-semibold" >Continue</button>

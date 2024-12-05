@@ -22,7 +22,7 @@ type SignInFormProps = {
 }
 
 export default function SignInForm({ switchToSignUpForm, forgotPassword, success, closeAuthContainer }: SignInFormProps) {
-    const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
+    const { register, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
     const location = useLocation();
@@ -59,12 +59,13 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
             setCurrentUser(user);
             localStorage.setItem("userId", user.id);
-            success();
 
             // When rememberMe is true that means that we want to handle longer authentication with refresh token
             if (rememberMe && refreshToken) {
                 localStorage.setItem("refreshToken", refreshToken);
             }
+
+            success();
             setTimeout(() => {
                 closeAuthContainer();
                 navigate(location.pathname, { replace: true });

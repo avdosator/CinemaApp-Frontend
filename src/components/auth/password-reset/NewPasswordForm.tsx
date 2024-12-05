@@ -1,7 +1,13 @@
+import { jwtDecode } from "jwt-decode";
+import ApiService from "../../../service/ApiService";
+import { AuthResponse } from "../../../types/AuthResponse";
 import "../AuthForm.css"
 import "./PasswordReset.css"
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { User } from "../../../types/User";
+import { useUser } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 type NewPasswordForm = {
     password: string,
@@ -10,13 +16,16 @@ type NewPasswordForm = {
 
 type NewPasswordFormProps = {
     email: string,
-    success: () => void
+    success: () => void,
+    closeAuthContainer: () => void
 }
 
-export default function NewPasswordForm({ email, success }: NewPasswordFormProps) {
+export default function NewPasswordForm({ email, success, closeAuthContainer }: NewPasswordFormProps) {
     const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting }, watch, trigger } = useForm<NewPasswordForm>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const { setCurrentUser } = useUser();
+    const navigate = useNavigate();
 
     const toggleShowPassword = (): void => {
         setShowPassword(prevPassword => !prevPassword);
@@ -48,14 +57,28 @@ export default function NewPasswordForm({ email, success }: NewPasswordFormProps
 
     const onSubmit: SubmitHandler<NewPasswordForm> = async (formData) => {
         try {
-            // send request
-            console.log(formData);
-            console.log(email);
+            const response = await ApiService.post<AuthResponse>("/users/change-password", { email, newPassword: formData.password });
+            const { jwt, expiresIn, refreshToken } = response;
+            const expiryDate = new Date().getTime() + expiresIn;
+            localStorage.setItem("authToken", jwt);
+            localStorage.setItem("authTokenExpiry", expiryDate.toString());
+            localStorage.setItem("refreshToken", refreshToken);
+
+            // Get user by email from payload
+            const decodedJwt: { sub: string } = jwtDecode(jwt);
+            const userEmail: string = decodedJwt.sub;
+            const user = await ApiService.get<User>(`/users/email/${encodeURIComponent(userEmail)}`);
+            setCurrentUser(user);
+            localStorage.setItem("userId", user.id);
             success();
+            setTimeout(() => {
+                closeAuthContainer();
+                navigate("/home");
+            }, 2000);
         } catch (error) {
             setError("password", {
                 message: "This password is already taken"
-            })
+            });
         }
     }
 

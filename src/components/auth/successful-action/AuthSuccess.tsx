@@ -8,7 +8,7 @@ type AuthSuccessProps = {
     text: string,
     icon: IconProp,
     btn?: boolean,
-    closeAuthContainer?: () => void 
+    closeAuthContainer?: () => void
 }
 
 export default function AuthSuccess({ text, icon, btn = false, closeAuthContainer }: AuthSuccessProps) {
@@ -29,7 +29,11 @@ export default function AuthSuccess({ text, icon, btn = false, closeAuthContaine
                     <FontAwesomeIcon icon={icon} className="successful-auth-icon" />
                 </div>
             </div>
-            {btn && (<Link onClick={() => closeAuthContainer!()} to="/home" className="auth-form-btn no-style-link font-lg-semibold">See Movies</Link>)}
+            {btn &&
+                (<Link onClick={() => closeAuthContainer!()} to="/currently-showing" className="auth-form-btn no-style-link font-lg-semibold">
+                    See Movies
+                </Link>)
+            }
         </div>
     )
 }

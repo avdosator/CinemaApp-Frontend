@@ -18,11 +18,13 @@ type AuthContainerProps = {
 export default function AuthContainer({ closeAuthContainer }: AuthContainerProps) {
     const [authStep, setAuthStep] = useState<"signIn" | "signUp" | "passwordResetEmail" | "passwordResetCode" | "newPassword" | "successfulSignIn" | "successfulSignUp" | "successfulPasswordChange">("signIn");
     const [resetCodeEmail, setResetCodeEmail] = useState<string>("");
+    const [passwordResetEmailResponse, setPasswordResetEmailResponse] = useState<string>("");
 
     const backButtonActions = backActions(closeAuthContainer, setAuthStep);
 
-    const handleEmailSubmit = (email: string) => {
+    const handleEmailSubmit = (email: string, response: string) => {
         setResetCodeEmail(email); // Save the email
+        setPasswordResetEmailResponse(response);
         setAuthStep("passwordResetCode"); // Move to the next step
     };
 
@@ -38,14 +40,20 @@ export default function AuthContainer({ closeAuthContainer }: AuthContainerProps
                     />
                 );
             case "signUp":
-                return (<SignUpForm success={() => setAuthStep("successfulSignUp")} closeAuthContainer={closeAuthContainer} />);
+                return (<SignUpForm success={() => setAuthStep("successfulSignUp")} />);
             case "passwordResetEmail":
                 return (<PasswordResetEmail onValidEmail={handleEmailSubmit} />);
             case "passwordResetCode":
                 return (
-                    <PasswordResetCode email={resetCodeEmail} onCodeVerified={() => setAuthStep("newPassword")} />);
+                    <PasswordResetCode email={resetCodeEmail} response={passwordResetEmailResponse} onCodeVerified={() => setAuthStep("newPassword")} />);
             case "newPassword":
-                return (<NewPasswordForm email={resetCodeEmail} success={() => setAuthStep("successfulPasswordChange")} />);
+                return (
+                    <NewPasswordForm
+                        email={resetCodeEmail}
+                        success={() => setAuthStep("successfulPasswordChange")}
+                        closeAuthContainer={closeAuthContainer}
+                    />
+                );
             case "successfulSignIn":
                 return (<AuthSuccess text="Please, wait. You will be directed to the homepage." icon={faVideo} />);
             case "successfulSignUp":
@@ -55,7 +63,8 @@ export default function AuthContainer({ closeAuthContainer }: AuthContainerProps
                         icon={faFilm}
                         btn={true}
                         closeAuthContainer={closeAuthContainer}
-                    />);
+                    />
+                );
             case "successfulPasswordChange":
                 return (<AuthSuccess text="Please, wait. You will be directed to the homepage." icon={faLock} />);
         }

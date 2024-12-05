@@ -1,7 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import ApiService from "../../../service/ApiService";
 
 type PasswordResetEmailProps = {
-    onValidEmail: (email: string) => void,
+    onValidEmail: (email: string, response: string) => void,
 }
 
 export default function PasswordResetEmail({ onValidEmail }: PasswordResetEmailProps) {
@@ -11,9 +12,8 @@ export default function PasswordResetEmail({ onValidEmail }: PasswordResetEmailP
 
     const onSubmit: SubmitHandler<{ email: string }> = async (formData) => {
         try {
-            // send request
-            console.log(formData);
-            onValidEmail(formData.email);
+            const response: string = await ApiService.post<string>("/auth/forgot-password", { email: formData.email });
+            onValidEmail(formData.email, response);
         } catch (error) {
             setError("email", { message: "Invalid request" });
         }
@@ -37,7 +37,7 @@ export default function PasswordResetEmail({ onValidEmail }: PasswordResetEmailP
                             {...register("email", {
                                 required: "Email address is required.",
                                 pattern: {
-                                    value: /^(?!(^[.-].*|[^@]*\.@|.*\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+@)(?!-.*|.*-\.)([a-zA-Z0-9-]{1,63}\.)+[a-zA-Z]{2,15}$/,
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                     message: "Invalid email. Please check for typos and ensure it's a valid address."
                                 }
                             })}

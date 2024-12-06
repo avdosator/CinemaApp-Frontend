@@ -5,8 +5,6 @@ import Header from './components/header/Header';
 import HomePage from './components/home-page/HomePage';
 import AboutUsPage from './components/about-us-page/AboutUsPage';
 import PricingPage from './components/pricing-page/PricingPage';
-import CurrentlyShowingPage from './components/currently-showing-page/CurrentlyShowingPage';
-import UpcomingMoviesPage from './components/upcoming-movies-page/UpcomingMoviesPage';
 import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
 

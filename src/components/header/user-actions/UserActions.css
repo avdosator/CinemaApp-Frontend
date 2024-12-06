@@ -60,15 +60,17 @@
 
 .user-actions-dropdown-menu {
     position: absolute;
-    top: 74px;
-    right: 100px;
-    color: #FCFCFD;
-    background-color: #1D2939;
-    border: 1px solid #344054;
+    width: 308px;
+    top: 66px;
+    right: 82px;
+    color: #D52D2D;
+    background-color: #FFFFFF;
+    border: 1px solid #E4E7EC;
     border-radius: 8px;
     z-index: 1000;
     display: flex;
     flex-direction: column;
+    align-items: start;
     cursor: pointer;
 }
 

@@ -22,7 +22,7 @@ type SignInFormProps = {
 }
 
 export default function SignInForm({ switchToSignUpForm, forgotPassword, success, closeAuthContainer }: SignInFormProps) {
-    const { register, handleSubmit, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
+    const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
     const location = useLocation();
@@ -64,20 +64,13 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             if (rememberMe && refreshToken) {
                 localStorage.setItem("refreshToken", refreshToken);
             }
-
             success();
             setTimeout(() => {
                 closeAuthContainer();
                 navigate(location.pathname, { replace: true });
             }, 2000);
         } catch (error: any) {
-            console.error(error);
-            // setError("email", {
-            //     message: "This email is already taken"
-            // });
-            // setError("password", {
-            //     message: "This password is already taken"
-            // })
+            setError("root", { message: error.response.data.message });
         }
     };
 
@@ -89,8 +82,8 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
 
     return (
         <div className="auth-form-container">
-            {/* <AuthHeading onBack={closeAuthContainer} headingText="Welcome Back" /> */}
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)} >
+                {errors.root && <div className="font-md-regular auth-error" style={{ textAlign: "center" }}>{errors.root.message}</div>}
                 <div className={`auth-input-group ${getContainerClass(emailValue, !!errors.email)}`}>
                     <label htmlFor="email" className="auth-form-label font-lg-semibold">Email</label>
                     <div className="auth-input-wrapper">

@@ -14,8 +14,8 @@ export default function PasswordResetEmail({ onValidEmail }: PasswordResetEmailP
         try {
             const response: string = await ApiService.post<string>("/auth/forgot-password", { email: formData.email });
             onValidEmail(formData.email, response);
-        } catch (error) {
-            setError("email", { message: "Invalid request" });
+        } catch (error: any) {
+            setError("email", { message: error.response.data.message });
         }
     }
 

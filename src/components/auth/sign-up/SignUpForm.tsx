@@ -72,13 +72,7 @@ export default function SignUpForm({ success }: SignUpFormProps) {
             localStorage.setItem("userId", user.id);
             success();
         } catch (error: any) {
-            console.log(error.message);
-            // setError("email", {
-            //     message: "This email is already taken"
-            // });
-            // setError("password", {
-            //     message: "This password is already taken"
-            // })
+            setError("root", { message: error.response.data.message });
         }
     }
 
@@ -91,6 +85,7 @@ export default function SignUpForm({ success }: SignUpFormProps) {
     return (
         <div className="auth-form-container">
             <form className="auth-form" onSubmit={handleSubmit(onSubmit)} >
+                {errors.root && <div className="font-md-regular auth-error" style={{ textAlign: "center" }}>{errors.root.message}</div>}
                 <div id="sign-up-email-container" className={`auth-input-group ${getContainerClass(emailValue, !!errors.email)}`}>
                     <label htmlFor="email" className="auth-form-label font-lg-semibold">Email</label>
                     <div className="auth-input-wrapper">

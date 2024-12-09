@@ -3,7 +3,7 @@ type SeatProps = {
     type: "regular" | "vip" | "love"
 }
 
-export default function Seat({ number, type }: SeatProps) {
+export default function Seat({ number }: SeatProps) {
     return (
         <button className="seat">
             {number}

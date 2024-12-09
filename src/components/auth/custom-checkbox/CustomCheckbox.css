@@ -1,0 +1,51 @@
+.css-checkbox {
+    position: absolute;
+    overflow: hidden;
+    height: 0px;
+    width: 0px;
+    /* margin: -1px;
+    padding: 0;
+    border: 0; */
+}
+
+#inputPreview {
+    display: flex;
+    /* gap: 20px; */
+    justify-content: center;
+}
+
+.css-checkbox+label {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+.css-checkbox+label::before {
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #FCFCFD;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+.css-checkbox:checked+label::after {
+    content: " ";
+    background-image: url("../../../assets/check-solid.svg");
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: center center;
+    background-color: #101828;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
+}

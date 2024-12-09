@@ -24,7 +24,7 @@ export default class ApiService {
             const response: AxiosResponse<T> = await this.axiosInstance.post(route, body, { headers });
             return response.data;
         } catch (err) {
-            console.error("POST request failed", err);
+            //console.error("POST request failed", err);
             throw err;
         }
     }

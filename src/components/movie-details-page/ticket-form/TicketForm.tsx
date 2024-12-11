@@ -18,9 +18,23 @@ export default function TicketForm({ movie }: { movie: Movie }) {
 
     const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(movie.projections[0].endDate));
 
-    // this should be generated based on cities and venues where each movie has projection
-    const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];
-    const venueOptions: SelectOptionType[] = [{ value: "venuId", label: "Cinema City Mostar" }];
+    const venueOptions: SelectOptionType[] = Array.from(
+        new Map(
+            movie.projections.map(projection => {
+                const venue = projection.hall.venue;
+                return [venue.id, { value: venue.id, label: venue.name }];
+            })
+        ).values()
+    );
+
+    const cityOptions: SelectOptionType[] = Array.from(
+        new Map(
+            movie.projections.map(projection => {
+                const city = projection.hall.venue.city;
+                return [city.id, { value: city.id, label: city.name }];
+            })
+        ).values()
+    );
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
         setFormData((prevData) => ({
@@ -30,7 +44,14 @@ export default function TicketForm({ movie }: { movie: Movie }) {
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
+        e.preventDefault();   
+    }
+
+    const sendRequest = ():void => {
+        if (!isFormComplete) return;
+
+        // Replace this with the actual request logic
+        console.log("Sending request with data:", formData);
     }
 
     const handleFocus = (iconName: IconType): void => {
@@ -110,6 +131,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                     <button
                         className={isFormComplete ? "ticket-btn-buy" : "ticket-btn-buy-disabled"}
                         disabled={!isFormComplete}
+                        type="submit"
+                        onClick={sendRequest}
                     >
                         Buy Ticket
                     </button>

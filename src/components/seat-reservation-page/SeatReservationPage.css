@@ -19,6 +19,7 @@
 }
 
 .session-duration-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -37,8 +38,42 @@
     border: 1px solid #E4E7EC;
 }
 
+.session-duration-info {
+    position: absolute;
+    top: 145px;
+    right: 170px;
+    width: 213px;
+    background-color: #101828;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #FFFFFF;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.session-duration-container:hover + .session-duration-info {
+    opacity: 1 !important; 
+    visibility: visible; 
+}
+
 .seat-reservation-horizontal-line {
     height: 1px;
     background-color: #E4E7EC;
     margin: 0px -74px 20px -74px;
 }
+
+.seat-reservation-movie-container {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 25px;
+}
+
+.seat-reservation-movie-img {}
+
+.seat-reservation-movie-info {}
+
+.seat-reservation-booking-info {}

@@ -14,6 +14,9 @@ export default function SeatReservationPage() {
                     <div className="font-lg-regular session-duration-text">Session Duration</div>
                     <div className="session-duration-counter font-heading-h6">04:59</div>
                 </div>
+                <div className="session-duration-info font-sm-regular">
+                    Session will expire in 5 minutes <br />and selected seats will be refreshed
+                </div>
             </div>
             <div className="seat-reservation-horizontal-line"></div>
             

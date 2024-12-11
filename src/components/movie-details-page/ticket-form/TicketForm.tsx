@@ -11,10 +11,14 @@ import { MovieDetailsFormData } from "../../../types/FormData";
 import { IconType } from "../../../types/IconType";
 import { generateDatePickerBtnInputs } from "../../../utils/utils";
 import { DatePickerBtnType } from "../../../types/DatePickerBtn";
+import ApiService from "../../../service/ApiService";
+import { ProjectionInstance } from "../../../types/ProjectionInstance";
+import { useNavigate } from "react-router-dom";
 
 export default function TicketForm({ movie }: { movie: Movie }) {
     const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: new Date().toISOString().split('T')[0], time: "" });
     const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
+    const navigate = useNavigate();
 
     const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(movie.projections[0].endDate));
 
@@ -44,14 +48,22 @@ export default function TicketForm({ movie }: { movie: Movie }) {
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();   
+        e.preventDefault();
     }
 
-    const sendRequest = ():void => {
+    const sendRequest = async () => {
         if (!isFormComplete) return;
 
-        // Replace this with the actual request logic
-        console.log("Sending request with data:", formData);
+        const params: Record<string, string> = {
+            movie: movie.id,
+            city: formData.city!.value,
+            venue: formData.venue!.value,
+            date: formData.date,
+            time: formData.time
+        }
+
+        const projectionInstance = await ApiService.get<ProjectionInstance>("/projection/instance", params);
+        navigate("/reservations", {state: {projectionInstance, movie}});
     }
 
     const handleFocus = (iconName: IconType): void => {

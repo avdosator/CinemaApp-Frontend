@@ -7,16 +7,25 @@ import AboutUsPage from './components/about-us-page/AboutUsPage';
 import PricingPage from './components/pricing-page/PricingPage';
 import MovieProvider from './context/movie-context/MovieContext';
 import MovieRoutes from './routes/MovieRoutes';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import AuthContainer from './components/auth/auth-container/AuthContainer';
 import UserProvider from './context/UserContext';
 import ProtectedRoute from './routes/ProtectedRoute';
+import SeatReservationPage from './components/seat-reservation-page/SeatReservationPage';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
+  const [redirectInfo, setRedirectInfo] = useState<{ path: string; state?: any } | null>(null);
 
-  const openAuthModal = (): void => setIsAuthOpen(true);
-  const closeAuthModal = (): void => setIsAuthOpen(false);
+  const openAuthModal = useCallback((path: string = "/", state: any = null): void => {
+    setRedirectInfo({ path, state }); // Store the route and state
+    setIsAuthOpen(true); // Open the login modal
+  }, []);
+
+  const closeAuthModal = (): void => {
+    setIsAuthOpen(false);
+    setRedirectInfo(null); // Clear redirect info when closing modal
+  };
 
   return (
     <>
@@ -32,19 +41,27 @@ function App() {
                 <Route path='/about' element={<AboutUsPage />} />
                 {/* <Route path='/pricing' element={<PricingPage />} /> */}
                 {/* Protected Route */}
-              <Route
-                path="/pricing"
-                element={
-                  <ProtectedRoute openLoginForm={openAuthModal}>
-                    <PricingPage />
-                  </ProtectedRoute>
-                }
-              />
+                <Route
+                  path="/pricing"
+                  element={
+                    <ProtectedRoute openLoginForm={openAuthModal}>
+                      <PricingPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/reservations"
+                  element={
+                    <ProtectedRoute openLoginForm={openAuthModal}>
+                      <SeatReservationPage />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </div>
             <Footer />
           </div>
-          {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} />}
+          {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} redirectInfo={redirectInfo} />}
         </MovieProvider>
       </UserProvider>
     </>

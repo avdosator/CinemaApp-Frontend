@@ -12,10 +12,11 @@ import AuthSuccess from "../successful-action/AuthSuccess";
 import { faVideo, faLock, faFilm } from "@fortawesome/free-solid-svg-icons";
 
 type AuthContainerProps = {
-    closeAuthContainer: () => void
+    closeAuthContainer: () => void,
+    redirectInfo: { path: string; state?: any } | null;
 }
 
-export default function AuthContainer({ closeAuthContainer }: AuthContainerProps) {
+export default function AuthContainer({ closeAuthContainer, redirectInfo }: AuthContainerProps) {
     const [authStep, setAuthStep] = useState<"signIn" | "signUp" | "passwordResetEmail" | "passwordResetCode" | "newPassword" | "successfulSignIn" | "successfulSignUp" | "successfulPasswordChange">("signIn");
     const [resetCodeEmail, setResetCodeEmail] = useState<string>("");
     const [passwordResetEmailResponse, setPasswordResetEmailResponse] = useState<string>("");
@@ -37,6 +38,7 @@ export default function AuthContainer({ closeAuthContainer }: AuthContainerProps
                         switchToSignUpForm={() => setAuthStep("signUp")}
                         forgotPassword={() => setAuthStep("passwordResetEmail")}
                         success={() => setAuthStep("successfulSignIn")}
+                        redirectInfo={redirectInfo}
                     />
                 );
             case "signUp":

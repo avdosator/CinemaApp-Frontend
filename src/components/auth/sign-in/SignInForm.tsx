@@ -7,7 +7,7 @@ import { AuthResponse } from "../../../types/AuthResponse";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
 import { useUser } from "../../../context/UserContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type SignInFormType = {
     email: string,
@@ -18,14 +18,14 @@ type SignInFormProps = {
     closeAuthContainer: () => void,
     switchToSignUpForm: () => void,
     forgotPassword: () => void,
-    success: () => void
+    success: () => void,
+    redirectInfo: { path: string; state?: any } | null;
 }
 
-export default function SignInForm({ switchToSignUpForm, forgotPassword, success, closeAuthContainer }: SignInFormProps) {
+export default function SignInForm({ switchToSignUpForm, forgotPassword, success, closeAuthContainer, redirectInfo }: SignInFormProps) {
     const { register, handleSubmit, setError, formState: { errors, isSubmitting }, watch } = useForm<SignInFormType>();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [rememberMe, setRememberMe] = useState<boolean>(false); // State for the checkbox
-    const location = useLocation();
     const navigate = useNavigate();
     const { setCurrentUser } = useUser();
 
@@ -67,7 +67,13 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             success();
             setTimeout(() => {
                 closeAuthContainer();
-                navigate(location.pathname, { replace: true });
+    
+                // Use redirectInfo here
+                if (redirectInfo) {
+                    navigate(redirectInfo.path, { state: redirectInfo.state, replace: true });
+                } else {
+                    navigate("/", { replace: true }); // Default fallback
+                }
             }, 2000);
         } catch (error: any) {
             setError("root", { message: error.response.data.message });

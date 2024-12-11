@@ -6,7 +6,7 @@ import { useUser } from "../../context/UserContext";
 import UserActions from "./user-actions/UserActions";
 
 type HeaderProps = {
-    openAuthModal: () => void
+    openAuthModal: (path?: string, state?: any) => void; 
 }
 
 export default function Header({ openAuthModal }: HeaderProps) {
@@ -50,7 +50,7 @@ export default function Header({ openAuthModal }: HeaderProps) {
                 {currentUser ?
                     (<UserActions name={name} />)
                     :
-                    (<button onClick={openAuthModal} className="navbar-sign-in-btn font-lg-semibold">
+                    (<button onClick={() => openAuthModal()} className="navbar-sign-in-btn font-lg-semibold">
                         Sign In
                     </button>)
                 }

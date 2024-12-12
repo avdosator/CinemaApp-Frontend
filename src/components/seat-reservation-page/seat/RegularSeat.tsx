@@ -5,7 +5,7 @@ type SeatProps = {
     type: string
 }
 
-export default function Seat({ number, type }: SeatProps) {
+export default function RegularSeat({ number, type }: SeatProps) {
     const seatType: string = type;
     return (
         <button className="seat">

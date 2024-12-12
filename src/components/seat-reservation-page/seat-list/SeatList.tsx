@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import "./SeatList.css"
 import ApiService from "../../../service/ApiService"
 import { Seat as SeatType } from "../../../types/Seat"
-import Seat from "../seat/Seat"
+import RegularSeat from "../seat/RegularSeat"
 
 type SeatListProps = {
     hallId: string
@@ -24,7 +24,7 @@ export default function SeatList({ hallId }: SeatListProps) {
     }, [])
     return (
         <div className="seat-list">
-            {seats.map(seat => (<Seat key={seat.id} number={seat.number} type={seat.type} />))}
+            {seats.map(seat => (<RegularSeat key={seat.id} number={seat.number} type={seat.type} />))}
         </div>
     )
 }

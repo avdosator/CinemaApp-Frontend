@@ -1,18 +1,16 @@
 import { Venue } from "../../types/Venue";
 import VerticalLine from "../shared-components/divider/VerticalLine";
+import SeatSchema from "./seat-schema/SeatSchema";
 import "./SeatReservationPage.css"
 import { useLocation } from "react-router-dom";
 
 export default function SeatReservationPage() {
     const location = useLocation();
-    const { projectionInstance, movie } = location.state;
+    const { projectionInstance, movie } = location.state;    
     const venue: Venue = projectionInstance.projection.hall.venue;
 
     const date = new Date(projectionInstance.date);
-
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
-
-    // Format the date
     const formattedDate = date.toLocaleDateString("en-US", options);
 
     return (
@@ -51,7 +49,9 @@ export default function SeatReservationPage() {
                 </div>
             </div>
             <div className="seat-reservation-horizontal-line"></div>
-
+            <div className="seat-reservation-ticket-container">
+                <SeatSchema hallId={projectionInstance.projection.hall.id} />
+            </div>
         </div>
     )
 }

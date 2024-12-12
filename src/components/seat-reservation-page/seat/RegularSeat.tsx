@@ -1,14 +1,12 @@
-import "./Seat.css"
+import "./RegularSeat.css"
 
-type SeatProps = {
+type RegularSeatProps = {
     number: string,
-    type: string
 }
 
-export default function RegularSeat({ number, type }: SeatProps) {
-    const seatType: string = type;
+export default function RegularSeat({ number }: RegularSeatProps) {
     return (
-        <button className="seat">
+        <button className="regular-seat">
             {number}
         </button>
     )

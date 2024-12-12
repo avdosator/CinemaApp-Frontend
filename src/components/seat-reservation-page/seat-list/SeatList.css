@@ -1,7 +1,20 @@
-.seat-list {
+.seat-list-container {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 48px;
+}
+
+.left-seats,
+.right-seats {
+    display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 32px;
+    max-width: 45%; 
+    justify-content: center;
+}
+
+.passage {
+    width: 40px; /* Width of the passage */
 }

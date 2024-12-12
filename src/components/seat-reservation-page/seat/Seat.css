@@ -10,3 +10,14 @@
     letter-spacing: 0.0015em;
     text-align: center;
 }
+
+.reserved-seat {
+    background-color: #E4E7EC;
+    border: 1px solid #E4E7EC;
+}
+
+.selected-seat {
+    color: #FCFCFD;
+    background-color: #B22222;
+    border: 1px solid #B22222;
+}

@@ -1,0 +1,7 @@
+.seat-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+}

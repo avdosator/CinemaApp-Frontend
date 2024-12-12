@@ -1,9 +1,19 @@
+import { Venue } from "../../types/Venue";
+import VerticalLine from "../shared-components/divider/VerticalLine";
 import "./SeatReservationPage.css"
 import { useLocation } from "react-router-dom";
 
 export default function SeatReservationPage() {
     const location = useLocation();
     const { projectionInstance, movie } = location.state;
+    const venue: Venue = projectionInstance.projection.hall.venue;
+
+    const date = new Date(projectionInstance.date);
+
+    const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
+
+    // Format the date
+    const formattedDate = date.toLocaleDateString("en-US", options);
 
     return (
         <div className="seat-reservation-container">
@@ -19,8 +29,29 @@ export default function SeatReservationPage() {
                 </div>
             </div>
             <div className="seat-reservation-horizontal-line"></div>
-            
-            <p>Movie: {movie.title}</p>
+            <div className="seat-reservation-movie-container">
+                <div className="seat-reservation-movie-img-container">
+                    <img src={movie.photos[0].url} alt="" />
+                </div>
+                <div className="seat-reservation-movie-info">
+                    <h6 className="font-heading-h6">{movie.title}</h6>
+                    <div className="font-lg-regular basic-movie-info">
+                        <span>{movie?.pgRating}</span>
+                        <VerticalLine width="0.5px" />
+                        <span>{movie?.language}</span>
+                        <VerticalLine width="0.5px" />
+                        <span>{`${movie?.durationInMinutes} Min`}</span>
+                    </div>
+                </div>
+                <div className="seat-reservation-booking-info font-lg-regular">
+                    <h6 className="font-heading-h6">Booking Details</h6>
+                    <div className="font-lg-regular">{formattedDate} at {projectionInstance.time}</div>
+                    <div className="font-lg-regular">{venue.name}, {venue.street} {venue.streetNumber}, {venue.city.name} {venue.city.postalCode}</div>
+                    <div className="font-lg-regular">{projectionInstance.projection.hall.name}</div>
+                </div>
+            </div>
+            <div className="seat-reservation-horizontal-line"></div>
+
         </div>
     )
 }

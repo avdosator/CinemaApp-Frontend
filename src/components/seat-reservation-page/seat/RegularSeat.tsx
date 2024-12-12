@@ -6,7 +6,7 @@ type RegularSeatProps = {
 
 export default function RegularSeat({ number }: RegularSeatProps) {
     return (
-        <button className="regular-seat">
+        <button className="seat regular-seat">
             {number}
         </button>
     )

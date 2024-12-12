@@ -1,4 +1,5 @@
 import "./LoveSeat.css"
+import "./Seat.css"
 
 type LoveSeatProps = {
     number: string,
@@ -6,7 +7,7 @@ type LoveSeatProps = {
 
 export default function LoveSeat({number}: LoveSeatProps) {
     return (
-        <button className="love-seat">
+        <button className="seat love-seat">
             {number}
         </button>
     )

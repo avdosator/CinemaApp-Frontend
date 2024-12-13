@@ -2,10 +2,12 @@ import { useState } from "react";
 import "./UserActions.css"
 import { useUser } from "../../../context/UserContext";
 import ApiService from "../../../service/ApiService";
+import { useNavigate } from "react-router-dom";
 
 export default function UserActions({ name }: { name: string }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
     const {setCurrentUser} = useUser();
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setIsDropdownVisible((prev) => !prev);
@@ -21,6 +23,7 @@ export default function UserActions({ name }: { name: string }) {
         }
         setCurrentUser(null);
         localStorage.clear();
+        navigate("/home");
     };
 
     return (

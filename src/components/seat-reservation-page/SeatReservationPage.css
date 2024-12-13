@@ -112,5 +112,16 @@
 .seat-reservation-ticket-container {
     width: 100%;
     display: flex;
-    
+}
+
+.seat-reservation-right-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width-horizontal-line {
+    height: 1px !important;
+    background-color: #E4E7EC;
+    width: 100%;
 }

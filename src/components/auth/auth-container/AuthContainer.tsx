@@ -57,7 +57,7 @@ export default function AuthContainer({ closeAuthContainer, redirectInfo }: Auth
                     />
                 );
             case "successfulSignIn":
-                return (<AuthSuccess text="Please, wait. You will be directed to the homepage." icon={faVideo} />);
+                return (<AuthSuccess text="Please, wait. You will be redirected." icon={faVideo} />);
             case "successfulSignUp":
                 return (
                     <AuthSuccess

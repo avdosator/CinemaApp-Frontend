@@ -1,0 +1,22 @@
+.chosen-seats-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+}
+
+.seats-and-price-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chosen-seats-price {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.chosen-seats-price h6 {
+    display: inline-block;
+    color: #1D2939;
+}

@@ -5,13 +5,17 @@ import { Seat as SeatType } from "../../../types/Seat"
 import RegularSeat from "../seat/RegularSeat"
 import VipSeat from "../seat/VipSeat"
 import LoveSeat from "../seat/LoveSeat"
+import { ProjectionInstance } from "../../../types/ProjectionInstance"
 
 type SeatListProps = {
-    hallId: string
+    hallId: string,
+    projectionInstance: ProjectionInstance
 }
 
-export default function SeatList({ hallId }: SeatListProps) {
+export default function SeatList({ hallId, projectionInstance }: SeatListProps) {
+    console.log("in seat list ", projectionInstance?.id);
     const [seats, setSeats] = useState<SeatType[]>([]);
+    const {seatsStatus} = projectionInstance;
 
     useEffect(() => {
         try {
@@ -23,16 +27,22 @@ export default function SeatList({ hallId }: SeatListProps) {
         } catch (error) {
             console.log(error);
         }
-    }, [hallId])
+    }, [hallId]);
+
+    const getSeatStatus = (seatNumber: string) => {
+        const status = seatsStatus[seatNumber]; // Check the seat status
+        return status === "reserved" ? "reserved-seat" : "";
+    };
 
     const renderSeat = (seat: SeatType) => {
+        const seatClass = getSeatStatus(seat.number);
         switch (seat.type) {
             case "regular":
-                return <RegularSeat key={seat.id} number={seat.number} />;
+                return <RegularSeat key={seat.id} number={seat.number} classes={seatClass} />;
             case "VIP":
-                return <VipSeat key={seat.id} number={seat.number} />;
+                return <VipSeat key={seat.id} number={seat.number} classes={seatClass} />;
             case "love":
-                return <LoveSeat key={seat.id} number={seat.number} />;
+                return <LoveSeat key={seat.id} number={seat.number} classes={seatClass} />;
             default:
                 return null;
         }

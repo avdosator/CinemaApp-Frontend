@@ -1,16 +1,17 @@
 import "./SeatSchema.css"
 import SeatList from "../seat-list/SeatList";
+import { ProjectionInstance } from "../../../types/ProjectionInstance";
 
 type SeatSchemaProps = {
-    hallId: string 
+    projectionInstance: ProjectionInstance
 }
 
-export default function SeatSchema({hallId}: SeatSchemaProps) {
+export default function SeatSchema({ projectionInstance }: SeatSchemaProps) {
     return (
         <div className="seat-schema">
-            <p className="font-lg-regular" style={{color: "#1D2939", marginBottom: "0px"}}>Cinema Screen</p>
+            <p className="font-lg-regular" style={{ color: "#1D2939", marginBottom: "0px" }}>Cinema Screen</p>
             <div className="cinema-screen"></div>
-            <SeatList hallId={hallId} />
+            <SeatList projectionInstance={projectionInstance} />
         </div>
     )
 }

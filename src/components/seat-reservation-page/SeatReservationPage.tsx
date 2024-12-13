@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Venue } from "../../types/Venue";
 import VerticalLine from "../shared-components/divider/VerticalLine";
 import ChosenSeats from "./chosen-seats/ChosenSeats";
@@ -5,11 +6,14 @@ import SeatGuide from "./seat-guide/SeatGuide";
 import SeatSchema from "./seat-schema/SeatSchema";
 import "./SeatReservationPage.css"
 import { useLocation } from "react-router-dom";
+import { ProjectionInstance } from "../../types/ProjectionInstance";
 
 export default function SeatReservationPage() {
     const location = useLocation();
     const { projectionInstance, movie } = location.state;
     const venue: Venue = projectionInstance.projection.hall.venue;
+    console.log(projectionInstance);
+    const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
 
     const date = new Date(projectionInstance.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
@@ -52,7 +56,7 @@ export default function SeatReservationPage() {
             </div>
             <div className="seat-reservation-horizontal-line"></div>
             <div className="seat-reservation-ticket-container">
-                <SeatSchema hallId={projectionInstance.projection.hall.id} />
+                <SeatSchema projectionInstance={projection} />
                 <div className="seat-reservation-right-content">
                     <SeatGuide />
                     <div className="full-width-horizontal-line"></div>

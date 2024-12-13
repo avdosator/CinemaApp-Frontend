@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import "./SeatList.css"
-import ApiService from "../../../service/ApiService"
 import { Seat as SeatType } from "../../../types/Seat"
 import RegularSeat from "../seat/RegularSeat"
 import VipSeat from "../seat/VipSeat"
@@ -8,26 +7,12 @@ import LoveSeat from "../seat/LoveSeat"
 import { ProjectionInstance } from "../../../types/ProjectionInstance"
 
 type SeatListProps = {
-    hallId: string,
     projectionInstance: ProjectionInstance
 }
 
-export default function SeatList({ hallId, projectionInstance }: SeatListProps) {
-    console.log("in seat list ", projectionInstance?.id);
-    const [seats, setSeats] = useState<SeatType[]>([]);
+export default function SeatList({ projectionInstance }: SeatListProps) {
+    const [seats, setSeats] = useState<SeatType[]>(projectionInstance.projection.hall.seats);
     const {seatsStatus} = projectionInstance;
-
-    useEffect(() => {
-        try {
-            ApiService.get<SeatType[]>(`/seats`, { hall: hallId })
-                .then(response => {
-                    console.log(response);
-                    setSeats(response);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-    }, [hallId]);
 
     const getSeatStatus = (seatNumber: string) => {
         const status = seatsStatus[seatNumber]; // Check the seat status

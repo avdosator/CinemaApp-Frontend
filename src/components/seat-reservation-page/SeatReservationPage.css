@@ -121,7 +121,7 @@
 }
 
 .full-width-horizontal-line {
-    height: 1px !important;
+    height: 0.5px !important;
     background-color: #E4E7EC;
     width: 100%;
 }

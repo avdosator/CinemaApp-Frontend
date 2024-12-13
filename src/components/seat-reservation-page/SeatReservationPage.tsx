@@ -1,5 +1,6 @@
 import { Venue } from "../../types/Venue";
 import VerticalLine from "../shared-components/divider/VerticalLine";
+import ChosenSeats from "./chosen-seats/ChosenSeats";
 import SeatGuide from "./seat-guide/SeatGuide";
 import SeatSchema from "./seat-schema/SeatSchema";
 import "./SeatReservationPage.css"
@@ -55,7 +56,7 @@ export default function SeatReservationPage() {
                 <div className="seat-reservation-right-content">
                     <SeatGuide />
                     <div className="full-width-horizontal-line"></div>
-
+                    <ChosenSeats />
                 </div>
             </div>
         </div>

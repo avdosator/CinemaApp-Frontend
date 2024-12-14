@@ -12,9 +12,9 @@ type SeatReservationPageProps = {
     movie: Movie,
     selectedSeats: string[],
     setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>
-} 
+}
 
-export default function SeatReservationPage({projectionInstance, movie, selectedSeats, setSelectedSeats}: SeatReservationPageProps) {
+export default function SeatReservationPage({ projectionInstance, movie, selectedSeats, setSelectedSeats }: SeatReservationPageProps) {
     const venue: Venue = projectionInstance.projection.hall.venue;
 
     const date = new Date(projectionInstance.date);
@@ -22,8 +22,7 @@ export default function SeatReservationPage({projectionInstance, movie, selected
     const formattedDate = date.toLocaleDateString("en-US", options);
 
     return (
-        <div className="seat-reservation-container">
-           
+        <div>
             <div className="seat-reservation-movie-container">
                 <div className="seat-reservation-movie-img-container">
                     <img src={movie.photos[0].url} alt="" />

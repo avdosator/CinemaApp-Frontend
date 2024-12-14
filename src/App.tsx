@@ -11,7 +11,7 @@ import { useCallback, useState } from 'react';
 import AuthContainer from './components/auth/auth-container/AuthContainer';
 import UserProvider from './context/UserContext';
 import ProtectedRoute from './routes/ProtectedRoute';
-import SeatReservationPage from './components/seat-reservation-page/SeatReservationPage';
+import ReservationTicketPage from './components/reservation-ticket-page/ReservationTicketPage';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -53,7 +53,7 @@ function App() {
                   path="/projection/:id/reservations"
                   element={
                     <ProtectedRoute openLoginForm={openAuthModal}>
-                      <SeatReservationPage />
+                      <ReservationTicketPage />
                     </ProtectedRoute>
                   }
                 />

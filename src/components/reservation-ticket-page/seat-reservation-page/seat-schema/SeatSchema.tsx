@@ -1,6 +1,6 @@
 import "./SeatSchema.css"
 import SeatList from "../seat-list/SeatList";
-import { ProjectionInstance } from "../../../types/ProjectionInstance";
+import { ProjectionInstance } from "../../../../types/ProjectionInstance";
 
 type SeatSchemaProps = {
     projectionInstance: ProjectionInstance,

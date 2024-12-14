@@ -1,10 +1,10 @@
 import { useState } from "react"
 import "./SeatList.css"
-import { Seat } from "../../../types/Seat"
+import { Seat } from "../../../../types/Seat"
 import RegularSeat from "../seat/RegularSeat"
 import VipSeat from "../seat/VipSeat"
 import LoveSeat from "../seat/LoveSeat"
-import { ProjectionInstance } from "../../../types/ProjectionInstance"
+import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 
 type SeatListProps = {
     projectionInstance: ProjectionInstance,

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "./SeatList.css"
-import { Seat as SeatType } from "../../../types/Seat"
+import { Seat } from "../../../types/Seat"
 import RegularSeat from "../seat/RegularSeat"
 import VipSeat from "../seat/VipSeat"
 import LoveSeat from "../seat/LoveSeat"
@@ -11,16 +11,20 @@ type SeatListProps = {
 }
 
 export default function SeatList({ projectionInstance }: SeatListProps) {
-    const [seats, setSeats] = useState<SeatType[]>(projectionInstance.projection.hall.seats);
-    const {seatsStatus} = projectionInstance;
+    const [seats, setSeats] = useState<Seat[]>(projectionInstance.projection.hall.seats);
+    const { seatReservations } = projectionInstance;
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
 
-    const getSeatStatus = (seatNumber: string) => {
-        const status = seatsStatus[seatNumber]; // Check the seat status
-        return status === "reserved" ? "reserved-seat" : "";
+    const getSeatStatus = (seatId: string) => {
+        if (!seatReservations || seatReservations.length === 0) {
+            return ""; // No reservations, all seats available
+        }
+        const isReserved = seatReservations.some(reservation => reservation.seat.id === seatId);
+        return isReserved ? "reserved-seat" : ""; // Add "reserved-seat" class if reserved
     };
 
-    const renderSeat = (seat: SeatType) => {
-        const seatClass = getSeatStatus(seat.number);
+    const renderSeat = (seat: Seat) => {
+        const seatClass = getSeatStatus(seat.id);
         switch (seat.type) {
             case "regular":
                 return <RegularSeat key={seat.id} number={seat.number} classes={seatClass} />;
@@ -35,9 +39,6 @@ export default function SeatList({ projectionInstance }: SeatListProps) {
 
 
     return (
-        // <div className="seat-list">
-        //     {seats.map(seat => renderSeat(seat))}
-        // </div>
         <div className="seat-list-container">
             <div className="left-seats">
                 {seats

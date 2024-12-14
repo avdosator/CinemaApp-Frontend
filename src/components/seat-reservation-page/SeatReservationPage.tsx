@@ -49,9 +49,9 @@ export default function SeatReservationPage() {
                 </div>
                 <div className="seat-reservation-booking-info font-lg-regular">
                     <h6 className="font-heading-h6">Booking Details</h6>
-                    <div className="font-lg-regular">{formattedDate} at {projectionInstance.time}</div>
+                    <div className="font-lg-regular">{formattedDate} at {projection.time}</div>
                     <div className="font-lg-regular">{venue.name}, {venue.street} {venue.streetNumber}, {venue.city.name} {venue.city.postalCode}</div>
-                    <div className="font-lg-regular">{projectionInstance.projection.hall.name}</div>
+                    <div className="font-lg-regular">{projection.projection.hall.name}</div>
                 </div>
             </div>
             <div className="seat-reservation-horizontal-line"></div>

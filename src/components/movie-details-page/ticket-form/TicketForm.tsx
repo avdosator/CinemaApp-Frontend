@@ -63,7 +63,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
         }
 
         const projectionInstance = await ApiService.get<ProjectionInstance>("/projection/instance", params);
-        navigate("/reservations", {state: {projectionInstance, movie}});
+        navigate(`/projection/${projectionInstance.id}/reservations`, {state: {projectionInstance, movie}});
     }
 
     const handleFocus = (iconName: IconType): void => {

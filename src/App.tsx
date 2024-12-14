@@ -50,7 +50,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/reservations"
+                  path="/projection/:id/reservations"
                   element={
                     <ProtectedRoute openLoginForm={openAuthModal}>
                       <SeatReservationPage />

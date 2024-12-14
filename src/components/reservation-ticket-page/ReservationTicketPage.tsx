@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ProjectionInstance } from "../../types/ProjectionInstance";
 import SeatReservationPage from "./seat-reservation-page/SeatReservationPage";
+import "./ReservationTicketPage.css"
 
 export default function ReservationTicketPage() {
     const location = useLocation();

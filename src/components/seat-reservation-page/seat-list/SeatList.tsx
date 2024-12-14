@@ -7,13 +7,14 @@ import LoveSeat from "../seat/LoveSeat"
 import { ProjectionInstance } from "../../../types/ProjectionInstance"
 
 type SeatListProps = {
-    projectionInstance: ProjectionInstance
+    projectionInstance: ProjectionInstance,
+    selectedSeats: string[]; // Array of selected seat IDs
+    setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>; // Setter function for selectedSeats
 }
 
-export default function SeatList({ projectionInstance }: SeatListProps) {
+export default function SeatList({ projectionInstance, selectedSeats, setSelectedSeats }: SeatListProps) {
     const [seats, setSeats] = useState<Seat[]>(projectionInstance.projection.hall.seats);
     const { seatReservations } = projectionInstance;
-    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
 
     const getSeatStatus = (seatId: string) => {
         if (!seatReservations || seatReservations.length === 0) {
@@ -23,18 +24,38 @@ export default function SeatList({ projectionInstance }: SeatListProps) {
         return isReserved ? "reserved-seat" : ""; // Add "reserved-seat" class if reserved
     };
 
-    const renderSeat = (seat: Seat) => {
-        const seatClass = getSeatStatus(seat.id);
-        switch (seat.type) {
-            case "regular":
-                return <RegularSeat key={seat.id} number={seat.number} classes={seatClass} />;
-            case "VIP":
-                return <VipSeat key={seat.id} number={seat.number} classes={seatClass} />;
-            case "love":
-                return <LoveSeat key={seat.id} number={seat.number} classes={seatClass} />;
-            default:
-                return null;
+    const toggleSeatSelection = (seat: Seat) => {
+        if (!seatReservations.some(reservation => reservation.seat.id === seat.id)) {
+            setSelectedSeats(prevSelected => {
+                const isAlreadySelected = prevSelected.includes(seat.id);
+                if (isAlreadySelected) {
+                    return prevSelected.filter(id => id !== seat.id); // Deselect seat
+                } else {
+                    return [...prevSelected, seat.id]; // Select seat
+                }
+            });
         }
+    };
+
+    const renderSeat = (seat: Seat) => {
+        const isSelected = selectedSeats.includes(seat.id);
+        const seatClass = `${getSeatStatus(seat.id)} ${isSelected ? "selected-seat" : ""}`;
+        return (
+            <div onClick={() => toggleSeatSelection(seat)} key={seat.id}>
+                {(() => {
+                    switch (seat.type) {
+                        case "regular":
+                            return <RegularSeat number={seat.number} classes={seatClass} />;
+                        case "VIP":
+                            return <VipSeat number={seat.number} classes={seatClass} />;
+                        case "love":
+                            return <LoveSeat number={seat.number} classes={seatClass} />;
+                        default:
+                            return null;
+                    }
+                })()}
+            </div>
+        );
     };
 
 

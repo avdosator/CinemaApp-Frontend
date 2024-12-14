@@ -14,6 +14,8 @@ export default function SeatReservationPage() {
     const venue: Venue = projectionInstance.projection.hall.venue;
     console.log(projectionInstance);
     const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
+    const [selectedSeats, setSelectedSeats] = useState<string[]>([]); // Store seat IDs
+
 
     const date = new Date(projectionInstance.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
@@ -56,7 +58,7 @@ export default function SeatReservationPage() {
             </div>
             <div className="seat-reservation-horizontal-line"></div>
             <div className="seat-reservation-ticket-container">
-                <SeatSchema projectionInstance={projection} />
+                <SeatSchema projectionInstance={projection} selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} />
                 <div className="seat-reservation-right-content">
                     <SeatGuide />
                     <div className="full-width-horizontal-line"></div>

@@ -32,6 +32,7 @@
 }
 
 .session-duration-counter {
+    width: 72.5px;
     color: #1D2939;
     border-radius: 8px;
     padding: 10px;

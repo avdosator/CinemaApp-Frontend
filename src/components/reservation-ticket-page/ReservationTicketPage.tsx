@@ -7,11 +7,11 @@ import ApiService from "../../service/ApiService";
 
 export default function ReservationTicketPage() {
     const location = useLocation();
+    const SESSION_DURATION = 300;
     const { projectionInstance, movie } = location.state;
-    console.log(projectionInstance);
     const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-    const [remainingTime, setRemainingTime] = useState(20);
+    const [remainingTime, setRemainingTime] = useState(SESSION_DURATION);
     const [showModal, setShowModal] = useState(false); // Modal visibility
 
 
@@ -19,8 +19,7 @@ export default function ReservationTicketPage() {
         try {
             const response = await ApiService.get<ProjectionInstance>(`/projections/instance/${projectionInstance.id}`);
             if (response !== null) setProjection(response);
-            console.log("REFRESHED THE STATE");
-            setRemainingTime(20);
+            setRemainingTime(SESSION_DURATION);
         } catch (error) {
             console.error(error);
         }
@@ -45,14 +44,12 @@ export default function ReservationTicketPage() {
 
     const handleOkayClick = () => {
         setShowModal(false); // Hide modal
-        setRemainingTime(20); // Reset timer
-        refreshProjectionState(); // Refresh the projection instance
+        setRemainingTime(SESSION_DURATION); // Reset timer
     };
 
     useEffect(() => {
         if (remainingTime === 0) {
             refreshProjectionState();
-            setRemainingTime(20); // Reset timer to 20 seconds
         }
     }, [remainingTime]);
 

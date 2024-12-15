@@ -7,9 +7,11 @@ type ChosenSeatsProps = {
 
 export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
 
+    let areSelectedSeatsEmpty: boolean = selectedSeats.length === 0;
+
     // Calculate total price of selected seats
     let totalPrice: number = 0;
-    if (selectedSeats.length > 0) {
+    if (!areSelectedSeatsEmpty) {
         totalPrice = selectedSeats.reduce((sum, seat) => {
             switch (seat.type) {
                 case "regular":
@@ -32,7 +34,7 @@ export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
                 <p className="font-lg-regular" style={{ color: "#1D2939" }}>Total price</p>
             </div>
             <div className="full-width-horizontal-line"></div>
-            {selectedSeats.length > 0 && (
+            {!areSelectedSeatsEmpty && (
                 <div className="chosen-seats-price">
                     <h6 className="font-heading-h6">
                         {selectedSeats.map((seat, index) => {
@@ -44,6 +46,11 @@ export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
                     </h6>
                 </div>
             )}
+            <button
+                className={`font-lg-semibold continue-payment-btn ${areSelectedSeatsEmpty ? "continue-payment-btn-disabled" : ""}`}
+                disabled={areSelectedSeatsEmpty}>
+                Continue to Payment
+            </button>
         </div>
     )
 }

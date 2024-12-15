@@ -51,7 +51,7 @@ export default function SeatReservationPage({ projectionInstance, movie, selecte
                 <div className="seat-reservation-right-content">
                     <SeatGuide />
                     <div className="full-width-horizontal-line"></div>
-                    <ChosenSeats />
+                    <ChosenSeats selectedSeats={selectedSeats} />
                 </div>
             </div>
         </div>

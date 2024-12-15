@@ -4,13 +4,14 @@ import { ProjectionInstance } from "../../types/ProjectionInstance";
 import SeatReservationPage from "./seat-reservation-page/SeatReservationPage";
 import "./ReservationTicketPage.css"
 import ApiService from "../../service/ApiService";
+import { Seat } from "../../types/Seat";
 
 export default function ReservationTicketPage() {
     const location = useLocation();
     const SESSION_DURATION = 300;
     const { projectionInstance, movie } = location.state;
     const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
-    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [remainingTime, setRemainingTime] = useState(SESSION_DURATION);
     const [showModal, setShowModal] = useState(false); // Modal visibility
 

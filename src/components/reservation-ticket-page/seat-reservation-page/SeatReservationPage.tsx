@@ -6,12 +6,13 @@ import SeatSchema from "./seat-schema/SeatSchema";
 import "./SeatReservationPage.css"
 import { ProjectionInstance } from "../../../types/ProjectionInstance";
 import { Movie } from "../../../types/Movie";
+import { Seat } from "../../../types/Seat";
 
 type SeatReservationPageProps = {
     projectionInstance: ProjectionInstance,
     movie: Movie,
-    selectedSeats: string[],
-    setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>
+    selectedSeats: Seat[],
+    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>
 }
 
 export default function SeatReservationPage({ projectionInstance, movie, selectedSeats, setSelectedSeats }: SeatReservationPageProps) {

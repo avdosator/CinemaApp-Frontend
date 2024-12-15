@@ -1,11 +1,12 @@
 import "./SeatSchema.css"
 import SeatList from "../seat-list/SeatList";
 import { ProjectionInstance } from "../../../../types/ProjectionInstance";
+import { Seat } from "../../../../types/Seat";
 
 type SeatSchemaProps = {
     projectionInstance: ProjectionInstance,
-    selectedSeats: string[]; // Array of selected seat IDs
-    setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>; // Setter function for selectedSeats
+    selectedSeats: Seat[]; // Array of selected seat IDs
+    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>; // Setter function for selectedSeats
 }
 
 export default function SeatSchema({ projectionInstance, selectedSeats, setSelectedSeats }: SeatSchemaProps) {

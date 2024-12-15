@@ -8,8 +8,8 @@ import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 
 type SeatListProps = {
     projectionInstance: ProjectionInstance,
-    selectedSeats: string[]; // Array of selected seat IDs
-    setSelectedSeats: React.Dispatch<React.SetStateAction<string[]>>; // Setter function for selectedSeats
+    selectedSeats: Seat[]; // Array of selected seat IDs
+    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>; // Setter function for selectedSeats
 }
 
 export default function SeatList({ projectionInstance, selectedSeats, setSelectedSeats }: SeatListProps) {
@@ -27,18 +27,18 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
     const toggleSeatSelection = (seat: Seat) => {
         if (!seatReservations.some(reservation => reservation.seat.id === seat.id)) {
             setSelectedSeats(prevSelected => {
-                const isAlreadySelected = prevSelected.includes(seat.id);
+                const isAlreadySelected = prevSelected.some(selectedSeat => selectedSeat.id === seat.id);
                 if (isAlreadySelected) {
-                    return prevSelected.filter(id => id !== seat.id); // Deselect seat
+                    return prevSelected.filter(selectedSeat => selectedSeat.id !== seat.id); // Deselect seat
                 } else {
-                    return [...prevSelected, seat.id]; // Select seat
+                    return [...prevSelected, seat]; // Select seat
                 }
             });
         }
     };
 
     const renderSeat = (seat: Seat) => {
-        const isSelected = selectedSeats.includes(seat.id);
+        const isSelected = selectedSeats.some(selectedSeat => selectedSeat.id === seat.id);
         const seatClass = `${getSeatStatus(seat.id)} ${isSelected ? "selected-seat" : ""}`;
         return (
             <div onClick={() => toggleSeatSelection(seat)} key={seat.id}>

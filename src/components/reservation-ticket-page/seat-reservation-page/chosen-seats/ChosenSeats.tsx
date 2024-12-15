@@ -40,7 +40,7 @@ export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
                         })}
                     </h6>
                     <h6 className="font-heading-h6">
-                        {totalPrice}BAM
+                        {totalPrice} BAM
                     </h6>
                 </div>
             )}

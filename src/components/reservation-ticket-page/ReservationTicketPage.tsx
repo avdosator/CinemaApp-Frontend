@@ -20,6 +20,7 @@ export default function ReservationTicketPage() {
         try {
             const response = await ApiService.get<ProjectionInstance>(`/projections/instance/${projectionInstance.id}`);
             if (response !== null) setProjection(response);
+            setSelectedSeats([]);
             setRemainingTime(SESSION_DURATION);
         } catch (error) {
             console.error(error);

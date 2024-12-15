@@ -22,3 +22,7 @@
     background-color: #B22222;
     border: 1px solid #B22222;
 }
+
+.selected-seat svg {
+    fill: #FCFCFD;
+}

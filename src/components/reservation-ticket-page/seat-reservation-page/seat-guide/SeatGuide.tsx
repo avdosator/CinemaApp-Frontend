@@ -23,16 +23,16 @@ export default function SeatGuide() {
                     </div>
                 </div>
                 <div className="seat-prices">
-                <div className="seat-guide-group">
+                    <div className="seat-guide-group">
                         <RegularSeat number="XY" />
                         <span>Regular Seats(7 BAM)</span>
                     </div>
                     <div className="seat-guide-group">
-                    <VipSeat number="XY" />
+                        <VipSeat number="XY" />
                         <span>VIP Seats (10 BAM)</span>
                     </div>
                     <div className="seat-guide-group">
-                    <LoveSeat number="XY" />
+                        <LoveSeat number="XY" />
                         <span>Love Seats(24 BAM)</span>
                     </div>
                 </div>

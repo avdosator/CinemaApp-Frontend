@@ -35,3 +35,7 @@
     align-items: center;
     gap: 8px;
 }
+
+.seat-guide-group button {
+    cursor: default !important;
+}

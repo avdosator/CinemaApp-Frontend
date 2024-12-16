@@ -1,4 +1,5 @@
 import { Seat } from "../../../../types/Seat"
+import { calculateReservedSeatsPrice } from "../../../../utils/utils";
 import "./ChosenSeats.css"
 
 type ChosenSeatsProps = {
@@ -13,18 +14,7 @@ export default function ChosenSeats({ selectedSeats, proceedToBuyTicket }: Chose
     // Calculate total price of selected seats
     let totalPrice: number = 0;
     if (!areSelectedSeatsEmpty) {
-        totalPrice = selectedSeats.reduce((sum, seat) => {
-            switch (seat.type) {
-                case "regular":
-                    return sum + 7;
-                case "VIP":
-                    return sum + 10;
-                case "love":
-                    return sum + 24;
-                default:
-                    return sum;
-            }
-        }, 0);
+        totalPrice = calculateReservedSeatsPrice(selectedSeats);
     }
 
     return (

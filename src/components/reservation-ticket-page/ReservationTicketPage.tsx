@@ -5,6 +5,7 @@ import SeatReservationPage from "./seat-reservation-page/SeatReservationPage";
 import "./ReservationTicketPage.css"
 import ApiService from "../../service/ApiService";
 import { Seat } from "../../types/Seat";
+import BuyTicketPage from "./buy-ticket-page/BuyTicketPage";
 
 const SESSION_DURATION = 300;
 
@@ -92,13 +93,17 @@ export default function ReservationTicketPage() {
                 </div>
             </div>
             <div className={`seat-reservation-horizontal-line ${step === "Seat Options" ? "seat-options-line" : "payment-details-line"}`}></div>
-            <SeatReservationPage
+            {step === "Seat Options" ? (<SeatReservationPage
                 projectionInstance={projection}
                 movie={movie}
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 proceedToBuyTicket={setStep}
-            />
+            />)
+                :
+                (<BuyTicketPage projection={projection} movie={movie} selectedSeats={selectedSeats} />)
+            }
+
         </div>
 
     )

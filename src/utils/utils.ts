@@ -1,4 +1,5 @@
 import { DatePickerBtnType } from "../types/DatePickerBtn";
+import { Seat } from "../types/Seat";
 
 // returns date in string format "YYYY-MM-DD"
 export const calculateDateString = (plusDays: number): string => {
@@ -24,4 +25,19 @@ export const generateDatePickerBtnInputs = (endDate: Date): DatePickerBtnType[] 
         currentDate.setDate(currentDate.getDate() + 1);
     }
     return dates;
+}
+
+export const calculateReservedSeatsPrice = (selectedSeats: Seat[]): number => {
+    return selectedSeats.reduce((sum, seat) => {
+        switch (seat.type) {
+            case "regular":
+                return sum + 7;
+            case "VIP":
+                return sum + 10;
+            case "love":
+                return sum + 24;
+            default:
+                return sum;
+        }
+    }, 0);
 }

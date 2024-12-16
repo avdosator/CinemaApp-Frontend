@@ -6,15 +6,18 @@ import "./ReservationTicketPage.css"
 import ApiService from "../../service/ApiService";
 import { Seat } from "../../types/Seat";
 
+const SESSION_DURATION = 300;
+
 export default function ReservationTicketPage() {
     const location = useLocation();
-    const SESSION_DURATION = 300;
     const { projectionInstance, movie } = location.state;
     const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [remainingTime, setRemainingTime] = useState(SESSION_DURATION);
     const [showModal, setShowModal] = useState(false); // Modal visibility
+    const [step, setStep] = useState<"Seat Options" | "Payment Details">("Seat Options");
 
+    useEffect(() => window.scrollTo(0, 0), []);
 
     const refreshProjectionState = async () => {
         try {
@@ -78,7 +81,7 @@ export default function ReservationTicketPage() {
             )}
 
             <div className="seat-reservation-heading-container">
-                <h5 className="font-heading-h5 seat-options-heading">Seat Options</h5>
+                <h5 className="font-heading-h5 seat-options-heading">{step}</h5>
                 <div className="session-duration-container">
                     <svg xmlns="http://www.w3.org/2000/svg" width={16} height={24} fill="#1D2939" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336l24 0 0-64-24 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0c13.3 0 24 10.7 24 24l0 88 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" /></svg>
                     <div className="font-lg-regular session-duration-text">Session Duration</div>
@@ -88,7 +91,7 @@ export default function ReservationTicketPage() {
                     Session expires every 5 minutes <br />when selected seats will be refreshed
                 </div>
             </div>
-            <div className="seat-reservation-horizontal-line"></div>
+            <div className={`seat-reservation-horizontal-line ${step === "Seat Options" ? "seat-options-line" : "payment-details-line"}`}></div>
             <SeatReservationPage
                 projectionInstance={projection}
                 movie={movie}

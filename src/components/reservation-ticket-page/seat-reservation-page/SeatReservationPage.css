@@ -1,10 +1,19 @@
 .seat-reservation-horizontal-line {
     height: 0.5px !important;
     background-color: #E4E7EC;
-    /* margin: 0px -100px 20px -100px; */
-    width: 98vw;
-    margin-left: -95px;
+    width: 98.8vw;
+    margin-left: -98px;
     margin-bottom: 20px;
+}
+
+.seat-options-line {
+    height: 1px !important;
+    background: linear-gradient(to right, #B22222 50%, #E4E7EC 50%);
+}
+
+.payment-details-line {
+    height: 1px !important;
+    background: #B22222;
 }
 
 .seat-reservation-movie-container {

@@ -39,16 +39,8 @@ function App() {
                 <Route path='/home' element={<HomePage />} />
                 <Route path='/movies/*' element={<MovieRoutes />} />
                 <Route path='/about' element={<AboutUsPage />} />
-                {/* <Route path='/pricing' element={<PricingPage />} /> */}
+                <Route path='/pricing' element={<PricingPage />} />
                 {/* Protected Route */}
-                <Route
-                  path="/pricing"
-                  element={
-                    <ProtectedRoute openLoginForm={openAuthModal}>
-                      <PricingPage />
-                    </ProtectedRoute>
-                  }
-                />
                 <Route
                   path="/projection/:id/reservations"
                   element={

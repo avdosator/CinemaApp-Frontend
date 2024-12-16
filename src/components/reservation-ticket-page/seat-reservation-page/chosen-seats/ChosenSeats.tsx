@@ -2,10 +2,11 @@ import { Seat } from "../../../../types/Seat"
 import "./ChosenSeats.css"
 
 type ChosenSeatsProps = {
-    selectedSeats: Seat[]
+    selectedSeats: Seat[],
+    proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>
 }
 
-export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
+export default function ChosenSeats({ selectedSeats, proceedToBuyTicket }: ChosenSeatsProps) {
 
     let areSelectedSeatsEmpty: boolean = selectedSeats.length === 0;
 
@@ -48,7 +49,9 @@ export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
             )}
             <button
                 className={`font-lg-semibold continue-payment-btn ${areSelectedSeatsEmpty ? "continue-payment-btn-disabled" : ""}`}
-                disabled={areSelectedSeatsEmpty}>
+                disabled={areSelectedSeatsEmpty}
+                onClick={() => proceedToBuyTicket("Payment Details")}
+            >
                 Continue to Payment
             </button>
         </div>

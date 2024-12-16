@@ -97,6 +97,7 @@ export default function ReservationTicketPage() {
                 movie={movie}
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
+                proceedToBuyTicket={setStep}
             />
         </div>
 

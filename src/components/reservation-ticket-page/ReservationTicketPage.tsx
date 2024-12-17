@@ -7,7 +7,7 @@ import ApiService from "../../service/ApiService";
 import { Seat } from "../../types/Seat";
 import BuyTicketPage from "./buy-ticket-page/BuyTicketPage";
 
-const SESSION_DURATION = 31100;
+const SESSION_DURATION = 300;
 
 export default function ReservationTicketPage() {
     const location = useLocation();

@@ -1,0 +1,72 @@
+.new-bank-card-form {
+    width: 100%;
+    height: 100%;
+    gap:24px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.add-new-card-form-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 4px;
+}
+
+.new-bank-card-form-label {
+    color: #344054;
+}
+
+#creditCard {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    /* Vertically center the icon */
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    fill: #344054;
+    z-index: 1;
+    margin-right: 12px;
+}
+
+.add-new-card-input {
+    width: 100%;
+    border: 1px solid #E4E7EC;
+    color: #344054;
+    text-align: left;
+    border-radius: 8px;
+    padding: 12px 12px;
+}
+
+#cardNumber {
+    padding-left: 35px;
+}
+
+.add-new-card-input::placeholder {
+    color: #667085;
+}
+
+.expiry-and-cvv-container {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.expiry-and-cvv-container div {
+    width: 50%;
+}
+
+.new-bank-card-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #D0D5DD;
+    color: #FCFCFD;
+    outline: none;
+    border: none;
+    align-self: end;
+    margin-top: 56px;
+}

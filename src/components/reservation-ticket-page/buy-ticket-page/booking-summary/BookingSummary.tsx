@@ -51,14 +51,17 @@ export default function BookingSummary({ projection, movie, selectedSeats }: Boo
                     <div className="font-lg-semibold booking-summary-info">{projection.projection.hall.name}</div>
                     <div className="booking-summary-info-group">
                         <div className="font-lg-regular booking-summary-heading">Seat(s) Details</div>
-                        <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Seat(s): </span> H1,H2</div>
+                        <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Seat(s): </span>
+                            {selectedSeats.map((seat, index) => {
+                                return index !== selectedSeats.length - 1 ? `${seat.number}, ` : `${seat.number}`
+                            })}
+                        </div>
 
                     </div>
                     <div className="booking-summary-info-group">
                         <div className="font-lg-regular booking-summary-heading">Price Details</div>
                         <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Total price:</span> {totalPrice} BAM</div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@ import ApiService from "../../service/ApiService";
 import { Seat } from "../../types/Seat";
 import BuyTicketPage from "./buy-ticket-page/BuyTicketPage";
 
-const SESSION_DURATION = 300;
+const SESSION_DURATION = 31100;
 
 export default function ReservationTicketPage() {
     const location = useLocation();
@@ -39,6 +39,7 @@ export default function ReservationTicketPage() {
                 if (prevTime <= 1) {
                     clearInterval(timer);
                     setShowModal(true);
+                    setStep("Seat Options");
                     return 0;
                 }
                 return prevTime - 1;

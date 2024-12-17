@@ -26,7 +26,7 @@ export default function BankCard({ cardType }: BankCardProps) {
                 <span>****</span>
                 <span>1234</span>
             </div>
-            <TertiaryButton label="Delete Card" size="small" onClick={console.log("b")!} />
+            <TertiaryButton label="Delete Card" size="small" />
         </div>
     )
 }

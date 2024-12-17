@@ -14,7 +14,7 @@ type BuyTicketPageProps = {
 export default function BuyTicketPage({projection, movie, selectedSeats}: BuyTicketPageProps) {
     return (
         <div className="buy-ticket-page">
-            <MakePayment/>
+            <MakePayment selectedSeats={selectedSeats}/>
             <BookingSummary projection={projection} movie={movie} selectedSeats={selectedSeats} />
         </div>
     )

@@ -26,7 +26,7 @@ export default function BookingSummary({ projection, movie, selectedSeats }: Boo
                     <img src={movie.photos[0].url} alt="" />
                 </div>
                 <div className="booking-summary-movie-info">
-                    <h6 className="font-heading-h6" style={{color: "#FCFCFD"}}>{movie.title}</h6>
+                    <h6 className="font-heading-h6" style={{ color: "#FCFCFD", marginBottom: "16px" }}>{movie.title}</h6>
                     <div className="font-lg-regular booking-summary-basic-movie-info">
                         <span>{movie.pgRating}</span>
                         <VerticalLine width="0.5px" />
@@ -36,17 +36,27 @@ export default function BookingSummary({ projection, movie, selectedSeats }: Boo
                     </div>
                 </div>
             </div>
-            <div className="full-width-horizontal-line"></div>
+            <div className="full-width-horizontal-line" id="bookingSummaryLine"></div>
             <div className="booking-summary-projection-details">
-                <div className="font-lg-regular booking-summary-heading">Date and Time</div>
-                <div className="font-lg-semibold booking-summary-info">{formattedDate} at {projection.time}</div>
-                <div className="font-lg-regular booking-summary-heading">Cinema Details</div>
-                <div className="font-lg-semibold booking-summary-info">{venue.name}, {venue.street} {venue.streetNumber}, {venue.city.name} {venue.city.postalCode}</div>
+                <div className="booking-summary-info-group">
+                    <div className="font-lg-regular booking-summary-heading">Date and Time</div>
+                    <div className="font-lg-semibold booking-summary-info">{formattedDate} at {projection.time}</div>
+                </div>
+                <div className="booking-summary-info-group">
+                    <div className="font-lg-regular booking-summary-heading">Cinema Details</div>
+                    <div className="font-lg-semibold booking-summary-info">{venue.name}, {venue.street} {venue.streetNumber}, {venue.city.name} {venue.city.postalCode}</div>
+                </div>
                 <div className="font-lg-semibold booking-summary-info">{projection.projection.hall.name}</div>
-                <div className="font-lg-regular booking-summary-heading">Seat(s) Details</div>
-                <div className="font-lg-semibold booking-summary-info">H1,H2</div>
-                <div className="font-lg-regular booking-summary-heading">Price Details</div>
-                <div className="font-lg-semibold booking-summary-info">{totalPrice}</div>
+                <div className="booking-summary-info-group">
+                    <div className="font-lg-regular booking-summary-heading">Seat(s) Details</div>
+                    <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Seat(s): </span> H1,H2</div>
+
+                </div>
+                <div className="booking-summary-info-group">
+                    <div className="font-lg-regular booking-summary-heading">Price Details</div>
+                    <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Total price:</span> {totalPrice} BAM</div>
+                </div>
+
             </div>
         </div>
     )

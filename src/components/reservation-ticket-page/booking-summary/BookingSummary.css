@@ -4,7 +4,7 @@
     flex-direction: column;
     border-radius: 16px;
     background-color: #1D2939;
-    padding: 16px;
+    padding: 32px;
 }
 
 .booking-summary-photo-container {
@@ -21,6 +21,11 @@
 .booking-summary-movie-details {
     display: flex;
     flex-direction: row;
+    margin-bottom: 28px;
+}
+
+.booking-summary-movie-info {
+    margin-left: 24px;
 }
 
 .booking-summary-basic-movie-info {
@@ -36,5 +41,10 @@
 }
 
 .booking-summary-info {
+    margin-top: 8px;
     color: #FCFCFD;
+}
+
+.booking-summary-info-group {
+    margin-top: 16px;
 }

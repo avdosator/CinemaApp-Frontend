@@ -42,7 +42,7 @@ body {
 
 .blurred-background {
   opacity: 0.7;
-  pointer-events: none; 
+  pointer-events: none;
   transition: all 0.3s ease;
 }
 
@@ -112,6 +112,16 @@ body {
   text-decoration: underline 1px solid;
 }
 
+.font-sm-underline-semibold {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  text-align: left;
+  text-decoration: underline 1px solid;
+  text-decoration-skip-ink: none;
+}
+
 .font-md-regular {
   font-size: 14px;
   font-weight: 400;
@@ -121,13 +131,13 @@ body {
 }
 
 .font-md-semibold {
-font-size: 14px;
-font-weight: 600;
-line-height: 20px;
-letter-spacing: 0.0025em;
-text-align: left;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0025em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 }
 
 .font-md-italic-regular {
@@ -140,13 +150,13 @@ text-decoration-skip-ink: none;
 }
 
 .font-sm-regular {
-font-size: 12px;
-font-weight: 400;
-line-height: 16px;
-letter-spacing: 0.0015em;
-text-align: left;
-text-underline-position: from-font;
-text-decoration-skip-ink: none;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.0015em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 }
 
 .font-sm-semibold {
@@ -156,4 +166,3 @@ text-decoration-skip-ink: none;
   letter-spacing: 0.0015em;
   text-align: left;
 }
-

@@ -1,5 +1,13 @@
 .make-payment-container {
     width: 66%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+}
+
+#big-or-divider {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 0px;
 }

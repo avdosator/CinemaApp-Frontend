@@ -7,8 +7,9 @@ type TertiaryButtonProps = {
 }
 
 export default function TertiaryButton({label, size, onClick}: TertiaryButtonProps) {
+    const btnSize = size === "large" ? "tertiary-btn-lg font-lg-underline-semibold" : "tertiary-btn-sm font-sm-underline-semibold";
     return (
-        <button className={size === "large" ? "tertiary-btn-lg font-lg-underline-semibold" : ""} onClick={onClick}>
+        <button className={`tertiary-btn ${btnSize}`} onClick={onClick}>
             {label}
         </button>
     )

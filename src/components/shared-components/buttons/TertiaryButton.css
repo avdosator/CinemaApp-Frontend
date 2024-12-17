@@ -1,10 +1,16 @@
-.tertiary-btn-lg {
-    /* height: 48px; */
+.tertiary-btn {
     background-color: inherit;
     color: #B22222;
-    padding: 12px 20px;
     border-radius: 8px;
     border: none;
     text-decoration: underline 1px solid;
     align-self: center;
+}
+
+.tertiary-btn-lg {    
+    padding: 12px 20px;
+}
+
+.tertiary-btn-sm {
+    padding: 8px 16px;
 }

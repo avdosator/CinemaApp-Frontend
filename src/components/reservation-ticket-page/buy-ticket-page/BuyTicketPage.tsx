@@ -1,3 +1,4 @@
+import "./BuyTicketPage.css"
 import { Movie } from "../../../types/Movie"
 import { ProjectionInstance } from "../../../types/ProjectionInstance"
 import { Seat } from "../../../types/Seat"

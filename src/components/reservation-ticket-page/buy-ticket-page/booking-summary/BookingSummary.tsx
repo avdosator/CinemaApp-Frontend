@@ -20,9 +20,8 @@ export default function BookingSummary({ projection, movie, selectedSeats }: Boo
     const formattedDate = date.toLocaleDateString("en-US", options);
     const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
     return (
-        <>
+        <div className="booking-summary">
             <h6 className="font-heading-h6" style={{ color: "#667085", marginBottom: "24px" }}>Booking Summary</h6>
-
             <div className="booking-summary-container">
                 <div className="booking-summary-movie-details">
                     <div className="booking-summary-photo-container">
@@ -62,6 +61,6 @@ export default function BookingSummary({ projection, movie, selectedSeats }: Boo
 
                 </div>
             </div>
-        </>
+        </div>
     )
 }

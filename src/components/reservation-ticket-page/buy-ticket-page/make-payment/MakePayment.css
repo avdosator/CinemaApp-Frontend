@@ -1,0 +1,5 @@
+.make-payment-container {
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+}

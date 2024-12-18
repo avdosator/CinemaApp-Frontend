@@ -18,10 +18,17 @@ export default function HomePage() {
 
     useEffect(() => {
         setIsLoading(true);
-        ApiService.get<PageResponse<Movie>>("/movies/active").then(response => setActiveMovies(response.content));
-        ApiService.get<PageResponse<Movie>>("/movies/upcoming").then(response => setUpcomingMovies(response.content));
-        ApiService.get<PageResponse<Venue>>("/venues").then(response => { setVenues(response.content) });
-        setIsLoading(false);
+        Promise.all([
+            ApiService.get<PageResponse<Movie>>("/movies/active"),
+            ApiService.get<PageResponse<Movie>>("/movies/upcoming"),
+            ApiService.get<PageResponse<Venue>>("/venues")
+        ])
+            .then(([activeMoviesPage, upcomingMoviesPage, venuesPage]) => {
+                setActiveMovies(activeMoviesPage.content);
+                setUpcomingMovies(upcomingMoviesPage.content);
+                setVenues(venuesPage.content);
+                setIsLoading(false);
+            });
     }, [])
     return (
         isLoading ? (

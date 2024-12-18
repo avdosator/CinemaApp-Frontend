@@ -24,6 +24,7 @@ export default function HomePage() {
             ApiService.get<PageResponse<Venue>>("/venues")
         ])
             .then(([activeMoviesPage, upcomingMoviesPage, venuesPage]) => {
+                setIsLoading(true);
                 setActiveMovies(activeMoviesPage.content);
                 setUpcomingMovies(upcomingMoviesPage.content);
                 setVenues(venuesPage.content);

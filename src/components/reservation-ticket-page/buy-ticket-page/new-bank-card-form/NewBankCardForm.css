@@ -48,6 +48,11 @@
     color: #667085;
 }
 
+.add-new-card-input:focus {
+    border: 1px solid #B22222 !important;
+    outline: none 1px #B22222 !important;
+}
+
 .expiry-and-cvv-container {
     width: 100%;
     display: flex;

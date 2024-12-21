@@ -1,6 +1,18 @@
+import { Movie } from "../../../../types/Movie"
+import { ProjectionInstance } from "../../../../types/ProjectionInstance"
+import { Seat } from "../../../../types/Seat"
+import { calculateReservedSeatsPrice } from "../../../../utils/utils"
 import "./NewBankCardForm.css"
 
-export default function NewBankCardForm({totalPrice}: {totalPrice: number}) {
+type NewBankCardFormProps = {
+    projection: ProjectionInstance,
+    movie: Movie,
+    selectedSeats: Seat[],
+}
+
+export default function NewBankCardForm({projection, movie, selectedSeats}: NewBankCardFormProps) {
+    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+
     return (
         <div>
             <form className="font-lg-regular new-bank-card-form" onSubmit={() => console.log("form submitted")}>

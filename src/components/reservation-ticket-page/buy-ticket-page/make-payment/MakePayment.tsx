@@ -2,14 +2,16 @@ import NewBankCardForm from "../new-bank-card-form/NewBankCardForm"
 import BankCard from "../bank-card/BankCard"
 import "./MakePayment.css"
 import { Seat } from "../../../../types/Seat"
-import { calculateReservedSeatsPrice } from "../../../../utils/utils";
+import { ProjectionInstance } from "../../../../types/ProjectionInstance";
+import { Movie } from "../../../../types/Movie";
 
 type MakePaymentProps = {
+    projection: ProjectionInstance,
+    movie: Movie,
     selectedSeats: Seat[]
 }
 
-export default function MakePayment({selectedSeats}: MakePaymentProps) {
-    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+export default function MakePayment({projection, movie, selectedSeats}: MakePaymentProps) {
 
     return (
         <div className="make-payment-container">
@@ -22,7 +24,7 @@ export default function MakePayment({selectedSeats}: MakePaymentProps) {
                 <span className="auth-horizontal-line" style={{ color: "#E4E7EC" }}></span>
             </div>
             <h6 className="font-heading-h6" style={{ color: "#667085", marginBottom: "0px" }}>Add New Card</h6>
-            <NewBankCardForm totalPrice={totalPrice} />
+            <NewBankCardForm projection={projection} movie={movie} selectedSeats={selectedSeats} />
         </div>
     )
 }

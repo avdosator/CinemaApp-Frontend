@@ -41,7 +41,7 @@
 }
 
 #cardNumber {
-    padding-left: 35px;
+    padding-left: 39px;
 }
 
 .add-new-card-input::placeholder {
@@ -67,11 +67,17 @@
     width: 100%;
     padding: 12px 20px;
     border-radius: 8px;
-    text-align: center;
-    background-color: #D0D5DD;
-    color: #FCFCFD;
+    text-align: center;   
     outline: none;
     border: none;
     align-self: end;
     margin-top: 56px;
+    background-color: #B22222;
+    color: #FCFCFD;
+}
+
+.new-bank-card-btn-disabled {
+    background-color: #D0D5DD;
+    color: #FCFCFD;
+    cursor: default;
 }

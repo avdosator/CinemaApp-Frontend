@@ -96,7 +96,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
     }
 
     return (
-        <div>
+        <div id="new-card-form-container">
             <form className="font-lg-regular new-bank-card-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="add-new-card-form-input-group">
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>

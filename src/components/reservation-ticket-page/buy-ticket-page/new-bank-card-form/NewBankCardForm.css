@@ -7,6 +7,11 @@
     margin-top: 16px;
 }
 
+.new-card-form-container {
+    height: 100%;
+    margin-top: auto;
+}
+
 .add-new-card-form-input-group {
     display: flex;
     flex-direction: column;
@@ -62,7 +67,6 @@
     outline: none;
     border: none;
     align-self: end;
-    margin-top: 56px;
     background-color: #B22222;
     color: #FCFCFD;
 }

@@ -4,6 +4,9 @@ import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import { Seat } from "../../../../types/Seat"
 import { calculateReservedSeatsPrice } from "../../../../utils/utils"
 import "./NewBankCardForm.css"
+import { useUser } from "../../../../context/UserContext"
+import ApiService from "../../../../service/ApiService"
+import { CreatePaymentResponse } from "../../../../types/CreatePaymentResponse"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -19,14 +22,25 @@ type NewBankCardFormProps = {
 
 export default function NewBankCardForm({ projection, movie, selectedSeats }: NewBankCardFormProps) {
     const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+    const { currentUser } = useUser();
     const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm<NewBankCardFormType>({
         mode: "onChange", // Enables validation check on change
     });
 
     const onSubmit: SubmitHandler<NewBankCardFormType> = async (formData) => {
-        console.log(formData);
-        console.log(projection);
-        console.log(movie);
+        
+        const body = {
+            userId: currentUser?.id,
+            projectionInstanceId: projection.id,
+            amount: totalPrice,
+        };
+
+        try {
+            const response = await ApiService.post<CreatePaymentResponse>("/payments/intent", body);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

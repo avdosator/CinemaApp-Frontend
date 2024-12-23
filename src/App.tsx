@@ -12,6 +12,8 @@ import AuthContainer from './components/auth/auth-container/AuthContainer';
 import UserProvider from './context/UserContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import ReservationTicketPage from './components/reservation-ticket-page/ReservationTicketPage';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -26,34 +28,37 @@ function App() {
     setIsAuthOpen(false);
     setRedirectInfo(null); // Clear redirect info when closing modal
   };
+  const stripePromise = loadStripe("pk_test_51QWObK005aH1ki3zlE396ntDW9qto4YWeDvPSEIDyvQoUioh6sSJjtvzplukio4b1EHd2kBxSZlPcmSIqcVi3DC500Purif1vc");
 
   return (
     <>
       <UserProvider >
         <MovieProvider>
-          <div className='app-container'>
-            <Header openAuthModal={openAuthModal} />
-            <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
-              <Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path='/home' element={<HomePage />} />
-                <Route path='/movies/*' element={<MovieRoutes />} />
-                <Route path='/about' element={<AboutUsPage />} />
-                <Route path='/pricing' element={<PricingPage />} />
-                {/* Protected Route */}
-                <Route
-                  path="/projection/:id/reservations"
-                  element={
-                    <ProtectedRoute openLoginForm={openAuthModal}>
-                      <ReservationTicketPage />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
+          <Elements stripe={stripePromise}>
+            <div className='app-container'>
+              <Header openAuthModal={openAuthModal} />
+              <div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
+                <Routes>
+                  <Route path='/' element={<HomePage />} />
+                  <Route path='/home' element={<HomePage />} />
+                  <Route path='/movies/*' element={<MovieRoutes />} />
+                  <Route path='/about' element={<AboutUsPage />} />
+                  <Route path='/pricing' element={<PricingPage />} />
+                  {/* Protected Route */}
+                  <Route
+                    path="/projection/:id/reservations"
+                    element={
+                      <ProtectedRoute openLoginForm={openAuthModal}>
+                        <ReservationTicketPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-          {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} redirectInfo={redirectInfo} />}
+            {isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} redirectInfo={redirectInfo} />}
+          </Elements>
         </MovieProvider>
       </UserProvider>
     </>

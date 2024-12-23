@@ -32,7 +32,7 @@
 }
 
 .add-new-card-input {
-    width: 100%;
+    width: 100% !important;
     border: 1px solid #E4E7EC;
     color: #344054;
     text-align: left;
@@ -42,15 +42,6 @@
 
 #cardNumber {
     padding-left: 39px;
-}
-
-.add-new-card-input::placeholder {
-    color: #667085;
-}
-
-.add-new-card-input:focus {
-    border: 1px solid #B22222 !important;
-    outline: none 1px #B22222 !important;
 }
 
 .expiry-and-cvv-container {

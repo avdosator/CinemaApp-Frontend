@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { Movie } from "../../../../types/Movie"
 import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import { Seat } from "../../../../types/Seat"
@@ -6,7 +6,8 @@ import { calculateReservedSeatsPrice } from "../../../../utils/utils"
 import "./NewBankCardForm.css"
 import { useUser } from "../../../../context/UserContext"
 import ApiService from "../../../../service/ApiService"
-import { CreatePaymentResponse } from "../../../../types/CreatePaymentResponse"
+import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
+import { useState } from "react"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -20,26 +21,77 @@ type NewBankCardFormProps = {
     selectedSeats: Seat[],
 }
 
+const inputStyle = {
+    base: {
+        fontSize: "16px",
+        color: "#344054",
+        fontFamily: "Urbanist, sans-serif",
+        "::placeholder": { color: "#667085" },
+    },
+    invalid: {
+        color: "#FDA29B",
+        iconColor: "#FDA29B",
+    },
+}
+
 export default function NewBankCardForm({ projection, movie, selectedSeats }: NewBankCardFormProps) {
-    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
-    const { currentUser } = useUser();
-    const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm<NewBankCardFormType>({
-        mode: "onChange", // Enables validation check on change
+    const [cardDetails, setCardDetails] = useState({
+        cardNumberError: null,
+        expiryDateError: null,
+        cvvError: null,
+        isCardNumberValid: false,
+        isExpiryDateValid: false,
+        isCvvValid: false,
     });
 
-    const onSubmit: SubmitHandler<NewBankCardFormType> = async (formData) => {
-        
-        const body = {
+    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+
+    const { handleSubmit, formState: { isSubmitting } } = useForm<NewBankCardFormType>({ mode: "onChange", });
+    const { currentUser } = useUser();
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const isFormValid = stripe && elements && cardDetails.isCardNumberValid && cardDetails.isExpiryDateValid && cardDetails.isCvvValid;
+
+    const handleCardChange = (field: "cardNumber" | "expiryDate" | "cvv", event: any) => {
+        setCardDetails((prev) => ({
+            ...prev,
+            [`${field}Error`]: event.error ? event.error.message : null,
+            [`is${field[0].toUpperCase() + field.slice(1)}Valid`]: !event.error && event.complete,
+        }));
+    };
+
+    const renderError = (error: string | null) => error && <div className="font-sm-regular auth-error">{error}</div>;
+
+    const onSubmit = async () => {
+        if (!stripe || !elements) {
+            console.error("Stripe has not loaded yet.");
+            return;
+        }
+
+        const intentBody = {
             userId: currentUser?.id,
             projectionInstanceId: projection.id,
             amount: totalPrice,
         };
 
         try {
-            const response = await ApiService.post<CreatePaymentResponse>("/payments/intent", body);
-            console.log(response);
+            const { clientSecret } = await ApiService.post<{ clientSecret: string }>("/payments/intent", intentBody);
+
+            // Step 2: Confirm the payment with the client secret
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardNumberElement)!,
+                },
+            });
+
+            if (result.error) {
+                console.error("Payment failed:", result.error.message);
+            } else {
+                console.log("Payment succeeded:", result.paymentIntent);
+            }
         } catch (error) {
-            console.log(error);
+            console.error("Error during payment:", error);
         }
     }
 
@@ -50,76 +102,39 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>
                     <div className="input-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" id="creditCard" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16l0 32L48 128l0-32c0-8.8 7.2-16 16-16l448 0zm16 144l0 192c0 8.8-7.2 16-16 16L64 432c-8.8 0-16-7.2-16-16l0-192 480 0zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l448 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" /></svg>
-                        <input
-                            {...register("cardNumber", {
-                                required: "Please enter valid card number.",
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: "Card number must contain only digits.",
-                                },
-                                minLength: {
-                                    value: 16,
-                                    message: "Card number must have 16 digits"
-                                },
-                                maxLength: {
-                                    value: 16,
-                                    message: "Card number must have 16 digits"
-                                }
-                            })}
-                            type="text"
-                            id="cardNumber"
+                        <CardNumberElement
+                            options={{ style: inputStyle }}
                             className="add-new-card-input"
-                            placeholder="**** **** **** ****" />
+                            onChange={(event) => handleCardChange("cardNumber", event)}
+                            id="cardNumber"
+                        />
                     </div>
-                    {errors.cardNumber && <div className="font-sm-regular auth-error">{errors.cardNumber.message}</div>}
+                    {renderError(cardDetails.cardNumberError)}
                 </div>
                 <div className="expiry-and-cvv-container">
                     <div className="add-new-card-form-input-group">
                         <label htmlFor="expiryDate" className="new-bank-card-form-label font-lg-semibold">Expiry Date</label>
-                        <input
-                            {...register("expiryDate", {
-                                required: "Please enter expiration date",
-                                pattern: {
-                                    value: /^(0[1-9]|1[0-2])\/\d{2}$/,
-                                    message: "Invalid expiration date. Use MM/YY format."
-                                }
-                            })}
-                            type="text"
-                            id="expiryDate"
+                        <CardExpiryElement
+                            options={{ style: inputStyle }}
                             className="add-new-card-input"
-                            placeholder="00/00"
+                            onChange={(event) => handleCardChange("expiryDate", event)}
                         />
-                        {errors.expiryDate && <div className="font-sm-regular auth-error">{errors.expiryDate.message}</div>}
+                        {renderError(cardDetails.expiryDateError)}
                     </div>
                     <div className="add-new-card-form-input-group">
                         <label htmlFor="cvv" className="new-bank-card-form-label font-lg-semibold">CVV</label>
-                        <input
-                            {...register("cvv", {
-                                required: "Please enter CVV number.",
-                                pattern: {
-                                    value: /^[0-9]*$/,
-                                    message: "CVV must contain only digits.",
-                                },
-                                minLength: {
-                                    value: 3,
-                                    message: "CVV must be three digit number."
-                                },
-                                maxLength: {
-                                    value: 3,
-                                    message: "CVV must be three digit number."
-                                }
-                            })}
-                            type="text"
-                            id="cvv"
+                        <CardCvcElement
+                            options={{ style: inputStyle }}
                             className="add-new-card-input"
-                            placeholder="000" />
-                        {errors.cvv && <div className="font-sm-regular auth-error">{errors.cvv.message}</div>}
+                            onChange={(event) => handleCardChange("cvv", event)}
+                        />
+                        {renderError(cardDetails.cvvError)}
                     </div>
                 </div>
                 <button
                     type="submit"
-                    className={`font-lg-semibold new-bank-card-btn ${!isValid || isSubmitting ? "new-bank-card-btn-disabled" : ""}`}
-                    disabled={!isValid || isSubmitting}
+                    className={`font-lg-semibold new-bank-card-btn ${!isFormValid || isSubmitting ? "new-bank-card-btn-disabled" : ""}`}
+                    disabled={!isFormValid || isSubmitting}
                 >
                     Make Payment - {totalPrice} BAM
                 </button>

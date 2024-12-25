@@ -43,6 +43,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
         isExpiryDateValid: false,
         isCvvValid: false,
     });
+    const [successfulPayment, setSuccessfulPayment] = useState<boolean>(true);
 
     const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
 
@@ -87,8 +88,22 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
 
             if (result.error) {
                 console.error("Payment failed:", result.error.message);
-            } else {
-                console.log("Payment succeeded:", result.paymentIntent);
+            } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+                console.log("Payment succeeded: ", result.paymentIntent);
+                const jwt = localStorage.getItem("authToken");
+                const headers = { "Authorization": `Bearer ${jwt}` };
+                const ticketResponse = await ApiService.post<{ status: string, message: string }>("/payments", {
+                    userId: currentUser?.id,
+                    projectionInstanceId: projection.id,
+                    amount: totalPrice,
+                    selectedSeats: selectedSeats.map((seat) => seat.id),
+                    paymentIntentId: result.paymentIntent.id,
+                    movieId: movie.id
+                },
+                    headers
+                );
+                setSuccessfulPayment(true);
+                console.log("Ticket created successfully:");
             }
         } catch (error) {
             console.error("Error during payment:", error);
@@ -97,6 +112,21 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
 
     return (
         <div id="new-card-form-container">
+            {successfulPayment && (
+                <>
+                    <div className="session-expired-overlay"></div>
+                    <div className="session-expired-modal">
+                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Payment Successful!</h6>
+                        <p className="font-md-regular" style={{ color: "#667085" }}>
+                            The receipt and ticket have been sent to your email. You may download them immediately, or retrieve them later from your User Profile.
+                        </p>
+                        <div className="session-expired-footer" style={{gap: "8px"}}>
+                            <button className="font-sm-semibold payment-back-to-home-btn" >Back to Home</button>
+                            <button className="font-sm-semibold session-expired-btn" >Download</button>
+                        </div>
+                    </div>
+                </>
+            )}
             <form className="font-lg-regular new-bank-card-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="add-new-card-form-input-group">
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>

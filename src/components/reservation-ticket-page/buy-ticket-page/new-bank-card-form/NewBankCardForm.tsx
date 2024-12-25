@@ -8,6 +8,7 @@ import { useUser } from "../../../../context/UserContext"
 import ApiService from "../../../../service/ApiService"
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -43,12 +44,15 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
         isExpiryDateValid: false,
         isCvvValid: false,
     });
-    const [successfulPayment, setSuccessfulPayment] = useState<boolean>(true);
+    const [successfulPayment, setSuccessfulPayment] = useState<boolean>(false);
+    const [unsuccessfulPayment, setUnsuccessfulPayment] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
 
     const { handleSubmit, formState: { isSubmitting } } = useForm<NewBankCardFormType>({ mode: "onChange", });
     const { currentUser } = useUser();
+    const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -102,12 +106,21 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
                 },
                     headers
                 );
-                setSuccessfulPayment(true);
-                console.log("Ticket created successfully:");
+                if (ticketResponse.status === "success") {
+                    setSuccessfulPayment(true);
+                    console.log("Ticket created successfully:");
+                }
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error during payment:", error);
+            setErrorMessage(error.response.data.message);
+            setUnsuccessfulPayment(true);
         }
+    }
+
+    const redirectToHomePage = () => {
+        setSuccessfulPayment(false);
+        navigate("/home");
     }
 
     return (
@@ -120,9 +133,21 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
                         <p className="font-md-regular" style={{ color: "#667085" }}>
                             The receipt and ticket have been sent to your email. You may download them immediately, or retrieve them later from your User Profile.
                         </p>
-                        <div className="session-expired-footer" style={{gap: "8px"}}>
-                            <button className="font-sm-semibold payment-back-to-home-btn" >Back to Home</button>
+                        <div className="session-expired-footer" style={{ gap: "8px" }}>
+                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={redirectToHomePage} >Back to Home</button>
                             <button className="font-sm-semibold session-expired-btn" >Download</button>
+                        </div>
+                    </div>
+                </>
+            )}
+            {unsuccessfulPayment && (
+                <>
+                    <div className="session-expired-overlay"></div>
+                    <div className="session-expired-modal">
+                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Payment Unsuccessful!</h6>
+                        <p className="font-md-regular" style={{ color: "#667085" }}>{errorMessage}</p>
+                        <div className="session-expired-footer" style={{ gap: "8px" }}>
+                            <button className="font-sm-semibold session-expired-btn" onClick={() => setUnsuccessfulPayment(false)} >Try Again</button>
                         </div>
                     </div>
                 </>

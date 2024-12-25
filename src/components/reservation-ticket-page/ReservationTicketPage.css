@@ -63,7 +63,7 @@
 .session-expired-modal {
     position: fixed;
     top: 220px;
-    left: 48%;
+    left: 50%;
     transform: translate(-50%, -50%);
     width: 408px;
     height: 200px;

@@ -76,3 +76,12 @@
     color: #FCFCFD;
     cursor: default;
 }
+
+.payment-back-to-home-btn {
+    color: #B22222;
+    background-color: #FCFCFD;
+    outline: none;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+    padding: 8px 16px;
+}

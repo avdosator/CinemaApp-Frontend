@@ -9,6 +9,7 @@ import ApiService from "../../../../service/ApiService"
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import UnsuccessfulPaymentNotification from "./UnsuccessfulPaymentNotification"
 import SuccessfulPaymentNotification from "./SuccessfulPaymentNotification"
 
 type NewBankCardFormType = {
@@ -126,22 +127,8 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
 
     return (
         <div id="new-card-form-container">
-            {successfulPayment && (
-                <>
-                    <div className="session-expired-overlay"></div>
-                    <div className="session-expired-modal">
-                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Payment Successful!</h6>
-                        <p className="font-md-regular" style={{ color: "#667085" }}>
-                            The receipt and ticket have been sent to your email. You may download them immediately, or retrieve them later from your User Profile.
-                        </p>
-                        <div className="session-expired-footer" style={{ gap: "8px" }}>
-                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={redirectToHomePage} >Back to Home</button>
-                            <button className="font-sm-semibold session-expired-btn" >Download</button>
-                        </div>
-                    </div>
-                </>
-            )}
-            {unsuccessfulPayment &&  (<SuccessfulPaymentNotification redirectToHomePage={redirectToHomePage} />) }
+            {successfulPayment && (<SuccessfulPaymentNotification redirectToHomePage={redirectToHomePage} />)}
+            {unsuccessfulPayment && (<UnsuccessfulPaymentNotification errorMessage={errorMessage} tryAgain={() => setUnsuccessfulPayment(false)} />)}
             <form className="font-lg-regular new-bank-card-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="add-new-card-form-input-group">
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>

@@ -9,6 +9,7 @@ import ApiService from "../../../../service/ApiService"
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import SuccessfulPaymentNotification from "./SuccessfulPaymentNotification"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -140,18 +141,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
                     </div>
                 </>
             )}
-            {unsuccessfulPayment && (
-                <>
-                    <div className="session-expired-overlay"></div>
-                    <div className="session-expired-modal">
-                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Payment Unsuccessful!</h6>
-                        <p className="font-md-regular" style={{ color: "#667085" }}>{errorMessage}</p>
-                        <div className="session-expired-footer" style={{ gap: "8px" }}>
-                            <button className="font-sm-semibold session-expired-btn" onClick={() => setUnsuccessfulPayment(false)} >Try Again</button>
-                        </div>
-                    </div>
-                </>
-            )}
+            {unsuccessfulPayment &&  (<SuccessfulPaymentNotification redirectToHomePage={redirectToHomePage} />) }
             <form className="font-lg-regular new-bank-card-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="add-new-card-form-input-group">
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>

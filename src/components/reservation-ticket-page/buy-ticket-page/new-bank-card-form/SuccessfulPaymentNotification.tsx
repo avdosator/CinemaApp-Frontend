@@ -13,7 +13,7 @@ export default function SuccessfulPaymentNotification({ redirectToHomePage }: Su
                 </p>
                 <div className="session-expired-footer" style={{ gap: "8px" }}>
                     <button className="font-sm-semibold payment-back-to-home-btn" onClick={redirectToHomePage} >Back to Home</button>
-                    <button className="font-sm-semibold session-expired-btn" >Download</button>
+                    <button className="font-sm-semibold session-expired-btn new-bank-card-btn-disabled" disabled >Download</button>
                 </div>
             </div>
         </>

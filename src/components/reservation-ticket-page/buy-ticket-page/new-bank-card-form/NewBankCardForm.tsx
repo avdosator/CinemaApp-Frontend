@@ -94,8 +94,8 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
 
             if (result.error) {
                 console.error("Payment failed:", result.error.message);
+                return;
             } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-                console.log("Payment succeeded: ", result.paymentIntent);
                 const jwt = localStorage.getItem("authToken");
                 const headers = { "Authorization": `Bearer ${jwt}` };
                 const ticketResponse = await ApiService.post<{ status: string, message: string }>("/payments", {
@@ -110,11 +110,9 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
                 );
                 if (ticketResponse.status === "success") {
                     setSuccessfulPayment(true);
-                    console.log("Ticket created successfully:");
                 }
             }
         } catch (error: any) {
-            console.error("Error during payment:", error);
             setErrorMessage(error.response.data.message);
             setUnsuccessfulPayment(true);
         }

@@ -1,8 +1,23 @@
 import "./GeneralForm.css"
 import { faCalendarDays, faClock, faFilm, faLanguage, faLink, faR, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SelectOptionType } from "../../../../types/SelectOptionType";
+import { useEffect, useState } from "react";
+import ApiService from "../../../../service/ApiService";
+import { Genre } from "../../../../types/Genre";
 
 export default function GeneralForm() {
+    let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+
+    useEffect(() => {
+        ApiService.get<Genre[]>("/genres")
+            .then(genresResponse => {
+                const genreOptions = genresResponse.map(genre => ({ value: genre.id, label: genre.name }))
+                setGenreOptions(genreOptions);
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }, [])
+
     return (
         <form className="general-form">
             <div className="half-width-elements">
@@ -111,13 +126,16 @@ export default function GeneralForm() {
             <div className="general-form-input-group" style={{ marginTop: "24px" }}>
                 <label htmlFor="synopsis" className="font-lg-semibold">Synopsis</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faLink} className="input-icon" style={{top: "24px"}} />
+                    <FontAwesomeIcon icon={faLink} className="input-icon" style={{ top: "24px" }} />
                     <textarea name="synopsis"
                         id="synopsis"
                         className="search-movies-input font-lg-regular"
                         placeholder="Write synopsis"
+                        rows={6}
                         maxLength={500}
+                        style={{ paddingRight: "64px" }}
                     />
+                    <div className="synopsis-length font-lg-regular">{0}/500</div>
                 </div>
             </div>
         </form>

@@ -1,0 +1,36 @@
+.general-form {
+    width: 100%;
+    /* display: flex;
+    gap: 16px; */
+
+}
+
+.half-width-elements {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+
+}
+
+.left-part {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.right-part {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.general-form-input-group {
+    /* gap: 4px; */
+}
+
+.general-form-input-group label {
+    color: #344054;
+    margin-bottom: 4px;
+}

@@ -1,0 +1,22 @@
+.side-bar-container {
+    width: 264px;
+    height: 100vh; /* or 100vh*/
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 16px;
+    padding: 32px;
+    background-color: #1D2939;
+    border-right: 1px solid #E4E7EC;
+    margin-left: -8%;
+}
+
+.side-bar-btn {
+    display: flex;
+    padding: 12px 20px 12px 0px;
+    gap: 6px;
+    outline: none;
+    border: none;
+    background-color: inherit;
+}

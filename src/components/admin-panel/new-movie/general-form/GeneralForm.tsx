@@ -1,3 +1,4 @@
+import "../../../upcoming-movies-page/upcoming-movies-form/UpcomingMoviesForm.css"
 import "./GeneralForm.css"
 import { faCalendarDays, faClock, faFilm, faLanguage, faLink, faR, faT, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -110,7 +111,7 @@ export default function GeneralForm() {
                         <label htmlFor="projectionDate" className="font-lg-semibold">Projection Date</label>
                         <div className="input-wrapper">
                             <FontAwesomeIcon icon={faCalendarDays} className={`input-icon ${formData?.startDate ? "red-icon" : ""}`} />
-                            <Select
+                            <Select<SelectOptionType, false>
                                 options={[]}
                                 placeholder="Select Date Range"
                                 className="dropdown-menu-input"
@@ -122,11 +123,12 @@ export default function GeneralForm() {
                                 onMenuOpen={() => setIsDatePickerOpened(true)}
                             />
                             {isDatePickerOpened && (
-                                <div className="date-picker">
+                                <div className="date-picker" id="generalFormDatePicker">
                                     <DateRange
                                         editableDateInputs={false}
                                         onChange={(item: RangeKeyDict) => setCalendarState([item.selection])}
                                         moveRangeOnFirstSelection={false}
+                                        showMonthAndYearPickers={false}
                                         ranges={calendarState}
                                         className="custom-date-range font-lg-regular"
                                         rangeColors={["#FDE3E3"]}

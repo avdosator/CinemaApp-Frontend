@@ -49,6 +49,20 @@
     color: #B22222 !important;
 }
 
+#generalFormDatePicker {
+    width: 345px;
+    left: 240px;
+    top: 50px;
+}
+
+.css-1nmdiq5-menu {
+    box-shadow: none !important;
+}
+
+ .dropdown__menu-notice--no-options {
+    display: none !important;
+ }
+
 .css-1p3m7a8-multiValue {
     background-color: inherit !important;
 }

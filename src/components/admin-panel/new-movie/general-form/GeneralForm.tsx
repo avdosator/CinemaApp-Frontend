@@ -6,15 +6,21 @@ import { useEffect, useState } from "react";
 import ApiService from "../../../../service/ApiService";
 import { Genre } from "../../../../types/Genre";
 import { GeneralFormData } from "../../../../types/FormData";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
+import { DateRange, Range, RangeKeyDict } from "react-date-range";
+import { format } from "date-fns";
 
 export default function GeneralForm() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+    let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
+    let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
+    let [formattedDateRange, setFormattedDateRange] = useState("");
 
     let [formData, setFormData] = useState<GeneralFormData>({
         title: "",
         language: "",
-        projectionDate: "",
+        startDate: "",
+        endDate: "",
         director: "",
         pgRating: "",
         duration: "",
@@ -41,6 +47,33 @@ export default function GeneralForm() {
             [name]: value
         } as GeneralFormData));
     };
+
+    const handleApply = () => {
+        const { startDate, endDate } = calendarState[0];
+        if (!startDate || !endDate) {
+            alert("Please select both a start and end date.");
+            return;
+        }
+
+        const formattedRangeDisplay = `${format(startDate, 'yyyy/MM/dd')} - ${format(endDate, 'yyyy/MM/dd')}`;
+        setFormattedDateRange(formattedRangeDisplay);
+
+        const isoStartDate = format(startDate, 'yyyy-MM-dd');
+        const isoEndDate = format(endDate, 'yyyy-MM-dd');
+
+        handleChange("startDate", isoStartDate);
+        handleChange("endDate", isoEndDate);
+
+        setIsDatePickerOpened(false);
+    };
+
+    const handleSelectValueChange = (newValue: SingleValue<SelectOptionType>): void => {
+        if (newValue === null) {
+            handleChange("startDate", "");
+            handleChange("endDate", "");
+            setFormattedDateRange("");
+        }
+    }
 
     return (
         <form className="general-form">
@@ -76,14 +109,36 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="projectionDate" className="font-lg-semibold">Projection Date</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faCalendarDays} className={`input-icon ${formData?.projectionDate ? "red-icon" : ""}`} />
-                            <input type="text"
-                                name="projectionDate"
-                                id="projectionDate"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Choose projection date"
-                                onChange={e => handleChange("projectionDate", e.target.value)}
+                            <FontAwesomeIcon icon={faCalendarDays} className={`input-icon ${formData?.startDate ? "red-icon" : ""}`} />
+                            <Select
+                                options={[]}
+                                placeholder="Select Date Range"
+                                className="dropdown-menu-input"
+                                classNamePrefix="dropdown"
+                                isClearable={true}
+                                value={formattedDateRange ? { value: "dateRange", label: formattedDateRange } : null}
+                                onChange={(newValue) => handleSelectValueChange(newValue)}
+                                menuIsOpen={isDatePickerOpened}
+                                onMenuOpen={() => setIsDatePickerOpened(true)}
                             />
+                            {isDatePickerOpened && (
+                                <div className="date-picker">
+                                    <DateRange
+                                        editableDateInputs={false}
+                                        onChange={(item: RangeKeyDict) => setCalendarState([item.selection])}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={calendarState}
+                                        className="custom-date-range font-lg-regular"
+                                        rangeColors={["#FDE3E3"]}
+                                        dateDisplayFormat="yyyy/MM/dd"
+                                        minDate={new Date()}
+                                    />
+                                    <div className="date-range-buttons">
+                                        <button className="date-picker-cancel font-sm-semibold" onClick={() => setIsDatePickerOpened(false)}>Cancel</button>
+                                        <button className="date-picker-apply font-sm-semibold" onClick={handleApply}>Apply</button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="general-form-input-group">

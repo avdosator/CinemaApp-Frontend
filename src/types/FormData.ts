@@ -28,7 +28,8 @@ export type MovieDetailsFormData = {
 export type GeneralFormData = {
     title: string,
     language: string,
-    projectionDate: string,
+    startDate: string,
+    endDate: string,
     director: string,
     pgRating: string,
     duration: string,

@@ -1,5 +1,5 @@
 import "./GeneralForm.css"
-import { faCalendarDays, faClock, faFilm, faLanguage, faLink, faR, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faClock, faFilm, faLanguage, faLink, faR, faT, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SelectOptionType } from "../../../../types/SelectOptionType";
 import { useEffect, useState } from "react";
@@ -145,7 +145,7 @@ export default function GeneralForm() {
             <div className="general-form-input-group" style={{ marginTop: "24px" }}>
                 <label htmlFor="synopsis" className="font-lg-semibold">Synopsis</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faLink} className="input-icon" style={{ top: "24px" }} />
+                    <FontAwesomeIcon icon={faT} className="input-icon" style={{ top: "24px" }} />
                     <textarea name="synopsis"
                         id="synopsis"
                         className="search-movies-input font-lg-regular"

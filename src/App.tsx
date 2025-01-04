@@ -14,7 +14,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import ReservationTicketPage from './components/reservation-ticket-page/ReservationTicketPage';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import SideBar from './components/admin-panel/side-bar/SideBar';
+import NewMovie from './components/admin-panel/new-movie/NewMovie';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -45,7 +45,7 @@ function App() {
                   <Route path='/movies/*' element={<MovieRoutes />} />
                   <Route path='/about' element={<AboutUsPage />} />
                   <Route path='/pricing' element={<PricingPage />} />
-                  <Route path='/admin' element={<SideBar />} />
+                  <Route path='/admin' element={<NewMovie />} />
                   {/* Protected Route */}
                   <Route
                     path="/projection/:id/reservations"

@@ -27,6 +27,11 @@
     margin-bottom: 4px;
 }
 
+.general-form-input-group input,
+.general-form-input-group textarea {
+    color: #101828;
+}
+
 .synopsis-length {
     position: absolute;
     right: 16px;
@@ -38,4 +43,25 @@
 
 #trailerLinkIcon {
     z-index: 0;
+}
+
+.css-1p3m7a8-multiValue {
+    background-color: inherit !important;
+}
+
+.css-9jq23d {
+    font-family: Urbanist !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    letter-spacing: 0.005em !important;
+    text-align: left !important;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #101828 !important;
+}
+
+.css-v7duua:hover {
+    background-color: inherit !important;
+    color: #B22222 !important;
 }

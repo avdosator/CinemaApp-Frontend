@@ -39,7 +39,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="name" className="font-lg-semibold">Movie Name</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faFilm} className="input-icon" />
+                            <FontAwesomeIcon icon={faFilm} className={`input-icon ${formData?.title ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="name"
                                 id="name"
@@ -52,7 +52,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="language" className="font-lg-semibold">Language</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLanguage} className="input-icon" />
+                            <FontAwesomeIcon icon={faLanguage} className={`input-icon ${formData?.language ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="language"
                                 id="language"
@@ -62,12 +62,12 @@ export default function GeneralForm() {
                         </div>
                     </div>
                     <div className="general-form-input-group">
-                        <label htmlFor="date" className="font-lg-semibold">Projection Date</label>
+                        <label htmlFor="projectionDate" className="font-lg-semibold">Projection Date</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faCalendarDays} className="input-icon" />
+                            <FontAwesomeIcon icon={faCalendarDays} className={`input-icon ${formData?.projectionDate ? "red-icon" : ""}`} />
                             <input type="text"
-                                name="date"
-                                id="date"
+                                name="projectionDate"
+                                id="projectionDate"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Choose projection date"
                             />
@@ -76,7 +76,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="director" className="font-lg-semibold">Director</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faUser} className="input-icon" />
+                            <FontAwesomeIcon icon={faUser} className={`input-icon ${formData?.director ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="director"
                                 id="director"
@@ -90,7 +90,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="pgRating" className="font-lg-semibold">PG Rating</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faR} className="input-icon" />
+                            <FontAwesomeIcon icon={faR} className={`input-icon ${formData?.pgRating ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="pgRating"
                                 id="pgRating"
@@ -102,7 +102,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="duration" className="font-lg-semibold">Movie Duration</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faClock} className="input-icon" />
+                            <FontAwesomeIcon icon={faClock} className={`input-icon ${formData?.duration ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="duration"
                                 id="duration"
@@ -114,7 +114,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="genre" className="font-lg-semibold">Genre</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faFilm} className="input-icon" />
+                            <FontAwesomeIcon icon={faFilm} className={`input-icon ${formData?.genre ? "red-icon" : ""}`} />
                             <Select<SelectOptionType, true>
                                 options={genreOptions}
                                 placeholder="All Cities"
@@ -131,7 +131,7 @@ export default function GeneralForm() {
                     <div className="general-form-input-group">
                         <label htmlFor="trailer" className="font-lg-semibold">Trailer link</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLink} className="input-icon" id="trailerLinkIcon" />
+                            <FontAwesomeIcon icon={faLink} className={`input-icon ${formData?.trailer ? "red-icon" : ""}`} id="trailerLinkIcon" />
                             <input type="text"
                                 name="trailer"
                                 id="trailer"
@@ -145,7 +145,7 @@ export default function GeneralForm() {
             <div className="general-form-input-group" style={{ marginTop: "24px" }}>
                 <label htmlFor="synopsis" className="font-lg-semibold">Synopsis</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faT} className="input-icon" style={{ top: "24px" }} />
+                    <FontAwesomeIcon icon={faT} className={`input-icon ${formData?.synopsis ? "red-icon" : ""}`} style={{ top: "24px" }} />
                     <textarea name="synopsis"
                         id="synopsis"
                         className="search-movies-input font-lg-regular"

@@ -31,7 +31,7 @@ export type GeneralFormData = {
     projectionDate: string,
     director: string,
     pgRating: string,
-    duration: number,
+    duration: string,
     genre: SelectOptionType[],
     trailer: string,
     synopsis: string

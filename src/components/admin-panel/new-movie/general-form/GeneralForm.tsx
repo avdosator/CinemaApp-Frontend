@@ -11,7 +11,17 @@ import Select from "react-select";
 export default function GeneralForm() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
 
-    let [formData, setFormData] = useState<GeneralFormData>();
+    let [formData, setFormData] = useState<GeneralFormData>({
+        title: "",
+        language: "",
+        projectionDate: "",
+        director: "",
+        pgRating: "",
+        duration: "",
+        genre: [],
+        trailer: "",
+        synopsis: ""
+    });
 
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
@@ -46,6 +56,7 @@ export default function GeneralForm() {
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type movie name"
                                 autoFocus
+                                onChange={e => handleChange("title", e.target.value)}
                             />
                         </div>
                     </div>
@@ -58,6 +69,7 @@ export default function GeneralForm() {
                                 id="language"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type language"
+                                onChange={e => handleChange("language", e.target.value)}
                             />
                         </div>
                     </div>
@@ -70,6 +82,7 @@ export default function GeneralForm() {
                                 id="projectionDate"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Choose projection date"
+                                onChange={e => handleChange("projectionDate", e.target.value)}
                             />
                         </div>
                     </div>
@@ -82,6 +95,7 @@ export default function GeneralForm() {
                                 id="director"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Add director"
+                                onChange={e => handleChange("director", e.target.value)}
                             />
                         </div>
                     </div>
@@ -96,6 +110,7 @@ export default function GeneralForm() {
                                 id="pgRating"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type PG rating"
+                                onChange={e => handleChange("pgRating", e.target.value)}
                             />
                         </div>
                     </div>
@@ -108,13 +123,14 @@ export default function GeneralForm() {
                                 id="duration"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type movie duration"
+                                onChange={e => handleChange("duration", e.target.value)}
                             />
                         </div>
                     </div>
                     <div className="general-form-input-group">
                         <label htmlFor="genre" className="font-lg-semibold">Genre</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faFilm} className={`input-icon ${formData?.genre ? "red-icon" : ""}`} />
+                            <FontAwesomeIcon icon={faFilm} className={`input-icon ${formData.genre.length > 0 ? "red-icon" : ""}`} />
                             <Select<SelectOptionType, true>
                                 options={genreOptions}
                                 placeholder="All Cities"
@@ -137,6 +153,7 @@ export default function GeneralForm() {
                                 id="trailer"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Insert trailer link"
+                                onChange={e => handleChange("trailer", e.target.value)}
                             />
                         </div>
                     </div>
@@ -153,6 +170,7 @@ export default function GeneralForm() {
                         rows={6}
                         maxLength={500}
                         style={{ paddingRight: "64px" }}
+                        onChange={e => handleChange("synopsis", e.target.value)}
                     />
                     <div className="synopsis-length font-lg-regular">{0}/500</div>
                 </div>

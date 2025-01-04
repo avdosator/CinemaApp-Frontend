@@ -1,15 +1,11 @@
 .general-form {
     width: 100%;
-    /* display: flex;
-    gap: 16px; */
-
 }
 
 .half-width-elements {
     width: 100%;
     display: flex;
     gap: 16px;
-
 }
 
 .left-part {
@@ -26,11 +22,20 @@
     gap: 24px;
 }
 
-.general-form-input-group {
-    /* gap: 4px; */
-}
-
 .general-form-input-group label {
     color: #344054;
     margin-bottom: 4px;
+}
+
+.synopsis-length {
+    position: absolute;
+    right: 16px;
+    top: 24px;
+    transform: translateY(-50%);
+    color: #667085;
+    /* z-index: 1; */
+}
+
+#trailerLinkIcon {
+    z-index: 0;
 }

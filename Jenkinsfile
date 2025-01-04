@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        FRONTEND_IMAGE = 'ahmedhamdo/cinemaapp-frontend:latest'
+        FRONTEND_IMAGE = 'ahmedhamdo/team3-frontend:latest'
         SERVER_PORT = '82'
+        DOCKER_NETWORK = 'team3-network'
     }
 
     stages {
@@ -38,8 +39,9 @@ pipeline {
             steps {
                 echo "Deploying frontend container on port ${SERVER_PORT}"
                 sh """
-                docker rm -f cinemaapp-frontend || true
-                docker run -d --name cinemaapp-frontend \
+                docker rm -f team3-frontend || true
+                docker run -d --name team3-frontend \
+                    --network ${DOCKER_NETWORK} \
                     -p ${SERVER_PORT}:80 \
                     ${FRONTEND_IMAGE}
                 """
@@ -52,7 +54,7 @@ pipeline {
             echo "Frontend build, push, and deployment completed successfully!"
         }
         failure {
-            echo "Frontend build or deployment failed."
+            echo "Frontend build or deployment failed. Check the logs for more details."
         }
     }
 }

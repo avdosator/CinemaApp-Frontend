@@ -169,10 +169,10 @@ export default function GeneralForm() {
                         placeholder="Write synopsis"
                         rows={6}
                         maxLength={500}
-                        style={{ paddingRight: "64px" }}
+                        style={{ paddingRight: "84px" }}
                         onChange={e => handleChange("synopsis", e.target.value)}
                     />
-                    <div className="synopsis-length font-lg-regular">{0}/500</div>
+                    <div className="synopsis-length font-lg-regular">{formData.synopsis.length}/500</div>
                 </div>
             </div>
         </form>

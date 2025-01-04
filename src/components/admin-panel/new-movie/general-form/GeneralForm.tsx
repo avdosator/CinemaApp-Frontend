@@ -5,9 +5,13 @@ import { SelectOptionType } from "../../../../types/SelectOptionType";
 import { useEffect, useState } from "react";
 import ApiService from "../../../../service/ApiService";
 import { Genre } from "../../../../types/Genre";
+import { GeneralFormData } from "../../../../types/FormData";
+import Select from "react-select";
 
 export default function GeneralForm() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+
+    let [formData, setFormData] = useState<GeneralFormData>();
 
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
@@ -17,6 +21,16 @@ export default function GeneralForm() {
             })
             .catch(error => console.error("Error fetching data:", error));
     }, [])
+
+    const handleChange = (
+        name: keyof GeneralFormData,
+        value: string | SelectOptionType[]
+    ): void => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        } as GeneralFormData));
+    };
 
     return (
         <form className="general-form">
@@ -101,18 +115,23 @@ export default function GeneralForm() {
                         <label htmlFor="genre" className="font-lg-semibold">Genre</label>
                         <div className="input-wrapper">
                             <FontAwesomeIcon icon={faFilm} className="input-icon" />
-                            <input type="text"
+                            <Select<SelectOptionType, true>
+                                options={genreOptions}
+                                placeholder="All Cities"
+                                className="dropdown-menu-input"
+                                classNamePrefix="dropdown"
+                                isClearable={true}
+                                value={formData?.genre ?? []}
+                                onChange={(newValue) => handleChange("genre", [...newValue])}
                                 name="genre"
-                                id="genre"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Choose genre"
+                                isMulti
                             />
                         </div>
                     </div>
                     <div className="general-form-input-group">
                         <label htmlFor="trailer" className="font-lg-semibold">Trailer link</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLink} className="input-icon" />
+                            <FontAwesomeIcon icon={faLink} className="input-icon" id="trailerLinkIcon" />
                             <input type="text"
                                 name="trailer"
                                 id="trailer"

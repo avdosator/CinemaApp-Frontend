@@ -11,7 +11,8 @@
     gap: 16px;
 }
 
-.upload-writers-container, .upload-cast-container {
+.upload-writers-container,
+.upload-cast-container {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -32,7 +33,7 @@
     justify-content: center;
 }
 
- .upload-photos-container .file-input-container {
+.upload-photos-container .file-input-container {
     height: 164px;
 }
 
@@ -58,12 +59,12 @@
     color: #B22222;
     pointer-events: none;
     text-decoration: underline 1px solid #B22222;
-font-family: Urbanist;
-font-size: 16px;
-font-weight: 600;
-line-height: 24px;
-letter-spacing: 0.005em;
-text-align: left;
+    font-family: Urbanist;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.005em;
+    text-align: left;
 
 }
 

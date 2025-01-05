@@ -1,0 +1,72 @@
+.details-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.writers-cast-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.upload-writers-container, .upload-cast-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-photos-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.file-input-container {
+    border: 1px solid #E4E7EC;
+    border-radius: 16px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ .upload-photos-container .file-input-container {
+    height: 164px;
+}
+
+.upload-writers-container label,
+.upload-cast-container label,
+.upload-photos-container label {
+    margin-bottom: 6px;
+    color: #1D2939;
+}
+
+/* Hide the default file input while keeping it functional */
+.upload-writers-container .file-input,
+.upload-cast-container .file-input {
+    opacity: 0;
+    position: absolute;
+    cursor: pointer;
+}
+
+/* Make the container look like a button with the desired text */
+.upload-writers-container .file-input-container::before,
+.upload-cast-container .file-input-container::before {
+    content: "+ Upload Writers via CSV";
+    color: #B22222;
+    pointer-events: none;
+    text-decoration: underline 1px solid #B22222;
+font-family: Urbanist;
+font-size: 16px;
+font-weight: 600;
+line-height: 24px;
+letter-spacing: 0.005em;
+text-align: left;
+
+}
+
+.upload-cast-container .file-input-container::before {
+    content: "+ Upload Cast via CSV";
+}

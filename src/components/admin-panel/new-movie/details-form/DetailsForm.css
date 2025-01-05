@@ -19,9 +19,27 @@
 }
 
 .upload-photos-container {
-    width: 100%;
+    height: 164px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border: 1px solid #E4E7EC;
+    border-radius: 16px;
+    gap: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.photo-upload-btn {
+    color: #B22222;
+    margin-top: 36px;
+    margin-bottom: 4px;
+}
+
+.upload-photos-container p:nth-last-of-type(1),
+.upload-photos-container p:nth-last-of-type(2) {
+    color: #667085;
 }
 
 .file-input-container {
@@ -33,13 +51,9 @@
     justify-content: center;
 }
 
-.upload-photos-container .file-input-container {
-    height: 164px;
-}
-
 .upload-writers-container label,
 .upload-cast-container label,
-.upload-photos-container label {
+.upload-photos-label {
     margin-bottom: 6px;
     color: #1D2939;
 }

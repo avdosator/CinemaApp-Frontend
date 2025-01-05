@@ -11,10 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select from "react-select";
 import { ProjectionsFormData } from "../../../../types/FormData";
 
-const timeOptions = Array.from({ length: 24 * 60 }, (_, i) => {
-    const hours = Math.floor(i / 60).toString().padStart(2, "0");
-    const minutes = (i % 60).toString().padStart(2, "0");
-    return { value: `${hours}:${minutes}`, label: `${hours}:${minutes}` };
+const timeOptions = Array.from({ length: 16 }, (_, i) => {
+    const hours = (8 + i).toString().padStart(2, "0");
+    return { value: `${hours}:00`, label: `${hours}:00` };
 });
 
 export default function ProjectionsForm() {

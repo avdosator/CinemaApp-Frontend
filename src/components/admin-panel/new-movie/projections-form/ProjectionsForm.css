@@ -12,3 +12,13 @@
 .add-projection-input-group {
     flex: 1;
 }
+
+/* Hides scrollbar for the dropdown menu */
+.dropdown__menu-list {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.dropdown__menu-list::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and newer Edge */
+}

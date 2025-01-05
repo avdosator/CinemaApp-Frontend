@@ -1,6 +1,12 @@
+import { useDropzone } from "react-dropzone";
 import "./DetailsForm.css"
 
 export default function DetailsForm() {
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: { "image/*": [] },
+        maxFiles: 4,
+    });
+
     return (
         <form className="details-form">
             <div className="writers-cast-container">
@@ -17,10 +23,13 @@ export default function DetailsForm() {
                     </div>
                 </div>
             </div>
-            <div className="upload-photos-container">
-                <label htmlFor="" className="font-lg-semibold">Upload Photos</label>
-                <div className="file-input-container">
-                    <input type="file" className="file-input" />
+            <div>
+                <label htmlFor="" className="font-lg-semibold upload-photos-label">Upload Photos</label>
+                <div className="upload-photos-container" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <p className="font-lg-underline-semibold photo-upload-btn">+ Upload Photos</p>
+                    <p className="font-md-regular" style={{ marginBottom: "12px" }} >or just drag and drop</p>
+                    <p className="font-sm-regular">* Add up to 4 photos</p>
                 </div>
             </div>
         </form>

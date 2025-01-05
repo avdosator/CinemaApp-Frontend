@@ -1,0 +1,14 @@
+.projections-form {
+    width: 100%;
+}
+
+.add-projection-select-group {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.add-projection-input-group {
+    flex: 1;
+}

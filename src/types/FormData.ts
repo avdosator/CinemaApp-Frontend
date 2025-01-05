@@ -37,3 +37,9 @@ export type GeneralFormData = {
     trailer: string,
     synopsis: string
 }
+
+export type ProjectionsFormData = {
+    city: SelectOptionType | null,
+    venue: SelectOptionType | null,
+    time: string
+}

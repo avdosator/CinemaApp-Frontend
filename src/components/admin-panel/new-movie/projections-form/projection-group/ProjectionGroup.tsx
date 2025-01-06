@@ -84,8 +84,9 @@ export default function ProjectionGroup({
                         className="dropdown-menu-input"
                         classNamePrefix="dropdown"
                         isClearable
-                        value={timeOptions.find(option => option.value === formData.time)}
-                        onChange={(newValue) => onChange("time", newValue?.value)}
+                        // value={timeOptions.find(option => option.value === formData.time)}
+                        value={timeOptions.find(option => option.value === formData.time) || null}
+                        onChange={(newValue) => onChange("time", newValue?.value || "")}
                     />
                 </div>
             </div>

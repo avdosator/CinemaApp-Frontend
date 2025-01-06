@@ -17,11 +17,13 @@ const timeOptions = Array.from({ length: 16 }, (_, i) => {
 });
 
 export default function ProjectionsForm() {
-    let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
-    let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>();
+    let [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
+    let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>([]);
     const [projections, setProjections] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
 
     useEffect(() => {
         Promise.all([
@@ -44,9 +46,27 @@ export default function ProjectionsForm() {
         );
     };
 
-    const handleDeleteGroup = (index: number) => {
-        setProjections(prevProjections => prevProjections.filter((_, i) => i !== index));
+    const handleDeleteGroupClick = (index: number) => {
+        setProjections(prevProjections =>
+            prevProjections.map((group, i) =>
+                i === index ? { city: null, venue: null, time: "" } : group
+            )
+        );
     };
+
+    const confirmDelete = () => {
+        if (!modalVisible || groupToDelete === null) return;
+        
+        // Close the modal first before deleting
+        setModalVisible(false);
+    
+        // Perform the deletion after the modal closes to prevent re-render conflict
+        setTimeout(() => {
+            setProjections(prevProjections => prevProjections.filter((_, i) => i !== groupToDelete));
+            setGroupToDelete(null);
+        }, 0);
+    };
+
 
     const handleAddProjectionGroup = () => {
         setProjections(prevProjections => [
@@ -61,28 +81,50 @@ export default function ProjectionsForm() {
     };
 
     return (
-        <form className="projections-form">
-            {projections.map((group, index) => (
-                <ProjectionGroup
-                    key={index}
-                    formData={group}
-                    cityOptions={cityOptions!}
-                    venueOptions={venueOptions!}
-                    timeOptions={timeOptions}
-                    onChange={(field, value) => handleGroupChange(index, field, value)}
-                    onDelete={() => handleDeleteGroup(index)}
-                    isFirst={index === 0}
-                />
-            ))}
-            <button
-                className="projection-form-add-btn"
-                onClick={handleAddProjectionGroup}
-                disabled={!isLastGroupFilled()}
-                style={isLastGroupFilled() ? { color: "#B22222" } : { color: "#D0D5DD" }}
-            >
-                <FontAwesomeIcon icon={faPlus} height={24} />
-                <span className="font-lg-underline-semibold">Add Projection</span>
-            </button>
-        </form>
+        <>
+            {modalVisible && groupToDelete !== null && (
+                <div className="session-expired-overlay">
+                    <div className="session-expired-modal">
+                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Delete Projection</h6>
+                        <p className="font-md-regular" style={{ color: "#667085" }}>
+                            Are you sure you want to delete this projection?
+                        </p>
+                        <div className="session-expired-footer" style={{ gap: "8px" }}>
+                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={() => setModalVisible(false)}>
+                                Cancel
+                            </button>
+                            <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={confirmDelete}>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <form className="projections-form">
+                {projections.map((group, index) => (
+                    <ProjectionGroup
+                        key={index}
+                        formData={group}
+                        cityOptions={cityOptions}
+                        venueOptions={venueOptions}
+                        timeOptions={timeOptions}
+                        onChange={(field, value) => handleGroupChange(index, field, value)}
+                        onDelete={() => handleDeleteGroupClick(index)}
+                        isFirst={index === 0}
+                    />
+                ))}
+                <button
+                    className="projection-form-add-btn"
+                    onClick={handleAddProjectionGroup}
+                    disabled={!isLastGroupFilled()}
+                    style={isLastGroupFilled() ? { color: "#B22222" } : { color: "#D0D5DD" }}
+                    type="button"
+                >
+                    <FontAwesomeIcon icon={faPlus} height={24} />
+                    <span className="font-lg-underline-semibold">Add Projection</span>
+                </button>
+            </form>
+        </>
     )
 }

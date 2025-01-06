@@ -11,6 +11,25 @@
     text-align: center;
 }
 
+.regular-seat {
+    width: 52px;
+}
+
+.love-seat {
+    width: 112px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vip-seat {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
 .reserved-seat {
     background-color: #E4E7EC;
     border: 1px solid #E4E7EC;

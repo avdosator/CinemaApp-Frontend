@@ -1,7 +1,5 @@
 import "./SeatGuide.css"
-import LoveSeat from "../seat/LoveSeat";
-import RegularSeat from "../seat/RegularSeat";
-import VipSeat from "../seat/VipSeat";
+import Seat from "../seat/Seat";
 
 export default function SeatGuide() {
     return (
@@ -10,29 +8,29 @@ export default function SeatGuide() {
             <div className="seat-guide-content">
                 <div className="seat-availability">
                     <div className="seat-guide-group">
-                        <RegularSeat number="XY" />
+                        <Seat number="XY" type="regular" />
                         <span>Available</span>
                     </div>
                     <div className="seat-guide-group">
-                        <RegularSeat number="XY" classes="reserved-seat" />
+                        <Seat number="XY" type="regular" classes="reserved-seat" />
                         <span>Reserved</span>
                     </div>
                     <div className="seat-guide-group">
-                        <RegularSeat number="XY" classes="selected-seat" />
+                        <Seat number="XY" type="regular" classes="selected-seat" />
                         <span>Selected</span>
                     </div>
                 </div>
                 <div className="seat-prices">
                     <div className="seat-guide-group">
-                        <RegularSeat number="XY" />
+                        <Seat number="XY" type="regular" classes="regular-seat" />
                         <span>Regular Seats(7 BAM)</span>
                     </div>
                     <div className="seat-guide-group">
-                        <VipSeat number="XY" />
+                        <Seat number="XY" type="VIP" classes="vip-seat" />
                         <span>VIP Seats (10 BAM)</span>
                     </div>
                     <div className="seat-guide-group">
-                        <LoveSeat number="XY" />
+                        <Seat number="XY" type="love" classes="love-seat" />
                         <span>Love Seats(24 BAM)</span>
                     </div>
                 </div>

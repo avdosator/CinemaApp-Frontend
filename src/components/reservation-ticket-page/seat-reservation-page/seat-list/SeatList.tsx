@@ -1,10 +1,8 @@
 import { useState } from "react"
 import "./SeatList.css"
 import { Seat } from "../../../../types/Seat"
-import RegularSeat from "../seat/RegularSeat"
-import VipSeat from "../seat/VipSeat"
-import LoveSeat from "../seat/LoveSeat"
 import { ProjectionInstance } from "../../../../types/ProjectionInstance"
+import SeatComponent from "../seat/Seat"
 
 type SeatListProps = {
     projectionInstance: ProjectionInstance,
@@ -54,18 +52,7 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
         const seatClass = `${getSeatStatus(seat.id)} ${isSelected ? "selected-seat" : ""}`;
         return (
             <div onClick={() => toggleSeatSelection(seat)} key={seat.id}>
-                {(() => {
-                    switch (seat.type) {
-                        case "regular":
-                            return <RegularSeat number={seat.number} classes={seatClass} />;
-                        case "VIP":
-                            return <VipSeat number={seat.number} classes={seatClass} />;
-                        case "love":
-                            return <LoveSeat number={seat.number} classes={seatClass} />;
-                        default:
-                            return null;
-                    }
-                })()}
+                <SeatComponent number={seat.number} type={seat.type} classes={seatClass} />
             </div>
         );
     };

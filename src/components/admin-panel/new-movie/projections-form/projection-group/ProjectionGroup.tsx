@@ -1,3 +1,4 @@
+import "./ProjectionGroup.css"
 import Select from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faClock, faLocationPin, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -21,13 +22,14 @@ export default function ProjectionGroup({
     onChange,
     onDelete
 }: ProjectionGroupProps) {
+
     return (
         <div className="add-projection-select-group">
             {/* City Select */}
             <div className="add-projection-input-group">
                 <label htmlFor="city" className="font-lg-semibold">City</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData.city ? "red-icon" : ""}`} />
+                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData.city ? "red-icon" : ""}`} id="locationIcon" />
                     <Select<SelectOptionType>
                         options={cityOptions}
                         placeholder="Choose city"
@@ -44,7 +46,7 @@ export default function ProjectionGroup({
             <div className="add-projection-input-group">
                 <label htmlFor="venue" className="font-lg-semibold">Venue</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData.venue ? "red-icon" : ""}`} />
+                    <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData.venue ? "red-icon" : ""}`} id="buildingIcon" />
                     <Select<SelectOptionType>
                         options={venueOptions}
                         placeholder="Choose venue"
@@ -61,7 +63,7 @@ export default function ProjectionGroup({
             <div className="add-projection-input-group">
                 <label htmlFor="time" className="font-lg-semibold">Projection Time</label>
                 <div className="input-wrapper">
-                    <FontAwesomeIcon icon={faClock} className={`input-icon ${formData.time ? "red-icon" : ""}`} />
+                    <FontAwesomeIcon icon={faClock} className={`input-icon ${formData.time ? "red-icon" : ""}`} id="clockIcon" />
                     <Select<SelectOptionType, false>
                         options={timeOptions}
                         placeholder="Choose time"

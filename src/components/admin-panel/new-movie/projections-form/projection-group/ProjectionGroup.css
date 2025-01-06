@@ -1,0 +1,35 @@
+.add-projection-select-group {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.add-projection-input-group {
+    flex: 1;
+}
+
+.projection-form-trash-btn {
+    border-radius: 8px;
+    border: none;
+    background-color: inherit;
+    padding: 12px;
+    color: #D0D5DD;
+    width: 48px;
+    height: 48px;
+    align-self: end;
+}
+
+/* Hides scrollbar for the dropdown menu */
+.dropdown__menu-list {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.dropdown__menu-list::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and newer Edge */
+}
+
+#clockIcon, #buildingIcon, #locationIcon {
+    
+}

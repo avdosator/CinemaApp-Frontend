@@ -37,6 +37,18 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
         }
     };
 
+    const filterSeatsBySide = (seats: Seat[], side: "left" | "right") => {
+        return seats.filter(seat => {
+            const row = seat.number[0];
+            const seatNumber = parseInt(seat.number.slice(1));
+
+            const rowSeats = seats.filter(s => s.number[0] === row);
+            const half = Math.ceil(rowSeats.length / 2);
+
+            return side === "left" ? seatNumber <= half : seatNumber > half;
+        });
+    };
+
     const renderSeat = (seat: Seat) => {
         const isSelected = selectedSeats.some(selectedSeat => selectedSeat.id === seat.id);
         const seatClass = `${getSeatStatus(seat.id)} ${isSelected ? "selected-seat" : ""}`;
@@ -62,31 +74,11 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
     return (
         <div className="seat-list-container">
             <div className="left-seats">
-                {seats
-                    .filter(seat => {
-                        const row = seat.number[0]; // Extract the row letter (e.g., 'A' from 'A1')
-                        const seatNumber = parseInt(seat.number.slice(1)); // Extract the number (e.g., 1 from 'A1')
-
-                        // Find all seats in the current row
-                        const rowSeats = seats.filter(s => s.number[0] === row);
-                        const half = Math.ceil(rowSeats.length / 2); // Split the row into halves
-
-                        return seatNumber <= half; // Seats in the first half go to the left
-                    })
-                    .map(seat => renderSeat(seat))}
+                {filterSeatsBySide(seats, "left").map(seat => renderSeat(seat))}
             </div>
             <div className="passage"></div>
             <div className="right-seats">
-                {seats
-                    .filter(seat => {
-                        const row = seat.number[0];
-                        const seatNumber = parseInt(seat.number.slice(1));
-
-                        const rowSeats = seats.filter(s => s.number[0] === row);
-                        const half = Math.ceil(rowSeats.length / 2);
-                        return seatNumber > half;
-                    })
-                    .map(seat => renderSeat(seat))}
+                {filterSeatsBySide(seats, "right").map(seat => renderSeat(seat))}
             </div>
         </div>
     )

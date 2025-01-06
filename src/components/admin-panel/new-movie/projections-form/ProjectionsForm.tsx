@@ -71,6 +71,7 @@ export default function ProjectionsForm() {
                     timeOptions={timeOptions}
                     onChange={(field, value) => handleGroupChange(index, field, value)}
                     onDelete={() => handleDeleteGroup(index)}
+                    isFirst={index === 0}
                 />
             ))}
             <button

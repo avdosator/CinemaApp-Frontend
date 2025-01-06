@@ -3,6 +3,7 @@
     display: flex;
     gap: 16px;
     justify-content: space-between;
+    margin-bottom: 24px;
 }
 
 .add-projection-input-group {
@@ -12,24 +13,38 @@
 .projection-form-trash-btn {
     border-radius: 8px;
     border: none;
-    background-color: inherit;
     padding: 12px;
-    color: #D0D5DD;
+    background-color: inherit;
     width: 48px;
     height: 48px;
     align-self: end;
 }
 
+.trash-btn-enabled {
+    color: #B22222;
+}
+
+.trash-btn-enabled:hover {
+    background-color: #FDE3E3;
+}
+
+.trash-btn-disabled {
+    color: #D0D5DD;
+}
+
 /* Hides scrollbar for the dropdown menu */
 .dropdown__menu-list {
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
 }
 
 .dropdown__menu-list::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and newer Edge */
+    display: none;
+    /* For Chrome, Safari, and newer Edge */
 }
 
-#clockIcon, #buildingIcon, #locationIcon {
-    
+.add-projection-input-group .dropdown__menu {
+    z-index: 10 !important;
 }

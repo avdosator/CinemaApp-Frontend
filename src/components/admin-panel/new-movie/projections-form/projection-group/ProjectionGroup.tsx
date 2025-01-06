@@ -12,6 +12,7 @@ type ProjectionGroupProps = {
     timeOptions: SelectOptionType[];
     onChange: (field: keyof ProjectionsFormData, value: any) => void;
     onDelete: () => void;
+    isFirst: boolean
 };
 
 export default function ProjectionGroup({
@@ -20,8 +21,21 @@ export default function ProjectionGroup({
     venueOptions,
     timeOptions,
     onChange,
-    onDelete
+    onDelete,
+    isFirst
 }: ProjectionGroupProps) {
+
+    const isAllSelected = formData.city && formData.venue && formData.time;
+
+    const handleTrashClick = () => {
+        if (isFirst && isAllSelected) {
+            onChange("city", null);
+            onChange("venue", null);
+            onChange("time", "");
+        } else {
+            onDelete();
+        }
+    };
 
     return (
         <div className="add-projection-select-group">
@@ -78,11 +92,11 @@ export default function ProjectionGroup({
 
             {/* Delete Button */}
             <button
-                className="projection-form-trash-btn"
-                onClick={onDelete}
-                type="button"
+                className={`projection-form-trash-btn ${isFirst && !isAllSelected ? "trash-btn-disabled" : "trash-btn-enabled"}`}
+                onClick={handleTrashClick}
+                disabled={isFirst && !isAllSelected}
             >
-                <FontAwesomeIcon icon={faTrash} height={24} />
+                <FontAwesomeIcon icon={faTrash} />
             </button>
         </div>
     )

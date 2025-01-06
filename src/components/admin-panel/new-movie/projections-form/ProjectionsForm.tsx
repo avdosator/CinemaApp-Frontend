@@ -6,7 +6,7 @@ import ApiService from "../../../../service/ApiService";
 import { City } from "../../../../types/City";
 import { PageResponse } from "../../../../types/PageResponse";
 import { Venue } from "../../../../types/Venue";
-import { faBuilding, faClock, faLocationPin } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faClock, faLocationPin, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select from "react-select";
 import { ProjectionsFormData } from "../../../../types/FormData";
@@ -44,54 +44,61 @@ export default function ProjectionsForm() {
     }, []);
 
     return (
-            <form className="projections-form">
-                <div className="add-projection-select-group">
-                    <div className="add-projection-input-group">
-                        <label htmlFor="genre" className="font-lg-semibold">Genre</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.city ? "red-icon" : ""}`} />
-                            <Select<SelectOptionType>
-                                options={cityOptions || []}
-                                placeholder="Choose city"
-                                className="dropdown-menu-input"
-                                classNamePrefix="dropdown"
-                                isClearable={true}
-                                value={formData.city}
-                                onChange={(newValue) => handleChange("city", newValue)}
-                            />
-                        </div>
-                    </div>
-                    <div className="add-projection-input-group">
-                        <label htmlFor="city" className="font-lg-semibold">City</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.venue ? "red-icon" : ""}`} />
-                            <Select<SelectOptionType>
-                                options={venueOptions}
-                                placeholder="Choose venue"
-                                className="dropdown-menu-input"
-                                classNamePrefix="dropdown"
-                                isClearable={true}
-                                value={formData.venue}
-                                onChange={(newValue) => handleChange("venue", newValue)}
-                            />
-                        </div>
-                    </div>
-                    <div className="add-projection-input-group">
-                        <label htmlFor="time" className="font-lg-semibold">Projection Time</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faClock} className={`input-icon ${formData?.time ? "red-icon" : ""}`} />
-                            <Select<SelectOptionType, false>
-                                options={timeOptions}
-                                placeholder="Choose time"
-                                className="dropdown-menu-input"
-                                classNamePrefix="dropdown"
-                                isClearable
-                                value={timeOptions.find(option => option.value === formData.time)}
-                                onChange={(newValue) => handleChange("time", newValue?.value)}
-                            />
-                        </div>
+        <form className="projections-form">
+            <div className="add-projection-select-group">
+                <div className="add-projection-input-group">
+                    <label htmlFor="genre" className="font-lg-semibold">Genre</label>
+                    <div className="input-wrapper">
+                        <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.city ? "red-icon" : ""}`} />
+                        <Select<SelectOptionType>
+                            options={cityOptions || []}
+                            placeholder="Choose city"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={formData.city}
+                            onChange={(newValue) => handleChange("city", newValue)}
+                        />
                     </div>
                 </div>
-            </form>
+                <div className="add-projection-input-group">
+                    <label htmlFor="city" className="font-lg-semibold">City</label>
+                    <div className="input-wrapper">
+                        <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.venue ? "red-icon" : ""}`} />
+                        <Select<SelectOptionType>
+                            options={venueOptions}
+                            placeholder="Choose venue"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={formData.venue}
+                            onChange={(newValue) => handleChange("venue", newValue)}
+                        />
+                    </div>
+                </div>
+                <div className="add-projection-input-group">
+                    <label htmlFor="time" className="font-lg-semibold">Projection Time</label>
+                    <div className="input-wrapper">
+                        <FontAwesomeIcon icon={faClock} className={`input-icon ${formData?.time ? "red-icon" : ""}`} />
+                        <Select<SelectOptionType, false>
+                            options={timeOptions}
+                            placeholder="Choose time"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable
+                            value={timeOptions.find(option => option.value === formData.time)}
+                            onChange={(newValue) => handleChange("time", newValue?.value)}
+                        />
+                    </div>
+                </div>
+                <button className="projection-form-trash-btn">
+                    <FontAwesomeIcon icon={faTrash} height={24} />
+                </button>
+            </div>
+            <button className="projection-form-add-btn">
+                <FontAwesomeIcon icon={faPlus} height={24} />
+                <span className="font-lg-underline-semibold">Add Projection</span>
+            </button>
+        </form>
     )
 }

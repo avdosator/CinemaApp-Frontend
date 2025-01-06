@@ -22,3 +22,27 @@
 .dropdown__menu-list::-webkit-scrollbar {
     display: none; /* For Chrome, Safari, and newer Edge */
 }
+
+.projection-form-trash-btn {
+    border-radius: 8px;
+    border: none;
+    background-color: inherit;
+    padding: 12px;
+    color: #D0D5DD;
+    width: 48px;
+    height: 48px;
+    align-self: end;
+}
+
+.projection-form-add-btn {
+    border-radius: 8px;
+    border: none;
+    background-color: inherit;
+    padding: 12px 20px;
+    color: #D0D5DD;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: auto;
+    margin-top: 32px;
+}

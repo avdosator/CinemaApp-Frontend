@@ -21,6 +21,7 @@ export default function FeaturedMovieCarousel({ movies }: { movies: Movie[] }) {
                     const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
                     return (
                         <FeaturedMovieInfo key={index}
+                            id={movie.id}
                             index={index}
                             title={movie.title}
                             synopsis={movie.synopsis}

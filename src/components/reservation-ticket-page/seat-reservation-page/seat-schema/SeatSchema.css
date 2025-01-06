@@ -1,0 +1,15 @@
+.seat-schema {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 52px;
+}
+
+.cinema-screen {
+    width: 70%; 
+    height: 60px;
+    clip-path: ellipse(50% 10%);
+    border-top: 30px solid #B22222;
+    background: linear-gradient(180deg, #B22222 -65.87%, #FCFCFD 34.92%);
+}

@@ -47,6 +47,7 @@ export default function MovieDetailsPage() {
                                     src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     loading="eager"
+                                    style={{borderRadius:"16px 0px 0px 16px", outline: "none"}}
                                 >
                                 </iframe>
                             </div>

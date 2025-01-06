@@ -5,6 +5,7 @@
 }
 
 .notification-btn {
+    display: none !important;
     position: relative;
     width: 48px;
     height: 48px;

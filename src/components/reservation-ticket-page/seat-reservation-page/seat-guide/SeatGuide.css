@@ -1,0 +1,41 @@
+.seat-guide {
+    width: 100%;
+    /* height: 180px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    margin-bottom: 32px;
+}
+
+.seat-guide-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.seat-availability {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.seat-prices {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.seat-guide-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.seat-guide-group button {
+    cursor: default !important;
+}

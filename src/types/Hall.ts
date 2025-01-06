@@ -1,5 +1,9 @@
+import { Seat } from "./Seat"
+import { Venue } from "./Venue"
+
 export type Hall = {
     id: string,
-    name: string
-    // projections and venue will be added after updating Hall domain model on backend
+    name: string,
+    venue: Venue,
+    seats: Seat[]
 }

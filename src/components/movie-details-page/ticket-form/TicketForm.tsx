@@ -11,16 +11,34 @@ import { MovieDetailsFormData } from "../../../types/FormData";
 import { IconType } from "../../../types/IconType";
 import { generateDatePickerBtnInputs } from "../../../utils/utils";
 import { DatePickerBtnType } from "../../../types/DatePickerBtn";
+import ApiService from "../../../service/ApiService";
+import { ProjectionInstance } from "../../../types/ProjectionInstance";
+import { useNavigate } from "react-router-dom";
 
 export default function TicketForm({ movie }: { movie: Movie }) {
     const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: new Date().toISOString().split('T')[0], time: "" });
     const [focusedIcon, setFocusedIcon] = useState<IconType>(null);
+    const navigate = useNavigate();
 
     const dates: DatePickerBtnType[] = generateDatePickerBtnInputs(new Date(movie.projections[0].endDate));
 
-    // this should be generated based on cities and venues where each movie has projection
-    const cityOptions: SelectOptionType[] = [{ value: "cityId", label: "Mostar" }];
-    const venueOptions: SelectOptionType[] = [{ value: "venuId", label: "Cinema City Mostar" }];
+    const venueOptions: SelectOptionType[] = Array.from(
+        new Map(
+            movie.projections.map(projection => {
+                const venue = projection.hall.venue;
+                return [venue.id, { value: venue.id, label: venue.name }];
+            })
+        ).values()
+    );
+
+    const cityOptions: SelectOptionType[] = Array.from(
+        new Map(
+            movie.projections.map(projection => {
+                const city = projection.hall.venue.city;
+                return [city.id, { value: city.id, label: city.name }];
+            })
+        ).values()
+    );
 
     const handleChange = (name: string, value: string | SingleValue<SelectOptionType>): void => {
         setFormData((prevData) => ({
@@ -31,6 +49,21 @@ export default function TicketForm({ movie }: { movie: Movie }) {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
+    }
+
+    const sendRequest = async () => {
+        if (!isFormComplete) return;
+
+        const params: Record<string, string> = {
+            movie: movie.id,
+            city: formData.city!.value,
+            venue: formData.venue!.value,
+            date: formData.date,
+            time: formData.time
+        }
+
+        const projectionInstance = await ApiService.get<ProjectionInstance>("/projections/instance", params);
+        navigate(`/projection/${projectionInstance.id}/reservations`, {state: {projectionInstance, movie}});
     }
 
     const handleFocus = (iconName: IconType): void => {
@@ -110,6 +143,8 @@ export default function TicketForm({ movie }: { movie: Movie }) {
                     <button
                         className={isFormComplete ? "ticket-btn-buy" : "ticket-btn-buy-disabled"}
                         disabled={!isFormComplete}
+                        type="submit"
+                        onClick={sendRequest}
                     >
                         Buy Ticket
                     </button>

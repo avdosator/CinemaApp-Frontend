@@ -1,17 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useUser } from "../context/UserContext"
 import useTokenValidation from "../custom-hooks/useTokenValidation";
 import { ReactNode, useCallback, useEffect, useState } from "react";
-import SessionExpiredAlert from "../components/shared-components/session-expired-alert/SessionExpiredAlert";
 
 type ProtectedRouteProps = {
-    openLoginForm: () => void,
+    // openLoginForm: () => void,
+    openLoginForm: (path?: string, state?: any) => void;
     children: ReactNode
 }
 
 export default function ProtectedRoute({ openLoginForm, children }: ProtectedRouteProps) {
     const { currentUser, setCurrentUser } = useUser();
     const [showSessionExpired, setShowSessionExpired] = useState<boolean>(false);
+    const location = useLocation();
 
     const handleSessionExpired = useCallback((expired: boolean) => {
         if (expired) {
@@ -31,14 +32,15 @@ export default function ProtectedRoute({ openLoginForm, children }: ProtectedRou
         userId: currentUser?.id || "", // Non-null assertion
     });
 
-    if (isTokenExpired || !currentUser) {
-        if (showSessionExpired) {
-            return (<SessionExpiredAlert openLoginForm={openLoginForm} />)
+    useEffect(() => {
+        if (isTokenExpired || !currentUser) {
+            openLoginForm(location.pathname, location.state);
         }
-        // Returning null ensures nothing is rendered until the alert is displayed
+    }, [isTokenExpired, currentUser, location.pathname, location.state, openLoginForm]);
+
+    if (isTokenExpired || !currentUser) {
         return null;
     }
-    // return {children};
-    return children ? <>{children}</> : <Outlet />;
 
+    return children ? <>{children}</> : <Outlet />;
 }

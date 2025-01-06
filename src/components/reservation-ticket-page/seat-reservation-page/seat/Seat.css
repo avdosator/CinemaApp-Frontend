@@ -1,0 +1,47 @@
+.seat {
+    height: 40px;
+    color: #1D2939;
+    background-color: #FCFCFD;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.0015em;
+    text-align: center;
+}
+
+.regular-seat {
+    width: 52px;
+}
+
+.love-seat {
+    width: 112px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vip-seat {
+    width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.reserved-seat {
+    background-color: #E4E7EC;
+    border: 1px solid #E4E7EC;
+    cursor:default !important;
+}
+
+.selected-seat {
+    color: #FCFCFD;
+    background-color: #B22222;
+    border: 1px solid #B22222;
+}
+
+.selected-seat svg {
+    fill: #FCFCFD;
+}

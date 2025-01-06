@@ -2,10 +2,12 @@ import { useState } from "react";
 import "./UserActions.css"
 import { useUser } from "../../../context/UserContext";
 import ApiService from "../../../service/ApiService";
+import { useNavigate } from "react-router-dom";
 
 export default function UserActions({ name }: { name: string }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
     const {setCurrentUser} = useUser();
+    const navigate = useNavigate();
 
     const toggleDropdown = () => {
         setIsDropdownVisible((prev) => !prev);
@@ -21,6 +23,7 @@ export default function UserActions({ name }: { name: string }) {
         }
         setCurrentUser(null);
         localStorage.clear();
+        navigate("/home");
     };
 
     return (
@@ -33,9 +36,9 @@ export default function UserActions({ name }: { name: string }) {
             </div>
             <button className="user-btn" onClick={toggleDropdown}>
                 <span className="font-lg-semibold user-name">{name}</span>
-                <a href="#" className="dropdown-icon-container">
+                <div className="dropdown-icon-container">
                     <svg xmlns="http://www.w3.org/2000/svg" className="dropdown-icon" fill="#FCFCFD" width="14" height="16" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" /></svg>
-                </a>
+                </div>
             </button>
             {isDropdownVisible && (
                 <div className="user-actions-dropdown-menu">

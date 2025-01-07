@@ -44,14 +44,21 @@ export default function ProjectionsForm() {
         const updatedProjections = projections.map((group, i) =>
             i === index ? { ...group, [field]: value } : group
         );
-    
-        // Validation for time collision in the same venue
-        if (field === "time" || field === "venue") {
+
+        // Always clear error when a value is deselected
+        if (!value) {
+            setErrorMessages(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[index];
+                return newErrors;
+            });
+        } else {
+            // Re-validate only when both venue and time are filled
             const { venue, time } = updatedProjections[index];
             const hasCollision = updatedProjections.some((group, i) =>
                 i !== index && group.venue?.value === venue?.value && group.time === time
             );
-    
+
             if (hasCollision) {
                 setErrorMessages(prev => ({ ...prev, [index]: "Movie projection times cannot collide for the same Venues" }));
             } else {
@@ -62,7 +69,7 @@ export default function ProjectionsForm() {
                 });
             }
         }
-    
+
         setProjections(updatedProjections);
     };
 

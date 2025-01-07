@@ -91,15 +91,14 @@ export default function ProjectionGroup({
                     />
                 </div>
                 {errorMessage && (
-                    <div className="font-sm-regular" style={{color:"#D92D20"}}>
-                        {errorMessage}
-                    </div>
+                    <div className="font-sm-regular" style={{ color: "#D92D20" }}>{errorMessage}</div>
                 )}
             </div>
 
             {/* Delete Button */}
             <button
                 className={`projection-form-trash-btn ${isOnly && !isAllSelected ? "trash-btn-disabled" : "trash-btn-enabled"}`}
+                style={errorMessage ? { marginBottom: "16px" } : {}}
                 onClick={handleTrashClick}
                 disabled={isOnly && !isAllSelected}
                 type="button"

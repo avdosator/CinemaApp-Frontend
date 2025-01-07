@@ -1,0 +1,7 @@
+.movies-tab {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    padding-right: 0px;
+}

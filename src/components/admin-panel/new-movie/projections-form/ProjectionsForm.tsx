@@ -72,7 +72,7 @@ export default function ProjectionsForm() {
 
         setProjections(updatedProjections);
     };
-
+    
     const handleDeleteGroup = (index: number) => {
         setProjections(prevProjections => prevProjections.filter((_, i) => i !== index));
     };
@@ -127,8 +127,8 @@ export default function ProjectionsForm() {
                     <ProjectionGroup
                         key={index}
                         formData={group}
-                        cityOptions={cityOptions!}
-                        venueOptions={venueOptions!}
+                        cityOptions={cityOptions}
+                        venueOptions={venueOptions}
                         timeOptions={timeOptions}
                         onChange={(field, value) => handleGroupChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}

@@ -7,10 +7,28 @@
     gap: 6px;
 }
 
+.movie-panel-heading-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
 .movie-tabs-container {
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 32px;
     color: #1D2939;
+}
+
+.add-movie-btn {
+    border: none;
+    background-color: #B22222;
+    color: #FCFCFD;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+#addMovieBtn1 {
+    align-self: flex-start;
 }

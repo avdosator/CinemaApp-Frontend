@@ -12,7 +12,8 @@ type ProjectionGroupProps = {
     timeOptions: SelectOptionType[];
     onChange: (field: keyof ProjectionsFormData, value: any) => void;
     onDelete: () => void;
-    isOnly: boolean
+    isOnly: boolean,
+    errorMessage?: string;
 };
 
 export default function ProjectionGroup({
@@ -22,7 +23,8 @@ export default function ProjectionGroup({
     timeOptions,
     onChange,
     onDelete,
-    isOnly
+    isOnly,
+    errorMessage
 }: ProjectionGroupProps) {
 
     const isAllSelected = formData.city && formData.venue && formData.time;
@@ -88,6 +90,11 @@ export default function ProjectionGroup({
                         onChange={(newValue) => onChange("time", newValue?.value)}
                     />
                 </div>
+                {errorMessage && (
+                    <div className="font-sm-regular" style={{color:"#D92D20"}}>
+                        {errorMessage}
+                    </div>
+                )}
             </div>
 
             {/* Delete Button */}

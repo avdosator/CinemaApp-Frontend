@@ -25,6 +25,7 @@ export default function ProjectionsForm() {
 
     let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
+    const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
     useEffect(() => {
         Promise.all([
@@ -40,11 +41,29 @@ export default function ProjectionsForm() {
     }, []);
 
     const handleGroupChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
-        setProjections(prevProjections =>
-            prevProjections.map((group, i) =>
-                i === index ? { ...group, [field]: value } : group
-            )
+        const updatedProjections = projections.map((group, i) =>
+            i === index ? { ...group, [field]: value } : group
         );
+    
+        // Validation for time collision in the same venue
+        if (field === "time" || field === "venue") {
+            const { venue, time } = updatedProjections[index];
+            const hasCollision = updatedProjections.some((group, i) =>
+                i !== index && group.venue?.value === venue?.value && group.time === time
+            );
+    
+            if (hasCollision) {
+                setErrorMessages(prev => ({ ...prev, [index]: "Movie projection times cannot collide for the same Venues" }));
+            } else {
+                setErrorMessages(prev => {
+                    const newErrors = { ...prev };
+                    delete newErrors[index];
+                    return newErrors;
+                });
+            }
+        }
+    
+        setProjections(updatedProjections);
     };
 
     const handleDeleteGroup = (index: number) => {
@@ -107,6 +126,7 @@ export default function ProjectionsForm() {
                         onChange={(field, value) => handleGroupChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
                         isOnly={projections.length === 1}
+                        errorMessage={errorMessages[index]}
                     />
                 ))}
                 <button

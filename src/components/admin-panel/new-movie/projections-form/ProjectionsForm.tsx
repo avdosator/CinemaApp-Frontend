@@ -22,7 +22,8 @@ export default function ProjectionsForm() {
     const [projections, setProjections] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
-    const [modalVisible, setModalVisible] = useState(false);
+
+    let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
 
     useEffect(() => {
@@ -46,27 +47,22 @@ export default function ProjectionsForm() {
         );
     };
 
-    const handleDeleteGroupClick = (index: number) => {
-        setProjections(prevProjections =>
-            prevProjections.map((group, i) =>
-                i === index ? { city: null, venue: null, time: "" } : group
-            )
-        );
+    const handleDeleteGroup = (index: number) => {
+        setProjections(prevProjections => prevProjections.filter((_, i) => i !== index));
     };
 
-    const confirmDelete = () => {
-        if (!modalVisible || groupToDelete === null) return;
-        
-        // Close the modal first before deleting
-        setModalVisible(false);
-    
-        // Perform the deletion after the modal closes to prevent re-render conflict
-        setTimeout(() => {
-            setProjections(prevProjections => prevProjections.filter((_, i) => i !== groupToDelete));
+    const askForDeletion = (index: number) => {
+        setIsModalVisible(true);
+        setGroupToDelete(index);
+    }
+
+    const confirmDeletion = () => {
+        if (groupToDelete !== null) {
+            handleDeleteGroup(groupToDelete);
             setGroupToDelete(null);
-        }, 0);
+            setIsModalVisible(false);
+        }
     };
-
 
     const handleAddProjectionGroup = () => {
         setProjections(prevProjections => [
@@ -82,7 +78,7 @@ export default function ProjectionsForm() {
 
     return (
         <>
-            {modalVisible && groupToDelete !== null && (
+            {isModalVisible && (
                 <div className="session-expired-overlay">
                     <div className="session-expired-modal">
                         <h6 className="font-heading-h6" style={{ color: "#101828" }}>Delete Projection</h6>
@@ -90,28 +86,27 @@ export default function ProjectionsForm() {
                             Are you sure you want to delete this projection?
                         </p>
                         <div className="session-expired-footer" style={{ gap: "8px" }}>
-                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={() => setModalVisible(false)}>
+                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={() => setIsModalVisible(false)}>
                                 Cancel
                             </button>
-                            <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={confirmDelete}>
+                            <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={confirmDeletion}>
                                 Delete
                             </button>
                         </div>
                     </div>
                 </div>
             )}
-
             <form className="projections-form">
                 {projections.map((group, index) => (
                     <ProjectionGroup
                         key={index}
                         formData={group}
-                        cityOptions={cityOptions}
-                        venueOptions={venueOptions}
+                        cityOptions={cityOptions!}
+                        venueOptions={venueOptions!}
                         timeOptions={timeOptions}
                         onChange={(field, value) => handleGroupChange(index, field, value)}
-                        onDelete={() => handleDeleteGroupClick(index)}
-                        isFirst={index === 0}
+                        onDelete={() => askForDeletion(index)}
+                        isOnly={projections.length === 1}
                     />
                 ))}
                 <button

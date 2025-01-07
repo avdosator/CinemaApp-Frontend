@@ -12,7 +12,7 @@ type ProjectionGroupProps = {
     timeOptions: SelectOptionType[];
     onChange: (field: keyof ProjectionsFormData, value: any) => void;
     onDelete: () => void;
-    isFirst: boolean
+    isOnly: boolean
 };
 
 export default function ProjectionGroup({
@@ -22,13 +22,13 @@ export default function ProjectionGroup({
     timeOptions,
     onChange,
     onDelete,
-    isFirst
+    isOnly
 }: ProjectionGroupProps) {
 
     const isAllSelected = formData.city && formData.venue && formData.time;
 
     const handleTrashClick = () => {
-        if (isFirst && isAllSelected) {
+        if (isOnly && isAllSelected) {
             onChange("city", null);
             onChange("venue", null);
             onChange("time", "");
@@ -84,18 +84,18 @@ export default function ProjectionGroup({
                         className="dropdown-menu-input"
                         classNamePrefix="dropdown"
                         isClearable
-                        // value={timeOptions.find(option => option.value === formData.time)}
                         value={timeOptions.find(option => option.value === formData.time) || null}
-                        onChange={(newValue) => onChange("time", newValue?.value || "")}
+                        onChange={(newValue) => onChange("time", newValue?.value)}
                     />
                 </div>
             </div>
 
             {/* Delete Button */}
             <button
-                className={`projection-form-trash-btn ${isFirst && !isAllSelected ? "trash-btn-disabled" : "trash-btn-enabled"}`}
+                className={`projection-form-trash-btn ${isOnly && !isAllSelected ? "trash-btn-disabled" : "trash-btn-enabled"}`}
                 onClick={handleTrashClick}
-                disabled={isFirst && !isAllSelected}
+                disabled={isOnly && !isAllSelected}
+                type="button"
             >
                 <FontAwesomeIcon icon={faTrash} />
             </button>

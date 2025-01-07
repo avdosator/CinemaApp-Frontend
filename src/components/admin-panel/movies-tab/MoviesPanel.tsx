@@ -1,4 +1,5 @@
 import "./MoviesPanel.css"
+import NoMoviesAdded from "./no-movies-added/NoMoviesAdded"
 
 export default function MoviesPanel() {
     return (
@@ -16,6 +17,7 @@ export default function MoviesPanel() {
                 <button className="add-movie-btn font-lg-semibold" id="addMovieBtn1">Add Movie</button>
             </div>
             <div className="full-width-horizontal-line"></div>
+            <NoMoviesAdded />
         </div>
     )
 }

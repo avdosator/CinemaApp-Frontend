@@ -14,7 +14,6 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import ReservationTicketPage from './components/reservation-ticket-page/ReservationTicketPage';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import NewMovie from './components/admin-panel/new-movie/NewMovie';
 import AdminPanelPage from './components/admin-panel/AdminPanelPage';
 
 function App() {

@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         FRONTEND_IMAGE = 'ahmedhamdo/team3-frontend:latest'
-        SERVER_PORT = '82'
+        SERVER_PORT = '8087'
         DOCKER_NETWORK = 'team3-network'
     }
 

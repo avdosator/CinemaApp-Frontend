@@ -11,6 +11,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #E4E7EC;
+    padding-bottom: 6px;
 }
 
 .movie-tabs-container {
@@ -19,6 +21,21 @@
     flex-direction: row;
     gap: 32px;
     color: #1D2939;
+    position: relative;
+}
+
+.movie-tab {
+    border: none;
+    background: inherit;
+}
+
+.tab-highlight {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background-color: #B22222;
+    transition: transform 0.3s ease, width 0.3s ease;
 }
 
 .add-movie-btn {

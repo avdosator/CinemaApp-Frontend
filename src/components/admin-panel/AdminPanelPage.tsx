@@ -6,17 +6,18 @@ import { Outlet, Navigate, useLocation, useNavigate } from "react-router-dom";
 export default function AdminPanelPage() {
     const location = useLocation();
     const navigate = useNavigate();
-    let [activePanel, setActivePanel] = useState<"movies" | "venues">("movies");
+
+    const activePanel = location.pathname.includes("venues") ? "venues" : "movies";
 
     const handlePanelChange = (panel: "movies" | "venues") => {
-        setActivePanel(panel);
         navigate(`/admin/${panel}${panel === "movies" ? "/drafts" : ""}`);
     };
 
     return (
         <div className="admin-panel-page">
             <SideBar selectPanel={handlePanelChange} activePanel={activePanel} />
-            {/* Redirecting to /movies/drafts when /admin is opened */}
+            
+            {/*  Redirects to /admin/movies/drafts if accessing /admin directly */}
             {location.pathname === "/admin" && <Navigate to="/admin/movies/drafts" replace />}
             <Outlet />
             {/* {panel === "movies" ? (<MoviesPanel />) : <></>} */}

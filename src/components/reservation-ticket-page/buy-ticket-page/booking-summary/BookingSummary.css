@@ -1,0 +1,56 @@
+.booking-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-summary-container {
+    width: 100%;
+    height: 634px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background-color: #1D2939;
+    padding: 32px;
+}
+
+.booking-summary-photo-container {
+    width: 125px;
+    height: 126px;
+}
+.booking-summary-photo-container img {
+    object-fit:cover;
+    border-radius: 16px;
+    width: 100%;
+    height: 100%;
+}
+
+.booking-summary-movie-details {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 28px;
+}
+
+.booking-summary-movie-info {
+    margin-left: 24px;
+}
+
+.booking-summary-basic-movie-info {
+    color: #FCFCFD;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.booking-summary-heading {
+    color: #98A2B3;
+    text-align: start;
+}
+
+.booking-summary-info {
+    margin-top: 8px;
+    color: #FCFCFD;
+}
+
+.booking-summary-info-group {
+    margin-top: 16px;
+}

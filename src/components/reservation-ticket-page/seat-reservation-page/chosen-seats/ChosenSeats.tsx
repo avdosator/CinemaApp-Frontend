@@ -1,29 +1,20 @@
 import { Seat } from "../../../../types/Seat"
+import { calculateReservedSeatsPrice } from "../../../../utils/utils";
 import "./ChosenSeats.css"
 
 type ChosenSeatsProps = {
-    selectedSeats: Seat[]
+    selectedSeats: Seat[],
+    proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>
 }
 
-export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
+export default function ChosenSeats({ selectedSeats, proceedToBuyTicket }: ChosenSeatsProps) {
 
     let areSelectedSeatsEmpty: boolean = selectedSeats.length === 0;
 
     // Calculate total price of selected seats
     let totalPrice: number = 0;
     if (!areSelectedSeatsEmpty) {
-        totalPrice = selectedSeats.reduce((sum, seat) => {
-            switch (seat.type) {
-                case "regular":
-                    return sum + 7;
-                case "VIP":
-                    return sum + 10;
-                case "love":
-                    return sum + 24;
-                default:
-                    return sum;
-            }
-        }, 0);
+        totalPrice = calculateReservedSeatsPrice(selectedSeats);
     }
 
     return (
@@ -48,7 +39,9 @@ export default function ChosenSeats({ selectedSeats }: ChosenSeatsProps) {
             )}
             <button
                 className={`font-lg-semibold continue-payment-btn ${areSelectedSeatsEmpty ? "continue-payment-btn-disabled" : ""}`}
-                disabled={areSelectedSeatsEmpty}>
+                disabled={areSelectedSeatsEmpty}
+                onClick={() => proceedToBuyTicket("Payment Details")}
+            >
                 Continue to Payment
             </button>
         </div>

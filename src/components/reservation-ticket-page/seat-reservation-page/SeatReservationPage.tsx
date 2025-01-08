@@ -12,10 +12,11 @@ type SeatReservationPageProps = {
     projectionInstance: ProjectionInstance,
     movie: Movie,
     selectedSeats: Seat[],
-    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>
+    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>,
+    proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>
 }
 
-export default function SeatReservationPage({ projectionInstance, movie, selectedSeats, setSelectedSeats }: SeatReservationPageProps) {
+export default function SeatReservationPage({ projectionInstance, movie, selectedSeats, setSelectedSeats, proceedToBuyTicket }: SeatReservationPageProps) {
     const venue: Venue = projectionInstance.projection.hall.venue;
 
     const date = new Date(projectionInstance.date);
@@ -51,7 +52,7 @@ export default function SeatReservationPage({ projectionInstance, movie, selecte
                 <div className="seat-reservation-right-content">
                     <SeatGuide />
                     <div className="full-width-horizontal-line"></div>
-                    <ChosenSeats selectedSeats={selectedSeats} />
+                    <ChosenSeats selectedSeats={selectedSeats} proceedToBuyTicket={proceedToBuyTicket} />
                 </div>
             </div>
         </div>

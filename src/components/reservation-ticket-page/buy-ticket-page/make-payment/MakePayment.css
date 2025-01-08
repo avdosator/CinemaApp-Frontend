@@ -1,0 +1,14 @@
+.make-payment-container {
+    width: 66%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#big-or-divider {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 0px;
+}

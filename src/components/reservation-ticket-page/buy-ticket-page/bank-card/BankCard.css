@@ -1,0 +1,29 @@
+.bank-card {
+    width: 100%;
+    border: 1px solid #E4E7EC;
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 0px;
+    box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 82px;
+}
+
+.bank-card-icon {
+    display: block;
+    width: 36px;
+    height: 38px;
+    color: #000000;
+}
+
+.card-number-container {
+    display: flex;
+    gap: 37px;
+    color: #667085;
+}
+
+.bank-card button {
+    margin-left: auto;
+}

@@ -45,7 +45,7 @@ function App() {
                   <Route path='/movies/*' element={<MovieRoutes />} />
                   <Route path='/about' element={<AboutUsPage />} />
                   <Route path='/pricing' element={<PricingPage />} />
-                  <Route path='/admin' element={<AdminPanelPage />} />
+                  <Route path='/admin/*' element={<AdminPanelPage />} />
                   {/* Protected Route */}
                   <Route
                     path="/projection/:id/reservations"

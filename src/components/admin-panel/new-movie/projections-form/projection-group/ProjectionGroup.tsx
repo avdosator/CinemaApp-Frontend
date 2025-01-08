@@ -87,7 +87,7 @@ export default function ProjectionGroup({
                         classNamePrefix="dropdown"
                         isClearable
                         value={timeOptions.find(option => option.value === formData.time) || null}
-                        onChange={(newValue) => onChange("time", newValue?.value)}
+                        onChange={(newValue) => onChange("time", newValue ? newValue.value : "")}
                     />
                 </div>
                 {errorMessage && (

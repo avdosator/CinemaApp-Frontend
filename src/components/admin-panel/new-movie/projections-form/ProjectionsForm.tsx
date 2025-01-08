@@ -41,40 +41,49 @@ export default function ProjectionsForm() {
     }, []);
 
     const handleGroupChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
-        const updatedProjections = projections.map((group, i) =>
-            i === index ? { ...group, [field]: value } : group
-        );
-
-        // Always clear error when a value is deselected
-        if (!value) {
-            setErrorMessages(prev => {
-                const newErrors = { ...prev };
-                delete newErrors[index];
-                return newErrors;
-            });
-        } else {
-            // Re-validate only when both venue and time are filled
-            const { venue, time } = updatedProjections[index];
-            const hasCollision = updatedProjections.some((group, i) =>
-                i !== index && group.venue?.value === venue?.value && group.time === time
+        setProjections((prevProjections) => {
+            const updatedProjections = prevProjections.map((group, i) =>
+                i === index ? { ...group, [field]: value } : group
             );
 
-            if (hasCollision) {
-                setErrorMessages(prev => ({ ...prev, [index]: "Movie projection times cannot collide for the same Venues" }));
-            } else {
+            // Always clear error when a value is deselected
+            if (!value) {
                 setErrorMessages(prev => {
                     const newErrors = { ...prev };
                     delete newErrors[index];
                     return newErrors;
                 });
-            }
-        }
+            } else {
+                // Re-validate only when both venue and time are filled
+                const { venue, time } = updatedProjections[index];
+                const hasCollision = updatedProjections.some((group, i) =>
+                    i !== index && group.venue?.value === venue?.value && group.time === time
+                );
 
-        setProjections(updatedProjections);
+                if (hasCollision) {
+                    setErrorMessages(prev => ({ ...prev, [index]: "Movie projection times cannot collide for the same Venues" }));
+                } else {
+                    setErrorMessages(prev => {
+                        const newErrors = { ...prev };
+                        delete newErrors[index];
+                        return newErrors;
+                    });
+                }
+            }
+
+            return updatedProjections;
+        });
     };
-    
+
     const handleDeleteGroup = (index: number) => {
         setProjections(prevProjections => prevProjections.filter((_, i) => i !== index));
+
+        // Clear error for the deleted group
+        setErrorMessages(prev => {
+            const newErrors = { ...prev };
+            delete newErrors[index];
+            return newErrors;
+        });
     };
 
     const askForDeletion = (index: number) => {

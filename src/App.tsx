@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css'
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
@@ -15,6 +15,7 @@ import ReservationTicketPage from './components/reservation-ticket-page/Reservat
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import AdminPanelPage from './components/admin-panel/AdminPanelPage';
+import MoviesPanel from './components/admin-panel/movies-tab/MoviesPanel';
 
 function App() {
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
@@ -45,7 +46,19 @@ function App() {
                   <Route path='/movies/*' element={<MovieRoutes />} />
                   <Route path='/about' element={<AboutUsPage />} />
                   <Route path='/pricing' element={<PricingPage />} />
-                  <Route path='/admin/*' element={<AdminPanelPage />} />
+                  <Route path='/admin/*' element={<AdminPanelPage />} >
+                    {/* Default redirect for /admin */}
+                    <Route index element={<Navigate to="/admin/movies/drafts" replace />} />
+
+                    {/* Movie Tabs as Child Routes */}
+                    <Route path="movies/drafts" element={<MoviesPanel />} />
+                    <Route path="movies/currently-showing" element={<MoviesPanel />} />
+                    <Route path="movies/upcoming" element={<MoviesPanel />} />
+                    <Route path="movies/archived" element={<MoviesPanel />} />
+
+                    {/* Venues Route */}
+                    <Route path="venues" element={<div>Venues Section Coming Soon</div>} />
+                  </Route>
                   {/* Protected Route */}
                   <Route
                     path="/projection/:id/reservations"

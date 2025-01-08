@@ -1,11 +1,14 @@
+import { useLocation } from "react-router-dom";
 import "./SideBar.css"
 
 type SideBarProps = {
     selectPanel: (panel: "movies" | "venues") => void,
-    activePanel: "movies" | "venues"
 }
 
-export default function SideBar({ selectPanel, activePanel }: SideBarProps) {
+export default function SideBar({ selectPanel }: SideBarProps) {
+    const location = useLocation();
+    const activePanel = location.pathname.includes("venues") ? "venues" : "movies";
+    
     return (
         <div className="side-bar-container">
             <h5 className="font-heading-h5" style={{ color: "#FCFCFD", marginBottom: "21px" }}>Admin</h5>

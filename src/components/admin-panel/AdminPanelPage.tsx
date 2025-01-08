@@ -7,7 +7,6 @@ export default function AdminPanelPage() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const activePanel = location.pathname.includes("venues") ? "venues" : "movies";
 
     const handlePanelChange = (panel: "movies" | "venues") => {
         navigate(`/admin/${panel}${panel === "movies" ? "/drafts" : ""}`);
@@ -15,7 +14,7 @@ export default function AdminPanelPage() {
 
     return (
         <div className="admin-panel-page">
-            <SideBar selectPanel={handlePanelChange} activePanel={activePanel} />
+            <SideBar selectPanel={handlePanelChange} />
             
             {/*  Redirects to /admin/movies/drafts if accessing /admin directly */}
             {location.pathname === "/admin" && <Navigate to="/admin/movies/drafts" replace />}

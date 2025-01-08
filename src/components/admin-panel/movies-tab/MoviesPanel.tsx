@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./MoviesPanel.css"
 import NoMoviesAdded from "./no-movies-added/NoMoviesAdded"
 
 export default function MoviesPanel() {
-    const [activeTab, setActiveTab] = useState<"drafts" | "currentlyShowing" | "upcoming" | "archived">("drafts");
+    const location = useLocation();
+    const navigate = useNavigate();
+    const activeTab = location.pathname.split("/").pop() as "drafts" | "currently-showing" | "upcoming" | "archived";
 
-    const tabs: { id: "drafts" | "currentlyShowing" | "upcoming" | "archived"; label: string }[] = [
+    const tabs: { id: "drafts" | "currently-showing" | "upcoming" | "archived"; label: string }[] = [
         { id: "drafts", label: "Drafts (0)" },
-        { id: "currentlyShowing", label: "Currently Showing (0)" },
+        { id: "currently-showing", label: "Currently Showing (0)" },
         { id: "upcoming", label: "Upcoming (0)" },
         { id: "archived", label: "Archived (0)" }
     ];
@@ -37,7 +40,7 @@ export default function MoviesPanel() {
                                 key={tab.id}
                                 ref={(el) => (tabRefs.current[index] = el)}
                                 className={`movie-tab ${activeTab === tab.id ? "font-lg-semibold" : "font-lg-regular"}`}
-                                onClick={() => setActiveTab(tab.id)}
+                                onClick={() => navigate(`/admin/movies/${tab.id}`)}
                                 style={{ color: activeTab === tab.id ? "#B22222" : "#1D2939" }}
                             >
                                 {tab.label}

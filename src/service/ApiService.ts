@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 export default class ApiService {
 
     static axiosInstance = axios.create({
-        baseURL: `${import.meta.env.VITE_API_BASE_URL}`,
+        baseURL: "http://63.176.2.136:8082/api",
         headers: {
             "Content-Type": "application/json"
         }

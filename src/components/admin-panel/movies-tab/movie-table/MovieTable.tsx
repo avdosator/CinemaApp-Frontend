@@ -69,12 +69,11 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
         <table className="movie-table">
             <thead className="movie-table-heading">
                 <tr className="font-heading-caption">
-                    {showCheckbox && <th></th>}
                     <th>Name</th>
                     <th>Projection Date</th>
                     <th>Venue</th>
                     <th>Status</th>
-                    {showActions && <th>Action</th>}
+                    {showActions && <th style={{alignSelf: "end", width: "7%"}}>Action</th>}
                 </tr>
             </thead>
             <tbody className="font-lg-regular">

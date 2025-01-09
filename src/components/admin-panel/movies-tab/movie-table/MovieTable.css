@@ -13,11 +13,10 @@
 .movie-table td, .movie-table th {
     color: #101828;
     text-align: left;
-    padding: 8px;
-    padding-left: 16px;
 }
 
 .movie-table td {
+    padding:  8px 16px;
     white-space: nowrap;           /* Prevent text wrapping */
     overflow: hidden;              /* Hide overflow content */
     text-overflow: ellipsis;       /* Add "..." for overflowed content */
@@ -25,8 +24,8 @@
     width: 100%;                   /* Dynamically expands with column width */
 }
 
-.movie-table th {
-    padding: 12px;
+.font-heading-caption th {
+    padding: 12px 16px;
 }
 
 .movie-table tr {

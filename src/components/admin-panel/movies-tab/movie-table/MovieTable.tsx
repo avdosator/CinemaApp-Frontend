@@ -8,6 +8,16 @@ type MovieTableProps = {
 }
 
 export default function MovieTable({ movies, showCheckbox = true, showActions = true }: MovieTableProps) {
+
+    const formatProjectionDate = (date: Date | string): string => {
+        const validDate = typeof date === "string" ? new Date(date) : date;
+        return validDate.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+    };
+
     return (
         <table className="movie-table">
             <thead className="movie-table-heading">
@@ -35,7 +45,7 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                         </td>
                         <td>
                             {movie.projections.map(projection =>
-                                `${projection.startDate} - ${projection.endDate}`
+                                `${formatProjectionDate(projection.startDate)} - ${formatProjectionDate(projection.endDate)}`
                             ).join(", ")}
                         </td>
                         <td>All Venues</td>

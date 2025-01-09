@@ -1,6 +1,5 @@
 .movie-table {
     width: 100%;
-    
     border: 1px solid #E4E7EC;
     padding: 8px;
     margin-top: 76px;
@@ -11,10 +10,14 @@
     table-layout: fixed;
 }
 
-.movie-table th,
-.movie-table td {
+.movie-table td, .movie-table th {
     color: #101828;
     text-align: left;
+    padding: 8px;
+    padding-left: 16px;
+}
+
+.movie-table th {
     padding: 12px;
 }
 
@@ -29,4 +32,11 @@
 .movie-table-heading th {
     text-transform: uppercase;
     color: #667085;
+}
+
+.movie-table-row-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    border-radius: 8px;
 }

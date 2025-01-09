@@ -25,7 +25,13 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                     <tr key={movie.id}>
                         {showCheckbox && <td><input type="checkbox" /></td>}
                         <td>
-                            
+                            {(() => {
+                                const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
+                                return coverPhoto ? (
+                                    <img src={coverPhoto.url} alt={movie.title} className="movie-table-row-img" />
+                                ) : (<img src="https://placehold.co/40x40" />);
+                            })()}
+                            {movie.title}
                         </td>
                         <td>
                             {movie.projections.map(projection =>

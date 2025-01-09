@@ -6,6 +6,7 @@ import { Movie } from "../../../types/Movie";
 import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
+import MovieTable from "./movie-table/MovieTable";
 
 export default function MoviesPanel() {
     const location = useLocation();
@@ -82,9 +83,7 @@ export default function MoviesPanel() {
             {isLoading ? (
                 <LoadingIndicator />
             ) : movies.length > 0 ? (
-                <div> {/* Replace with your MovieTable component later */}
-                    Movies will be shown here
-                </div>
+                <MovieTable movies={movies} showActions={false} showCheckbox={false} />
             ) : (
                 <NoMoviesAdded />
             )}

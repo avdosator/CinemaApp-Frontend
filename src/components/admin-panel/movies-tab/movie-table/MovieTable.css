@@ -1,6 +1,21 @@
 .movie-table {
-    border-radius: 8px;
+    width: 100%;
+    
     border: 1px solid #E4E7EC;
+    padding: 8px;
+    margin-top: 76px;
+    /*Ensures full-width stretching*/
+    border-collapse: collapse;
+    border-radius: 8px !important;
+    /*Distributes columns equally*/
+    table-layout: fixed;
+}
+
+.movie-table th,
+.movie-table td {
+    color: #101828;
+    text-align: left;
+    padding: 12px;
 }
 
 .movie-table tr {

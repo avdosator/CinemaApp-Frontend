@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css'
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
@@ -20,6 +20,8 @@ import AdminRoutes from './routes/AdminRoutes';
 function App() {
 	const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
 	const [redirectInfo, setRedirectInfo] = useState<{ path: string; state?: any } | null>(null);
+	const location = useLocation();
+	const isAdminPage = location.pathname.startsWith("/admin");
 
 	const openAuthModal = useCallback((path: string = "/", state: any = null): void => {
 		setRedirectInfo({ path, state }); // Store the route and state
@@ -38,8 +40,8 @@ function App() {
 				<MovieProvider>
 					<Elements stripe={stripePromise}>
 						<div className='app-container'>
-							<Header openAuthModal={openAuthModal} />
-							<div className={`main-content ${isAuthOpen ? "blurred-background" : ""}`}>
+							<Header openAuthModal={openAuthModal} width={`${isAdminPage ? "95%" : "87%"}`} />
+							<div className={`${isAuthOpen ? "blurred-background" : ""} ${isAdminPage ? "admin-content" : "main-content"}`}>
 								<Routes>
 									<Route path='/' element={<HomePage />} />
 									<Route path='/home' element={<HomePage />} />
@@ -62,7 +64,8 @@ function App() {
 									/>
 								</Routes>
 							</div>
-							<Footer />
+							{/* <Footer /> */}
+							{!isAdminPage && <Footer />}
 						</div>
 						{isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} redirectInfo={redirectInfo} />}
 					</Elements>

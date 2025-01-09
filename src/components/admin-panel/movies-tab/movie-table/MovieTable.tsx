@@ -1,13 +1,16 @@
 import "./MovieTable.css"
 import { Movie } from "../../../../types/Movie";
+import MovieStatusBadge from "./movie-status-badge/MovieStatusBadge";
 
 type MovieTableProps = {
-    movies: Movie[];
-    showCheckbox?: boolean;
-    showActions?: boolean;
+    movies: Movie[],
+    showCheckbox?: boolean,
+    showActions?: boolean,
+    activeTab: "currently-showing" | "upcoming" | "drafts" | "archived"
+
 }
 
-export default function MovieTable({ movies, showCheckbox = true, showActions = true }: MovieTableProps) {
+export default function MovieTable({ movies, showCheckbox = true, showActions = true, activeTab }: MovieTableProps) {
 
     const formatProjectionDate = (date: Date | string): string => {
         const validDate = typeof date === "string" ? new Date(date) : date;
@@ -16,6 +19,28 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
             month: "short",
             year: "numeric"
         });
+    };
+
+    const calculateDaysRemaining = (movie: Movie, activeTab: "currently-showing" | "upcoming"): number | undefined => {
+        const today = new Date();
+
+        if (activeTab === "currently-showing") {
+            const latestEndDate = Math.max(
+                ...movie.projections.map(projection =>
+                    (projection.endDate instanceof Date ? projection.endDate : new Date(projection.endDate)).getTime()
+                )
+            );
+            return Math.max(Math.ceil((latestEndDate - today.getTime()) / (1000 * 60 * 60 * 24)), 0);
+        }
+
+        if (activeTab === "upcoming") {
+            const earliestStartDate = Math.min(
+                ...movie.projections.map(projection =>
+                    (projection.startDate instanceof Date ? projection.startDate : new Date(projection.startDate)).getTime()
+                )
+            );
+            return Math.max(Math.ceil((earliestStartDate - today.getTime()) / (1000 * 60 * 60 * 24)), 0);
+        }
     };
 
     const getUniqueVenues = (movie: Movie): string[] => {
@@ -55,8 +80,8 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
             <tbody className="font-lg-regular">
                 {movies.map((movie) => (
                     <tr key={movie.id}>
-                        {showCheckbox && <td><input type="checkbox" /></td>}
                         <td>
+                            {showCheckbox && <input type="checkbox" style={{marginRight: "6px"}} />}
                             {(() => {
                                 const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
                                 return coverPhoto ? (
@@ -71,7 +96,14 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                             ).join(", ")}
                         </td>
                         <td>{renderVenuesColumn(movie)}</td>
-                        <td>Status Here</td>
+                        <td>
+                            <MovieStatusBadge
+                                statusType={activeTab}
+                                daysRemaining={["currently-showing", "upcoming"].includes(activeTab)
+                                    ? calculateDaysRemaining(movie, activeTab as "currently-showing" | "upcoming")
+                                    : undefined}
+                            />
+                        </td>
                         {showActions && <td><button>...</button></td>}
                     </tr>
                 ))}

@@ -28,7 +28,7 @@ export default function MovieStatusBadge({ statusType, daysRemaining, draftStep 
         if (statusType === "archived") {
             return "red-pill";
         }
-        return daysRemaining && daysRemaining > 7 ? "green-pill" : "yellow-pill";
+        return daysRemaining && daysRemaining >= 7 ? "green-pill" : "yellow-pill";
     };
 
     return (

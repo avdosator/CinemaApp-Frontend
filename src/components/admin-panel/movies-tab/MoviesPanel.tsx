@@ -83,7 +83,12 @@ export default function MoviesPanel() {
             {isLoading ? (
                 <LoadingIndicator />
             ) : movies.length > 0 ? (
-                <MovieTable movies={movies} showActions={false} showCheckbox={false} />
+                <MovieTable
+                    movies={movies}
+                    showActions={activeTab !== "currently-showing"}
+                    showCheckbox={activeTab !== "currently-showing"}
+                    activeTab={activeTab}
+                />
             ) : (
                 <NoMoviesAdded />
             )}

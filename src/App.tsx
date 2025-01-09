@@ -17,6 +17,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import AdminPanelPage from './components/admin-panel/AdminPanelPage';
 import AdminRoutes from './routes/AdminRoutes';
 
+const STRIPE_PROMISE = loadStripe("pk_test_51QWObK005aH1ki3zlE396ntDW9qto4YWeDvPSEIDyvQoUioh6sSJjtvzplukio4b1EHd2kBxSZlPcmSIqcVi3DC500Purif1vc");
+
 function App() {
 	const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
 	const [redirectInfo, setRedirectInfo] = useState<{ path: string; state?: any } | null>(null);
@@ -32,13 +34,12 @@ function App() {
 		setIsAuthOpen(false);
 		setRedirectInfo(null); // Clear redirect info when closing modal
 	};
-	const stripePromise = loadStripe("pk_test_51QWObK005aH1ki3zlE396ntDW9qto4YWeDvPSEIDyvQoUioh6sSJjtvzplukio4b1EHd2kBxSZlPcmSIqcVi3DC500Purif1vc");
 
 	return (
 		<>
 			<UserProvider >
 				<MovieProvider>
-					<Elements stripe={stripePromise}>
+					<Elements stripe={STRIPE_PROMISE}>
 						<div className='app-container'>
 							<Header openAuthModal={openAuthModal} width={`${isAdminPage ? "95%" : "87%"}`} />
 							<div className={`${isAuthOpen ? "blurred-background" : ""} ${isAdminPage ? "admin-content" : "main-content"}`}>

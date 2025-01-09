@@ -11,9 +11,9 @@ export default function MovieStatusBadge({ statusType, daysRemaining, draftStep 
     const getStatusText = () => {
         switch (statusType) {
             case "currently-showing":
-                return `Ending in ${daysRemaining} days`;
+                return daysRemaining === 1 ? `Ending in ${daysRemaining} day` : `Ending in ${daysRemaining} days`;
             case "upcoming":
-                return `Coming in ${daysRemaining} days`;
+                return daysRemaining === 1 ? `Coming in ${daysRemaining} day` : `Ending in ${daysRemaining} days`;
             case "drafts":
                 return `Step ${draftStep}/3 completed`;
             case "archived":

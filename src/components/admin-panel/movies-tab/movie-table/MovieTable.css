@@ -17,6 +17,14 @@
     padding-left: 16px;
 }
 
+.movie-table td {
+    white-space: nowrap;           /* Prevent text wrapping */
+    overflow: hidden;              /* Hide overflow content */
+    text-overflow: ellipsis;       /* Add "..." for overflowed content */
+    max-width: 1px;                /* Shrinks to fit content but allows expansion */
+    width: 100%;                   /* Dynamically expands with column width */
+}
+
 .movie-table th {
     padding: 12px;
 }

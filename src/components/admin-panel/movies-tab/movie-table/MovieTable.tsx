@@ -29,14 +29,14 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
 
     const renderVenuesColumn = (movie: Movie): string => {
         const uniqueVenues = getUniqueVenues(movie);
-        const maxVisibleVenues = 2; 
-    
+        const maxVisibleVenues = 2;
+
         // If there are more than 2 venues, show +1, +2 notation
         if (uniqueVenues.length > maxVisibleVenues) {
             const displayedVenues = uniqueVenues.slice(0, maxVisibleVenues).join(", ");
             return `${displayedVenues} +${uniqueVenues.length - maxVisibleVenues}`;
         }
-    
+
         return uniqueVenues.join(", ");
     };
 

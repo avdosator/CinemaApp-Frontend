@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./MoviesPanel.css"
 import NoMoviesAdded from "./no-movies-added/NoMoviesAdded"
+import { Movie } from "../../../types/Movie";
+import ApiService from "../../../service/ApiService";
+import { PageResponse } from "../../../types/PageResponse";
+import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 
 export default function MoviesPanel() {
     const location = useLocation();
@@ -17,6 +21,9 @@ export default function MoviesPanel() {
 
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [underlineStyle, setUnderlineStyle] = useState({ width: "0px", transform: "translateX(0px)" });
+    const [movies, setMovies] = useState<Movie[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
@@ -27,7 +34,27 @@ export default function MoviesPanel() {
                 transform: `translateX(${activeTabElement.offsetLeft}px)`
             });
         }
+        fetchMovies(activeTab);
     }, [activeTab]);
+
+    const fetchMovies = (tab: string) => {
+        setIsLoading(true);
+        const endpoint = tab === "currently-showing" ? "/movies/active" :
+            tab === "upcoming" ? "/movies/upcoming" : "";
+        if (!endpoint) {
+            setMovies([]);
+            setIsLoading(false);
+            return;
+        }
+
+        ApiService.get<PageResponse<Movie>>(endpoint, { page: 0, size: 1000 })
+            .then(response => {
+                setMovies(response.content);
+                console.log(response.totalElements);
+            })
+            .catch(console.error)
+            .finally(() => setIsLoading(false));
+    };
 
     return (
         <div className="movies-panel">
@@ -52,7 +79,15 @@ export default function MoviesPanel() {
                 </div>
                 <button className="add-movie-btn font-lg-semibold" id="addMovieBtn1">Add Movie</button>
             </div>
-            <NoMoviesAdded />
+            {isLoading ? (
+                <LoadingIndicator />
+            ) : movies.length > 0 ? (
+                <div> {/* Replace with your MovieTable component later */}
+                    Movies will be shown here
+                </div>
+            ) : (
+                <NoMoviesAdded />
+            )}
         </div>
     )
 }

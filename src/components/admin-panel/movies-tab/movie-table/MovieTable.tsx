@@ -18,6 +18,28 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
         });
     };
 
+    const getUniqueVenues = (movie: Movie): string[] => {
+        const venueSet = new Set<string>();
+        movie.projections.forEach(projection => {
+            const venueName = projection.hall.venue.name.split(" ").slice(0, 2).join(" "); // Extracting first two words
+            venueSet.add(venueName);
+        });
+        return Array.from(venueSet);
+    };
+
+    const renderVenuesColumn = (movie: Movie): string => {
+        const uniqueVenues = getUniqueVenues(movie);
+        const maxVisibleVenues = 2; 
+    
+        // If there are more than 2 venues, show +1, +2 notation
+        if (uniqueVenues.length > maxVisibleVenues) {
+            const displayedVenues = uniqueVenues.slice(0, maxVisibleVenues).join(", ");
+            return `${displayedVenues} +${uniqueVenues.length - maxVisibleVenues}`;
+        }
+    
+        return uniqueVenues.join(", ");
+    };
+
     return (
         <table className="movie-table">
             <thead className="movie-table-heading">
@@ -48,7 +70,7 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                                 `${formatProjectionDate(projection.startDate)} - ${formatProjectionDate(projection.endDate)}`
                             ).join(", ")}
                         </td>
-                        <td>All Venues</td>
+                        <td>{renderVenuesColumn(movie)}</td>
                         <td>Status Here</td>
                         {showActions && <td><button>...</button></td>}
                     </tr>

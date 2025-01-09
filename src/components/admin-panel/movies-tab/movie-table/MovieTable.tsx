@@ -1,6 +1,8 @@
 import "./MovieTable.css"
 import { Movie } from "../../../../types/Movie";
 import MovieStatusBadge from "./movie-status-badge/MovieStatusBadge";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 type MovieTableProps = {
     movies: Movie[],
@@ -73,14 +75,14 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                     <th>Projection Date</th>
                     <th>Venue</th>
                     <th>Status</th>
-                    {showActions && <th style={{alignSelf: "end", width: "7%"}}>Action</th>}
+                    {showActions && <th className="action-column">Action</th>}
                 </tr>
             </thead>
             <tbody className="font-lg-regular">
                 {movies.map((movie) => (
                     <tr key={movie.id}>
                         <td>
-                            {showCheckbox && <input type="checkbox" style={{marginRight: "6px"}} />}
+                            {showCheckbox && <input type="checkbox" style={{ marginRight: "6px" }} />}
                             {(() => {
                                 const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
                                 return coverPhoto ? (
@@ -103,7 +105,11 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
                                     : undefined}
                             />
                         </td>
-                        {showActions && <td><button>...</button></td>}
+                        {showActions && (<td>
+                            <button className="movie-table-action-button">
+                                <FontAwesomeIcon icon={faEllipsis} />
+                            </button>
+                        </td>)}
                     </tr>
                 ))}
             </tbody>

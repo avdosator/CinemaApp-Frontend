@@ -47,3 +47,15 @@
     margin-right: 8px;
     border-radius: 8px;
 }
+
+.action-column {
+    width: 80px;                
+}
+
+.movie-table-action-button {
+    border: none;
+    background-color: inherit;
+    color: #B22222;
+    width: 11px;
+    height: 11px;
+}

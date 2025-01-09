@@ -1,0 +1,17 @@
+.movie-table {
+    border-radius: 8px;
+    border: 1px solid #E4E7EC;
+}
+
+.movie-table tr {
+    border-bottom: 1px solid #E4E7EC;
+}
+
+.movie-table-heading {
+    background-color: #F9FAFB;
+}
+
+.movie-table-heading th {
+    text-transform: uppercase;
+    color: #667085;
+}

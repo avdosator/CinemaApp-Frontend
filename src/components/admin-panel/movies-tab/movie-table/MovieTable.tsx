@@ -1,3 +1,4 @@
+import "./MovieTable.css"
 import { Movie } from "../../../../types/Movie";
 
 type MovieTableProps = {
@@ -10,8 +11,8 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
     return (
         <div className="movie-table">
             <table>
-                <thead>
-                    <tr>
+                <thead className="movie-table-heading">
+                    <tr className="font-heading-caption">
                         {showCheckbox && <th></th>}
                         <th>Name</th>
                         <th>Projection Date</th>

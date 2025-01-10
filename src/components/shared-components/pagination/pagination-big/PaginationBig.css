@@ -7,9 +7,7 @@
     color: #667085;
 }
 
-.pagination-big .showing-section {
-   
-}
+.pagination-big .showing-section {}
 
 .showing-section span {
     color: #101828;
@@ -17,9 +15,9 @@
 }
 
 .pagination-big-control {
-   display: flex;
-   align-items: center;
-   gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .pagination-big-control button {
@@ -39,4 +37,23 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+}
+
+.pagination-big-items-per-page {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.pagination-select {
+    width: 56px;
+    height: 32px;
+    gap: 0px;
+    border-radius: 8px;
+    margin: 0px 4px;
+    border: 1px solid #E4E7EC;
+    color: #101828;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
 }

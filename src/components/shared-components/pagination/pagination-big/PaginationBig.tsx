@@ -28,7 +28,15 @@ export default function PaginationBig() {
             </div>
             <div className="pagination-big-items-per-page">
                 <span>Display</span>
-                <span></span>
+                <select
+                    className="pagination-select"
+                // onChange={(e) => {/* Add your page size handling logic here */ }}
+                >
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
                 <span>items per page.</span>
             </div>
         </div>

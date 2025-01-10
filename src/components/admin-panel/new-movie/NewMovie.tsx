@@ -18,6 +18,11 @@ export default function NewMovie() {
                 <div className="add-movie-step-line"></div>
                 <div className="step-circle">3</div>
             </div>
+            <div className="add-movie-step-labels font-lg-semibold">
+                <p className="step-label">General</p>
+                <p className="step-label">Details</p>
+                <p className="step-label">Venues</p>
+            </div>
         </div>
     )
 }

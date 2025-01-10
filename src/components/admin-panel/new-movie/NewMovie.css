@@ -28,6 +28,8 @@
 }
 
 .add-movie-step-container {
+    margin-top: 24px;
+    padding: 0px 6px;
     width: 70%;
     display: flex;
     justify-content:space-between;
@@ -36,9 +38,9 @@
 }
 
 .add-movie-step-line {
+    flex-grow: 1;
     border: 1px solid #E4E7EC;
     height: 1px;
-    width:fit-content;
 }
 
 .step-circle {
@@ -50,4 +52,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.add-movie-step-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-top: 8px;
+    align-self: center;
+}
+
+.step-label {
+    color: #667085;
+    /* text-align: center; */
+    margin-bottom: 0px;
+}
+
+.step-label:nth-of-type(2) {
+    margin-right: 8px;
 }

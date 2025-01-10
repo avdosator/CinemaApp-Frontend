@@ -7,19 +7,18 @@ import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import MovieTable from "./movie-table/MovieTable";
-
-type TabType = "drafts" | "currently-showing" | "upcoming" | "archived";
+import { MovieTabType } from "../../../types/MovieTabType";
 
 export default function MoviesPanel() {
     const location = useLocation();
     const navigate = useNavigate();
-    const activeTab = location.pathname.split("/").pop() as TabType;
+    const activeTab = location.pathname.split("/").pop() as MovieTabType;
 
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [underlineStyle, setUnderlineStyle] = useState({ width: "0px", transform: "translateX(0px)" });
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [totalCounts, setTotalCounts] = useState<{ [key in TabType]: number }>({
+    const [totalCounts, setTotalCounts] = useState<{ [key in MovieTabType]: number }>({
         drafts: 0,
         "currently-showing": 0, // quotes needed because of dash
         upcoming: 0,
@@ -38,7 +37,7 @@ export default function MoviesPanel() {
         fetchMovies(activeTab);
     }, [activeTab]);
 
-    const fetchMovies = (tab: TabType) => {
+    const fetchMovies = (tab: MovieTabType) => {
         setIsLoading(true);
         const endpoint = tab === "currently-showing" ? "/movies/active" :
             tab === "upcoming" ? "/movies/upcoming" : "";
@@ -62,7 +61,7 @@ export default function MoviesPanel() {
             .finally(() => setIsLoading(false));
     };
 
-    const tabs: { id: TabType; label: string }[] = [
+    const tabs: { id: MovieTabType; label: string }[] = [
         { id: "drafts", label: `Drafts (${totalCounts.drafts})` },
         { id: "currently-showing", label: `Currently Showing (${totalCounts["currently-showing"]})` },
         { id: "upcoming", label: `Upcoming (${totalCounts.upcoming})` },

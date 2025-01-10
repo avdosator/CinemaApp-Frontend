@@ -1,7 +1,8 @@
+import { MovieTabType } from "../../../../../types/MovieTabType";
 import "./MovieStatusBadge.css"
 
 type MovieStatusBadgeProps = {
-    statusType: "currently-showing" | "upcoming" | "drafts" | "archived";
+    statusType: MovieTabType,
     daysRemaining?: number;
     draftStep?: 1 | 2 | 3;
 };

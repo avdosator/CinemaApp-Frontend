@@ -2,12 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { Movie } from "../../../../../types/Movie";
 import MovieStatusBadge from "../movie-status-badge/MovieStatusBadge";
+import { MovieTabType } from "../../../../../types/MovieTabType";
 
 type MovieRowProps = {
     movie: Movie;
     showCheckbox?: boolean;
     showActions?: boolean;
-    activeTab: "currently-showing" | "upcoming" | "drafts" | "archived";
+    activeTab: MovieTabType
 };
 
 export default function MovieRow({

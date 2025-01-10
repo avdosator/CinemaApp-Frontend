@@ -1,13 +1,13 @@
 import "./MovieTable.css"
 import { Movie } from "../../../../types/Movie";
 import MovieRow from "./movie-row/MovieRow";
+import { MovieTabType } from "../../../../types/MovieTabType";
 
 type MovieTableProps = {
     movies: Movie[],
     showCheckbox?: boolean,
     showActions?: boolean,
-    activeTab: "currently-showing" | "upcoming" | "drafts" | "archived"
-
+    activeTab: MovieTabType
 }
 
 export default function MovieTable({ movies, showCheckbox = true, showActions = true, activeTab }: MovieTableProps) {

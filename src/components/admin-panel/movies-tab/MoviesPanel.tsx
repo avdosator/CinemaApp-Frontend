@@ -94,7 +94,7 @@ export default function MoviesPanel() {
                 <div>
                     <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "10px" }}>Movies</h6>
                     <div className="movie-tabs-container">
-                    {tabs.map((tab, index) => (
+                        {tabs.map((tab, index) => (
                             <button
                                 key={tab.id}
                                 ref={(el) => (tabRefs.current[index] = el)}
@@ -114,23 +114,26 @@ export default function MoviesPanel() {
             {isLoading ? (
                 <LoadingIndicator />
             ) : pageResponse.content.length > 0 ? (
-                <MovieTable
-                    movies={pageResponse.content}
-                    showActions={activeTab !== "currently-showing"}
-                    showCheckbox={activeTab !== "currently-showing"}
-                    activeTab={activeTab}
-                />
+                <>
+                    <MovieTable
+                        movies={pageResponse.content}
+                        showActions={activeTab !== "currently-showing"}
+                        showCheckbox={activeTab !== "currently-showing"}
+                        activeTab={activeTab}
+                    />
+                    <PaginationBig
+                        currentPage={pageResponse.pageNumber + 1}
+                        totalPages={pageResponse.totalPages}
+                        totalItems={pageResponse.totalElements}
+                        pageSize={pageResponse.pageSize}
+                        onPageChange={handlePageChange}
+                        onPageSizeChange={handlePageSizeChange}
+                    />
+                </>
             ) : (
                 <NoMoviesAdded />
             )}
-            <PaginationBig
-                currentPage={pageResponse.pageNumber + 1}
-                totalPages={pageResponse.totalPages}
-                totalItems={pageResponse.totalElements}
-                pageSize={pageResponse.pageSize}
-                onPageChange={handlePageChange}
-                onPageSizeChange={handlePageSizeChange}
-            />
+
         </div>
     )
 }

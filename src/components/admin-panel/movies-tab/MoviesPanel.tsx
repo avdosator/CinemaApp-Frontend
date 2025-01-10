@@ -69,7 +69,6 @@ export default function MoviesPanel() {
             .catch(console.error)
             .finally(() => setIsLoading(false));
     };
-    console.log(pageResponse.totalElements)
 
     const handlePageChange = (newPage: number) => {
         setPageResponse(prev => ({ ...prev, pageNumber: newPage - 1 }));
@@ -109,7 +108,7 @@ export default function MoviesPanel() {
                     </div>
 
                 </div>
-                <button className="add-movie-btn font-lg-semibold" id="addMovieBtn1">Add Movie</button>
+                <button className="add-movie-btn font-lg-semibold" id="addMovieBtn1" onClick={() => navigate("/admin/movies/new-movie")}>Add Movie</button>
             </div>
             {isLoading ? (
                 <LoadingIndicator />

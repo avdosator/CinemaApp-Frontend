@@ -19,26 +19,32 @@ export default function PaginationBig({
     onPageChange,
     onPageSizeChange
 }: PaginationBigProps) {
+
+    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newSize = parseInt(e.target.value);
+        onPageSizeChange(newSize);
+    };
+
     return (
         <div className="pagination-big font-sm-regular">
             <div className="showing-section">
-                Showing <span className="font-sm-semibold">10</span> out of <span className="font-sm-semibold">12</span> items.
+                Showing <span className="font-sm-semibold">{pageSize}</span> out of <span className="font-sm-semibold">{totalItems}</span> items.
             </div>
             <div className="pagination-big-control">
-                <button>
+                <button disabled={currentPage === 1} onClick={() => onPageChange(1)}>
                     <FontAwesomeIcon icon={faAnglesLeft} width={16} height={16} />
                 </button>
-                <button>
+                <button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
                     <FontAwesomeIcon icon={faAngleLeft} width={16} height={16} />
                 </button>
                 <span>Page</span>
-                <span className="pagination-big-current-page" >1</span>
+                <span className="pagination-big-current-page" >{currentPage}</span>
                 <span>out of</span>
-                <span className="font-sm-semibold" style={{ color: "#101828" }}>2</span>
-                <button>
+                <span className="font-sm-semibold" style={{ color: "#101828" }}>{totalPages}</span>
+                <button disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>
                     <FontAwesomeIcon icon={faAngleRight} width={16} height={16} />
                 </button>
-                <button>
+                <button disabled={currentPage === totalPages} onClick={() => onPageChange(totalPages)}>
                     <FontAwesomeIcon icon={faAnglesRight} width={16} height={16} />
                 </button>
             </div>
@@ -46,7 +52,8 @@ export default function PaginationBig({
                 <span>Display</span>
                 <select
                     className="pagination-select"
-                // onChange={(e) => {/* Add your page size handling logic here */ }}
+                    value={pageSize}
+                    onChange={handlePageSizeChange}
                 >
                     <option value="5">5</option>
                     <option value="10">10</option>

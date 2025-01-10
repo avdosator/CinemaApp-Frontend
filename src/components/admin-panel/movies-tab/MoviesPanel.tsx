@@ -17,7 +17,15 @@ export default function MoviesPanel() {
 
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [underlineStyle, setUnderlineStyle] = useState({ width: "0px", transform: "translateX(0px)" });
-    const [movies, setMovies] = useState<Movie[]>([]);
+    const [pageResponse, setPageResponse] = useState<PageResponse<Movie>>({
+        content: [],
+        pageNumber: 0,
+        pageSize: 10,
+        totalElements: 0,
+        totalPages: 0,
+        empty: true,
+        last: false
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [totalCounts, setTotalCounts] = useState<{ [key in MovieTabType]: number }>({
         drafts: 0,
@@ -35,23 +43,23 @@ export default function MoviesPanel() {
                 transform: `translateX(${activeTabElement.offsetLeft}px)`
             });
         }
-        fetchMovies(activeTab);
+        fetchMovies(activeTab, 0, pageResponse.pageSize);
     }, [activeTab]);
 
-    const fetchMovies = (tab: MovieTabType) => {
+    const fetchMovies = (tab: MovieTabType, page: number, size: number) => {
         setIsLoading(true);
         const endpoint = tab === "currently-showing" ? "/movies/active" :
             tab === "upcoming" ? "/movies/upcoming" : "";
         if (!endpoint) {
-            setMovies([]);
+            setPageResponse(prev => ({ ...prev, content: [], empty: true }));
             setIsLoading(false);
             return;
         }
 
-        ApiService.get<PageResponse<Movie>>(endpoint, { page: 0, size: 1000 })
+        ApiService.get<PageResponse<Movie>>(endpoint, { page, size })
             .then(response => {
-                setMovies(response.content);
-                if (tab in totalCounts) {  // Ensure tab is a valid key before setting
+                setPageResponse(response);
+                if (tab in totalCounts) {
                     setTotalCounts(prev => ({
                         ...prev,
                         [tab]: response.totalElements
@@ -61,6 +69,17 @@ export default function MoviesPanel() {
             .catch(console.error)
             .finally(() => setIsLoading(false));
     };
+
+    const handlePageChange = (newPage: number) => {
+        setPageResponse(prev => ({ ...prev, pageNumber: newPage - 1 }));
+        fetchMovies(activeTab, newPage - 1, pageResponse.pageSize);
+    };
+
+    const handlePageSizeChange = (newSize: number) => {
+        setPageResponse(prev => ({ ...prev, pageSize: newSize, pageNumber: 0 }));
+        fetchMovies(activeTab, 0, newSize);
+    };
+
 
     const tabs: { id: MovieTabType; label: string }[] = [
         { id: "drafts", label: `Drafts (${totalCounts.drafts})` },
@@ -75,7 +94,7 @@ export default function MoviesPanel() {
                 <div>
                     <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "10px" }}>Movies</h6>
                     <div className="movie-tabs-container">
-                        {tabs.map((tab, index) => (
+                    {tabs.map((tab, index) => (
                             <button
                                 key={tab.id}
                                 ref={(el) => (tabRefs.current[index] = el)}
@@ -94,9 +113,9 @@ export default function MoviesPanel() {
             </div>
             {isLoading ? (
                 <LoadingIndicator />
-            ) : movies.length > 0 ? (
+            ) : pageResponse.content.length > 0 ? (
                 <MovieTable
-                    movies={movies}
+                    movies={pageResponse.content}
                     showActions={activeTab !== "currently-showing"}
                     showCheckbox={activeTab !== "currently-showing"}
                     activeTab={activeTab}
@@ -104,7 +123,14 @@ export default function MoviesPanel() {
             ) : (
                 <NoMoviesAdded />
             )}
-            <PaginationBig />
+            <PaginationBig
+                currentPage={pageResponse.pageNumber + 1}
+                totalPages={pageResponse.totalPages}
+                totalItems={pageResponse.totalElements}
+                pageSize={pageResponse.pageSize}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+            />
         </div>
     )
 }

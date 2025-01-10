@@ -1,14 +1,27 @@
+import { faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import "./PaginationBig.css"
+
 export default function PaginationBig() {
     return (
-        <div className="pagination-big">
-            <div className="font-sm-regular" style={{color: "#667085"}}>
-                Showing <span>10</span> out of <span>12</span> items.
+        <div className="pagination-big font-sm-regular">
+            <div className="showing-section">
+                Showing <span className="font-sm-semibold">10</span> out of <span className="font-sm-semibold">12</span> items.
             </div>
-            <div>
-
+            <div className="pagination-big-control">
+                <FontAwesomeIcon icon={faAnglesLeft} width={16} height={16} />
+                <FontAwesomeIcon icon={faAngleLeft} width={16} height={16} />
+                <span>Page</span>
+                <span className="pagination-big-current-page" >1</span>
+                <span>out of</span>
+                <span className="font-sm-semibold" style={{ color: "#101828" }}>2</span>
+                <FontAwesomeIcon icon={faAngleRight} width={16} height={16} />
+                <FontAwesomeIcon icon={faAnglesRight} width={16} height={16} />
             </div>
-            <div>
-
+            <div className="pagination-big-items-per-page">
+                <span>Display</span>
+                <span></span>
+                <span>items per page.</span>
             </div>
         </div>
     )

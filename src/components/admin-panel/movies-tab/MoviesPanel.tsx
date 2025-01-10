@@ -8,6 +8,7 @@ import { PageResponse } from "../../../types/PageResponse";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import MovieTable from "./movie-table/MovieTable";
 import { MovieTabType } from "../../../types/MovieTabType";
+import PaginationBig from "../../shared-components/pagination/pagination-big/PaginationBig";
 
 export default function MoviesPanel() {
     const location = useLocation();
@@ -103,6 +104,7 @@ export default function MoviesPanel() {
             ) : (
                 <NoMoviesAdded />
             )}
+            <PaginationBig />
         </div>
     )
 }

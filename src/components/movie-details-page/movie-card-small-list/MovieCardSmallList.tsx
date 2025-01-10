@@ -2,7 +2,7 @@ import "./MovieCardSmallList.css"
 import { useState } from "react";
 import MovieCardSmall from "../../shared-components/card/movie-card-small/MovieCardSmall";
 import { Movie } from "../../../types/Movie";
-import PaginationSmall from "../../shared-components/pagination/PaginationSmall";
+import PaginationSmall from "../../shared-components/pagination/pagination-small/PaginationSmall";
 import { useActiveMovies } from "../../../context/movie-context/MovieContext";
 
 export default function MovieCardSmallList() {

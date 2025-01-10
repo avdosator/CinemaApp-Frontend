@@ -1,4 +1,4 @@
-import type { PaginationSmall } from "../../../types/PaginationSmall"
+import type { PaginationSmall } from "../../../../types/PaginationSmall"
 import "./PaginationSmall.css"
 
 export default function PaginationSmall({

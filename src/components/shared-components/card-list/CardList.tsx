@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { CardList } from "../../../types/CardList"
-import PaginationSmall from "../pagination/PaginationSmall"
+import PaginationSmall from "../pagination/pagination-small/PaginationSmall"
 import "./CardList.css"
 import { Venue } from "../../../types/Venue";
 import { Movie } from "../../../types/Movie";

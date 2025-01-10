@@ -11,8 +11,13 @@ export default function NewMovie() {
                     <FontAwesomeIcon icon={faXmark} width={12} height={16} />
                 </button>
             </div>
-            
-
+            <div className="add-movie-step-container">
+                <div className="step-circle">1</div>
+                <div className="add-movie-step-line"></div>
+                <div className="step-circle">2</div>
+                <div className="add-movie-step-line"></div>
+                <div className="step-circle">3</div>
+            </div>
         </div>
     )
 }

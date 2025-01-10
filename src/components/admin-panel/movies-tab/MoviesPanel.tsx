@@ -8,23 +8,23 @@ import { PageResponse } from "../../../types/PageResponse";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import MovieTable from "./movie-table/MovieTable";
 
+type TabType = "drafts" | "currently-showing" | "upcoming" | "archived";
+
 export default function MoviesPanel() {
     const location = useLocation();
     const navigate = useNavigate();
-    const activeTab = location.pathname.split("/").pop() as "drafts" | "currently-showing" | "upcoming" | "archived";
-
-    const tabs: { id: "drafts" | "currently-showing" | "upcoming" | "archived"; label: string }[] = [
-        { id: "drafts", label: "Drafts (0)" },
-        { id: "currently-showing", label: "Currently Showing (0)" },
-        { id: "upcoming", label: "Upcoming (0)" },
-        { id: "archived", label: "Archived (0)" }
-    ];
+    const activeTab = location.pathname.split("/").pop() as TabType;
 
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [underlineStyle, setUnderlineStyle] = useState({ width: "0px", transform: "translateX(0px)" });
     const [movies, setMovies] = useState<Movie[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [totalCounts, setTotalCounts] = useState<{ [key in TabType]: number }>({
+        drafts: 0,
+        "currently-showing": 0, // quotes needed because of dash
+        upcoming: 0,
+        archived: 0
+    });
 
     useEffect(() => {
         const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
@@ -38,7 +38,7 @@ export default function MoviesPanel() {
         fetchMovies(activeTab);
     }, [activeTab]);
 
-    const fetchMovies = (tab: string) => {
+    const fetchMovies = (tab: TabType) => {
         setIsLoading(true);
         const endpoint = tab === "currently-showing" ? "/movies/active" :
             tab === "upcoming" ? "/movies/upcoming" : "";
@@ -51,11 +51,23 @@ export default function MoviesPanel() {
         ApiService.get<PageResponse<Movie>>(endpoint, { page: 0, size: 1000 })
             .then(response => {
                 setMovies(response.content);
-                console.log(response.totalElements);
+                if (tab in totalCounts) {  // Ensure tab is a valid key before setting
+                    setTotalCounts(prev => ({
+                        ...prev,
+                        [tab]: response.totalElements
+                    }));
+                }
             })
             .catch(console.error)
             .finally(() => setIsLoading(false));
     };
+
+    const tabs: { id: TabType; label: string }[] = [
+        { id: "drafts", label: `Drafts (${totalCounts.drafts})` },
+        { id: "currently-showing", label: `Currently Showing (${totalCounts["currently-showing"]})` },
+        { id: "upcoming", label: `Upcoming (${totalCounts.upcoming})` },
+        { id: "archived", label: `Archived (${totalCounts.archived})` }
+    ];
 
     return (
         <div className="movies-panel">

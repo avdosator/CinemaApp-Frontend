@@ -25,10 +25,13 @@ export default function PaginationBig({
         onPageSizeChange(newSize);
     };
 
+    const startIndex = (currentPage - 1) * pageSize + 1;
+    const endIndex = Math.min(currentPage * pageSize, totalItems);
+
     return (
         <div className="pagination-big font-sm-regular">
             <div className="showing-section">
-                Showing <span className="font-sm-semibold">{pageSize}</span> out of <span className="font-sm-semibold">{totalItems}</span> items.
+                Showing <span className="font-sm-semibold">{startIndex} - {endIndex}</span> out of <span className="font-sm-semibold">{totalItems}</span> items.
             </div>
             <div className="pagination-big-control">
                 <button disabled={currentPage === 1} onClick={() => onPageChange(1)}>

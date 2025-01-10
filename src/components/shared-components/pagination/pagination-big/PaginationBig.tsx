@@ -2,7 +2,23 @@ import { faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight } from "@fortawe
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./PaginationBig.css"
 
-export default function PaginationBig() {
+type PaginationBigProps = {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    pageSize: number;
+    onPageChange: (page: number) => void;
+    onPageSizeChange: (size: number) => void;
+};
+
+export default function PaginationBig({
+    currentPage,
+    totalPages,
+    totalItems,
+    pageSize,
+    onPageChange,
+    onPageSizeChange
+}: PaginationBigProps) {
     return (
         <div className="pagination-big font-sm-regular">
             <div className="showing-section">
@@ -32,10 +48,9 @@ export default function PaginationBig() {
                     className="pagination-select"
                 // onChange={(e) => {/* Add your page size handling logic here */ }}
                 >
+                    <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
                 </select>
                 <span>items per page.</span>
             </div>

@@ -23,7 +23,11 @@
     height: 32px;
     border: none;
     background-color: inherit;
-    color: inherit;
+    color: #101828;;
+}
+
+.pagination-big-control button:disabled {
+    color: #667085;
 }
 
 .pagination-big-current-page {

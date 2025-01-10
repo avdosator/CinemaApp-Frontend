@@ -1,0 +1,29 @@
+.pagination-big {
+    width: 100%;
+    padding: 12px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #667085;
+}
+
+.pagination-big .showing-section {
+   
+}
+
+.showing-section span {
+    color: #101828;
+}
+
+.pagination-big-control {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.pagination-big-current-page {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #E4E7EC;
+}

@@ -13,6 +13,7 @@
 
 .showing-section span {
     color: #101828;
+    padding: 0px 4px;
 }
 
 .pagination-big-control {
@@ -21,9 +22,21 @@
    gap: 8px;
 }
 
+.pagination-big-control button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: inherit;
+    color: inherit;
+}
+
 .pagination-big-current-page {
     width: 32px;
     height: 32px;
+    display: flex;
     border-radius: 8px;
     border: 1px solid #E4E7EC;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }

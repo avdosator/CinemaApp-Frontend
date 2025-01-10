@@ -81,12 +81,11 @@ export default function MoviesPanel() {
         fetchMovies(activeTab, 0, newSize);
     };
 
-
     const tabs: { id: MovieTabType; label: string }[] = [
-        { id: "drafts", label: `Drafts (${activeTab === "drafts" ? pageResponse.totalElements : 0})` },
-        { id: "currently-showing", label: `Currently Showing (${activeTab === "currently-showing" ? pageResponse.totalElements : 0})` },
-        { id: "upcoming", label: `Upcoming (${activeTab === "upcoming" ? pageResponse.totalElements : 0})` },
-        { id: "archived", label: `Archived (${activeTab === "archived" ? pageResponse.totalElements : 0})` }
+        { id: "drafts", label: `Drafts (${totalCounts.drafts})` },
+        { id: "currently-showing", label: `Currently Showing (${totalCounts["currently-showing"]})` },
+        { id: "upcoming", label: `Upcoming (${totalCounts.upcoming})` },
+        { id: "archived", label: `Archived (${totalCounts.archived})` }
     ];
 
     return (

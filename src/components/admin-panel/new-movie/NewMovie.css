@@ -1,0 +1,22 @@
+.add-movie-container {
+    display: flex;
+}
+
+.add-movie-heading {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-movie-heading h6 {
+    color: #1D2939;
+}
+
+.add-movie-cancel-btn {
+    border-radius: 8px;
+    border: 1px solid #B22222;
+    padding: 12px;
+    background-color: inherit;
+    color: #B22222;
+}

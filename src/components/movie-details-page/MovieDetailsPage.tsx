@@ -30,6 +30,10 @@ export default function MovieDetailsPage() {
         }
     }, [id]);
 
+    const isActive = (): boolean => {
+        return movie!.projections.some(projection => new Date(projection.startDate) <= new Date());
+    };
+
     return (
         isLoading ? (
             <LoadingIndicator />
@@ -47,7 +51,7 @@ export default function MovieDetailsPage() {
                                     src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     loading="eager"
-                                    style={{borderRadius:"16px 0px 0px 16px", outline: "none"}}
+                                    style={{ borderRadius: "16px 0px 0px 16px", outline: "none" }}
                                 >
                                 </iframe>
                             </div>
@@ -114,12 +118,7 @@ export default function MovieDetailsPage() {
                                 </div>
                             </div>
                             <div className="ticket-container">
-                                {movie.projections.some(projection => projection.status === "active") ?
-                                    (<TicketForm movie={movie} />) :
-                                    movie.projections.some(projection => projection.status === "upcoming") ?
-                                        (< UpcomingMovieInfo title={movie.title} />) :
-                                        null
-                                }
+                                {isActive() ? (<TicketForm movie={movie} />) : (<UpcomingMovieInfo title={movie.title} />)}
                             </div>
                         </section>
                         <section className="movie-rating-container">

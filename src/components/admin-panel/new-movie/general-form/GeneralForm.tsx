@@ -3,24 +3,40 @@ import "./GeneralForm.css"
 import { faCalendarDays, faClock, faFilm, faLanguage, faLink, faR, faT, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SelectOptionType } from "../../../../types/SelectOptionType";
-import { useEffect, useState } from "react";
-import ApiService from "../../../../service/ApiService";
-import { Genre } from "../../../../types/Genre";
 import { GeneralFormData } from "../../../../types/FormData";
 import Select, { SingleValue } from "react-select";
 import { DateRange, Range, RangeKeyDict } from "react-date-range";
 import { format } from "date-fns";
 
-export default function GeneralForm() {
-    
-    const handleChange = (
-        name: keyof GeneralFormData,
-        value: string | SelectOptionType[]
-    ): void => {
+type GeneralFormProps = {
+    formData: GeneralFormData;
+    setFormData: React.Dispatch<React.SetStateAction<GeneralFormData>>;
+    genreOptions: SelectOptionType[];
+    calendarState: Range[];
+    setCalendarState: React.Dispatch<React.SetStateAction<Range[]>>;
+    isDatePickerOpened: boolean;
+    setIsDatePickerOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    formattedDateRange: string;
+    setFormattedDateRange: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function GeneralForm({
+    formData,
+    setFormData,
+    genreOptions,
+    calendarState,
+    setCalendarState,
+    isDatePickerOpened,
+    setIsDatePickerOpened,
+    formattedDateRange,
+    setFormattedDateRange
+}: GeneralFormProps) {
+
+    const handleChange = (name: keyof GeneralFormData, value: string | SelectOptionType[]) => {
         setFormData((prevData) => ({
             ...prevData,
             [name]: value
-        } as GeneralFormData));
+        }));
     };
 
     const handleApply = () => {

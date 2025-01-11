@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import ApiService from "../../../service/ApiService";
 import { GeneralFormData } from "../../../types/FormData";
 import { Genre } from "../../../types/Genre";
-import { DateRange, Range, RangeKeyDict } from "react-date-range";
+import { Range } from "react-date-range";
 import { SelectOptionType } from "../../../types/SelectOptionType";
 
 export default function NewMovie() {
@@ -57,7 +57,17 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
-            <GeneralForm />
+            <GeneralForm
+                formData={formData}
+                setFormData={setFormData}
+                genreOptions={genreOptions!}
+                calendarState={calendarState}
+                setCalendarState={setCalendarState}
+                isDatePickerOpened={isDatePickerOpened}
+                setIsDatePickerOpened={setIsDatePickerOpened}
+                formattedDateRange={formattedDateRange}
+                setFormattedDateRange={setFormattedDateRange}
+            />
             <ControlButtonGroup />
         </div>
     )

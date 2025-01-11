@@ -46,7 +46,7 @@ function App() {
 								<Routes>
 									<Route path='/' element={<HomePage />} />
 									<Route path='/home' element={<HomePage />} />
-									<Route path='/movies/*' element={<MovieRoutes />} />
+									<Route path='/movies/*' element={<MovieRoutes openLoginForm={openAuthModal} />} />
 									<Route path='/about' element={<AboutUsPage />} />
 									<Route path='/pricing' element={<PricingPage />} />
 

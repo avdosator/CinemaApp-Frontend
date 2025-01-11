@@ -2,7 +2,12 @@ import { Link } from "react-router-dom"
 import "./UpcomingMovieInfo.css"
 import NotificationDrawing from "./notification-drawing/NotificationDrawing"
 
-export default function UpcomingMovieInfo({ title }: { title: string }) {
+type UpcomingMovieInfoProps = {
+    title: string,
+    openLoginForm: (path?: string, state?: any) => void
+}
+
+export default function UpcomingMovieInfo({ title, openLoginForm }: UpcomingMovieInfoProps) {
     return (
         <div className="upcoming-movie-info">
             <div className="upcoming-movie-main-info">
@@ -12,9 +17,9 @@ export default function UpcomingMovieInfo({ title }: { title: string }) {
             <NotificationDrawing />
             <div className="notify-me-container">
                 <div className="horizontal-divider"></div>
-                <button className="font-lg-semibold notify-me-btn">Notify me</button>
+                <button className="font-lg-semibold notify-me-btn" disabled>Notify me</button>
                 <p className="body-lg-regular">
-                    Only signed users can be notified. <Link to="#" className="font-lg-semibold signup-anchor">Sign up</Link>
+                    Only signed users can be notified. <Link to="#" className="font-lg-semibold signup-anchor" onClick={() => openLoginForm()}>Sign up</Link>
                 </p>
             </div>
         </div>

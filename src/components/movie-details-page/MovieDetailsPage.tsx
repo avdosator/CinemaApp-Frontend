@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import UpcomingMovieInfo from "./upcoming-movie-info/UpcomingMovieInfo";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
 
-export default function MovieDetailsPage() {
+export default function MovieDetailsPage({ openLoginForm }: { openLoginForm: (path?: string, state?: any) => void }) {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<Movie | null>(null);
     let [isLoading, setIsLoading] = useState<boolean>(true);
@@ -118,7 +118,7 @@ export default function MovieDetailsPage() {
                                 </div>
                             </div>
                             <div className="ticket-container">
-                                {isActive() ? (<TicketForm movie={movie} />) : (<UpcomingMovieInfo title={movie.title} />)}
+                                {isActive() ? (<TicketForm movie={movie} />) : (<UpcomingMovieInfo title={movie.title} openLoginForm={openLoginForm} />)}
                             </div>
                         </section>
                         <section className="movie-rating-container">

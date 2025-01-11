@@ -113,7 +113,7 @@ export default function GeneralForm() {
                             <FontAwesomeIcon icon={faCalendarDays} className={`input-icon ${formData?.startDate ? "red-icon" : ""}`} />
                             <Select<SelectOptionType, false>
                                 options={[]}
-                                placeholder="Select Date Range"
+                                placeholder="Choose projection date"
                                 className="dropdown-menu-input"
                                 classNamePrefix="dropdown"
                                 isClearable={true}
@@ -190,7 +190,7 @@ export default function GeneralForm() {
                             <FontAwesomeIcon icon={faFilm} className={`input-icon ${formData.genre.length > 0 ? "red-icon" : ""}`} />
                             <Select<SelectOptionType, true>
                                 options={genreOptions}
-                                placeholder="All Cities"
+                                placeholder="Choose genre"
                                 className="dropdown-menu-input"
                                 classNamePrefix="dropdown"
                                 isClearable={true}

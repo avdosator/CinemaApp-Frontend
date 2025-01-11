@@ -1,5 +1,7 @@
 .general-form {
     width: 100%;
+    margin-bottom: 72px;
+    margin-top: 32px;
 }
 
 .half-width-elements {
@@ -38,7 +40,6 @@
     top: 24px;
     transform: translateY(-50%);
     color: #667085;
-    /* z-index: 1; */
 }
 
 #trailerLinkIcon {

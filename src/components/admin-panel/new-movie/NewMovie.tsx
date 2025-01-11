@@ -1,6 +1,8 @@
 import "./NewMovie.css"
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import GeneralForm from "./general-form/GeneralForm";
+import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 
 export default function NewMovie() {
     return (
@@ -23,6 +25,8 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
+            <GeneralForm />
+            <ControlButtonGroup />
         </div>
     )
 }

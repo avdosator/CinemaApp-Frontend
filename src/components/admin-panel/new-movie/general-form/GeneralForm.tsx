@@ -12,33 +12,7 @@ import { DateRange, Range, RangeKeyDict } from "react-date-range";
 import { format } from "date-fns";
 
 export default function GeneralForm() {
-    let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
-    let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
-    let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
-    let [formattedDateRange, setFormattedDateRange] = useState("");
-
-    let [formData, setFormData] = useState<GeneralFormData>({
-        title: "",
-        language: "",
-        startDate: "",
-        endDate: "",
-        director: "",
-        pgRating: "",
-        duration: "",
-        genre: [],
-        trailer: "",
-        synopsis: ""
-    });
-
-    useEffect(() => {
-        ApiService.get<Genre[]>("/genres")
-            .then(genresResponse => {
-                const genreOptions = genresResponse.map(genre => ({ value: genre.id, label: genre.name }))
-                setGenreOptions(genreOptions);
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }, [])
-
+    
     const handleChange = (
         name: keyof GeneralFormData,
         value: string | SelectOptionType[]

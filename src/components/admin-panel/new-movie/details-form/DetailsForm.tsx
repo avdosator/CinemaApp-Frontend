@@ -41,40 +41,50 @@ export default function DetailsForm() {
     return (
         <form className="details-form">
             <div className="writers-cast-container">
-                <div className="upload-writers-container">
-                    <div className="label-and-trash-icon-container">
-                        <label htmlFor="" className="font-lg-semibold">Writers</label>
-                        <button className="remove-csv-btn">
-                            <FontAwesomeIcon icon={faTrash} width={14} height={16} color="#D52D2D" />
-                        </button>
-                    </div>
-                    <div className="file-input-container">
-                        <input
-                            type="file"
-                            className="file-input"
-                            accept=".csv"
-                            onChange={(event) => handleFileParse(event, setWritersData)}
-                        />
-                    </div>
-                    {writersData.length > 0 && (<WritersContainer writersData={writersData} />)}
-                </div>
-                <div className="upload-cast-container">
-                    <div className="label-and-trash-icon-container">
-                        <label htmlFor="" className="font-lg-semibold">Cast</label>
-                        <button className="remove-csv-btn">
-                            <FontAwesomeIcon icon={faTrash} width={14} height={16} color="#D52D2D" />
-                        </button>
-                    </div>
-                    <div className="file-input-container">
-                        <input
-                            type="file"
-                            className="file-input"
-                            accept=".csv"
-                            onChange={(event) => handleFileParse(event, setCastData)}
-                        />
-                    </div>
-                    {castData.length > 0 && (<CastContainer castData={castData} />)}
-                </div>
+                {writersData.length > 0
+                    ? (<WritersContainer writersData={writersData} />)
+                    : (<>
+                        <div className="upload-writers-container">
+                            <div className="label-and-trash-icon-container">
+                                <label htmlFor="" className="font-lg-semibold">Writers</label>
+                                <button className="remove-csv-btn">
+                                    <FontAwesomeIcon icon={faTrash} width={14} height={16} color="#D52D2D" />
+                                </button>
+                            </div>
+                            <div className="file-input-container">
+                                <input
+                                    type="file"
+                                    className="file-input"
+                                    accept=".csv"
+                                    onChange={(event) => handleFileParse(event, setWritersData)}
+                                />
+                            </div>
+                        </div>
+                    </>
+                    )}
+
+
+                {castData.length > 0
+                    ? (<CastContainer castData={castData} />)
+                    : (<>
+                        <div className="upload-cast-container">
+                            <div className="label-and-trash-icon-container">
+                                <label htmlFor="" className="font-lg-semibold">Cast</label>
+                                <button className="remove-csv-btn">
+                                    <FontAwesomeIcon icon={faTrash} width={14} height={16} color="#D52D2D" />
+                                </button>
+                            </div>
+                            <div className="file-input-container">
+                                <input
+                                    type="file"
+                                    className="file-input"
+                                    accept=".csv"
+                                    onChange={(event) => handleFileParse(event, setCastData)}
+                                />
+                            </div>
+                        </div>
+                    </>
+                    )}
             </div>
 
             <div>

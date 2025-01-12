@@ -90,7 +90,7 @@ export default function DetailsForm() {
                         )}
                 </div>
             </div>
-            <div>
+            <div style={{marginBottom: "96px"}}>
                 <label htmlFor="" className="font-lg-semibold upload-photos-label">Upload Photos</label>
                 <div className="upload-photos-container" {...getRootProps()}>
                     <input {...getInputProps()} />

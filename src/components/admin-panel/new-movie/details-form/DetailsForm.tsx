@@ -5,6 +5,7 @@ import Papa from "papaparse";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WritersContainer from "./writers-container/WritersContainer";
+import CastContainer from "./cast-container/CastContainer";
 
 export default function DetailsForm() {
     const [writersData, setWritersData] = useState<string[]>([]);
@@ -72,16 +73,7 @@ export default function DetailsForm() {
                             onChange={(event) => handleFileParse(event, setCastData)}
                         />
                     </div>
-                    {castData.length > 0 && (
-                        <div className="cast-writers-list">
-                            {castData.map((cast, index) => (
-                                <div key={index} className="actor-name-group">
-                                    <p className="font-md-semibold">{cast.split("/")[0]}</p>
-                                    <p className="font-sm-regular" style={{ color: "#667085" }}>{cast.split("/")[1]}</p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    {castData.length > 0 && (<CastContainer castData={castData} />)}
                 </div>
             </div>
 

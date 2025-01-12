@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import WritersContainer from "./writers-container/WritersContainer";
 
 export default function DetailsForm() {
     const [writersData, setWritersData] = useState<string[]>([]);
@@ -54,13 +55,7 @@ export default function DetailsForm() {
                             onChange={(event) => handleFileParse(event, setWritersData)}
                         />
                     </div>
-                    {writersData.length > 0 && (
-                        <div className="cast-writers-list">
-                            {writersData.map((writer, index) => (
-                                <span className="font-md-semibold" key={index}>{writer}</span>
-                            ))}
-                        </div>
-                    )}
+                    {writersData.length > 0 && (<WritersContainer writersData={writersData} />)}
                 </div>
                 <div className="upload-cast-container">
                     <div className="label-and-trash-icon-container">

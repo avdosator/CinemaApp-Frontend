@@ -9,6 +9,7 @@ import { GeneralFormData } from "../../../types/FormData";
 import { Genre } from "../../../types/Genre";
 import { Range } from "react-date-range";
 import { SelectOptionType } from "../../../types/SelectOptionType";
+import DetailsForm from "./details-form/DetailsForm";
 
 export default function NewMovie() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -57,7 +58,7 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
-            <GeneralForm
+            {/* <GeneralForm
                 formData={formData}
                 setFormData={setFormData}
                 genreOptions={genreOptions!}
@@ -67,7 +68,8 @@ export default function NewMovie() {
                 setIsDatePickerOpened={setIsDatePickerOpened}
                 formattedDateRange={formattedDateRange}
                 setFormattedDateRange={setFormattedDateRange}
-            />
+            /> */}
+            <DetailsForm />
             <ControlButtonGroup />
         </div>
     )

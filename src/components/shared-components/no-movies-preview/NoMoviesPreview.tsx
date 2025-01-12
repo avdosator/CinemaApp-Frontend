@@ -11,11 +11,11 @@ export default function NoMoviesPreview({ infoText }: { infoText: string }) {
     const handleButtonClick = () => {
         if (location.pathname === "/upcoming-movies") {
             // Remove query parameters and reload the page
-            navigate("/upcoming-movies", { replace: true });
+            navigate("/movies/upcoming", { replace: true });
             window.location.reload();
         } else {
             // Navigate to the upcoming movies page if on any other page
-            navigate("/upcoming-movies");
+            navigate("/movies/upcoming");
         }
     };
 

@@ -1,20 +1,16 @@
 import { useState } from "react";
 import "./DetailsForm.css"
-import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import WritersContainer from "./writers-container/WritersContainer";
 import CastContainer from "./cast-container/CastContainer";
+import PhotosUpload from "./photos-upload/PhotosUpload";
 
 export default function DetailsForm() {
     const [writersData, setWritersData] = useState<string[]>([]);
     const [castData, setCastData] = useState<string[]>([]);
 
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "image/*": [] },
-        maxFiles: 4,
-    });
 
     const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
         const file = event.target.files?.[0];
@@ -90,15 +86,7 @@ export default function DetailsForm() {
                         )}
                 </div>
             </div>
-            <div style={{marginBottom: "96px"}}>
-                <label htmlFor="" className="font-lg-semibold upload-photos-label">Upload Photos</label>
-                <div className="upload-photos-container" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p className="font-lg-underline-semibold photo-upload-btn">+ Upload Photos</p>
-                    <p className="font-md-regular" style={{ marginBottom: "12px" }}>or just drag and drop</p>
-                    <p className="font-sm-regular">* Add up to 4 photos</p>
-                </div>
-            </div>
+            <PhotosUpload />
         </form>
     )
 }

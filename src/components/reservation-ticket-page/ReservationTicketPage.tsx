@@ -6,8 +6,10 @@ import "./ReservationTicketPage.css"
 import ApiService from "../../service/ApiService";
 import { Seat } from "../../types/Seat";
 import BuyTicketPage from "./buy-ticket-page/BuyTicketPage";
+import { TicketPrice } from "../../types/TicketPrice";
+import { calculateReservedSeatsPrice } from "../../utils/utils";
 
-const SESSION_DURATION = 31100;
+const SESSION_DURATION = 300;
 
 export default function ReservationTicketPage() {
     const location = useLocation();
@@ -17,8 +19,23 @@ export default function ReservationTicketPage() {
     const [remainingTime, setRemainingTime] = useState(SESSION_DURATION);
     const [showModal, setShowModal] = useState(false); // Modal visibility
     const [step, setStep] = useState<"Seat Options" | "Payment Details">("Seat Options");
+    const [ticketPrices, setTicketPrices] = useState<TicketPrice[]>([]);
+
+    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats, ticketPrices);
 
     useEffect(() => window.scrollTo(0, 0), []);
+
+    useEffect(() => {
+        const fetchTicketPrices = async () => {
+            try {
+                const prices = await ApiService.get<TicketPrice[]>("/ticket-prices");
+                setTicketPrices(prices);
+            } catch (error) {
+                console.error("Failed to fetch ticket prices:", error);
+            }
+        };
+        fetchTicketPrices();
+    }, []);
 
     const refreshProjectionState = async () => {
         try {
@@ -100,6 +117,7 @@ export default function ReservationTicketPage() {
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 proceedToBuyTicket={setStep}
+                totalPrice={totalPrice}
             />)
                 :
                 (<BuyTicketPage projection={projection} movie={movie} selectedSeats={selectedSeats} />)

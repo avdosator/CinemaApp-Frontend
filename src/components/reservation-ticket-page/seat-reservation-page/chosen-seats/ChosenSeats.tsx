@@ -1,21 +1,15 @@
 import { Seat } from "../../../../types/Seat"
-import { calculateReservedSeatsPrice } from "../../../../utils/utils";
 import "./ChosenSeats.css"
 
 type ChosenSeatsProps = {
     selectedSeats: Seat[],
-    proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>
+    proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>,
+    totalPrice: number
 }
 
-export default function ChosenSeats({ selectedSeats, proceedToBuyTicket }: ChosenSeatsProps) {
+export default function ChosenSeats({ selectedSeats, proceedToBuyTicket, totalPrice }: ChosenSeatsProps) {
 
     let areSelectedSeatsEmpty: boolean = selectedSeats.length === 0;
-
-    // Calculate total price of selected seats
-    let totalPrice: number = 0;
-    if (!areSelectedSeatsEmpty) {
-        totalPrice = calculateReservedSeatsPrice(selectedSeats);
-    }
 
     return (
         <div className="chosen-seats-container">

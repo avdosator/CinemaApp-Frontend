@@ -21,7 +21,7 @@ type NewBankCardFormProps = {
     projection: ProjectionInstance,
     movie: Movie,
     selectedSeats: Seat[],
-    totalPrice:number
+    totalPrice: number
 }
 
 const inputStyle = {
@@ -77,7 +77,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats, tota
         const intentBody = {
             userId: currentUser?.id,
             projectionInstanceId: projection.id,
-            amount: totalPrice,
+            selectedSeats: selectedSeats,
         };
 
         try {
@@ -96,17 +96,16 @@ export default function NewBankCardForm({ projection, movie, selectedSeats, tota
             } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
                 const jwt = localStorage.getItem("authToken");
                 const headers = { "Authorization": `Bearer ${jwt}` };
-                const ticketResponse = await ApiService.post<{ status: string, message: string }>("/payments", {
+
+                const createPaymentBody = {
                     userId: currentUser?.id,
                     projectionInstanceId: projection.id,
-                    amount: totalPrice,
-                    selectedSeats: selectedSeats.map((seat) => seat.id),
+                    selectedSeats: selectedSeats,
                     paymentIntentId: result.paymentIntent.id,
                     movieId: movie.id
-                },
-                    headers
-                );
-                if (ticketResponse.status === "success") {
+                }
+                const createPaymentResponse = await ApiService.post<{ status: string, message: string }>("/payments", createPaymentBody, headers);
+                if (createPaymentResponse.status === "success") {
                     setSuccessfulPayment(true);
                 }
             }

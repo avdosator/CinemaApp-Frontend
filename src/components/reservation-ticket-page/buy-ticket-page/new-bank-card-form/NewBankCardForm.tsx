@@ -7,10 +7,11 @@ import "./NewBankCardForm.css"
 import { useUser } from "../../../../context/UserContext"
 import ApiService from "../../../../service/ApiService"
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import UnsuccessfulPaymentNotification from "./UnsuccessfulPaymentNotification"
 import SuccessfulPaymentNotification from "./SuccessfulPaymentNotification"
+import { TicketPrice } from "../../../../types/TicketPrice"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -49,8 +50,9 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
     const [successfulPayment, setSuccessfulPayment] = useState<boolean>(false);
     const [unsuccessfulPayment, setUnsuccessfulPayment] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [ticketPrices, setTicketPrices] = useState<TicketPrice[]>([]);
 
-    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats, ticketPrices);
 
     const { handleSubmit, formState: { isSubmitting } } = useForm<NewBankCardFormType>({ mode: "onChange", });
     const { currentUser } = useUser();
@@ -59,6 +61,18 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
     const elements = useElements();
 
     const isFormValid = stripe && elements && cardDetails.isCardNumberValid && cardDetails.isExpiryDateValid && cardDetails.isCvvValid;
+
+    useEffect(() => {
+        const fetchTicketPrices = async () => {
+            try {
+                const prices = await ApiService.get<TicketPrice[]>("/ticket-prices");
+                setTicketPrices(prices);
+            } catch (error) {
+                console.error("Failed to fetch ticket prices:", error);
+            }
+        };
+        fetchTicketPrices();
+    }, []);
 
     const handleCardChange = (field: "cardNumber" | "expiryDate" | "cvv", event: any) => {
         setCardDetails((prev) => ({

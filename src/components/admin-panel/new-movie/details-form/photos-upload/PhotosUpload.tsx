@@ -3,6 +3,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
 
 export default function PhotosUpload() {
     const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
@@ -53,8 +54,11 @@ export default function PhotosUpload() {
                                     src={URL.createObjectURL(file)}
                                     className="uploaded-photo-thumbnail"
                                 />
+                                <div className="upload-photo-btn-container">
+                                    <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
+                                </div>
                                 <div className="uploaded-photo-actions">
-                                    <label className="cover-photo-label">
+                                    <label className="font-md-semibold">
                                         <input
                                             type="radio"
                                             name="coverPhoto"

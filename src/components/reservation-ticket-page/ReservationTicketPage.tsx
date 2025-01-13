@@ -120,7 +120,7 @@ export default function ReservationTicketPage() {
                 totalPrice={totalPrice}
             />)
                 :
-                (<BuyTicketPage projection={projection} movie={movie} selectedSeats={selectedSeats} />)
+                (<BuyTicketPage projection={projection} movie={movie} selectedSeats={selectedSeats} totalPrice={totalPrice} />)
             }
 
         </div>

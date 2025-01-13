@@ -1,0 +1,34 @@
+.uploaded-photos-preview {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #E4E7EC;
+    border-radius: 16px;
+    display: flex;
+    gap: 16px;
+}
+
+.uploaded-photo-preview-item {
+    /* width:25%; */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.uploaded-photo-thumbnail {
+    width: 258px;
+    height: 242px;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.uploaded-photo-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-photo-btn {
+    background-color: inherit;
+    border: none;
+    color: #D52D2D;
+}

@@ -3,13 +3,15 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ApiService from "../../../service/ApiService";
 import { GeneralFormData } from "../../../types/FormData";
 import { Genre } from "../../../types/Genre";
 import { Range } from "react-date-range";
 import { SelectOptionType } from "../../../types/SelectOptionType";
 import DetailsForm from "./details-form/DetailsForm";
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
 
 export default function NewMovie() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -38,6 +40,60 @@ export default function NewMovie() {
             })
             .catch(error => console.error("Error fetching data:", error));
     }, [])
+
+    const [writersData, setWritersData] = useState<string[]>([]);
+    const [castData, setCastData] = useState<string[]>([]);
+    const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
+    const [coverPhotoIndex, setCoverPhotoIndex] = useState<number | null>(null);
+    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
+
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: { "image/*": [] },
+        maxFiles: 4,
+        onDrop: (acceptedFiles) => {
+            if (uploadedPhotos.length + acceptedFiles.length > 4) {
+                alert("You can only upload up to 4 photos.");
+                return;
+            }
+            setUploadedPhotos((prev) => [...prev, ...acceptedFiles]);
+        }
+    });
+
+    const handleRemovePhoto = (index: number) => {
+        setUploadedPhotos((prev) => prev.filter((_, i) => i !== index));
+        if (index === coverPhotoIndex) {
+            setCoverPhotoIndex(null);
+        }
+    };
+
+    const handleSetCoverPhoto = (index: number) => {
+        setCoverPhotoIndex(index);
+    };
+
+    const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
+        const file = event.target.files?.[0];
+        if (file && file.name.endsWith(".csv")) {
+            Papa.parse(file, {
+                header: false,
+                complete: (result) => {
+                    const parsedData = result.data.flat().filter(Boolean) as string[];
+                    setter(parsedData);
+                },
+                error: () => alert("Error parsing the CSV file.")
+            });
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
+    };
+
+    const handleRemoveFile = (setter: React.Dispatch<React.SetStateAction<string[]>>) => {
+        setter([]);
+    };
+
+    const isFileParsed = (data: string[]): boolean => {
+        return data.length > 0;
+    }
     return (
         <div className="add-movie-container">
             <div className="add-movie-heading">
@@ -69,7 +125,24 @@ export default function NewMovie() {
                 formattedDateRange={formattedDateRange}
                 setFormattedDateRange={setFormattedDateRange}
             /> */}
-            <DetailsForm />
+            <DetailsForm
+                writersData={writersData}
+                setWritersData={setWritersData}
+                castData={castData}
+                setCastData={setCastData}
+                uploadedPhotos={uploadedPhotos}
+                setUploadedPhotos={setUploadedPhotos}
+                coverPhotoIndex={coverPhotoIndex}
+                setCoverPhotoIndex={setCoverPhotoIndex}
+                getRootProps={getRootProps}
+                getInputProps={getInputProps}
+                handleRemovePhoto={handleRemovePhoto}
+                handleSetCoverPhoto={handleSetCoverPhoto}
+                handleRemoveFile={handleRemoveFile}
+                handleFileParse={handleFileParse}
+                isFileParsed={isFileParsed}
+                placeholderRefs={placeholderRefs}
+            />
             <ControlButtonGroup />
         </div>
     )

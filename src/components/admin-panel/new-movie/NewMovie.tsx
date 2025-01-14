@@ -5,13 +5,14 @@ import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 import { useState, useEffect, useRef } from "react";
 import ApiService from "../../../service/ApiService";
-import { DetailsFormData, GeneralFormData } from "../../../types/FormData";
+import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import { Genre } from "../../../types/Genre";
 import { Range } from "react-date-range";
 import { SelectOptionType } from "../../../types/SelectOptionType";
 import DetailsForm from "./details-form/DetailsForm";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import ProjectionsForm from "./projections-form/ProjectionsForm";
 
 export default function NewMovie() {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -38,6 +39,34 @@ export default function NewMovie() {
         coverPhotoIndex: null
     });
     const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
+
+    const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
+        { city: null, venue: null, time: "" }
+    ]);
+
+    const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
+
+    const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
+        setProjectionsFormData((prev) => {
+            const updated = prev.map((group, i) =>
+                i === index ? { ...group, [field]: value } : group
+            );
+
+            const { venue, time } = updated[index];
+            const hasCollision = updated.some((group, i) =>
+                i !== index && group.venue?.value === venue?.value && group.time === time
+            );
+
+            setErrorMessages(prev => {
+                const newErrors = { ...prev };
+                if (hasCollision) newErrors[index] = "Movie projection times cannot collide for the same venue";
+                else delete newErrors[index];
+                return newErrors;
+            });
+
+            return updated;
+        });
+    };
 
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
@@ -127,9 +156,9 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
-            {/* <GeneralForm
-                formData={formData}
-                setFormData={setFormData}
+            <GeneralForm
+                formData={generalFormData}
+                setFormData={setGeneralFormData}
                 genreOptions={genreOptions!}
                 calendarState={calendarState}
                 setCalendarState={setCalendarState}
@@ -137,8 +166,8 @@ export default function NewMovie() {
                 setIsDatePickerOpened={setIsDatePickerOpened}
                 formattedDateRange={formattedDateRange}
                 setFormattedDateRange={setFormattedDateRange}
-            /> */}
-            <DetailsForm
+            />
+            {/* <DetailsForm
                 detailsFormData={detailsFormData}
                 setDetailsFormData={setDetailsFormData}
                 getRootProps={getRootProps}
@@ -149,7 +178,14 @@ export default function NewMovie() {
                 handleFileParse={handleFileParse}
                 isFileParsed={isFileParsed}
                 placeholderRefs={placeholderRefs}
-            />
+            /> */}
+            {/* <ProjectionsForm
+                projectionsFormData={projectionsFormData}
+                setProjectionsFormData={setProjectionsFormData}
+                errorMessages={errorMessages}
+                setErrorMessages={setErrorMessages}
+                onProjectionsChange={handleProjectionsChange}
+            /> */}
             <ControlButtonGroup />
         </div>
     )

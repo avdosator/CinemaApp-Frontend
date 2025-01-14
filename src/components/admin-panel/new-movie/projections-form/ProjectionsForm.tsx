@@ -16,16 +16,25 @@ const timeOptions = Array.from({ length: 16 }, (_, i) => {
     return { value: `${hours}:00`, label: `${hours}:00` };
 });
 
-export default function ProjectionsForm() {
+type ProjectionsFormProps = {
+    projectionsFormData: ProjectionsFormData[],
+    setProjectionsFormData: React.Dispatch<React.SetStateAction<ProjectionsFormData[]>>,
+    errorMessages: { [key: number]: string },
+    setErrorMessages: React.Dispatch<React.SetStateAction<{ [key: number]: string }>>,
+    onProjectionsChange: (index: number, field: keyof ProjectionsFormData, value: any) => void
+};
+
+export default function ProjectionsForm({
+    projectionsFormData,
+    setProjectionsFormData,
+    errorMessages,
+    setErrorMessages,
+    onProjectionsChange
+}: ProjectionsFormProps) {
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
     let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>([]);
-    const [projections, setProjections] = useState<ProjectionsFormData[]>([
-        { city: null, venue: null, time: "" }
-    ]);
-
     let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
-    const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
     useEffect(() => {
         Promise.all([
@@ -40,45 +49,11 @@ export default function ProjectionsForm() {
             })
     }, []);
 
-    const handleGroupChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
-        setProjections((prevProjections) => {
-            const updatedProjections = prevProjections.map((group, i) =>
-                i === index ? { ...group, [field]: value } : group
-            );
-
-            // Always clear error when a value is deselected
-            if (!value) {
-                setErrorMessages(prev => {
-                    const newErrors = { ...prev };
-                    delete newErrors[index];
-                    return newErrors;
-                });
-            } else {
-                // Re-validate only when both venue and time are filled
-                const { venue, time } = updatedProjections[index];
-                const hasCollision = updatedProjections.some((group, i) =>
-                    i !== index && group.venue?.value === venue?.value && group.time === time
-                );
-
-                if (hasCollision) {
-                    setErrorMessages(prev => ({ ...prev, [index]: "Movie projection times cannot collide for the same Venues" }));
-                } else {
-                    setErrorMessages(prev => {
-                        const newErrors = { ...prev };
-                        delete newErrors[index];
-                        return newErrors;
-                    });
-                }
-            }
-
-            return updatedProjections;
-        });
-    };
-
     const handleDeleteGroup = (index: number) => {
-        setProjections(prevProjections => prevProjections.filter((_, i) => i !== index));
+        setProjectionsFormData(prevProjections =>
+            prevProjections.filter((_, i) => i !== index)
+        );
 
-        // Clear error for the deleted group
         setErrorMessages(prev => {
             const newErrors = { ...prev };
             delete newErrors[index];
@@ -86,10 +61,19 @@ export default function ProjectionsForm() {
         });
     };
 
+    const handleAddProjectionGroup = () => {
+        setProjectionsFormData(prev => [...prev, { city: null, venue: null, time: "" }]);
+    };
+
+    const isLastGroupFilled = () => {
+        const lastGroup = projectionsFormData[projectionsFormData.length - 1];
+        return lastGroup.city && lastGroup.venue && lastGroup.time;
+    };
+
     const askForDeletion = (index: number) => {
         setIsModalVisible(true);
         setGroupToDelete(index);
-    }
+    };
 
     const confirmDeletion = () => {
         if (groupToDelete !== null) {
@@ -97,18 +81,6 @@ export default function ProjectionsForm() {
             setGroupToDelete(null);
             setIsModalVisible(false);
         }
-    };
-
-    const handleAddProjectionGroup = () => {
-        setProjections(prevProjections => [
-            ...prevProjections,
-            { city: null, venue: null, time: "" }
-        ]);
-    };
-
-    const isLastGroupFilled = () => {
-        const lastGroup = projections[projections.length - 1];
-        return lastGroup.city && lastGroup.venue && lastGroup.time;
     };
 
     return (
@@ -132,17 +104,18 @@ export default function ProjectionsForm() {
                 </div>
             )}
             <form className="projections-form">
-                {projections.map((group, index) => (
+
+                {projectionsFormData.map((group, index) => (
                     <ProjectionGroup
                         key={index}
                         formData={group}
                         cityOptions={cityOptions}
                         venueOptions={venueOptions}
                         timeOptions={timeOptions}
-                        onChange={(field, value) => handleGroupChange(index, field, value)}
+                        onChange={(field, value) => onProjectionsChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
-                        isOnly={projections.length === 1}
                         errorMessage={errorMessages[index]}
+                        isOnly={projectionsFormData.length === 1}
                     />
                 ))}
                 <button

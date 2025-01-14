@@ -15,11 +15,12 @@ import Papa from "papaparse";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 
 export default function NewMovie() {
+
+    // GeneralForm state 
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
     let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     let [formattedDateRange, setFormattedDateRange] = useState("");
-
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
         title: "",
         language: "",
@@ -32,6 +33,8 @@ export default function NewMovie() {
         trailer: "",
         synopsis: ""
     });
+
+    // DetailsForm state
     const [detailsFormData, setDetailsFormData] = useState<DetailsFormData>({
         writersData: [],
         castData: [],
@@ -40,34 +43,13 @@ export default function NewMovie() {
     });
     const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
+    // ProjectionsForm state
     const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
-
     const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
-    const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
-        setProjectionsFormData((prev) => {
-            const updated = prev.map((group, i) =>
-                i === index ? { ...group, [field]: value } : group
-            );
-
-            const { venue, time } = updated[index];
-            const hasCollision = updated.some((group, i) =>
-                i !== index && group.venue?.value === venue?.value && group.time === time
-            );
-
-            setErrorMessages(prev => {
-                const newErrors = { ...prev };
-                if (hasCollision) newErrors[index] = "Movie projection times cannot collide for the same venue";
-                else delete newErrors[index];
-                return newErrors;
-            });
-
-            return updated;
-        });
-    };
-
+    
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
             .then(genresResponse => {
@@ -91,6 +73,28 @@ export default function NewMovie() {
             }));
         }
     });
+
+    const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
+        setProjectionsFormData((prev) => {
+            const updated = prev.map((group, i) =>
+                i === index ? { ...group, [field]: value } : group
+            );
+
+            const { venue, time } = updated[index];
+            const hasCollision = updated.some((group, i) =>
+                i !== index && group.venue?.value === venue?.value && group.time === time
+            );
+
+            setErrorMessages(prev => {
+                const newErrors = { ...prev };
+                if (hasCollision) newErrors[index] = "Movie projection times cannot collide for the same venue";
+                else delete newErrors[index];
+                return newErrors;
+            });
+
+            return updated;
+        });
+    };
 
     const handleRemovePhoto = (index: number) => {
         setDetailsFormData((prev) => ({
@@ -136,6 +140,7 @@ export default function NewMovie() {
     const isFileParsed = (data: string[]): boolean => {
         return data.length > 0;
     }
+
     return (
         <div className="add-movie-container">
             <div className="add-movie-heading">

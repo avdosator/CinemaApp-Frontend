@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
+import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
 
 export default function PhotosUpload() {
     const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
@@ -72,6 +73,29 @@ export default function PhotosUpload() {
                                         className="remove-photo-btn"
                                         onClick={() => handleRemovePhoto(index)}
                                     >
+                                        <FontAwesomeIcon icon={faTrash} width={14} height={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+
+                        {Array.from({ length: 4 - uploadedPhotos.length }).map((_, index) => (
+                            <div
+                                key={`placeholder-${index}`}
+                                className="uploaded-photo-preview-item"
+                                {...getRootProps()}
+                            >
+                                <input {...getInputProps()} />
+                                <img className="uploaded-photo-thumbnail placeholder" src={placeholderImage} style={{ opacity: "0.6" }} />
+                                <div className="upload-photo-btn-container">
+                                    <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
+                                </div>
+                                <div className="uploaded-photo-actions">
+                                    <label className="font-md-semibold">
+                                        <input type="radio" disabled />
+                                        Cover Photo
+                                    </label>
+                                    <button type="button" className="remove-photo-btn disabled" disabled>
                                         <FontAwesomeIcon icon={faTrash} width={14} height={16} />
                                     </button>
                                 </div>

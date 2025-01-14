@@ -1,9 +1,11 @@
 .uploaded-photos-preview {
     width: 100%;
-    padding: 16px;
+    margin-bottom: 64px;
+    padding: 20px;
     border: 1px solid #E4E7EC;
     border-radius: 16px;
     display: flex;
+    justify-content: space-between;
     gap: 16px;
 }
 

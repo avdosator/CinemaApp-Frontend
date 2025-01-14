@@ -43,3 +43,10 @@ export type ProjectionsFormData = {
     venue: SelectOptionType | null,
     time: string
 }
+
+export type DetailsFormData = {
+    writersData: string[];
+    castData: string[];
+    uploadedPhotos: File[];
+    coverPhotoIndex: number | null;
+};

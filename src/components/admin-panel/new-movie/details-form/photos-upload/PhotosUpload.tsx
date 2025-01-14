@@ -5,19 +5,19 @@ import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton
 import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
 
 type PhotosUploadProps = {
-    uploadedPhotos: File[];
-    setUploadedPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-    coverPhotoIndex: number | null;
-    getRootProps: () => any;
-    getInputProps: () => any;
-    handleRemovePhoto: (index: number) => void;
-    handleSetCoverPhoto: (index: number) => void;
-    placeholderRefs: React.RefObject<HTMLInputElement>[];
+    uploadedPhotos: File[],
+    updateUploadedPhotos: (photos: File[]) => void,
+    coverPhotoIndex: number | null,
+    getRootProps: () => any,
+    getInputProps: () => any,
+    handleRemovePhoto: (index: number) => void,
+    handleSetCoverPhoto: (index: number) => void,
+    placeholderRefs: React.RefObject<HTMLInputElement>[],
 };
 
 export default function PhotosUpload({
     uploadedPhotos,
-    setUploadedPhotos,
+    updateUploadedPhotos,
     coverPhotoIndex,
     getRootProps,
     getInputProps,
@@ -75,9 +75,11 @@ export default function PhotosUpload({
                         {/* Placeholders when less than 4 photos are added first time */}
                         {Array.from({ length: 4 - uploadedPhotos.length }).map((_, index) => (
                             <PhotoPlaceholder
-                                key={`placeholder-${index}`}
-                                inputRef={placeholderRefs[index]}
-                                onPhotoUpload={(file) => setUploadedPhotos((prev) => [...prev, file])}
+                            key={`placeholder-${index}`}
+                            inputRef={placeholderRefs[index]}
+                            onPhotoUpload={(file) =>
+                                updateUploadedPhotos([...uploadedPhotos, file]) // ✅ Fixed usage
+                            }
                             />
                         ))}
                     </div>

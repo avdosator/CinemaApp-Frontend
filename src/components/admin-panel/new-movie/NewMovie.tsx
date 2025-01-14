@@ -5,7 +5,7 @@ import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 import { useState, useEffect, useRef } from "react";
 import ApiService from "../../../service/ApiService";
-import { GeneralFormData } from "../../../types/FormData";
+import { DetailsFormData, GeneralFormData } from "../../../types/FormData";
 import { Genre } from "../../../types/Genre";
 import { Range } from "react-date-range";
 import { SelectOptionType } from "../../../types/SelectOptionType";
@@ -19,7 +19,7 @@ export default function NewMovie() {
     let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     let [formattedDateRange, setFormattedDateRange] = useState("");
 
-    let [formData, setFormData] = useState<GeneralFormData>({
+    let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
         title: "",
         language: "",
         startDate: "",
@@ -31,6 +31,13 @@ export default function NewMovie() {
         trailer: "",
         synopsis: ""
     });
+    const [detailsFormData, setDetailsFormData] = useState<DetailsFormData>({
+        writersData: [],
+        castData: [],
+        uploadedPhotos: [],
+        coverPhotoIndex: null
+    });
+    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
@@ -41,44 +48,47 @@ export default function NewMovie() {
             .catch(error => console.error("Error fetching data:", error));
     }, [])
 
-    const [writersData, setWritersData] = useState<string[]>([]);
-    const [castData, setCastData] = useState<string[]>([]);
-    const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
-    const [coverPhotoIndex, setCoverPhotoIndex] = useState<number | null>(null);
-    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
-
-
     const { getRootProps, getInputProps } = useDropzone({
         accept: { "image/*": [] },
         maxFiles: 4,
         onDrop: (acceptedFiles) => {
-            if (uploadedPhotos.length + acceptedFiles.length > 4) {
+            if (detailsFormData.uploadedPhotos.length + acceptedFiles.length > 4) {
                 alert("You can only upload up to 4 photos.");
                 return;
             }
-            setUploadedPhotos((prev) => [...prev, ...acceptedFiles]);
+            setDetailsFormData((prev) => ({
+                ...prev,
+                uploadedPhotos: [...prev.uploadedPhotos, ...acceptedFiles]
+            }));
         }
     });
 
     const handleRemovePhoto = (index: number) => {
-        setUploadedPhotos((prev) => prev.filter((_, i) => i !== index));
-        if (index === coverPhotoIndex) {
-            setCoverPhotoIndex(null);
-        }
+        setDetailsFormData((prev) => ({
+            ...prev,
+            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
+            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
+        }));
     };
 
     const handleSetCoverPhoto = (index: number) => {
-        setCoverPhotoIndex(index);
+        setDetailsFormData((prev) => ({
+            ...prev,
+            coverPhotoIndex: index
+        }));
     };
 
-    const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string[]>>) => {
+    const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => {
         const file = event.target.files?.[0];
         if (file && file.name.endsWith(".csv")) {
             Papa.parse(file, {
                 header: false,
                 complete: (result) => {
                     const parsedData = result.data.flat().filter(Boolean) as string[];
-                    setter(parsedData);
+                    setDetailsFormData((prev) => ({
+                        ...prev,
+                        [key]: parsedData
+                    }));
                 },
                 error: () => alert("Error parsing the CSV file.")
             });
@@ -87,8 +97,11 @@ export default function NewMovie() {
         }
     };
 
-    const handleRemoveFile = (setter: React.Dispatch<React.SetStateAction<string[]>>) => {
-        setter([]);
+    const handleRemoveFile = (key: keyof DetailsFormData) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            [key]: []
+        }));
     };
 
     const isFileParsed = (data: string[]): boolean => {
@@ -126,14 +139,8 @@ export default function NewMovie() {
                 setFormattedDateRange={setFormattedDateRange}
             /> */}
             <DetailsForm
-                writersData={writersData}
-                setWritersData={setWritersData}
-                castData={castData}
-                setCastData={setCastData}
-                uploadedPhotos={uploadedPhotos}
-                setUploadedPhotos={setUploadedPhotos}
-                coverPhotoIndex={coverPhotoIndex}
-                setCoverPhotoIndex={setCoverPhotoIndex}
+                detailsFormData={detailsFormData}
+                setDetailsFormData={setDetailsFormData}
                 getRootProps={getRootProps}
                 getInputProps={getInputProps}
                 handleRemovePhoto={handleRemovePhoto}

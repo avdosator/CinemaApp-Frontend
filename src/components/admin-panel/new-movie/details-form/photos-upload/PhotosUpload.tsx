@@ -1,14 +1,15 @@
 import "./PhotosUpload.css"
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
-import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
+import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
 
 export default function PhotosUpload() {
     const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
     const [coverPhotoIndex, setCoverPhotoIndex] = useState<number | null>(null);
+    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: { "image/*": [] },
@@ -35,10 +36,10 @@ export default function PhotosUpload() {
 
     return (
         <div>
+            <label className="font-lg-semibold upload-photos-label">Upload Photos</label>
             {uploadedPhotos.length == 0
                 ? (
                     <div style={{ marginBottom: "96px" }}>
-                        <label htmlFor="" className="font-lg-semibold upload-photos-label">Upload Photos</label>
                         <div className="upload-photos-container" {...getRootProps()}>
                             <input {...getInputProps()} />
                             <p className="font-lg-underline-semibold photo-upload-btn">+ Upload Photos</p>
@@ -79,27 +80,13 @@ export default function PhotosUpload() {
                             </div>
                         ))}
 
+                        {/* Placeholders when less than 4 photos are added first time */}
                         {Array.from({ length: 4 - uploadedPhotos.length }).map((_, index) => (
-                            <div
+                            <PhotoPlaceholder
                                 key={`placeholder-${index}`}
-                                className="uploaded-photo-preview-item"
-                                {...getRootProps()}
-                            >
-                                <input {...getInputProps()} />
-                                <img className="uploaded-photo-thumbnail placeholder" src={placeholderImage} style={{ opacity: "0.6" }} />
-                                <div className="upload-photo-btn-container">
-                                    <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
-                                </div>
-                                <div className="uploaded-photo-actions">
-                                    <label className="font-md-semibold">
-                                        <input type="radio" disabled />
-                                        Cover Photo
-                                    </label>
-                                    <button type="button" className="remove-photo-btn disabled" disabled>
-                                        <FontAwesomeIcon icon={faTrash} width={14} height={16} />
-                                    </button>
-                                </div>
-                            </div>
+                                inputRef={placeholderRefs[index]}
+                                onPhotoUpload={(file) => setUploadedPhotos((prev) => [...prev, file])}
+                            />
                         ))}
                     </div>
                 )}

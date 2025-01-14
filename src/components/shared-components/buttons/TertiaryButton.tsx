@@ -11,7 +11,7 @@ export default function TertiaryButton({label, size, onClick, color}: TertiaryBu
     const btnSize = size === "large" ? "tertiary-btn-lg font-lg-underline-semibold" : "tertiary-btn-sm font-sm-underline-semibold";
     const style = color ? {color: color} : {}
     return (
-        <button className={`tertiary-btn ${btnSize}`} onClick={onClick} style={style}>
+        <button className={`tertiary-btn ${btnSize}`} onClick={onClick} style={style} type="button">
             {label}
         </button>
     )

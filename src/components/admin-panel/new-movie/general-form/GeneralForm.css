@@ -1,6 +1,7 @@
 .general-form {
     width: 100%;
-    margin-bottom: 72px;
+    margin-bottom: 32px;
+    min-height:calc(100vh - 96px);
     margin-top: 32px;
 }
 

@@ -15,6 +15,7 @@ import Papa from "papaparse";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 
 export default function NewMovie() {
+    const [currentStep, setCurrentStep] = useState(1); // Step kontrola
 
     // GeneralForm state 
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
@@ -49,7 +50,6 @@ export default function NewMovie() {
     ]);
     const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
-    
     useEffect(() => {
         ApiService.get<Genre[]>("/genres")
             .then(genresResponse => {
@@ -141,6 +141,14 @@ export default function NewMovie() {
         return data.length > 0;
     }
 
+    const handleNextStep = () => {
+        setCurrentStep((prev) => Math.min(prev + 1, 3));
+    };
+
+    const handlePreviousStep = () => {
+        setCurrentStep((prev) => Math.max(prev - 1, 1));
+    };
+
     return (
         <div className="add-movie-container">
             <div className="add-movie-heading">
@@ -161,37 +169,49 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
-            <GeneralForm
-                formData={generalFormData}
-                setFormData={setGeneralFormData}
-                genreOptions={genreOptions!}
-                calendarState={calendarState}
-                setCalendarState={setCalendarState}
-                isDatePickerOpened={isDatePickerOpened}
-                setIsDatePickerOpened={setIsDatePickerOpened}
-                formattedDateRange={formattedDateRange}
-                setFormattedDateRange={setFormattedDateRange}
-            />
-            {/* <DetailsForm
-                detailsFormData={detailsFormData}
-                setDetailsFormData={setDetailsFormData}
-                getRootProps={getRootProps}
-                getInputProps={getInputProps}
-                handleRemovePhoto={handleRemovePhoto}
-                handleSetCoverPhoto={handleSetCoverPhoto}
-                handleRemoveFile={handleRemoveFile}
-                handleFileParse={handleFileParse}
-                isFileParsed={isFileParsed}
-                placeholderRefs={placeholderRefs}
-            /> */}
-            {/* <ProjectionsForm
-                projectionsFormData={projectionsFormData}
-                setProjectionsFormData={setProjectionsFormData}
-                errorMessages={errorMessages}
-                setErrorMessages={setErrorMessages}
-                onProjectionsChange={handleProjectionsChange}
-            /> */}
-            <ControlButtonGroup />
+            {currentStep == 1 && (
+                <GeneralForm
+                    formData={generalFormData}
+                    setFormData={setGeneralFormData}
+                    genreOptions={genreOptions!}
+                    calendarState={calendarState}
+                    setCalendarState={setCalendarState}
+                    isDatePickerOpened={isDatePickerOpened}
+                    setIsDatePickerOpened={setIsDatePickerOpened}
+                    formattedDateRange={formattedDateRange}
+                    setFormattedDateRange={setFormattedDateRange}
+                />
+            )}
+            {currentStep === 2 && (
+                <DetailsForm
+                    detailsFormData={detailsFormData}
+                    setDetailsFormData={setDetailsFormData}
+                    getRootProps={getRootProps}
+                    getInputProps={getInputProps}
+                    handleRemovePhoto={handleRemovePhoto}
+                    handleSetCoverPhoto={handleSetCoverPhoto}
+                    handleRemoveFile={handleRemoveFile}
+                    handleFileParse={handleFileParse}
+                    isFileParsed={isFileParsed}
+                    placeholderRefs={placeholderRefs}
+                />
+            )}
+
+            {currentStep === 3 && (
+                <ProjectionsForm
+                    projectionsFormData={projectionsFormData}
+                    setProjectionsFormData={setProjectionsFormData}
+                    errorMessages={errorMessages}
+                    setErrorMessages={setErrorMessages}
+                    onProjectionsChange={handleProjectionsChange}
+                />
+            )}
+
+            <ControlButtonGroup
+            onNext={handleNextStep}
+            onBack={handlePreviousStep}
+            isBackDisabled={currentStep === 1}
+             />
         </div>
     )
 }

@@ -15,6 +15,10 @@
     border: none;
 }
 
+.add-movie-control-btns > button:disabled {
+    color: #D0D5DD;
+}
+
 .add-movie-control-btns > div > button:nth-of-type(1) {
     margin-right: 16px;
     border: 1px solid #B22222;

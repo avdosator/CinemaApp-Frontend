@@ -1,38 +1,30 @@
 import "./PhotosUpload.css"
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState, useRef } from "react";
-import { useDropzone } from "react-dropzone";
 import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
 import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
 
-export default function PhotosUpload() {
-    const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
-    const [coverPhotoIndex, setCoverPhotoIndex] = useState<number | null>(null);
-    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
+type PhotosUploadProps = {
+    uploadedPhotos: File[];
+    setUploadedPhotos: React.Dispatch<React.SetStateAction<File[]>>;
+    coverPhotoIndex: number | null;
+    getRootProps: () => any;
+    getInputProps: () => any;
+    handleRemovePhoto: (index: number) => void;
+    handleSetCoverPhoto: (index: number) => void;
+    placeholderRefs: React.RefObject<HTMLInputElement>[];
+};
 
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "image/*": [] },
-        maxFiles: 4,
-        onDrop: (acceptedFiles) => {
-            if (uploadedPhotos.length + acceptedFiles.length > 4) {
-                alert("You can only upload up to 4 photos.");
-                return;
-            }
-            setUploadedPhotos((prev) => [...prev, ...acceptedFiles]);
-        }
-    });
-
-    const handleRemovePhoto = (index: number) => {
-        setUploadedPhotos((prev) => prev.filter((_, i) => i !== index));
-        if (index === coverPhotoIndex) {
-            setCoverPhotoIndex(null);
-        }
-    };
-
-    const handleSetCoverPhoto = (index: number) => {
-        setCoverPhotoIndex(index);
-    };
+export default function PhotosUpload({
+    uploadedPhotos,
+    setUploadedPhotos,
+    coverPhotoIndex,
+    getRootProps,
+    getInputProps,
+    handleRemovePhoto,
+    handleSetCoverPhoto,
+    placeholderRefs
+}: PhotosUploadProps) {
 
     return (
         <div>

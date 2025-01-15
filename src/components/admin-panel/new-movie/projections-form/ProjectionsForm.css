@@ -14,4 +14,9 @@
     gap: 4px;
     margin: auto;
     margin-top: 32px;
+    color: #B22222;
+}
+
+.projection-form-add-btn:disabled {
+    color: #D0D5DD;
 }

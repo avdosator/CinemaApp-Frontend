@@ -130,7 +130,6 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
                     className="projection-form-add-btn"
                     onClick={handleAddProjectionGroup}
                     disabled={!isLastGroupFilled()}
-                    style={isLastGroupFilled() ? { color: "#B22222" } : { color: "#D0D5DD" }}
                     type="button"
                 >
                     <FontAwesomeIcon icon={faPlus} height={24} />

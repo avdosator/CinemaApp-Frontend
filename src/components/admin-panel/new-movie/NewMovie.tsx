@@ -112,7 +112,7 @@ export default function NewMovie() {
                 onBack={handlePreviousStep}
                 isBackDisabled={currentStep === 1}
                 isFinalStep={currentStep === 3}
-                isFinalStepComplete={isProjectionsFormComplete}
+                isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
                 onSubmit={() => console.log("Submitting Movie Data")} // Replace with actual submit logic
             />
         </div>

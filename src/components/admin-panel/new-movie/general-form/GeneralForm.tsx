@@ -80,6 +80,7 @@ export default function GeneralForm({
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type movie name"
                                 autoFocus
+                                value={formData.title}
                                 onChange={e => handleChange("title", e.target.value)}
                             />
                         </div>
@@ -93,6 +94,7 @@ export default function GeneralForm({
                                 id="language"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type language"
+                                value={formData.language}
                                 onChange={e => handleChange("language", e.target.value)}
                             />
                         </div>
@@ -142,6 +144,7 @@ export default function GeneralForm({
                                 id="director"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Add director"
+                                value={formData.director}
                                 onChange={e => handleChange("director", e.target.value)}
                             />
                         </div>
@@ -157,6 +160,7 @@ export default function GeneralForm({
                                 id="pgRating"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type PG rating"
+                                value={formData.pgRating}
                                 onChange={e => handleChange("pgRating", e.target.value)}
                             />
                         </div>
@@ -170,6 +174,7 @@ export default function GeneralForm({
                                 id="duration"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Type movie duration"
+                                value={formData.duration}
                                 onChange={e => handleChange("duration", e.target.value)}
                             />
                         </div>
@@ -200,6 +205,7 @@ export default function GeneralForm({
                                 id="trailer"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Insert trailer link"
+                                value={formData.trailer}
                                 onChange={e => handleChange("trailer", e.target.value)}
                             />
                         </div>
@@ -217,6 +223,7 @@ export default function GeneralForm({
                         rows={6}
                         maxLength={500}
                         style={{ paddingRight: "84px" }}
+                        value={formData.synopsis}
                         onChange={e => handleChange("synopsis", e.target.value)}
                     />
                     <div className="synopsis-length font-lg-regular">{formData.synopsis.length}/500</div>

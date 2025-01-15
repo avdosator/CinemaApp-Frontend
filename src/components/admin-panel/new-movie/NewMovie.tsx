@@ -4,16 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 import { useState } from "react";
-import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
+import { DetailsFormData, AddMovieFormStep, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import DetailsForm from "./details-form/DetailsForm";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 import { useNavigate } from "react-router-dom";
-
-type FormStep = 1 | 2 | 3;
+import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndicator";
 
 export default function NewMovie() {
     const navigate = useNavigate();
-    const [currentStep, setCurrentStep] = useState<FormStep>(1); // Every step is new form
+    const [currentStep, setCurrentStep] = useState<AddMovieFormStep>(1); // Every step is new form
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -43,11 +42,11 @@ export default function NewMovie() {
     ]);
 
     const handleNextStep = () => {
-        setCurrentStep((prev) => Math.min(prev + 1, 3) as FormStep);
+        setCurrentStep((prev) => Math.min(prev + 1, 3) as AddMovieFormStep);
     };
 
     const handlePreviousStep = () => {
-        setCurrentStep((prev) => Math.max(prev - 1, 1) as FormStep);
+        setCurrentStep((prev) => Math.max(prev - 1, 1) as AddMovieFormStep);
     };
 
     // Validation Check Functions (Basic Example)
@@ -55,7 +54,7 @@ export default function NewMovie() {
     const isDetailsFormComplete = detailsFormData.writersData.length > 0 && detailsFormData.castData.length > 0 && detailsFormData.uploadedPhotos.length > 0 && detailsFormData.coverPhotoIndex !== null;
     const isProjectionsFormComplete = projectionsFormData.every(group => group.city && group.venue && group.time);
 
-    const stepStatus = (step: FormStep) => {
+    const stepStatus = (step: AddMovieFormStep) => {
         if (step < currentStep) return "completed";
         if (step === currentStep) return "active";
         return "inactive";
@@ -69,23 +68,12 @@ export default function NewMovie() {
                     <FontAwesomeIcon icon={faXmark} width={12} height={16} />
                 </button>
             </div>
-            <div className="add-movie-step-container font-heading-h6">
-                {/* Step 1 */}
-                <div className={`step-circle ${stepStatus(1)} ${isGeneralFormComplete ? "filled" : ""}`} >1</div>
-                <div className={`add-movie-step-line ${stepStatus(1)}`}></div>
-
-                {/* Step 2 */}
-                <div className={`step-circle ${stepStatus(2)} ${isDetailsFormComplete ? "filled" : ""}`} >2</div>
-                <div className={`add-movie-step-line ${stepStatus(2)}`}></div>
-
-                {/* Step 3 */}
-                <div className={`step-circle ${stepStatus(3)} ${isProjectionsFormComplete ? "filled" : ""}`} >3</div>
-            </div>
-            <div className="add-movie-step-labels font-lg-semibold">
-                <p className="step-label" style={isGeneralFormComplete ? {color: "#1D2939"} : {}}>General</p>
-                <p className="step-label" style={isDetailsFormComplete ? {color: "#1D2939"} : {}}>Details</p>
-                <p className="step-label" style={isProjectionsFormComplete ? {color: "#1D2939"} : {}}>Venues</p>
-            </div>
+            <AddMovieStepIndicator
+                isGeneralFormComplete={isGeneralFormComplete}
+                isDetailsFormComplete={isDetailsFormComplete}
+                isProjectionsFormComplete={isProjectionsFormComplete}
+                stepStatus={stepStatus}
+            />
 
             {currentStep == 1 && (<GeneralForm generalFormData={generalFormData} setGeneralFormData={setGeneralFormData} />)}
             {currentStep === 2 && (<DetailsForm detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />)}

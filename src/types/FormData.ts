@@ -50,3 +50,5 @@ export type DetailsFormData = {
     uploadedPhotos: File[];
     coverPhotoIndex: number | null;
 };
+
+export type AddMovieFormStep = 1 | 2 | 3;

@@ -54,6 +54,21 @@
     align-items: center;
 }
 
+.step-circle.active {
+    border-color: #B22222;
+    color: #B22222;
+}
+
+.step-circle.filled {
+    background-color: #B22222;
+    color: #FCFCFD;
+    border: none;
+}
+
+.add-movie-step-line.completed {
+    border-color: #B22222 !important;
+}
+
 .add-movie-step-labels {
     display: flex;
     justify-content: space-between;

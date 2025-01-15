@@ -7,11 +7,13 @@ import { GeneralFormData } from "../../../../types/FormData";
 import Select, { SingleValue } from "react-select";
 import { DateRange, Range, RangeKeyDict } from "react-date-range";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
+import ApiService from "../../../../service/ApiService";
+import { Genre } from "../../../../types/Genre";
 
 type GeneralFormProps = {
     formData: GeneralFormData;
     setFormData: React.Dispatch<React.SetStateAction<GeneralFormData>>;
-    genreOptions: SelectOptionType[];
     calendarState: Range[];
     setCalendarState: React.Dispatch<React.SetStateAction<Range[]>>;
     isDatePickerOpened: boolean;
@@ -23,7 +25,6 @@ type GeneralFormProps = {
 export default function GeneralForm({
     formData,
     setFormData,
-    genreOptions,
     calendarState,
     setCalendarState,
     isDatePickerOpened,
@@ -31,6 +32,17 @@ export default function GeneralForm({
     formattedDateRange,
     setFormattedDateRange
 }: GeneralFormProps) {
+    let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
+
+    useEffect(() => {
+        ApiService.get<Genre[]>("/genres")
+            .then(genresResponse => {
+                const genreOptions = genresResponse.map(genre => ({ value: genre.id, label: genre.name }))
+                setGenreOptions(genreOptions);
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }, [])
+
 
     const handleChange = (name: keyof GeneralFormData, value: string | SelectOptionType[]) => {
         setFormData((prevData) => ({

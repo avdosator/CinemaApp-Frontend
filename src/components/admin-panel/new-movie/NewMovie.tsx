@@ -3,22 +3,20 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
-import { useState, useEffect, useRef } from "react";
-import ApiService from "../../../service/ApiService";
+import { useState, useRef } from "react";
 import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
-import { Genre } from "../../../types/Genre";
 import { Range } from "react-date-range";
-import { SelectOptionType } from "../../../types/SelectOptionType";
 import DetailsForm from "./details-form/DetailsForm";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 
+type FormStep = 1 | 2 | 3;
+
 export default function NewMovie() {
-    const [currentStep, setCurrentStep] = useState(1); // Step kontrola
+    const [currentStep, setCurrentStep] = useState<FormStep>(1); // Every step is new form
 
     // GeneralForm state 
-    let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
     let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     let [formattedDateRange, setFormattedDateRange] = useState("");
@@ -49,15 +47,6 @@ export default function NewMovie() {
         { city: null, venue: null, time: "" }
     ]);
     const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
-
-    useEffect(() => {
-        ApiService.get<Genre[]>("/genres")
-            .then(genresResponse => {
-                const genreOptions = genresResponse.map(genre => ({ value: genre.id, label: genre.name }))
-                setGenreOptions(genreOptions);
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    }, [])
 
     const { getRootProps, getInputProps } = useDropzone({
         accept: { "image/*": [] },
@@ -142,11 +131,11 @@ export default function NewMovie() {
     }
 
     const handleNextStep = () => {
-        setCurrentStep((prev) => Math.min(prev + 1, 3));
+        setCurrentStep((prev) => Math.min(prev + 1, 3) as FormStep);
     };
 
     const handlePreviousStep = () => {
-        setCurrentStep((prev) => Math.max(prev - 1, 1));
+        setCurrentStep((prev) => Math.max(prev - 1, 1) as FormStep);
     };
 
     return (
@@ -173,7 +162,6 @@ export default function NewMovie() {
                 <GeneralForm
                     formData={generalFormData}
                     setFormData={setGeneralFormData}
-                    genreOptions={genreOptions!}
                     calendarState={calendarState}
                     setCalendarState={setCalendarState}
                     isDatePickerOpened={isDatePickerOpened}
@@ -208,10 +196,10 @@ export default function NewMovie() {
             )}
 
             <ControlButtonGroup
-            onNext={handleNextStep}
-            onBack={handlePreviousStep}
-            isBackDisabled={currentStep === 1}
-             />
+                onNext={handleNextStep}
+                onBack={handlePreviousStep}
+                isBackDisabled={currentStep === 1}
+            />
         </div>
     )
 }

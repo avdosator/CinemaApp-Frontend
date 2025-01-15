@@ -9,6 +9,7 @@ type PhotoPlaceholderProps = {
 };
 
 export default function PhotoPlaceholder({ inputRef, onPhotoUpload }: PhotoPlaceholderProps) {
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {

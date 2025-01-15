@@ -6,29 +6,13 @@ import CastContainer from "./cast-container/CastContainer";
 import PhotosUpload from "./photos-upload/PhotosUpload";
 import { DetailsFormData } from "../../../../types/FormData";
 import Papa from "papaparse";
-import { useDropzone } from "react-dropzone";
 
 type DetailsFormProps = {
-    detailsFormData: DetailsFormData;
-    setDetailsFormData: React.Dispatch<React.SetStateAction<DetailsFormData>>;
+    detailsFormData: DetailsFormData,
+    setDetailsFormData: React.Dispatch<React.SetStateAction<DetailsFormData>>
 };
 
 export default function DetailsForm({ detailsFormData, setDetailsFormData, }: DetailsFormProps) {
-
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "image/*": [] },
-        maxFiles: 4,
-        onDrop: (acceptedFiles) => {
-            if (detailsFormData.uploadedPhotos.length + acceptedFiles.length > 4) {
-                alert("You can only upload up to 4 photos.");
-                return;
-            }
-            setDetailsFormData((prev) => ({
-                ...prev,
-                uploadedPhotos: [...prev.uploadedPhotos, ...acceptedFiles]
-            }));
-        }
-    });
 
     const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => {
         const file = event.target.files?.[0];
@@ -53,21 +37,6 @@ export default function DetailsForm({ detailsFormData, setDetailsFormData, }: De
         setDetailsFormData((prev) => ({
             ...prev,
             [key]: []
-        }));
-    };
-
-    const handleRemovePhoto = (index: number) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
-            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
-        }));
-    };
-
-    const handleSetCoverPhoto = (index: number) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            coverPhotoIndex: index
         }));
     };
 
@@ -125,20 +94,7 @@ export default function DetailsForm({ detailsFormData, setDetailsFormData, }: De
                         )}
                 </div>
             </div>
-            <PhotosUpload
-                uploadedPhotos={detailsFormData.uploadedPhotos}
-                updateUploadedPhotos={(newPhotos) =>
-                    setDetailsFormData((prev) => ({
-                        ...prev,
-                        uploadedPhotos: newPhotos
-                    }))
-                }
-                coverPhotoIndex={detailsFormData.coverPhotoIndex}
-                getRootProps={getRootProps}
-                getInputProps={getInputProps}
-                handleRemovePhoto={handleRemovePhoto}
-                handleSetCoverPhoto={handleSetCoverPhoto}
-            />
+            <PhotosUpload detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />
         </form>
     )
 }

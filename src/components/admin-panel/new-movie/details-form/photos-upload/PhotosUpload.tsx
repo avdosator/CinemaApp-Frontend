@@ -4,32 +4,51 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
 import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
 import { useRef } from "react";
+import { DetailsFormData } from "../../../../../types/FormData";
+import { useDropzone } from "react-dropzone";
 
 type PhotosUploadProps = {
-    uploadedPhotos: File[],
-    updateUploadedPhotos: (photos: File[]) => void,
-    coverPhotoIndex: number | null,
-    getRootProps: () => any,
-    getInputProps: () => any,
-    handleRemovePhoto: (index: number) => void,
-    handleSetCoverPhoto: (index: number) => void,
+    detailsFormData: DetailsFormData,
+    setDetailsFormData: React.Dispatch<React.SetStateAction<DetailsFormData>>
 };
 
-export default function PhotosUpload({
-    uploadedPhotos,
-    updateUploadedPhotos,
-    coverPhotoIndex,
-    getRootProps,
-    getInputProps,
-    handleRemovePhoto,
-    handleSetCoverPhoto,
-}: PhotosUploadProps) {
+export default function PhotosUpload({ detailsFormData, setDetailsFormData }: PhotosUploadProps) {
     const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: { "image/*": [] },
+        maxFiles: 4,
+        onDrop: (acceptedFiles) => {
+            if (detailsFormData.uploadedPhotos.length + acceptedFiles.length > 4) {
+                alert("You can only upload up to 4 photos.");
+                return;
+            }
+            setDetailsFormData((prev) => ({
+                ...prev,
+                uploadedPhotos: [...prev.uploadedPhotos, ...acceptedFiles]
+            }));
+        }
+    });
+
+    const handleRemovePhoto = (index: number) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
+            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
+        }));
+    };
+
+    const handleSetCoverPhoto = (index: number) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            coverPhotoIndex: index
+        }));
+    };
 
     return (
         <div>
             <label className="font-lg-semibold upload-photos-label">Upload Photos</label>
-            {uploadedPhotos.length == 0
+            {detailsFormData.uploadedPhotos.length == 0
                 ? (
                     <div style={{ marginBottom: "96px" }}>
                         <div className="upload-photos-container" {...getRootProps()}>
@@ -42,7 +61,7 @@ export default function PhotosUpload({
                 )
                 : (
                     <div className="uploaded-photos-preview">
-                        {uploadedPhotos.map((file, index) => (
+                        {detailsFormData.uploadedPhotos.map((file, index) => (
                             <div key={index} className="uploaded-photo-preview-item">
                                 <img
                                     src={URL.createObjectURL(file)}
@@ -56,7 +75,7 @@ export default function PhotosUpload({
                                         <input
                                             type="radio"
                                             name="coverPhoto"
-                                            checked={coverPhotoIndex === index}
+                                            checked={detailsFormData.coverPhotoIndex === index}
                                             onChange={() => handleSetCoverPhoto(index)}
                                         />
                                         Cover Photo
@@ -73,12 +92,15 @@ export default function PhotosUpload({
                         ))}
 
                         {/* Placeholders when less than 4 photos are added first time */}
-                        {Array.from({ length: 4 - uploadedPhotos.length }).map((_, index) => (
+                        {Array.from({ length: 4 - detailsFormData.uploadedPhotos.length }).map((_, index) => (
                             <PhotoPlaceholder
                                 key={`placeholder-${index}`}
                                 inputRef={placeholderRefs[index]}
                                 onPhotoUpload={(file) =>
-                                    updateUploadedPhotos([...uploadedPhotos, file]) // ✅ Fixed usage
+                                    setDetailsFormData((prev) => ({
+                                        ...prev,
+                                        uploadedPhotos: [...prev.uploadedPhotos, file]
+                                    }))
                                 }
                             />
                         ))}

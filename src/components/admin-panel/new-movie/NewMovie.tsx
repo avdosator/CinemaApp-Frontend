@@ -6,8 +6,6 @@ import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 import { useState } from "react";
 import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import DetailsForm from "./details-form/DetailsForm";
-import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 
 type FormStep = 1 | 2 | 3;
@@ -43,21 +41,6 @@ export default function NewMovie() {
     ]);
     const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: { "image/*": [] },
-        maxFiles: 4,
-        onDrop: (acceptedFiles) => {
-            if (detailsFormData.uploadedPhotos.length + acceptedFiles.length > 4) {
-                alert("You can only upload up to 4 photos.");
-                return;
-            }
-            setDetailsFormData((prev) => ({
-                ...prev,
-                uploadedPhotos: [...prev.uploadedPhotos, ...acceptedFiles]
-            }));
-        }
-    });
-
     const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
         setProjectionsFormData((prev) => {
             const updated = prev.map((group, i) =>
@@ -79,51 +62,6 @@ export default function NewMovie() {
             return updated;
         });
     };
-
-    const handleRemovePhoto = (index: number) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
-            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
-        }));
-    };
-
-    const handleSetCoverPhoto = (index: number) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            coverPhotoIndex: index
-        }));
-    };
-
-    const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => {
-        const file = event.target.files?.[0];
-        if (file && file.name.endsWith(".csv")) {
-            Papa.parse(file, {
-                header: false,
-                complete: (result) => {
-                    const parsedData = result.data.flat().filter(Boolean) as string[];
-                    setDetailsFormData((prev) => ({
-                        ...prev,
-                        [key]: parsedData
-                    }));
-                },
-                error: () => alert("Error parsing the CSV file.")
-            });
-        } else {
-            alert("Please upload a valid CSV file.");
-        }
-    };
-
-    const handleRemoveFile = (key: keyof DetailsFormData) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            [key]: []
-        }));
-    };
-
-    const isFileParsed = (data: string[]): boolean => {
-        return data.length > 0;
-    }
 
     const handleNextStep = () => {
         setCurrentStep((prev) => Math.min(prev + 1, 3) as FormStep);
@@ -164,13 +102,6 @@ export default function NewMovie() {
                 <DetailsForm
                     detailsFormData={detailsFormData}
                     setDetailsFormData={setDetailsFormData}
-                    getRootProps={getRootProps}
-                    getInputProps={getInputProps}
-                    handleRemovePhoto={handleRemovePhoto}
-                    handleSetCoverPhoto={handleSetCoverPhoto}
-                    handleRemoveFile={handleRemoveFile}
-                    handleFileParse={handleFileParse}
-                    isFileParsed={isFileParsed}
                 />
             )}
 

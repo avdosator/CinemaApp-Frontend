@@ -5,30 +5,75 @@ import WritersContainer from "./writers-container/WritersContainer";
 import CastContainer from "./cast-container/CastContainer";
 import PhotosUpload from "./photos-upload/PhotosUpload";
 import { DetailsFormData } from "../../../../types/FormData";
+import Papa from "papaparse";
+import { useDropzone } from "react-dropzone";
 
 type DetailsFormProps = {
     detailsFormData: DetailsFormData;
     setDetailsFormData: React.Dispatch<React.SetStateAction<DetailsFormData>>;
-    getRootProps: () => any;
-    getInputProps: () => any;
-    handleRemovePhoto: (index: number) => void;
-    handleSetCoverPhoto: (index: number) => void;
-    handleRemoveFile: (key: keyof DetailsFormData) => void;
-    handleFileParse: (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => void;
-    isFileParsed: (data: string[]) => boolean;
 };
 
-export default function DetailsForm({
-    detailsFormData,
-    setDetailsFormData,
-    getRootProps,
-    getInputProps,
-    handleRemovePhoto,
-    handleSetCoverPhoto,
-    handleRemoveFile,
-    handleFileParse,
-    isFileParsed,
-}: DetailsFormProps) {
+export default function DetailsForm({ detailsFormData, setDetailsFormData, }: DetailsFormProps) {
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: { "image/*": [] },
+        maxFiles: 4,
+        onDrop: (acceptedFiles) => {
+            if (detailsFormData.uploadedPhotos.length + acceptedFiles.length > 4) {
+                alert("You can only upload up to 4 photos.");
+                return;
+            }
+            setDetailsFormData((prev) => ({
+                ...prev,
+                uploadedPhotos: [...prev.uploadedPhotos, ...acceptedFiles]
+            }));
+        }
+    });
+
+    const handleFileParse = (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => {
+        const file = event.target.files?.[0];
+        if (file && file.name.endsWith(".csv")) {
+            Papa.parse(file, {
+                header: false,
+                complete: (result) => {
+                    const parsedData = result.data.flat().filter(Boolean) as string[];
+                    setDetailsFormData((prev) => ({
+                        ...prev,
+                        [key]: parsedData
+                    }));
+                },
+                error: () => alert("Error parsing the CSV file.")
+            });
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
+    };
+
+    const handleRemoveFile = (key: keyof DetailsFormData) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            [key]: []
+        }));
+    };
+
+    const handleRemovePhoto = (index: number) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
+            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
+        }));
+    };
+
+    const handleSetCoverPhoto = (index: number) => {
+        setDetailsFormData((prev) => ({
+            ...prev,
+            coverPhotoIndex: index
+        }));
+    };
+
+    const isFileParsed = (data: string[]): boolean => {
+        return data.length > 0;
+    }
 
     return (
         <form className="details-form">

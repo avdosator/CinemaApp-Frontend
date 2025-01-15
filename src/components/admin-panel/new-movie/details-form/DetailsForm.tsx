@@ -16,7 +16,6 @@ type DetailsFormProps = {
     handleRemoveFile: (key: keyof DetailsFormData) => void;
     handleFileParse: (event: React.ChangeEvent<HTMLInputElement>, key: keyof DetailsFormData) => void;
     isFileParsed: (data: string[]) => boolean;
-    placeholderRefs: React.RefObject<HTMLInputElement>[];
 };
 
 export default function DetailsForm({
@@ -29,7 +28,6 @@ export default function DetailsForm({
     handleRemoveFile,
     handleFileParse,
     isFileParsed,
-    placeholderRefs
 }: DetailsFormProps) {
 
     return (
@@ -95,7 +93,6 @@ export default function DetailsForm({
                 getInputProps={getInputProps}
                 handleRemovePhoto={handleRemovePhoto}
                 handleSetCoverPhoto={handleSetCoverPhoto}
-                placeholderRefs={placeholderRefs}
             />
         </form>
     )

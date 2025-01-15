@@ -3,7 +3,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import DetailsForm from "./details-form/DetailsForm";
 import { useDropzone } from "react-dropzone";
@@ -36,7 +36,6 @@ export default function NewMovie() {
         uploadedPhotos: [],
         coverPhotoIndex: null
     });
-    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
     // ProjectionsForm state
     const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
@@ -154,7 +153,7 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
-            
+
             {currentStep == 1 && (
                 <GeneralForm
                     formData={generalFormData}
@@ -172,7 +171,6 @@ export default function NewMovie() {
                     handleRemoveFile={handleRemoveFile}
                     handleFileParse={handleFileParse}
                     isFileParsed={isFileParsed}
-                    placeholderRefs={placeholderRefs}
                 />
             )}
 

@@ -3,6 +3,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
 import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
+import { useRef } from "react";
 
 type PhotosUploadProps = {
     uploadedPhotos: File[],
@@ -12,7 +13,6 @@ type PhotosUploadProps = {
     getInputProps: () => any,
     handleRemovePhoto: (index: number) => void,
     handleSetCoverPhoto: (index: number) => void,
-    placeholderRefs: React.RefObject<HTMLInputElement>[],
 };
 
 export default function PhotosUpload({
@@ -23,8 +23,8 @@ export default function PhotosUpload({
     getInputProps,
     handleRemovePhoto,
     handleSetCoverPhoto,
-    placeholderRefs
 }: PhotosUploadProps) {
+    const placeholderRefs = Array(4).fill(null).map(() => useRef<HTMLInputElement>(null));
 
     return (
         <div>
@@ -75,11 +75,11 @@ export default function PhotosUpload({
                         {/* Placeholders when less than 4 photos are added first time */}
                         {Array.from({ length: 4 - uploadedPhotos.length }).map((_, index) => (
                             <PhotoPlaceholder
-                            key={`placeholder-${index}`}
-                            inputRef={placeholderRefs[index]}
-                            onPhotoUpload={(file) =>
-                                updateUploadedPhotos([...uploadedPhotos, file]) // ✅ Fixed usage
-                            }
+                                key={`placeholder-${index}`}
+                                inputRef={placeholderRefs[index]}
+                                onPhotoUpload={(file) =>
+                                    updateUploadedPhotos([...uploadedPhotos, file]) // ✅ Fixed usage
+                                }
                             />
                         ))}
                     </div>

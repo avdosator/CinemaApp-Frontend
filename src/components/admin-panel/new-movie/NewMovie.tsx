@@ -107,7 +107,14 @@ export default function NewMovie() {
             {currentStep === 2 && (<DetailsForm detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />)}
             {currentStep === 3 && (<ProjectionsForm projectionsFormData={projectionsFormData} setProjectionsFormData={setProjectionsFormData} />)}
 
-            <ControlButtonGroup onNext={handleNextStep} onBack={handlePreviousStep} isBackDisabled={currentStep === 1} />
+            <ControlButtonGroup
+                onNext={handleNextStep}
+                onBack={handlePreviousStep}
+                isBackDisabled={currentStep === 1}
+                isFinalStep={currentStep === 3}
+                isFinalStepComplete={isProjectionsFormComplete}
+                onSubmit={() => console.log("Submitting Movie Data")} // Replace with actual submit logic
+            />
         </div>
     )
 }

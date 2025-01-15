@@ -5,7 +5,6 @@ import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
 import { useState, useRef } from "react";
 import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
-import { Range } from "react-date-range";
 import DetailsForm from "./details-form/DetailsForm";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
@@ -17,7 +16,6 @@ export default function NewMovie() {
     const [currentStep, setCurrentStep] = useState<FormStep>(1); // Every step is new form
 
     // GeneralForm state 
-    let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
     let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
     let [formattedDateRange, setFormattedDateRange] = useState("");
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -162,8 +160,6 @@ export default function NewMovie() {
                 <GeneralForm
                     formData={generalFormData}
                     setFormData={setGeneralFormData}
-                    calendarState={calendarState}
-                    setCalendarState={setCalendarState}
                     isDatePickerOpened={isDatePickerOpened}
                     setIsDatePickerOpened={setIsDatePickerOpened}
                     formattedDateRange={formattedDateRange}

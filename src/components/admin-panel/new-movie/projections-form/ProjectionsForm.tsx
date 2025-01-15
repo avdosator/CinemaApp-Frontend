@@ -14,22 +14,14 @@ import ProjectionGroup from "./projection-group/ProjectionGroup";
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],
     setProjectionsFormData: React.Dispatch<React.SetStateAction<ProjectionsFormData[]>>,
-    errorMessages: { [key: number]: string },
-    setErrorMessages: React.Dispatch<React.SetStateAction<{ [key: number]: string }>>,
-    onProjectionsChange: (index: number, field: keyof ProjectionsFormData, value: any) => void
 };
 
-export default function ProjectionsForm({
-    projectionsFormData,
-    setProjectionsFormData,
-    errorMessages,
-    setErrorMessages,
-    onProjectionsChange
-}: ProjectionsFormProps) {
+export default function ProjectionsForm({ projectionsFormData, setProjectionsFormData, }: ProjectionsFormProps) {
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
     let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>([]);
     let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
+    const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
 
     useEffect(() => {
         Promise.all([
@@ -43,6 +35,28 @@ export default function ProjectionsForm({
                 setVenueOptions(venueOptions);
             })
     }, []);
+
+    const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
+        setProjectionsFormData((prev) => {
+            const updated = prev.map((group, i) =>
+                i === index ? { ...group, [field]: value } : group
+            );
+
+            const { venue, time } = updated[index];
+            const hasCollision = updated.some((group, i) =>
+                i !== index && group.venue?.value === venue?.value && group.time === time
+            );
+
+            setErrorMessages(prev => {
+                const newErrors = { ...prev };
+                if (hasCollision) newErrors[index] = "Movie projection times cannot collide for the same venue";
+                else delete newErrors[index];
+                return newErrors;
+            });
+
+            return updated;
+        });
+    };
 
     const handleDeleteGroup = (index: number) => {
         setProjectionsFormData(prevProjections =>
@@ -106,7 +120,7 @@ export default function ProjectionsForm({
                         formData={group}
                         cityOptions={cityOptions}
                         venueOptions={venueOptions}
-                        onChange={(field, value) => onProjectionsChange(index, field, value)}
+                        onChange={(field, value) => handleProjectionsChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
                         errorMessage={errorMessages[index]}
                         isOnly={projectionsFormData.length === 1}

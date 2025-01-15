@@ -39,29 +39,6 @@ export default function NewMovie() {
     const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
-    const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
-
-    const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
-        setProjectionsFormData((prev) => {
-            const updated = prev.map((group, i) =>
-                i === index ? { ...group, [field]: value } : group
-            );
-
-            const { venue, time } = updated[index];
-            const hasCollision = updated.some((group, i) =>
-                i !== index && group.venue?.value === venue?.value && group.time === time
-            );
-
-            setErrorMessages(prev => {
-                const newErrors = { ...prev };
-                if (hasCollision) newErrors[index] = "Movie projection times cannot collide for the same venue";
-                else delete newErrors[index];
-                return newErrors;
-            });
-
-            return updated;
-        });
-    };
 
     const handleNextStep = () => {
         setCurrentStep((prev) => Math.min(prev + 1, 3) as FormStep);
@@ -92,34 +69,10 @@ export default function NewMovie() {
                 <p className="step-label">Venues</p>
             </div>
 
-            {currentStep == 1 && (
-                <GeneralForm
-                    formData={generalFormData}
-                    setFormData={setGeneralFormData}
-                />
-            )}
-            {currentStep === 2 && (
-                <DetailsForm
-                    detailsFormData={detailsFormData}
-                    setDetailsFormData={setDetailsFormData}
-                />
-            )}
+            {currentStep == 1 && (<GeneralForm generalFormData={generalFormData} setGeneralFormData={setGeneralFormData} />)}
+            {currentStep === 2 && (<DetailsForm detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />)}
+            {currentStep === 3 && (<ProjectionsForm projectionsFormData={projectionsFormData} setProjectionsFormData={setProjectionsFormData} />)}
 
-            {currentStep === 3 && (
-                <ProjectionsForm
-                    projectionsFormData={projectionsFormData}
-                    setProjectionsFormData={setProjectionsFormData}
-                    errorMessages={errorMessages}
-                    setErrorMessages={setErrorMessages}
-                    onProjectionsChange={handleProjectionsChange}
-                />
-            )}
-
-            <ControlButtonGroup
-                onNext={handleNextStep}
-                onBack={handlePreviousStep}
-                isBackDisabled={currentStep === 1}
-            />
-        </div>
+            <ControlButtonGroup onNext={handleNextStep} onBack={handlePreviousStep} isBackDisabled={currentStep === 1} /></div>
     )
 }

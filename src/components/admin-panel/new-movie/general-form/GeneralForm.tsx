@@ -12,11 +12,11 @@ import ApiService from "../../../../service/ApiService";
 import { Genre } from "../../../../types/Genre";
 
 type GeneralFormProps = {
-    formData: GeneralFormData;
-    setFormData: React.Dispatch<React.SetStateAction<GeneralFormData>>;
+    generalFormData: GeneralFormData;
+    setGeneralFormData: React.Dispatch<React.SetStateAction<GeneralFormData>>;
 };
 
-export default function GeneralForm({ formData, setFormData, }: GeneralFormProps) {
+export default function GeneralForm({ generalFormData: formData, setGeneralFormData: setFormData, }: GeneralFormProps) {
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [calendarState, setCalendarState] = useState<Range[]>([{ startDate: new Date(), endDate: new Date(), key: 'selection' }]);
     let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);

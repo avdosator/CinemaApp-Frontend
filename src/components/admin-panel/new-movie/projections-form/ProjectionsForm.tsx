@@ -11,11 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProjectionsFormData } from "../../../../types/FormData";
 import ProjectionGroup from "./projection-group/ProjectionGroup";
 
-const timeOptions = Array.from({ length: 16 }, (_, i) => {
-    const hours = (8 + i).toString().padStart(2, "0");
-    return { value: `${hours}:00`, label: `${hours}:00` };
-});
-
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],
     setProjectionsFormData: React.Dispatch<React.SetStateAction<ProjectionsFormData[]>>,
@@ -111,7 +106,6 @@ export default function ProjectionsForm({
                         formData={group}
                         cityOptions={cityOptions}
                         venueOptions={venueOptions}
-                        timeOptions={timeOptions}
                         onChange={(field, value) => onProjectionsChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
                         errorMessage={errorMessages[index]}

@@ -18,7 +18,7 @@ type ProjectionsFormProps = {
 
 export default function ProjectionsForm({ projectionsFormData, setProjectionsFormData, }: ProjectionsFormProps) {
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
-    let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>([]);
+    const [allVenues, setAllVenues] = useState<Venue[]>([]); // Stores all venues for filtering
     let [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [groupToDelete, setGroupToDelete] = useState<number | null>(null);
     const [errorMessages, setErrorMessages] = useState<{ [key: number]: string }>({});
@@ -31,16 +31,27 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
             .then(([citiesResponse, venuesResponse]) => {
                 const cityOptions = citiesResponse.map(city => ({ value: city.id, label: city.name }));
                 setCityOptions(cityOptions);
-                const venueOptions = venuesResponse.content.map(venue => ({ value: venue.id, label: venue.name }));
-                setVenueOptions(venueOptions);
+                setAllVenues(venuesResponse.content);
             })
     }, []);
+
+    const filterVenuesByCity = (cityId: string | null): SelectOptionType[] => {
+        if (!cityId) return [];
+        return allVenues
+            .filter(venue => venue.city.id.toString() === cityId) 
+            .map(venue => ({ value: venue.id, label: venue.name }));
+    };
+
 
     const handleProjectionsChange = (index: number, field: keyof ProjectionsFormData, value: any) => {
         setProjectionsFormData((prev) => {
             const updated = prev.map((group, i) =>
                 i === index ? { ...group, [field]: value } : group
             );
+
+            if (field === "city") {
+                updated[index].venue = null; // Reset venue selection if city changes
+            }
 
             const { venue, time } = updated[index];
             const hasCollision = updated.some((group, i) =>
@@ -119,7 +130,7 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
                         key={index}
                         formData={group}
                         cityOptions={cityOptions}
-                        venueOptions={venueOptions}
+                        venueOptions={filterVenuesByCity(group.city?.value ?? null)} 
                         onChange={(field, value) => handleProjectionsChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
                         errorMessage={errorMessages[index]}

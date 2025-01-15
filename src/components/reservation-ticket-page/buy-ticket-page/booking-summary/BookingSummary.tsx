@@ -3,22 +3,22 @@ import { Movie } from "../../../../types/Movie"
 import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import { Seat } from "../../../../types/Seat"
 import { Venue } from "../../../../types/Venue"
-import { calculateReservedSeatsPrice } from "../../../../utils/utils"
 import VerticalLine from "../../../shared-components/divider/VerticalLine"
 
 type BookingSummaryProps = {
     projection: ProjectionInstance,
     movie: Movie,
-    selectedSeats: Seat[]
+    selectedSeats: Seat[],
+    totalPrice:number
 }
 
-export default function BookingSummary({ projection, movie, selectedSeats }: BookingSummaryProps) {
+export default function BookingSummary({ projection, movie, selectedSeats, totalPrice }: BookingSummaryProps) {
 
     const venue: Venue = projection.projection.hall.venue;
     const date = new Date(projection.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
-    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
+
     return (
         <div className="booking-summary">
             <h6 className="font-heading-h6" style={{ color: "#667085", marginBottom: "24px" }}>Booking Summary</h6>

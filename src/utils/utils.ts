@@ -27,17 +27,9 @@ export const generateDatePickerBtnInputs = (endDate: Date): DatePickerBtnType[] 
     return dates;
 }
 
-export const calculateReservedSeatsPrice = (selectedSeats: Seat[]): number => {
-    return selectedSeats.reduce((sum, seat) => {
-        switch (seat.type) {
-            case "regular":
-                return sum + 7;
-            case "VIP":
-                return sum + 10;
-            case "love":
-                return sum + 24;
-            default:
-                return sum;
-        }
+export const calculateReservedSeatsPrice = (selectedSeats: Seat[], ticketPrices: { seatType: string, price: number }[]): number => {
+    return selectedSeats.reduce((total, seat) => {
+        const matchingPrice = ticketPrices.find(price => price.seatType.toLowerCase() === seat.type.toLowerCase());
+        return total + (matchingPrice ? matchingPrice.price : 0);
     }, 0);
-}
+};

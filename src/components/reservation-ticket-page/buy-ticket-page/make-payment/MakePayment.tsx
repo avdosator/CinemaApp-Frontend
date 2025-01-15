@@ -8,10 +8,11 @@ import { Movie } from "../../../../types/Movie";
 type MakePaymentProps = {
     projection: ProjectionInstance,
     movie: Movie,
-    selectedSeats: Seat[]
+    selectedSeats: Seat[],
+    totalPrice: number
 }
 
-export default function MakePayment({projection, movie, selectedSeats}: MakePaymentProps) {
+export default function MakePayment({ projection, movie, selectedSeats, totalPrice }: MakePaymentProps) {
 
     return (
         <div className="make-payment-container">
@@ -24,7 +25,7 @@ export default function MakePayment({projection, movie, selectedSeats}: MakePaym
                 <span className="auth-horizontal-line" style={{ color: "#E4E7EC" }}></span>
             </div>
             <h6 className="font-heading-h6" style={{ color: "#667085", marginBottom: "0px" }}>Add New Card</h6>
-            <NewBankCardForm projection={projection} movie={movie} selectedSeats={selectedSeats} />
+            <NewBankCardForm projection={projection} movie={movie} selectedSeats={selectedSeats} totalPrice={totalPrice} />
         </div>
     )
 }

@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form"
 import { Movie } from "../../../../types/Movie"
 import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import { Seat } from "../../../../types/Seat"
-import { calculateReservedSeatsPrice } from "../../../../utils/utils"
 import "./NewBankCardForm.css"
 import { useUser } from "../../../../context/UserContext"
 import ApiService from "../../../../service/ApiService"
@@ -22,6 +21,7 @@ type NewBankCardFormProps = {
     projection: ProjectionInstance,
     movie: Movie,
     selectedSeats: Seat[],
+    totalPrice: number
 }
 
 const inputStyle = {
@@ -37,7 +37,7 @@ const inputStyle = {
     },
 }
 
-export default function NewBankCardForm({ projection, movie, selectedSeats }: NewBankCardFormProps) {
+export default function NewBankCardForm({ projection, movie, selectedSeats, totalPrice }: NewBankCardFormProps) {
     const [cardDetails, setCardDetails] = useState({
         cardNumberError: null,
         expiryDateError: null,
@@ -49,8 +49,6 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
     const [successfulPayment, setSuccessfulPayment] = useState<boolean>(false);
     const [unsuccessfulPayment, setUnsuccessfulPayment] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
-
-    const totalPrice: number = calculateReservedSeatsPrice(selectedSeats);
 
     const { handleSubmit, formState: { isSubmitting } } = useForm<NewBankCardFormType>({ mode: "onChange", });
     const { currentUser } = useUser();
@@ -79,7 +77,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
         const intentBody = {
             userId: currentUser?.id,
             projectionInstanceId: projection.id,
-            amount: totalPrice,
+            selectedSeats: selectedSeats,
         };
 
         try {
@@ -98,17 +96,16 @@ export default function NewBankCardForm({ projection, movie, selectedSeats }: Ne
             } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
                 const jwt = localStorage.getItem("authToken");
                 const headers = { "Authorization": `Bearer ${jwt}` };
-                const ticketResponse = await ApiService.post<{ status: string, message: string }>("/payments", {
+
+                const createPaymentBody = {
                     userId: currentUser?.id,
                     projectionInstanceId: projection.id,
-                    amount: totalPrice,
-                    selectedSeats: selectedSeats.map((seat) => seat.id),
+                    selectedSeats: selectedSeats,
                     paymentIntentId: result.paymentIntent.id,
                     movieId: movie.id
-                },
-                    headers
-                );
-                if (ticketResponse.status === "success") {
+                }
+                const createPaymentResponse = await ApiService.post<{ status: string, message: string }>("/payments", createPaymentBody, headers);
+                if (createPaymentResponse.status === "success") {
                     setSuccessfulPayment(true);
                 }
             }

@@ -1,3 +1,4 @@
+import "./AddMovieStepIndicator.css"
 import { AddMovieFormStep } from "../../../../types/FormData";
 
 type AddMovieStepIndicatorProps = {

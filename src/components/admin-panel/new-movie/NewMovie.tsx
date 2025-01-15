@@ -16,8 +16,6 @@ export default function NewMovie() {
     const [currentStep, setCurrentStep] = useState<FormStep>(1); // Every step is new form
 
     // GeneralForm state 
-    let [isDatePickerOpened, setIsDatePickerOpened] = useState(false);
-    let [formattedDateRange, setFormattedDateRange] = useState("");
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
         title: "",
         language: "",
@@ -156,14 +154,11 @@ export default function NewMovie() {
                 <p className="step-label">Details</p>
                 <p className="step-label">Venues</p>
             </div>
+            
             {currentStep == 1 && (
                 <GeneralForm
                     formData={generalFormData}
                     setFormData={setGeneralFormData}
-                    isDatePickerOpened={isDatePickerOpened}
-                    setIsDatePickerOpened={setIsDatePickerOpened}
-                    formattedDateRange={formattedDateRange}
-                    setFormattedDateRange={setFormattedDateRange}
                 />
             )}
             {currentStep === 2 && (

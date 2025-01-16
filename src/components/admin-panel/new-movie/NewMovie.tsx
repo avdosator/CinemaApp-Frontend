@@ -9,6 +9,9 @@ import DetailsForm from "./details-form/DetailsForm";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
 import { useNavigate } from "react-router-dom";
 import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndicator";
+import ApiService from "../../../service/ApiService";
+import { buildMovieBody } from "../../../utils/utils";
+import { Movie } from "../../../types/Movie";
 
 export default function NewMovie() {
     const navigate = useNavigate();
@@ -75,6 +78,17 @@ export default function NewMovie() {
         return true;
     };
 
+    function createMovie(): void {
+        const createMovieBody = buildMovieBody(generalFormData, detailsFormData, projectionsFormData);
+        console.log(createMovieBody);
+        try {
+            ApiService.post<Movie>("/movies", createMovieBody)
+                .then(response => console.log("we got response: ", response));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (
@@ -113,7 +127,7 @@ export default function NewMovie() {
                 isBackDisabled={currentStep === 1}
                 isFinalStep={currentStep === 3}
                 isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
-                onSubmit={() => console.log("Submitting Movie Data")} // Replace with actual submit logic
+                onSubmit={() => createMovie()} // Replace with actual submit logic
             />
         </div>
     )

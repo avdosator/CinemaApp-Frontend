@@ -3,7 +3,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralForm from "./general-form/GeneralForm";
 import ControlButtonGroup from "./control-button-group/ControlButtonGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DetailsFormData, AddMovieFormStep, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import DetailsForm from "./details-form/DetailsForm";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
@@ -12,11 +12,13 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
+import AddMoviePopUp from "./pop-up/AddMoviePopUp";
 
 export default function NewMovie() {
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState<AddMovieFormStep>(1);
     const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false); // Every step is new form
+    const [conflictingProjections, setConflictingProjections] = useState<boolean>(false);
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -44,6 +46,10 @@ export default function NewMovie() {
     const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
+
+    useEffect(() => {
+        checkConflictingProjections();
+    }, [projectionsFormData]);
 
     const handleNextStep = () => {
         if (validateCurrentStep()) {
@@ -80,29 +86,47 @@ export default function NewMovie() {
 
     function createMovie(): void {
         const createMovieBody = buildMovieBody(generalFormData, detailsFormData, projectionsFormData);
-        console.log(createMovieBody);
         try {
             ApiService.post<Movie>("/movies", createMovieBody)
-                .then(response => console.log("we got response: ", response));
+                .then(response => console.log(response));
         } catch (error) {
             console.log(error);
         }
     }
 
+    const checkConflictingProjections = (): boolean => {
+        const projectionSet = new Set();
+        for (const projection of projectionsFormData) {
+            if (projection.city && projection.venue && projection.time) {
+                const key = `${projection.city.value}-${projection.venue.value}-${projection.time}`;
+                if (projectionSet.has(key)) {
+                    return true; // Conflicting projection found
+                }
+                projectionSet.add(key);
+            }
+        }
+        return false; // No conflicts
+    };
+
+    const handleAddMovie = () => {
+        if (checkConflictingProjections()) {
+            setConflictingProjections(true); // Show the popup
+        } else {
+            createMovie(); // Proceed to create the movie if no conflicts
+        }
+    };
+
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (
-                <div className="session-expired-overlay">
-                    <div className="session-expired-modal">
-                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Form not completed</h6>
-                        <p className="font-md-regular" style={{ color: "#667085" }}> Please complete all required fields before proceeding.</p>
-                        <div className="session-expired-footer" style={{ gap: "8px" }}>
-                            <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={() => setFormNotFilledModal(false)}>
-                                OK
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                    okayAction={setFormNotFilledModal}
+                />
+            )}
+            {conflictingProjections && (
+                <AddMoviePopUp heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
+                    okayAction={setConflictingProjections}
+                />
             )}
             <div className="add-movie-heading">
                 <h6 className="font-heading-h6">Add New Movie</h6>
@@ -127,7 +151,7 @@ export default function NewMovie() {
                 isBackDisabled={currentStep === 1}
                 isFinalStep={currentStep === 3}
                 isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
-                onSubmit={() => createMovie()} // Replace with actual submit logic
+                handleAddMovie={handleAddMovie} // Replace with actual submit logic
             />
         </div>
     )

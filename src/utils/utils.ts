@@ -35,16 +35,18 @@ export const calculateReservedSeatsPrice = (selectedSeats: Seat[], ticketPrices:
     }, 0);
 };
 
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
 export const buildMovieBody = (generalFormData: GeneralFormData, detailsFormData: DetailsFormData, projectionsFormData: ProjectionsFormData[]) => {
     const body = {
-        title: generalFormData.title,
-        language: generalFormData.language,
-        director: generalFormData.director,
-        pgRating: generalFormData.pgRating,
-        duration: Number(generalFormData.duration),
-        genres: generalFormData.genre.map(genre => genre.label),
-        trailer: generalFormData.trailer,
-        synopsis: generalFormData.synopsis,
+        title: capitalize(generalFormData.title.trim()),
+        language: capitalize(generalFormData.language.trim()),
+        director: capitalize(generalFormData.director.trim()),
+        pgRating: capitalize(generalFormData.pgRating.trim()),
+        duration: Number(generalFormData.duration.split(" ")[0].trim()),
+        genreIds: generalFormData.genre.map(genre => genre.value),
+        trailer: generalFormData.trailer.trim(),
+        synopsis: capitalize(generalFormData.synopsis.trim()),
         startDate: generalFormData.startDate,
         endDate: generalFormData.endDate,
         writers: detailsFormData.writersData,

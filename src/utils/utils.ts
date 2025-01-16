@@ -1,4 +1,5 @@
 import { DatePickerBtnType } from "../types/DatePickerBtn";
+import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../types/FormData";
 import { Seat } from "../types/Seat";
 
 // returns date in string format "YYYY-MM-DD"
@@ -33,3 +34,26 @@ export const calculateReservedSeatsPrice = (selectedSeats: Seat[], ticketPrices:
         return total + (matchingPrice ? matchingPrice.price : 0);
     }, 0);
 };
+
+export const buildMovieBody = (generalFormData: GeneralFormData, detailsFormData: DetailsFormData, projectionsFormData: ProjectionsFormData[]) => {
+    const body = {
+        title: generalFormData.title,
+        language: generalFormData.language,
+        director: generalFormData.director,
+        pgRating: generalFormData.pgRating,
+        duration: Number(generalFormData.duration),
+        genres: generalFormData.genre.map(genre => genre.label),
+        trailer: generalFormData.trailer,
+        synopsis: generalFormData.synopsis,
+        startDate: generalFormData.startDate,
+        endDate: generalFormData.endDate,
+        writers: detailsFormData.writersData,
+        cast: detailsFormData.castData,
+        projections: projectionsFormData.map(projection => ({
+            projectionTime: projection.time,
+            cityId: projection.city?.value,
+            venueId: projection.venue?.value,
+        })),
+    }
+    return body;
+}

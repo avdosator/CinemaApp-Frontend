@@ -108,7 +108,7 @@ export default function NewMovie() {
         const uploadedPhotoUrls = await Promise.all(
             detailsFormData.uploadedPhotos.map(photo => uploadPhoto(photo).catch(() => null))
         ).then(results => results.filter(url => url !== null));
-    
+
         if (uploadedPhotoUrls.length > 0) {
             setDetailsFormData((prev) => ({
                 ...prev,
@@ -117,7 +117,7 @@ export default function NewMovie() {
         } else {
             alert("Photo upload failed. Please try again.");
         }
-    
+
         return uploadedPhotoUrls;
     };
 
@@ -145,10 +145,8 @@ export default function NewMovie() {
             );
 
             // Step 4: Send the request to the backend
-            const response = await ApiService.post<Movie>("/movies", createMovieBody);
-            console.log("Movie created successfully:", response.title);
-
-            // Redirect or show success message here
+            await ApiService.post<Movie>("/movies", createMovieBody);
+            navigate("/admin/movies/drafts");
         } catch (error) {
             console.error("Error adding movie:", error);
         }
@@ -189,7 +187,7 @@ export default function NewMovie() {
                 isBackDisabled={currentStep === 1}
                 isFinalStep={currentStep === 3}
                 isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
-                handleAddMovie={handleAddMovie} // Replace with actual submit logic
+                handleAddMovie={handleAddMovie}
             />
         </div>
     )

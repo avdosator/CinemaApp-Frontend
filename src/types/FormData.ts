@@ -45,10 +45,11 @@ export type ProjectionsFormData = {
 }
 
 export type DetailsFormData = {
-    writersData: string[];
-    castData: string[];
-    uploadedPhotos: File[];
-    coverPhotoIndex: number | null;
+    writersData: string[],
+    castData: string[],
+    uploadedPhotos: File[],
+    uploadedPhotoURLs: string[],
+    coverPhotoIndex: number | null,
 };
 
 export type AddMovieFormStep = 1 | 2 | 3;

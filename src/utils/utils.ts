@@ -50,6 +50,8 @@ export const buildMovieBody = (generalFormData: GeneralFormData, detailsFormData
         startDate: generalFormData.startDate,
         endDate: generalFormData.endDate,
         writers: detailsFormData.writersData,
+        photoUrls: detailsFormData.uploadedPhotoURLs,
+        coverPhotoUrl: detailsFormData.uploadedPhotoURLs[detailsFormData.coverPhotoIndex ?? 0],
         cast: detailsFormData.castData,
         projections: projectionsFormData.map(projection => ({
             projectionTime: projection.time,
@@ -59,3 +61,17 @@ export const buildMovieBody = (generalFormData: GeneralFormData, detailsFormData
     }
     return body;
 }
+
+export const checkConflictingProjections = (projectionsFormData: ProjectionsFormData[]): boolean => {
+    const projectionSet = new Set();
+    for (const projection of projectionsFormData) {
+        if (projection.city && projection.venue && projection.time) {
+            const key = `${projection.city.value}-${projection.venue.value}-${projection.time}`;
+            if (projectionSet.has(key)) {
+                return true; // Conflicting projection found
+            }
+            projectionSet.add(key);
+        }
+    }
+    return false; // No conflicts
+};

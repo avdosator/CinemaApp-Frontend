@@ -77,8 +77,9 @@
 
 .dropdown-item {
     padding: 12px 20px;
+    text-align: start;
 }
 
 .dropdown-item:hover {
-    font-weight: 600;
+    font-weight: 500;
 }

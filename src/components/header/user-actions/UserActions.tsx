@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserActions({ name }: { name: string }) {
     const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
-    const {setCurrentUser} = useUser();
+    const { currentUser, setCurrentUser } = useUser();
     const navigate = useNavigate();
 
     const toggleDropdown = () => {
@@ -16,15 +16,20 @@ export default function UserActions({ name }: { name: string }) {
     const handleLogout = () => {
         const refreshToken = localStorage.getItem("refreshToken");
         const userId = localStorage.getItem("userId");
-        if(refreshToken) {
-            ApiService.post<String>("/auth/logout", {refreshToken, userId })
-            .then(response => console.log(response)) // do we need to do anything with response
-            .catch(error => console.error(error));
+        if (refreshToken) {
+            ApiService.post<String>("/auth/logout", { refreshToken, userId })
+                .then(response => console.log(response)) // do we need to do anything with response
+                .catch(error => console.error(error));
         }
         setCurrentUser(null);
         localStorage.clear();
         navigate("/home");
     };
+
+    const goToAdminPage = () => {
+        toggleDropdown();
+        navigate("/admin");
+    }
 
     return (
         <div className="navbar-actions">
@@ -42,6 +47,9 @@ export default function UserActions({ name }: { name: string }) {
             </button>
             {isDropdownVisible && (
                 <div className="user-actions-dropdown-menu">
+                    {currentUser && currentUser.role === "ROLE_ADMIN" && (
+                        <button className="dropdown-item font-lg-regular" style={{ color: "#101828" }} onClick={goToAdminPage}>Admin</button>
+                    )}
                     <button className="dropdown-item font-lg-regular" onClick={handleLogout}>Log Out</button>
                 </div>
             )}

@@ -10,9 +10,12 @@ import ProjectionsForm from "./projections-form/ProjectionsForm";
 import { useNavigate } from "react-router-dom";
 import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndicator";
 import ApiService from "../../../service/ApiService";
-import { buildMovieBody } from "../../../utils/utils";
+import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
 import AddMoviePopUp from "./pop-up/AddMoviePopUp";
+import axios from "axios";
+
+const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function NewMovie() {
     const navigate = useNavigate();
@@ -39,6 +42,7 @@ export default function NewMovie() {
         writersData: [],
         castData: [],
         uploadedPhotos: [],
+        uploadedPhotoURLs: [],
         coverPhotoIndex: null
     });
 
@@ -48,7 +52,7 @@ export default function NewMovie() {
     ]);
 
     useEffect(() => {
-        checkConflictingProjections();
+        checkConflictingProjections(projectionsFormData);
     }, [projectionsFormData]);
 
     const handleNextStep = () => {
@@ -84,35 +88,69 @@ export default function NewMovie() {
         return true;
     };
 
-    function createMovie(): void {
-        const createMovieBody = buildMovieBody(generalFormData, detailsFormData, projectionsFormData);
-        try {
-            ApiService.post<Movie>("/movies", createMovieBody)
-                .then(response => console.log(response));
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    const uploadPhoto = async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("UPLOADCARE_PUB_KEY", UPLOADCARE_PUBLIC_KEY);
 
-    const checkConflictingProjections = (): boolean => {
-        const projectionSet = new Set();
-        for (const projection of projectionsFormData) {
-            if (projection.city && projection.venue && projection.time) {
-                const key = `${projection.city.value}-${projection.venue.value}-${projection.time}`;
-                if (projectionSet.has(key)) {
-                    return true; // Conflicting projection found
-                }
-                projectionSet.add(key);
-            }
+        try {
+            const response = await axios.post("https://upload.uploadcare.com/base/", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            return `https://ucarecdn.com/${response.data.file}/`;
+        } catch (error) {
+            console.error(`Error uploading file ${file.name}:`, error);
+            throw error;
         }
-        return false; // No conflicts
     };
 
-    const handleAddMovie = () => {
-        if (checkConflictingProjections()) {
-            setConflictingProjections(true); // Show the popup
+    const handleUploadPhotos = async (): Promise<string[]> => {
+        const uploadedPhotoUrls = await Promise.all(
+            detailsFormData.uploadedPhotos.map(photo => uploadPhoto(photo).catch(() => null))
+        ).then(results => results.filter(url => url !== null));
+    
+        if (uploadedPhotoUrls.length > 0) {
+            setDetailsFormData((prev) => ({
+                ...prev,
+                uploadedPhotoURLs: uploadedPhotoUrls,
+            }));
         } else {
-            createMovie(); // Proceed to create the movie if no conflicts
+            alert("Photo upload failed. Please try again.");
+        }
+    
+        return uploadedPhotoUrls;
+    };
+
+    const handleAddMovie = async () => {
+        if (checkConflictingProjections(projectionsFormData)) {
+            setConflictingProjections(true); // Show the popup
+            return;
+        }
+
+        try {
+            // Step 1: Upload photos and wait for completion
+            const uploadedPhotoUrls = await handleUploadPhotos();
+
+            // Step 3: Check if uploadedPhotoURLs and coverPhotoIndex are correctly set
+            if (uploadedPhotoUrls.length === 0 || detailsFormData.coverPhotoIndex === null) {
+                alert("Please upload photos and select a cover photo.");
+                return;
+            }
+
+            // Step 3: Build the request body with updated detailsFormData
+            const createMovieBody = buildMovieBody(
+                generalFormData,
+                { ...detailsFormData, uploadedPhotoURLs: uploadedPhotoUrls },
+                projectionsFormData
+            );
+
+            // Step 4: Send the request to the backend
+            const response = await ApiService.post<Movie>("/movies", createMovieBody);
+            console.log("Movie created successfully:", response.title);
+
+            // Redirect or show success message here
+        } catch (error) {
+            console.error("Error adding movie:", error);
         }
     };
 

@@ -51,10 +51,20 @@ function App() {
 									<Route path='/pricing' element={<PricingPage />} />
 
 									{/* Admin Panel with Nested Routing */}
-									<Route path="/admin/*" element={<AdminPanelPage />} >
+									{/* <Route path="/admin/*" element={<AdminPanelPage />} >
+										<Route path="*" element={<AdminRoutes />} />
+									</Route> */}
+
+									<Route
+										path="/admin/*"
+										element={
+											<ProtectedRoute openLoginForm={openAuthModal}>
+												<AdminPanelPage />
+											</ProtectedRoute>
+										}
+									>
 										<Route path="*" element={<AdminRoutes />} />
 									</Route>
-									{/* Protected Route */}
 									<Route
 										path="/projection/:id/reservations"
 										element={

@@ -62,7 +62,7 @@ export default function UpcomingMoviesPage() {
                     const cityOption = cityOptions.find(city => city.value === formData.city!.value);
                     if (cityOption) setFormData(prev => ({ ...prev, city: cityOption }));
                 }
-                
+
                 setAllVenues(venuesResponse.content);
                 const venueOptions = venuesResponse.content.map(venue => ({ value: venue.id, label: venue.name }));
                 setVenueOptions(venueOptions);
@@ -200,7 +200,7 @@ export default function UpcomingMoviesPage() {
             <LoadingIndicator />
         ) : (
             <>
-                <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
+                <h4 className="font-heading-h4 currently-showing-caption">Upcoming Movies{movies.length > 0 && ` (${movies.length})`}</h4>
                 <UpcomingMoviesForm
                     handleChange={handleChange}
                     formData={formData}

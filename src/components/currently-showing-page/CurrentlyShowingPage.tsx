@@ -96,7 +96,7 @@ export default function CurrentlyShowingPage() {
             size: PAGE_SIZE.toString(),
             date: data.date || END_DATE
         };
-        if (data.title) params.title = params.title = data.title.trim().replace(/\s+/g, " ");
+        if (data.title) params.title = data.title.trim().replace(/\s+/g, " ");
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;

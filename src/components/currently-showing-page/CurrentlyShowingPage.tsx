@@ -96,7 +96,7 @@ export default function CurrentlyShowingPage() {
             size: PAGE_SIZE.toString(),
             date: data.date || END_DATE
         };
-        if (data.title) params.title = data.title;
+        if (data.title) params.title = params.title = data.title.trim().replace(/\s+/g, " ");
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
@@ -118,7 +118,8 @@ export default function CurrentlyShowingPage() {
             time: data.time?.value,
         };
         if (data.title) {
-            params.title = data.title;
+            // Normalize the title by trimming spaces and replacing multiple spaces with a single space
+            params.title = data.title.trim().replace(/\s+/g, " ");
         }
 
         ApiService.get<PageResponse<Movie>>("/movies/active", params)
@@ -133,13 +134,21 @@ export default function CurrentlyShowingPage() {
     }
 
     const debouncedFetchMovies = debounce((data: CurrentlyShowingFormData): void => {
+        const trimmedTitle = data.title.trim();
+        if (trimmedTitle === "") {
+            // Clear the title filter if the input is only spaces
+            setFormData(prevData => ({ ...prevData, title: "" }));
+            updateSearchParams({ ...formData, title: "" }, 0);
+            fetchMovies({ ...formData, title: "" }, 0);
+            return;
+        }
         setPage(0);
         // Update formData for title changes
-        setFormData(prevData => ({ ...prevData, title: data.title }));
+        setFormData(prevData => ({ ...prevData, title: trimmedTitle }));
         // Update searchParams with the new title value
-        updateSearchParams({ ...formData, title: data.title }, 0);
+        updateSearchParams({ ...formData, title: trimmedTitle }, 0);
         // Fetch movies with the updated title
-        fetchMovies({ ...formData, title: data.title }, 0);
+        fetchMovies({ ...formData, title: trimmedTitle }, 0);
     }, 500);
 
     useEffect(() => {

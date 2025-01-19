@@ -200,7 +200,7 @@ export default function UpcomingMoviesPage() {
             <LoadingIndicator />
         ) : (
             <>
-                <h4 className="font-heading-h4 currently-showing-caption">Upcoming movies({movies.length})</h4>
+                <h4 className="font-heading-h4 currently-showing-caption">Upcoming Movies({movies.length})</h4>
                 <UpcomingMoviesForm
                     handleChange={handleChange}
                     formData={formData}

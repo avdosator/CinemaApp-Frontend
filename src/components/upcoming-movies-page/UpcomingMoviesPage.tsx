@@ -89,7 +89,7 @@ export default function UpcomingMoviesPage() {
             startDate: data.startDate || START_DATE,
             endDate: data.endDate || END_DATE
         };
-        if (data.title) params.title = data.title;
+        if (data.title) params.title = data.title.trim().replace(/\s+/g, " ");
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
@@ -109,7 +109,7 @@ export default function UpcomingMoviesPage() {
             genre: data.genre?.value,
         };
         if (data.title) {
-            params.title = data.title;
+            params.title = data.title.trim().replace(/\s+/g, " ");
         }
 
         ApiService.get<PageResponse<Movie>>("/movies/upcoming", params)
@@ -124,13 +124,21 @@ export default function UpcomingMoviesPage() {
     }
 
     const debouncedFetchMovies = debounce((data: UpcomingMoviesFormData) => {
+        const trimmedTitle = data.title.trim();
+        if (trimmedTitle === "") {
+            // Clear the title filter if the input is only spaces
+            setFormData(prevData => ({ ...prevData, title: "" }));
+            updateSearchParams({ ...formData, title: "" }, 0);
+            fetchMovies({ ...formData, title: "" }, 0);
+            return;
+        }
         setPage(0);
         // Update formData for title changes
-        setFormData(prevData => ({ ...prevData, title: data.title }));
+        setFormData(prevData => ({ ...prevData, title: trimmedTitle }));
         // Update searchParams with the new title value
-        updateSearchParams({ ...formData, title: data.title }, 0);
+        updateSearchParams({ ...formData, title: trimmedTitle }, 0);
         // Fetch movies with the updated title
-        fetchMovies({ ...formData, title: data.title }, 0);
+        fetchMovies({ ...formData, title: trimmedTitle }, 0);
     }, 500);
 
     useEffect(() => {

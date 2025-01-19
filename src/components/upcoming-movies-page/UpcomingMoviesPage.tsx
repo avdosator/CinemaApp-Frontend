@@ -6,7 +6,6 @@ import UpcomingMoviesList from "./upcoming-movies-list/UpcomingMoviesList";
 import TertiaryButton from "../shared-components/buttons/TertiaryButton";
 import { SelectOptionType } from "../../types/SelectOptionType";
 import { calculateDateString } from "../../utils/utils";
-import { useSearchParams } from "react-router-dom";
 import { UpcomingMoviesFormData } from "../../types/FormData";
 import { Genre } from "../../types/Genre";
 import { City } from "../../types/City";
@@ -17,9 +16,10 @@ import UpcomingMoviesForm from "./upcoming-movies-form/UpcomingMoviesForm";
 import NoMoviesPreview from "../shared-components/no-movies-preview/NoMoviesPreview";
 import { format } from "date-fns";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
+import { useQueryParams } from "../../custom-hooks/useQueryParams";
 
 export default function UpcomingMoviesPage() {
-    let [searchParams, setSearchParams] = useSearchParams();
+    const { queryParams, setQueryParams } = useQueryParams();
     let [movies, setMovies] = useState<Movie[]>([]);
     let [page, setPage] = useState<number>(0);
     let [isLastPage, setIsLastPage] = useState<boolean>(false);
@@ -34,12 +34,12 @@ export default function UpcomingMoviesPage() {
     const [allVenues, setAllVenues] = useState<Venue[]>([]);
 
     let [formData, setFormData] = useState<UpcomingMoviesFormData>({
-        title: searchParams.get("title") || "",
-        city: searchParams.get("city") ? { value: searchParams.get("city")!, label: "" } : null,
-        venue: searchParams.get("venue") ? { value: searchParams.get("venue")!, label: "" } : null,
-        genre: searchParams.get("genre") ? { value: searchParams.get("genre")!, label: "" } : null,
-        startDate: searchParams.get("startDate") ? searchParams.get("startDate")! : "",
-        endDate: searchParams.get("startDate") ? searchParams.get("endDate")! : ""
+        title: queryParams.title || "",
+        city: queryParams.city ? { value: queryParams.city, label: "" } : null,
+        venue: queryParams.venue ? { value: queryParams.venue, label: "" } : null,
+        genre: queryParams.genre ? { value: queryParams.genre, label: "" } : null,
+        startDate: queryParams.startDate || "",
+        endDate: queryParams.endDate || ""
     });
 
     // Determine the initial `formattedDateRange` to pass to `UpcomingMoviesForm`
@@ -115,7 +115,7 @@ export default function UpcomingMoviesPage() {
         if (data.city?.value) params.city = data.city.value;
         if (data.venue?.value) params.venue = data.venue.value;
         if (data.genre?.value) params.genre = data.genre.value;
-        setSearchParams(params);
+        setQueryParams(params); 
     };
 
     const fetchMovies = (data: UpcomingMoviesFormData, pageNumber: number) => {

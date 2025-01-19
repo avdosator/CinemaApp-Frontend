@@ -31,6 +31,7 @@ export default function UpcomingMoviesPage() {
     let [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     let [genreOptions, setGenreOptions] = useState<SelectOptionType[]>();
     let [venueOptions, setVenueOptions] = useState<SelectOptionType[]>();
+    const [allVenues, setAllVenues] = useState<Venue[]>([]);
 
     let [formData, setFormData] = useState<UpcomingMoviesFormData>({
         title: searchParams.get("title") || "",
@@ -61,7 +62,8 @@ export default function UpcomingMoviesPage() {
                     const cityOption = cityOptions.find(city => city.value === formData.city!.value);
                     if (cityOption) setFormData(prev => ({ ...prev, city: cityOption }));
                 }
-
+                
+                setAllVenues(venuesResponse.content);
                 const venueOptions = venuesResponse.content.map(venue => ({ value: venue.id, label: venue.name }));
                 setVenueOptions(venueOptions);
 
@@ -80,6 +82,26 @@ export default function UpcomingMoviesPage() {
             })
             .catch(error => console.error("Error fetching data:", error));
     }, []);
+
+    useEffect(() => {
+        if (formData.city?.value) {
+            // Filter venues based on the selected city
+            const filteredVenues = allVenues.filter(venue => venue.city.id === formData.city!.value);
+            const filteredVenueOptions = filteredVenues.map(venue => ({
+                value: venue.id,
+                label: venue.name,
+            }));
+            setVenueOptions(filteredVenueOptions);
+            setFormData(prev => ({ ...prev, venue: null })); // Reset venue selection
+        } else {
+            // Reset to show all venues if no city is selected
+            const allVenueOptions = allVenues.map(venue => ({
+                value: venue.id,
+                label: venue.name,
+            }));
+            setVenueOptions(allVenueOptions);
+        }
+    }, [formData.city, allVenues]);
 
     const updateSearchParams = (data: UpcomingMoviesFormData, pageNumber: number) => {
 
@@ -197,4 +219,4 @@ export default function UpcomingMoviesPage() {
             </>
         )
     )
-}
+}   

@@ -143,9 +143,11 @@ export default function NewMovie() {
                 { ...detailsFormData, uploadedPhotoURLs: uploadedPhotoUrls },
                 projectionsFormData
             );
+            const jwt = localStorage.getItem("authToken");
+            const headers = { "Authorization": `Bearer ${jwt}` };
 
             // Step 4: Send the request to the backend
-            await ApiService.post<Movie>("/movies", createMovieBody);
+            await ApiService.post<Movie>("/movies", createMovieBody, headers);
             navigate("/admin/movies/drafts");
         } catch (error) {
             console.error("Error adding movie:", error);

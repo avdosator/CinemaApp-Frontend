@@ -14,6 +14,7 @@ import { buildMovieBody, checkConflictingProjections } from "../../../utils/util
 import { Movie } from "../../../types/Movie";
 import AddMoviePopUp from "./pop-up/AddMoviePopUp";
 import axios from "axios";
+import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -22,6 +23,7 @@ export default function NewMovie() {
     const [currentStep, setCurrentStep] = useState<AddMovieFormStep>(1);
     const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false); // Every step is new form
     const [conflictingProjections, setConflictingProjections] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -128,6 +130,7 @@ export default function NewMovie() {
         }
 
         try {
+            setIsLoading(true);
             // Step 1: Upload photos and wait for completion
             const uploadedPhotoUrls = await handleUploadPhotos();
 
@@ -148,8 +151,10 @@ export default function NewMovie() {
 
             // Step 4: Send the request to the backend
             await ApiService.post<Movie>("/movies", createMovieBody, headers);
+            setIsLoading(false);
             navigate("/admin/movies/drafts");
         } catch (error) {
+            setIsLoading(false);
             console.error("Error adding movie:", error);
         }
     };
@@ -166,31 +171,39 @@ export default function NewMovie() {
                     okayAction={setConflictingProjections}
                 />
             )}
-            <div className="add-movie-heading">
-                <h6 className="font-heading-h6">Add New Movie</h6>
-                <button className="add-movie-cancel-btn" onClick={() => navigate("/admin")}>
-                    <FontAwesomeIcon icon={faXmark} width={12} height={16} />
-                </button>
-            </div>
-            <AddMovieStepIndicator
-                isGeneralFormComplete={isGeneralFormComplete}
-                isDetailsFormComplete={isDetailsFormComplete}
-                isProjectionsFormComplete={isProjectionsFormComplete}
-                stepStatus={stepStatus}
-            />
 
-            {currentStep == 1 && (<GeneralForm generalFormData={generalFormData} setGeneralFormData={setGeneralFormData} />)}
-            {currentStep === 2 && (<DetailsForm detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />)}
-            {currentStep === 3 && (<ProjectionsForm projectionsFormData={projectionsFormData} setProjectionsFormData={setProjectionsFormData} />)}
+            {isLoading
+                ? (<LoadingIndicator />)
+                : (
+                    <>
+                        <div className="add-movie-heading">
+                            <h6 className="font-heading-h6">Add New Movie</h6>
+                            <button className="add-movie-cancel-btn" onClick={() => navigate("/admin")}>
+                                <FontAwesomeIcon icon={faXmark} width={12} height={16} />
+                            </button>
+                        </div>
+                        <AddMovieStepIndicator
+                            isGeneralFormComplete={isGeneralFormComplete}
+                            isDetailsFormComplete={isDetailsFormComplete}
+                            isProjectionsFormComplete={isProjectionsFormComplete}
+                            stepStatus={stepStatus}
+                        />
+                        {currentStep == 1 && (<GeneralForm generalFormData={generalFormData} setGeneralFormData={setGeneralFormData} />)}
+                        {currentStep === 2 && (<DetailsForm detailsFormData={detailsFormData} setDetailsFormData={setDetailsFormData} />)}
+                        {currentStep === 3 && (<ProjectionsForm projectionsFormData={projectionsFormData} setProjectionsFormData={setProjectionsFormData} />)}
 
-            <ControlButtonGroup
-                onNext={handleNextStep}
-                onBack={handlePreviousStep}
-                isBackDisabled={currentStep === 1}
-                isFinalStep={currentStep === 3}
-                isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
-                handleAddMovie={handleAddMovie}
-            />
+                        <ControlButtonGroup
+                            onNext={handleNextStep}
+                            onBack={handlePreviousStep}
+                            isBackDisabled={currentStep === 1}
+                            isFinalStep={currentStep === 3}
+                            isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
+                            handleAddMovie={handleAddMovie}
+                        />
+                    </>
+                )}
+
+
         </div>
     )
 }

@@ -49,12 +49,6 @@ function App() {
 									<Route path='/movies/*' element={<MovieRoutes openLoginForm={openAuthModal} />} />
 									<Route path='/about' element={<AboutUsPage />} />
 									<Route path='/pricing' element={<PricingPage />} />
-
-									{/* Admin Panel with Nested Routing */}
-									{/* <Route path="/admin/*" element={<AdminPanelPage />} >
-										<Route path="*" element={<AdminRoutes />} />
-									</Route> */}
-
 									<Route
 										path="/admin/*"
 										element={

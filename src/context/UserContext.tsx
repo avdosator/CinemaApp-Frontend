@@ -34,8 +34,11 @@ export default function UserProvider({ children }: { children: ReactNode }) {
                     setCurrentUser(user); // Set user in context
                 })
                 .catch((error) => {
-                    console.error("Failed to refresh token or fetch user:", error);
-                    localStorage.clear();
+                    console.error("Failed to refresh token or fetch user:", error.response?.data || error.message);
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("authTokenExpiry");
+                    localStorage.removeItem("refreshToken");
                     setCurrentUser(null);
                 });
         }

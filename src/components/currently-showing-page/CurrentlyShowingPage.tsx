@@ -17,9 +17,11 @@ import { Genre } from "../../types/Genre";
 import { Venue } from "../../types/Venue";
 import { calculateDateString } from "../../utils/utils";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
+import { useQueryParams } from "../../custom-hooks/useQueryParams";
 
 export default function CurrentlyShowingPage() {
-    let [searchParams, setSearchParams] = useSearchParams();
+    const { queryParams, setQueryParams } = useQueryParams();
+    let [searchParams] = useSearchParams();
     let [movies, setMovies] = useState<Movie[]>([]);
     let [page, setPage] = useState(0); // Current page number
     let [isLastPage, setIsLastPage] = useState(false); // Track if we're on the last page
@@ -124,8 +126,21 @@ export default function CurrentlyShowingPage() {
         if (data.genre?.value) params.genre = data.genre.value;
         if (data.time?.value) params.time = data.time.value;
 
-        setSearchParams(params);
+        setQueryParams(params);
     };
+
+    useEffect(() => {
+        // Sync query params with form data on mount
+        setFormData(prev => ({
+            ...prev,
+            title: queryParams.title || "",
+            city: queryParams.city ? { value: queryParams.city, label: "" } : null,
+            venue: queryParams.venue ? { value: queryParams.venue, label: "" } : null,
+            genre: queryParams.genre ? { value: queryParams.genre, label: "" } : null,
+            time: queryParams.time ? { value: queryParams.time, label: "" } : null,
+            date: queryParams.date || new Date().toISOString().split('T')[0],
+        }));
+    }, [queryParams]);
 
     const fetchMovies = (data: CurrentlyShowingFormData, pageNumber: number): void => {
 

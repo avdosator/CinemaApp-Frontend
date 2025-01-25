@@ -1,0 +1,7 @@
+.admin-panel-venue-list {
+    width: 100%;
+    padding: 72px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}

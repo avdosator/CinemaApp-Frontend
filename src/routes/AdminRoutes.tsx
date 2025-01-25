@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import MoviesPanel from "../components/admin-panel/movies-tab/MoviesPanel";
 import NewMovie from "../components/admin-panel/new-movie/NewMovie";
+import VenuesPanel from "../components/admin-panel/venues-tab/VenuesPanel";
 
 export default function AdminRoutes() {
     return (
@@ -12,7 +13,7 @@ export default function AdminRoutes() {
             <Route path="movies/upcoming" element={<MoviesPanel />} />
             <Route path="movies/archived" element={<MoviesPanel />} />
             <Route path="movies/new-movie" element={<NewMovie />} />
-            <Route path="venues" element={<div>Venues Section Coming Soon</div>} />
+            <Route path="venues" element={<VenuesPanel />} />
         </Routes>
     )
 }

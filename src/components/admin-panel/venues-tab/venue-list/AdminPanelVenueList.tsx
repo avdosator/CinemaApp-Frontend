@@ -1,3 +1,4 @@
+import "./AdminPanelVenueList.css"
 import { Venue } from "../../../../types/Venue";
 import VenueCard from "../../../shared-components/card/venue-card/VenueCard";
 

@@ -6,31 +6,21 @@ import { AddVenueFormData } from "../../../../types/FormData";
 import { SelectOptionType } from "../../../../types/SelectOptionType";
 import ApiService from "../../../../service/ApiService";
 import { City } from "../../../../types/City";
+import { Venue } from "../../../../types/Venue";
+import { useLocation } from "react-router-dom";
+import { initializeVenueFormData } from "../../../../utils/utils";
 
-interface VenueFormProps {
+type VenueFormProps = {
     mode: 'add' | 'edit' | 'view';
-    initialData?: {
-        title: string;
-        phone: string;
-        street: string;
-        streetNumber: string;
-        city: string;
-        photoUrl?: string;
-    };
     onSubmit?: (data: any) => void;
     onCancel?: () => void;
 }
 
-export default function VenueForm({ initialData }: VenueFormProps) {
+export default function VenueForm({ mode }: VenueFormProps) {
+    const location = useLocation();
+    const venueFromState: Venue | null = location.state?.venue || null;
     const [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
-    const [formData, setFormData] = useState<AddVenueFormData>(initialData || {
-        title: "",
-        phone: "",
-        street: "",
-        streetNumber: "",
-        city: "",
-        photoUrl: "",
-    });
+    const [formData, setFormData] = useState<AddVenueFormData>(initializeVenueFormData(mode, venueFromState));
 
     useEffect(() => {
         ApiService.get<City[]>("/cities")
@@ -68,6 +58,7 @@ export default function VenueForm({ initialData }: VenueFormProps) {
                                 autoFocus
                                 value={formData.title}
                                 onChange={e => handleChange("title", e.target.value)}
+                                readOnly={mode === 'view'}
                             />
                         </div>
                     </div>
@@ -82,6 +73,7 @@ export default function VenueForm({ initialData }: VenueFormProps) {
                                 placeholder="Phone"
                                 value={formData.phone}
                                 onChange={e => handleChange("title", e.target.value)}
+                                readOnly={mode === 'view'}
                             />
                         </div>
                     </div>
@@ -101,6 +93,7 @@ export default function VenueForm({ initialData }: VenueFormProps) {
                                 placeholder="Street"
                                 value={formData.street}
                                 onChange={e => handleChange("title", e.target.value)}
+                                readOnly={mode === 'view'}
                             />
                         </div>
                     </div>
@@ -115,6 +108,7 @@ export default function VenueForm({ initialData }: VenueFormProps) {
                                 placeholder="Number"
                                 value={formData.streetNumber}
                                 onChange={e => handleChange("title", e.target.value)}
+                                readOnly={mode === 'view'}
                             />
                         </div>
                     </div>
@@ -135,6 +129,7 @@ export default function VenueForm({ initialData }: VenueFormProps) {
                             value={formData.city}
                             onChange={(newValue) => handleChange("city", newValue!)}
                             name="city"
+                        //readOnly={mode === 'view'}
                         />
                     </div>
                 </div>

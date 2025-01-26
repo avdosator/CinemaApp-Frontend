@@ -1,11 +1,28 @@
 import { faBuilding, faHashtag, faLocation, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import Select, { SingleValue } from "react-select";
+import { useEffect, useState } from "react";
+import Select from "react-select";
 import { AddVenueFormData } from "../../../../types/FormData";
 import { SelectOptionType } from "../../../../types/SelectOptionType";
+import ApiService from "../../../../service/ApiService";
+import { City } from "../../../../types/City";
 
-export default function NewVenue() {
+interface VenueFormProps {
+    mode: 'add' | 'edit' | 'view';
+    initialData?: {
+        title: string;
+        phone: string;
+        street: string;
+        streetNumber: string;
+        city: string;
+        photoUrl?: string;
+    };
+    onSubmit?: (data: any) => void;
+    onCancel?: () => void;
+}
+
+export default function VenueForm({ initialData }: VenueFormProps) {
+    const [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
     const [formData, setFormData] = useState<AddVenueFormData>(initialData || {
         title: "",
         phone: "",
@@ -14,6 +31,12 @@ export default function NewVenue() {
         city: "",
         photoUrl: "",
     });
+
+    useEffect(() => {
+        ApiService.get<City[]>("/cities")
+            .then(response => setCityOptions(response.map(city => ({ value: city.id, label: city.name }))))
+            .catch(error => console.log(error));
+    }, []);
 
     const handleChange = (name: keyof AddVenueFormData, value: string | SelectOptionType) => {
         setFormData((prevData) => ({

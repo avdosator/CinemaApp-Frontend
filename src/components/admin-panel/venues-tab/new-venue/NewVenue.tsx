@@ -1,8 +1,27 @@
 import { faBuilding, faHashtag, faLocation, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Select from "react-select/base";
+import { useState } from "react";
+import Select, { SingleValue } from "react-select";
+import { AddVenueFormData } from "../../../../types/FormData";
+import { SelectOptionType } from "../../../../types/SelectOptionType";
 
 export default function NewVenue() {
+    const [formData, setFormData] = useState<AddVenueFormData>(initialData || {
+        title: "",
+        phone: "",
+        street: "",
+        streetNumber: "",
+        city: "",
+        photoUrl: "",
+    });
+
+    const handleChange = (name: keyof AddVenueFormData, value: string | SelectOptionType) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
     return (
         <div className="new-venue-container">
             <h6 className="font-heading-h6" style={{ color: "#1D2939" }}>New Venue</h6>
@@ -38,7 +57,7 @@ export default function NewVenue() {
                                 id="phone"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Phone"
-                                value={formData.title}
+                                value={formData.phone}
                                 onChange={e => handleChange("title", e.target.value)}
                             />
                         </div>
@@ -57,7 +76,7 @@ export default function NewVenue() {
                                 id="street"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Street"
-                                value={formData.title}
+                                value={formData.street}
                                 onChange={e => handleChange("title", e.target.value)}
                             />
                         </div>
@@ -71,7 +90,7 @@ export default function NewVenue() {
                                 id="streetNumber"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Number"
-                                value={formData.title}
+                                value={formData.streetNumber}
                                 onChange={e => handleChange("title", e.target.value)}
                             />
                         </div>
@@ -81,21 +100,21 @@ export default function NewVenue() {
 
 
                 <div className="general-form-input-group">
-                        <label htmlFor="genre" className="font-lg-semibold">Genre</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocation} className={`input-icon ${formData.genre.length > 0 ? "red-icon" : ""}`} />
-                            <Select<SelectOptionType, false>
-                                options={cityOptions}
-                                placeholder="Choose city"
-                                className="dropdown-menu-input"
-                                classNamePrefix="dropdown"
-                                isClearable={true}
-                                value={formData.city}
-                                onChange={(newValue) => handleChange("city", newValue)}
-                                name="city"
-                            />
-                        </div>
+                    <label htmlFor="genre" className="font-lg-semibold">Genre</label>
+                    <div className="input-wrapper">
+                        <FontAwesomeIcon icon={faLocation} className={`input-icon ${formData.city ? "red-icon" : ""}`} />
+                        <Select<SelectOptionType, false>
+                            options={cityOptions}
+                            placeholder="Choose city"
+                            className="dropdown-menu-input"
+                            classNamePrefix="dropdown"
+                            isClearable={true}
+                            value={formData.city}
+                            onChange={(newValue) => handleChange("city", newValue!)}
+                            name="city"
+                        />
                     </div>
+                </div>
 
             </form>
         </div>

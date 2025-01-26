@@ -3,13 +3,18 @@ import { Venue } from "../../../../types/Venue";
 import VenueCard from "../../../shared-components/card/venue-card/VenueCard";
 
 type AdminPanelVenueList = {
-    venues: Venue[]
+    venues: Venue[],
+    onCardClick: (venue: Venue) => void
 }
 
-export default function AdminPanelVenueList({ venues }: AdminPanelVenueList) {
+export default function AdminPanelVenueList({ venues, onCardClick }: AdminPanelVenueList) {
     return (
         <div className="admin-panel-venue-list">
-            {venues.map(venue => (<VenueCard key={venue.id} {...venue} />))}
+            {venues.map(venue => (
+                <div onClick={() => onCardClick(venue)} key={venue.id} style={{ cursor: "pointer" }} >
+                    <VenueCard key={venue.id} {...venue} />
+                </div>
+            ))}
         </div>
     );
 }

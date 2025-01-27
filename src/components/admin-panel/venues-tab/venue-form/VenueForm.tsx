@@ -59,43 +59,31 @@ export default function VenueForm({ mode }: VenueFormProps) {
         }));
     };
 
-    const renderHeadingButton = () => {
-        switch (mode) {
-            case "view":
-                return (
-                    <button
-                        className="add-movie-btn font-lg-semibold"
-                        onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
-                    >
-                        Edit Venue
-                    </button>
-                );
-            case "edit":
-                return (
-                    <TertiaryButton label="Delete Venue" size="large" />
-                );
-            default: return null;
-        }
+    const renderHeadingButton = (): JSX.Element | null => {
+        return mode === "view" ? (
+            <button
+                className="add-movie-btn font-lg-semibold"
+                onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
+            >
+                Edit Venue
+            </button>
+        ) : mode === "edit" ? (
+            <TertiaryButton label="Delete Venue" size="large" />
+        ) : null;
     }
 
-    const renderControlButtons = () => {
-        switch (mode) {
-            case "add":
-                return (
-                    <>
-                        <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
-                        <button className="add-movie-btn font-lg-semibold">Add Venue</button>
-                    </>
-                );
-            case "edit":
-                return (
-                    <>
-                        <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
-                        <button className="add-movie-btn font-lg-semibold">Save Changes</button>
-                    </>
-                );
-            default: return null;
-        }
+    const renderControlButtons = (): JSX.Element | null => {
+        return mode === "add" ? (
+            <>
+                <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
+                <button className="add-movie-btn font-lg-semibold">Add Venue</button>
+            </>
+        ) : mode === "edit" ? (
+            <>
+                <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
+                <button className="add-movie-btn font-lg-semibold">Save Changes</button>
+            </>
+        ) : null;
     }
 
     return (

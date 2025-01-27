@@ -66,7 +66,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                                 autoFocus
                                 value={formData.title}
                                 onChange={e => handleChange("title", e.target.value)}
-                                readOnly={mode === 'view'}
+                                readOnly={mode === "view"}
                             />
                         </div>
                     </div>
@@ -81,7 +81,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                                 placeholder="Phone"
                                 value={formData.phone}
                                 onChange={e => handleChange("title", e.target.value)}
-                                readOnly={mode === 'view'}
+                                readOnly={mode === "view"}
                             />
                         </div>
                     </div>
@@ -100,7 +100,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                                 placeholder="Street"
                                 value={formData.street}
                                 onChange={e => handleChange("title", e.target.value)}
-                                readOnly={mode === 'view'}
+                                readOnly={mode === "view"}
                             />
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                                 placeholder="Number"
                                 value={formData.streetNumber}
                                 onChange={e => handleChange("title", e.target.value)}
-                                readOnly={mode === 'view'}
+                                readOnly={mode === "view"}
                             />
                         </div>
                     </div>
@@ -135,7 +135,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                             value={formData.city}
                             onChange={(newValue) => handleChange("city", newValue!)}
                             name="city"
-                        //readOnly={mode === 'view'}
+                            isDisabled={mode === "view"}
                         />
                     </div>
                 </div>

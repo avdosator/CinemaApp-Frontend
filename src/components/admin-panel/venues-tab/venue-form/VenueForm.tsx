@@ -1,7 +1,7 @@
 import "./VenueForm.css";
 import { faBuilding, faHashtag, faLocationPin, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import { AddVenueFormData } from "../../../../types/FormData";
 import { SelectOptionType } from "../../../../types/SelectOptionType";
@@ -14,27 +14,47 @@ import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 
 type VenueFormProps = {
-    mode: 'add' | 'edit' | 'view';
-    onSubmit?: (data: any) => void;
-    onCancel?: () => void;
+    mode: "add" | "edit" | "view";
 }
 
 export default function VenueForm({ mode }: VenueFormProps) {
     const navigate = useNavigate();
     const location = useLocation();
     const venueFromState: Venue | null = location.state?.venue || null;
-    console.log(venueFromState);
     const [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
     const [formData, setFormData] = useState<AddVenueFormData>(initializeVenueFormData(mode, venueFromState));
-
-    const heading = mode === "add" ? "New Venue" : venueFromState?.name;
-    const imgSrc = mode === "add" ? placeholderImage : venueFromState?.photo.url;
+    const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         ApiService.get<City[]>("/cities")
             .then(response => setCityOptions(response.map(city => ({ value: city.id, label: city.name }))))
             .catch(error => console.log(error));
     }, []);
+
+    const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setUploadedPhoto(file);
+        }
+    };
+
+    const handleUploadPhotoBtnClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const imgSrc = (() => {
+        if (mode === "add") {
+            return uploadedPhoto ? URL.createObjectURL(uploadedPhoto) : placeholderImage;
+        } else if (mode === "view" || mode === "edit") {
+            return uploadedPhoto
+                ? URL.createObjectURL(uploadedPhoto)
+                : venueFromState?.photo?.url || placeholderImage;
+        }
+        return placeholderImage;
+    })();
+
+    const heading = mode === "add" ? "New Venue" : venueFromState?.name;
 
     const handleChange = (name: keyof AddVenueFormData, value: string | SelectOptionType) => {
         setFormData((prevData) => ({
@@ -92,9 +112,25 @@ export default function VenueForm({ mode }: VenueFormProps) {
             <form className="new-venue-form">
                 <div className="uploaded-photo-preview-item">
                     <img src={imgSrc} className="uploaded-photo-thumbnail" />
-                    <div className="upload-photo-btn-container">
-                        <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
-                    </div>
+                    {mode !== "view" && (
+                    <>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            style={{ display: "none" }}
+                            onChange={handlePhotoUpload}
+                        />
+                        <div className="upload-photo-btn-container">
+                            <TertiaryButton
+                                label="Upload Photo"
+                                size="large"
+                                color="#FCFCFD"
+                                onClick={handleUploadPhotoBtnClick}
+                            />
+                        </div>
+                    </>
+                )}
                 </div>
                 <div className="full-width-horizontal-line"></div>
                 <div className="new-venue-group">

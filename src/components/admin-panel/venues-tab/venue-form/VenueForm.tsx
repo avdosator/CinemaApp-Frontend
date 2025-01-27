@@ -150,8 +150,6 @@ export default function VenueForm({ mode }: VenueFormProps) {
                         </div>
                     </div>
                 </div>
-
-
                 <div className="new-venue-group">
                     <div className="general-form-input-group">
                         <label htmlFor="street" className="font-lg-semibold">Street</label>
@@ -184,8 +182,6 @@ export default function VenueForm({ mode }: VenueFormProps) {
                         </div>
                     </div>
                 </div>
-
-
                 <div className="general-form-input-group">
                     <label htmlFor="çity" className="font-lg-semibold">City</label>
                     <div className="input-wrapper">
@@ -203,7 +199,6 @@ export default function VenueForm({ mode }: VenueFormProps) {
                         />
                     </div>
                 </div>
-
             </form>
             <div className="full-width-horizontal-line"></div>
             <div className="venue-form-control-btn-group">

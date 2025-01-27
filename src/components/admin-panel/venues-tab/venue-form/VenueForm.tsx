@@ -12,10 +12,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
+import axios from "axios";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
 }
+
+const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function VenueForm({ mode }: VenueFormProps) {
     const navigate = useNavigate();
@@ -71,6 +74,24 @@ export default function VenueForm({ mode }: VenueFormProps) {
             <TertiaryButton label="Delete Venue" size="large" />
         ) : null;
     }
+
+    const uploadPhoto = async (): Promise<string> => {
+        const formData = new FormData();
+        formData.append("file", uploadedPhoto!);
+        formData.append("UPLOADCARE_PUB_KEY", UPLOADCARE_PUBLIC_KEY);
+
+        try {
+            const response = await axios.post("https://upload.uploadcare.com/base/", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            return `https://ucarecdn.com/${response.data.file}/`;
+        } catch (error) {
+            console.error(`Error uploading file ${uploadedPhoto!.name}:`, error);
+            throw error;
+        }
+    };
+
+    
 
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (

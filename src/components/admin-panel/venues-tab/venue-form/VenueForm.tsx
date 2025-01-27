@@ -43,16 +43,12 @@ export default function VenueForm({ mode }: VenueFormProps) {
         fileInputRef.current?.click();
     };
 
-    const imgSrc = (() => {
-        if (mode === "add") {
-            return uploadedPhoto ? URL.createObjectURL(uploadedPhoto) : placeholderImage;
-        } else if (mode === "view" || mode === "edit") {
-            return uploadedPhoto
-                ? URL.createObjectURL(uploadedPhoto)
-                : venueFromState?.photo?.url || placeholderImage;
-        }
-        return placeholderImage;
-    })();
+    const imgSrc =
+        uploadedPhoto
+            ? URL.createObjectURL(uploadedPhoto)
+            : mode === "view" || mode === "edit"
+                ? venueFromState?.photo?.url || placeholderImage
+                : placeholderImage;
 
     const heading = mode === "add" ? "New Venue" : venueFromState?.name;
 
@@ -113,24 +109,24 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 <div className="uploaded-photo-preview-item">
                     <img src={imgSrc} className="uploaded-photo-thumbnail" />
                     {mode !== "view" && (
-                    <>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            style={{ display: "none" }}
-                            onChange={handlePhotoUpload}
-                        />
-                        <div className="upload-photo-btn-container">
-                            <TertiaryButton
-                                label="Upload Photo"
-                                size="large"
-                                color="#FCFCFD"
-                                onClick={handleUploadPhotoBtnClick}
+                        <>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                style={{ display: "none" }}
+                                onChange={handlePhotoUpload}
                             />
-                        </div>
-                    </>
-                )}
+                            <div className="upload-photo-btn-container">
+                                <TertiaryButton
+                                    label="Upload Photo"
+                                    size="large"
+                                    color="#FCFCFD"
+                                    onClick={handleUploadPhotoBtnClick}
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
                 <div className="full-width-horizontal-line"></div>
                 <div className="new-venue-group">

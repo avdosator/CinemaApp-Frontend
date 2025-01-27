@@ -8,7 +8,7 @@ import { SelectOptionType } from "../../../../types/SelectOptionType";
 import ApiService from "../../../../service/ApiService";
 import { City } from "../../../../types/City";
 import { Venue } from "../../../../types/Venue";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
@@ -20,8 +20,10 @@ type VenueFormProps = {
 }
 
 export default function VenueForm({ mode }: VenueFormProps) {
+    const navigate = useNavigate();
     const location = useLocation();
     const venueFromState: Venue | null = location.state?.venue || null;
+    console.log(venueFromState);
     const [cityOptions, setCityOptions] = useState<SelectOptionType[]>([]);
     const [formData, setFormData] = useState<AddVenueFormData>(initializeVenueFormData(mode, venueFromState));
 
@@ -41,10 +43,52 @@ export default function VenueForm({ mode }: VenueFormProps) {
         }));
     };
 
+    const renderHeadingButton = () => {
+        switch (mode) {
+            case "view":
+                return (
+                    <button
+                        className="add-movie-btn font-lg-semibold"
+                        onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
+                    >
+                        Edit Venue
+                    </button>
+                );
+            case "edit":
+                return (
+                    <TertiaryButton label="Delete Venue" size="large" />
+                );
+            default: return null;
+        }
+    }
+
+    const renderControlButtons = () => {
+        switch (mode) {
+            case "add":
+                return (
+                    <>
+                        <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
+                        <button className="add-movie-btn font-lg-semibold">Add Venue</button>
+                    </>
+                );
+            case "edit":
+                return (
+                    <>
+                        <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
+                        <button className="add-movie-btn font-lg-semibold">Save Changes</button>
+                    </>
+                );
+            default: return null;
+        }
+    }
+
     return (
         <div className="new-venue-container">
-            <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
-            <div className="full-width-horizontal-line"></div>
+            <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>
+                <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
+                {renderHeadingButton()}
+            </div>
+            <div className="full-width-horizontal-line" style={{ marginTop: "16px" }}></div>
             <form className="new-venue-form">
                 <div className="uploaded-photo-preview-item">
                     <img src={imgSrc} className="uploaded-photo-thumbnail" />
@@ -142,7 +186,9 @@ export default function VenueForm({ mode }: VenueFormProps) {
 
             </form>
             <div className="full-width-horizontal-line"></div>
-
+            <div className="venue-form-control-btn-group">
+                {renderControlButtons()}
+            </div>
         </div>
     );
 }

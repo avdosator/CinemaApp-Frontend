@@ -65,11 +65,11 @@ export default function VenueForm({ mode }: VenueFormProps) {
     };
 
     const isFormValid = (): boolean => {
-        const { title, phone, street, streetNumber, city } = formData;
+        const { name, phone, street, streetNumber, city } = formData;
 
         // Check for all required fields
         const isFormComplete =
-            title &&
+            name &&
             phone &&
             street &&
             streetNumber &&
@@ -140,7 +140,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
 
             // create object only from changed/updated fields
             const updatedVenueData = {
-                ...(formData.title && { title: formData.title }),
+                ...(formData.name && { name: formData.name }),
                 ...(formData.phone && { phone: formData.phone }),
                 ...(formData.street && { street: formData.street }),
                 ...(formData.streetNumber && { streetNumber: formData.streetNumber }),
@@ -242,15 +242,15 @@ export default function VenueForm({ mode }: VenueFormProps) {
                     <div className="general-form-input-group">
                         <label htmlFor="venue" className="font-lg-semibold">Venue Name</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.title ? "red-icon" : ""}`} />
+                            <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.name ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="venue"
                                 id="venue"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Venue"
                                 autoFocus
-                                value={formData.title}
-                                onChange={e => handleChange("title", e.target.value)}
+                                value={formData.name}
+                                onChange={e => handleChange("name", e.target.value)}
                                 readOnly={mode === "view"}
                             />
                         </div>

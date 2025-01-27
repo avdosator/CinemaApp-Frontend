@@ -55,7 +55,7 @@ export type DetailsFormData = {
 export type AddMovieFormStep = 1 | 2 | 3;
 
 export type AddVenueFormData = {
-    title: string,
+    name: string,
     phone: string,
     street: string,
     streetNumber: string,

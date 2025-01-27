@@ -64,19 +64,6 @@ export default function VenueForm({ mode }: VenueFormProps) {
         }));
     };
 
-    const renderHeadingButton = (): JSX.Element | null => {
-        return mode === "view" ? (
-            <button
-                className="add-movie-btn font-lg-semibold"
-                onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
-            >
-                Edit Venue
-            </button>
-        ) : mode === "edit" ? (
-            <TertiaryButton label="Delete Venue" size="large" />
-        ) : null;
-    }
-
     const isFormValid = (): boolean => {
         const { title, phone, street, streetNumber, city } = formData;
 
@@ -114,6 +101,9 @@ export default function VenueForm({ mode }: VenueFormProps) {
             return; // Stop execution
         }
 
+        const jwt = localStorage.getItem("authToken");
+        const headers = { "Authorization": `Bearer ${jwt}` };
+
         try {
             uploadPhoto()
                 .then(response => {
@@ -124,8 +114,11 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 });
 
             const requestBody = { ...formData, city: formData.city.value };
-            ApiService.post<Venue>("/venues", requestBody)
-                .then(response => console.log(response));
+            ApiService.post<Venue>("/venues", requestBody, headers)
+                .then(() => {
+                    console.log("Venue deleted!");
+                    navigate("/admin/venues");
+                });
         } catch (error) {
             console.error("Error creating venue: ", error);
         }
@@ -136,6 +129,9 @@ export default function VenueForm({ mode }: VenueFormProps) {
             setFormNotFilledModal(true); // Show modal if form is incomplete
             return; // Stop execution
         }
+
+        const jwt = localStorage.getItem("authToken");
+        const headers = { "Authorization": `Bearer ${jwt}` };
 
         try {
             const photoUrl = uploadedPhoto
@@ -152,7 +148,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 ...(photoUrl && { photoUrl }),
             };
 
-            await ApiService.patch(`/venues/${venueFromState?.id}`, updatedVenueData); // Send PATCH request
+            await ApiService.patch(`/venues/${venueFromState?.id}`, updatedVenueData, headers); // Send PATCH request
             console.log("Venue updated successfully:", updatedVenueData);
             navigate("/admin/venues"); // Redirect after successful update
 
@@ -161,6 +157,22 @@ export default function VenueForm({ mode }: VenueFormProps) {
         }
         // create body with edited data
         // send request and update venue instance
+    }
+
+    const deleteVenue = () => {
+
+        const jwt = localStorage.getItem("authToken");
+        const headers = { "Authorization": `Bearer ${jwt}` };
+
+        try {
+            ApiService.delete(`/venues/${venueFromState?.id}`, headers)
+                .then(() => {
+                    console.log("Venue deleted!");
+                    navigate("/admin/venues");
+                });
+        } catch (error) {
+            console.error("Problem with deleting ", error);
+        }
     }
 
     const renderControlButtons = (): JSX.Element | null => {
@@ -174,6 +186,19 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
                 <button className="add-movie-btn font-lg-semibold" onClick={updateVenue}>Save Changes</button>
             </>
+        ) : null;
+    }
+
+    const renderHeadingButton = (): JSX.Element | null => {
+        return mode === "view" ? (
+            <button
+                className="add-movie-btn font-lg-semibold"
+                onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
+            >
+                Edit Venue
+            </button>
+        ) : mode === "edit" ? (
+            <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue} />
         ) : null;
     }
 

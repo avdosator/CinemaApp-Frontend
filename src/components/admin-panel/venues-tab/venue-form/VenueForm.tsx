@@ -114,28 +114,53 @@ export default function VenueForm({ mode }: VenueFormProps) {
             return; // Stop execution
         }
 
-        // uploadPhoto()
-        //     .then(response => {
-        //         setFormData((prevData) => ({
-        //             ...prevData,
-        //             photoUrl: response
-        //         }));
-        //     });
+        try {
+            uploadPhoto()
+                .then(response => {
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        photoUrl: response
+                    }));
+                });
 
-        console.log("Venue created");
-
-        // create request body
-        // send request for creating venue
+            const requestBody = { ...formData, city: formData.city.value };
+            ApiService.post<Venue>("/venues", requestBody)
+                .then(response => console.log(response));
+        } catch (error) {
+            console.error("Error creating venue: ", error);
+        }
     }
 
-    const updateVenue = () => {
+    const updateVenue = async () => {
         if (!isFormValid()) {
             setFormNotFilledModal(true); // Show modal if form is incomplete
             return; // Stop execution
         }
+
+        try {
+            const photoUrl = uploadedPhoto
+                ? await uploadPhoto() // Upload new photo if the user changes it
+                : venueFromState?.photo?.url; // Use existing photo if no new one is uploaded
+
+            // create object only from changed/updated fields
+            const updatedVenueData = {
+                ...(formData.title && { title: formData.title }),
+                ...(formData.phone && { phone: formData.phone }),
+                ...(formData.street && { street: formData.street }),
+                ...(formData.streetNumber && { streetNumber: formData.streetNumber }),
+                ...(formData.city && { city: formData.city.value }),
+                ...(photoUrl && { photoUrl }),
+            };
+
+            await ApiService.patch(`/venues/${venueFromState?.id}`, updatedVenueData); // Send PATCH request
+            console.log("Venue updated successfully:", updatedVenueData);
+            navigate("/admin/venues"); // Redirect after successful update
+
+        } catch (error) {
+            console.error("Error updating venue: ", error);
+        }
         // create body with edited data
         // send request and update venue instance
-        console.log("Venue updated");
     }
 
     const renderControlButtons = (): JSX.Element | null => {

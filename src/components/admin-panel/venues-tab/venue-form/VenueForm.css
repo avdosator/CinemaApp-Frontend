@@ -27,3 +27,12 @@
 .new-venue-container .full-width-horizontal-line {
     margin: 32px 0px;
 }
+
+.new-venue-form>.uploaded-photo-preview-item {
+    align-self: center;
+}
+
+.new-venue-form .upload-photo-btn-container {
+    /* width: 100%; */
+    bottom: 0px !important;
+}

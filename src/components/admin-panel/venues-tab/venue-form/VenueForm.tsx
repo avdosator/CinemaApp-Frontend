@@ -10,6 +10,8 @@ import { City } from "../../../../types/City";
 import { Venue } from "../../../../types/Venue";
 import { useLocation } from "react-router-dom";
 import { initializeVenueFormData } from "../../../../utils/utils";
+import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 
 type VenueFormProps = {
     mode: 'add' | 'edit' | 'view';
@@ -24,6 +26,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const [formData, setFormData] = useState<AddVenueFormData>(initializeVenueFormData(mode, venueFromState));
 
     const heading = mode === "add" ? "New Venue" : venueFromState?.name;
+    const imgSrc = mode === "add" ? placeholderImage : venueFromState?.photo.url;
 
     useEffect(() => {
         ApiService.get<City[]>("/cities")
@@ -43,9 +46,11 @@ export default function VenueForm({ mode }: VenueFormProps) {
             <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
             <div className="full-width-horizontal-line"></div>
             <form className="new-venue-form">
-                <div>
-                    <input type="file" />
-                    <div></div>
+                <div className="uploaded-photo-preview-item">
+                    <img src={imgSrc} className="uploaded-photo-thumbnail" />
+                    <div className="upload-photo-btn-container">
+                        <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
+                    </div>
                 </div>
                 <div className="full-width-horizontal-line"></div>
                 <div className="new-venue-group">

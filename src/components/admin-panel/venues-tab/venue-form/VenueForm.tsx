@@ -13,6 +13,7 @@ import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
+import AddMoviePopUp from "../../new-movie/pop-up/AddMoviePopUp";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
@@ -28,6 +29,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const [formData, setFormData] = useState<AddVenueFormData>(initializeVenueFormData(mode, venueFromState));
     const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false);
 
     useEffect(() => {
         ApiService.get<City[]>("/cities")
@@ -75,6 +77,21 @@ export default function VenueForm({ mode }: VenueFormProps) {
         ) : null;
     }
 
+    const isFormValid = (): boolean => {
+        const { title, phone, street, streetNumber, city } = formData;
+
+        // Check for all required fields
+        const isFormComplete =
+            title &&
+            phone &&
+            street &&
+            streetNumber &&
+            city &&
+            (mode === "add" ? uploadedPhoto : true); // Only require uploadedPhoto in "add" mode
+
+        return Boolean(isFormComplete); // Convert to boolean
+    };
+
     const uploadPhoto = async (): Promise<string> => {
         const formData = new FormData();
         formData.append("file", uploadedPhoto!);
@@ -91,24 +108,57 @@ export default function VenueForm({ mode }: VenueFormProps) {
         }
     };
 
-    
+    const createVenue = () => {
+        if (!isFormValid()) {
+            setFormNotFilledModal(true); // Show modal if form is incomplete
+            return; // Stop execution
+        }
+
+        // uploadPhoto()
+        //     .then(response => {
+        //         setFormData((prevData) => ({
+        //             ...prevData,
+        //             photoUrl: response
+        //         }));
+        //     });
+
+        console.log("Venue created");
+
+        // create request body
+        // send request for creating venue
+    }
+
+    const updateVenue = () => {
+        if (!isFormValid()) {
+            setFormNotFilledModal(true); // Show modal if form is incomplete
+            return; // Stop execution
+        }
+        // create body with edited data
+        // send request and update venue instance
+        console.log("Venue updated");
+    }
 
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
-                <button className="add-movie-btn font-lg-semibold">Add Venue</button>
+                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
+                <button className="add-movie-btn font-lg-semibold" onClick={createVenue}>Add Venue</button>
             </>
         ) : mode === "edit" ? (
             <>
                 <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
-                <button className="add-movie-btn font-lg-semibold">Save Changes</button>
+                <button className="add-movie-btn font-lg-semibold" onClick={updateVenue}>Save Changes</button>
             </>
         ) : null;
     }
 
     return (
         <div className="new-venue-container">
+            {formNotFilledModal && (
+                <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                    okayAction={setFormNotFilledModal}
+                />
+            )}
             <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>
                 <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
                 {renderHeadingButton()}
@@ -158,14 +208,14 @@ export default function VenueForm({ mode }: VenueFormProps) {
                     <div className="general-form-input-group">
                         <label htmlFor="phone" className="font-lg-semibold">Phone</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faPhone} className={`input-icon ${formData?.title ? "red-icon" : ""}`} />
+                            <FontAwesomeIcon icon={faPhone} className={`input-icon ${formData?.phone ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="phone"
                                 id="phone"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Phone"
                                 value={formData.phone}
-                                onChange={e => handleChange("title", e.target.value)}
+                                onChange={e => handleChange("phone", e.target.value)}
                                 readOnly={mode === "view"}
                             />
                         </div>
@@ -175,14 +225,14 @@ export default function VenueForm({ mode }: VenueFormProps) {
                     <div className="general-form-input-group">
                         <label htmlFor="street" className="font-lg-semibold">Street</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.title ? "red-icon" : ""}`} />
+                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.street ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="street"
                                 id="street"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Street"
                                 value={formData.street}
-                                onChange={e => handleChange("title", e.target.value)}
+                                onChange={e => handleChange("street", e.target.value)}
                                 readOnly={mode === "view"}
                             />
                         </div>
@@ -190,14 +240,14 @@ export default function VenueForm({ mode }: VenueFormProps) {
                     <div className="general-form-input-group">
                         <label htmlFor="streetNumber" className="font-lg-semibold">Street Number</label>
                         <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faHashtag} className={`input-icon ${formData?.title ? "red-icon" : ""}`} />
+                            <FontAwesomeIcon icon={faHashtag} className={`input-icon ${formData?.streetNumber ? "red-icon" : ""}`} />
                             <input type="text"
                                 name="streetNumber"
                                 id="streetNumber"
                                 className="search-movies-input font-lg-regular"
                                 placeholder="Number"
                                 value={formData.streetNumber}
-                                onChange={e => handleChange("title", e.target.value)}
+                                onChange={e => handleChange("streetNumber", e.target.value)}
                                 readOnly={mode === "view"}
                             />
                         </div>
@@ -217,6 +267,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                             onChange={(newValue) => handleChange("city", newValue!)}
                             name="city"
                             isDisabled={mode === "view"}
+                            isSearchable={false}
                         />
                     </div>
                 </div>

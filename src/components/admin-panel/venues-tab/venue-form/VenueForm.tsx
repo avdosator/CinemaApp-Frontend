@@ -19,6 +19,15 @@ type VenueFormProps = {
     mode: "add" | "edit" | "view";
 }
 
+type VenueUpdateData = {
+    name?: string;
+    phone?: string;
+    street?: string;
+    streetNumber?: string;
+    cityId?: string;
+    photoUrl?: string;
+};
+
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function VenueForm({ mode }: VenueFormProps) {
@@ -131,29 +140,53 @@ export default function VenueForm({ mode }: VenueFormProps) {
         const headers = { "Authorization": `Bearer ${jwt}` };
 
         try {
-            const photoUrl = uploadedPhoto
-                ? await uploadPhoto() // Upload new photo if the user changes it
-                : venueFromState?.photo?.url; // Use existing photo if no new one is uploaded
+            let photoUrl;
+            if (uploadedPhoto) {
+                // Upload new photo only if the user has uploaded a new one
+                photoUrl = await uploadPhoto();
+            }
 
-            // create object only from changed/updated fields
-            const updatedVenueData = {
-                ...(formData.name && { name: formData.name }),
-                ...(formData.phone && { phone: formData.phone }),
-                ...(formData.street && { street: formData.street }),
-                ...(formData.streetNumber && { streetNumber: formData.streetNumber }),
-                ...(formData.city && { city: formData.city.value }),
-                ...(photoUrl && { photoUrl }),
-            };
+            // Construct the object only with fields that have changed
+            const updatedVenueData: VenueUpdateData = {};
 
-            await ApiService.patch(`/venues/${venueFromState?.id}`, updatedVenueData, headers); // Send PATCH request
+            if (formData.name !== venueFromState?.name) {
+                updatedVenueData.name = formData.name;
+            }
+
+            if (formData.phone !== venueFromState?.phone) {
+                updatedVenueData.phone = formData.phone;
+            }
+
+            if (formData.street !== venueFromState?.street) {
+                updatedVenueData.street = formData.street;
+            }
+
+            if (formData.streetNumber !== venueFromState?.streetNumber) {
+                updatedVenueData.streetNumber = formData.streetNumber;
+            }
+
+            if (formData.city?.value !== venueFromState?.city?.id) {
+                updatedVenueData.cityId = formData.city.value;
+            }
+
+            if (photoUrl) {
+                updatedVenueData.photoUrl = photoUrl; // Include only if a new photo was uploaded
+            }
+
+            // If no fields have changed, avoid making the request
+            if (Object.keys(updatedVenueData).length === 0) {
+                console.log("No changes detected. Skipping update.");
+                return;
+            }
+
+            await ApiService.patch(`/venues/${venueFromState?.id}/edit`, updatedVenueData, headers); // Send PATCH request
             console.log("Venue updated successfully:", updatedVenueData);
             navigate("/admin/venues"); // Redirect after successful update
 
         } catch (error) {
             console.error("Error updating venue: ", error);
         }
-        // create body with edited data
-        // send request and update venue instance
+
     }
 
     const deleteVenue = () => {
@@ -195,7 +228,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 Edit Venue
             </button>
         ) : mode === "edit" ? (
-            <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue} />
+            <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue()} />
         ) : null;
     }
 

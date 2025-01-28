@@ -81,7 +81,7 @@ export const initializeVenueFormData = (mode: "add" | "edit" | "view", venueFrom
     if (mode === "add") {
         // Default values for "add" mode
         return {
-            title: "",
+            name: "",
             phone: "",
             street: "",
             streetNumber: "",
@@ -93,7 +93,7 @@ export const initializeVenueFormData = (mode: "add" | "edit" | "view", venueFrom
     if (venueFromState && (mode === "edit" || mode === "view")) {
         // Use venue data for "edit" or "view" mode
         return {
-            title: venueFromState.name,
+            name: venueFromState.name,
             phone: venueFromState.phone,
             street: venueFromState.street,
             streetNumber: venueFromState.streetNumber,
@@ -107,7 +107,7 @@ export const initializeVenueFormData = (mode: "add" | "edit" | "view", venueFrom
 
     // Fallback for missing data
     return {
-        title: "",
+        name: "",
         phone: "",
         street: "",
         streetNumber: "",

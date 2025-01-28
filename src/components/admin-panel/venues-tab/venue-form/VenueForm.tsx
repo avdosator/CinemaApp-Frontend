@@ -104,24 +104,21 @@ export default function VenueForm({ mode }: VenueFormProps) {
         const jwt = localStorage.getItem("authToken");
         const headers = { "Authorization": `Bearer ${jwt}` };
 
-        try {
-            uploadPhoto()
-                .then(response => {
-                    setFormData((prevData) => ({
-                        ...prevData,
-                        photoUrl: response
-                    }));
-                });
+        uploadPhoto()
+            .then((photoUrl) => {
+                // Update the formData with the uploaded photo URL
+                const updatedFormData = { ...formData, photoUrl, cityId: formData.city.value };
 
-            const requestBody = { ...formData, city: formData.city.value };
-            ApiService.post<Venue>("/venues", requestBody, headers)
-                .then(() => {
-                    console.log("Venue deleted!");
-                    navigate("/admin/venues");
-                });
-        } catch (error) {
-            console.error("Error creating venue: ", error);
-        }
+                // Then send the request to the backend
+                return ApiService.post<Venue>("/venues", updatedFormData, headers);
+            })
+            .then(() => {
+                console.log("Venue created!");
+                navigate("/admin/venues"); // Navigate to the venues page
+            })
+            .catch((error) => {
+                console.error("Error creating venue: ", error);
+            });
     }
 
     const updateVenue = async () => {

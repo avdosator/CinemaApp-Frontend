@@ -15,6 +15,8 @@ export default function AdminPanelVenueList({ venues, onCardClick }: AdminPanelV
                     <VenueCard key={venue.id} {...venue} />
                 </div>
             ))}
+            <div className="shared-card flex-dummy"></div>
+            <div className="shared-card flex-dummy"></div>
         </div>
     );
 }

@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo "Creating .env file in frontend root directory"
                 sh """
-                echo "VITE_API_BASE_URL=http://63.176.2.136:8082/api" > .env
+                echo "VITE_API_BASE_URL=https://team3.backend.praksa.abhapp.com/api" > .env
                 """
             }
         }

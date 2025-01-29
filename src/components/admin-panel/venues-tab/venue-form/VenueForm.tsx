@@ -14,6 +14,7 @@ import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
 import AddMoviePopUp from "../../new-movie/pop-up/AddMoviePopUp";
+import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
@@ -39,6 +40,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         ApiService.get<City[]>("/cities")
@@ -105,6 +107,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
     };
 
     const createVenue = () => {
+        setIsLoading(true);
         if (!isFormValid()) {
             setFormNotFilledModal(true); // Show modal if form is incomplete
             return; // Stop execution
@@ -122,15 +125,17 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 return ApiService.post<Venue>("/venues", updatedFormData, headers);
             })
             .then(() => {
-                console.log("Venue created!");
+                setIsLoading(false);
                 navigate("/admin/venues"); // Navigate to the venues page
             })
             .catch((error) => {
+                setIsLoading(false);
                 console.error("Error creating venue: ", error);
             });
     }
 
     const updateVenue = async () => {
+        setIsLoading(true);
         if (!isFormValid()) {
             setFormNotFilledModal(true); // Show modal if form is incomplete
             return; // Stop execution
@@ -180,28 +185,30 @@ export default function VenueForm({ mode }: VenueFormProps) {
             }
 
             await ApiService.patch(`/venues/${venueFromState?.id}/edit`, updatedVenueData, headers); // Send PATCH request
-            console.log("Venue updated successfully:", updatedVenueData);
+            setIsLoading(false);
             navigate("/admin/venues"); // Redirect after successful update
 
         } catch (error) {
+            setIsLoading(false);
             console.error("Error updating venue: ", error);
         }
 
     }
 
     const deleteVenue = () => {
-
+        setIsLoading(true);
         const jwt = localStorage.getItem("authToken");
         const headers = { "Authorization": `Bearer ${jwt}` };
 
         try {
             ApiService.delete(`/venues/${venueFromState?.id}`, headers)
                 .then(() => {
-                    console.log("Venue deleted!");
+                    setIsLoading(false);
                     navigate("/admin/venues");
                 });
         } catch (error) {
-            console.error("Problem with deleting ", error);
+            setIsLoading(false);
+            console.error("Problem with deleting venue ", error);
         }
     }
 
@@ -213,7 +220,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
             </>
         ) : mode === "edit" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold">Cancel</button>
+                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
                 <button className="add-movie-btn font-lg-semibold" onClick={updateVenue}>Save Changes</button>
             </>
         ) : null;
@@ -234,128 +241,134 @@ export default function VenueForm({ mode }: VenueFormProps) {
 
     return (
         <div className="new-venue-container">
-            {formNotFilledModal && (
-                <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                    okayAction={setFormNotFilledModal}
-                />
-            )}
-            <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>
-                <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
-                {renderHeadingButton()}
-            </div>
-            <div className="full-width-horizontal-line" style={{ marginTop: "16px" }}></div>
-            <form className="new-venue-form">
-                <div className="uploaded-photo-preview-item">
-                    <img src={imgSrc} className="uploaded-photo-thumbnail" />
-                    {mode !== "view" && (
-                        <>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                style={{ display: "none" }}
-                                onChange={handlePhotoUpload}
-                            />
-                            <div className="upload-photo-btn-container">
-                                <TertiaryButton
-                                    label="Upload Photo"
-                                    size="large"
-                                    color="#FCFCFD"
-                                    onClick={handleUploadPhotoBtnClick}
+            {isLoading ? (
+                <LoadingIndicator />
+            ) : (
+                <>
+                    {formNotFilledModal && (
+                        <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                            okayAction={setFormNotFilledModal}
+                        />
+                    )}
+                    <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>
+                        <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "8px" }}>{heading}</h6>
+                        {renderHeadingButton()}
+                    </div>
+                    <div className="full-width-horizontal-line" style={{ marginTop: "16px" }}></div>
+                    <form className="new-venue-form">
+                        <div className="uploaded-photo-preview-item">
+                            <img src={imgSrc} className="uploaded-photo-thumbnail" />
+                            {mode !== "view" && (
+                                <>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        style={{ display: "none" }}
+                                        onChange={handlePhotoUpload}
+                                    />
+                                    <div className="upload-photo-btn-container">
+                                        <TertiaryButton
+                                            label="Upload Photo"
+                                            size="large"
+                                            color="#FCFCFD"
+                                            onClick={handleUploadPhotoBtnClick}
+                                        />
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        <div className="full-width-horizontal-line"></div>
+                        <div className="new-venue-group">
+                            <div className="general-form-input-group">
+                                <label htmlFor="venue" className="font-lg-semibold">Venue Name</label>
+                                <div className="input-wrapper">
+                                    <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.name ? "red-icon" : ""}`} />
+                                    <input type="text"
+                                        name="venue"
+                                        id="venue"
+                                        className="search-movies-input font-lg-regular"
+                                        placeholder="Venue"
+                                        autoFocus
+                                        value={formData.name}
+                                        onChange={e => handleChange("name", e.target.value)}
+                                        readOnly={mode === "view"}
+                                    />
+                                </div>
+                            </div>
+                            <div className="general-form-input-group">
+                                <label htmlFor="phone" className="font-lg-semibold">Phone</label>
+                                <div className="input-wrapper">
+                                    <FontAwesomeIcon icon={faPhone} className={`input-icon ${formData?.phone ? "red-icon" : ""}`} />
+                                    <input type="text"
+                                        name="phone"
+                                        id="phone"
+                                        className="search-movies-input font-lg-regular"
+                                        placeholder="Phone"
+                                        value={formData.phone}
+                                        onChange={e => handleChange("phone", e.target.value)}
+                                        readOnly={mode === "view"}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="new-venue-group">
+                            <div className="general-form-input-group">
+                                <label htmlFor="street" className="font-lg-semibold">Street</label>
+                                <div className="input-wrapper">
+                                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.street ? "red-icon" : ""}`} />
+                                    <input type="text"
+                                        name="street"
+                                        id="street"
+                                        className="search-movies-input font-lg-regular"
+                                        placeholder="Street"
+                                        value={formData.street}
+                                        onChange={e => handleChange("street", e.target.value)}
+                                        readOnly={mode === "view"}
+                                    />
+                                </div>
+                            </div>
+                            <div className="general-form-input-group">
+                                <label htmlFor="streetNumber" className="font-lg-semibold">Street Number</label>
+                                <div className="input-wrapper">
+                                    <FontAwesomeIcon icon={faHashtag} className={`input-icon ${formData?.streetNumber ? "red-icon" : ""}`} />
+                                    <input type="text"
+                                        name="streetNumber"
+                                        id="streetNumber"
+                                        className="search-movies-input font-lg-regular"
+                                        placeholder="Number"
+                                        value={formData.streetNumber}
+                                        onChange={e => handleChange("streetNumber", e.target.value)}
+                                        readOnly={mode === "view"}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="general-form-input-group">
+                            <label htmlFor="çity" className="font-lg-semibold">City</label>
+                            <div className="input-wrapper">
+                                <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData.city ? "red-icon" : ""}`} />
+                                <Select<SelectOptionType, false>
+                                    options={cityOptions}
+                                    placeholder="Choose city"
+                                    className="dropdown-menu-input"
+                                    classNamePrefix="dropdown"
+                                    isClearable={true}
+                                    value={formData.city}
+                                    onChange={(newValue) => handleChange("city", newValue!)}
+                                    name="city"
+                                    isDisabled={mode === "view"}
+                                    isSearchable={false}
                                 />
                             </div>
-                        </>
-                    )}
-                </div>
-                <div className="full-width-horizontal-line"></div>
-                <div className="new-venue-group">
-                    <div className="general-form-input-group">
-                        <label htmlFor="venue" className="font-lg-semibold">Venue Name</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faBuilding} className={`input-icon ${formData?.name ? "red-icon" : ""}`} />
-                            <input type="text"
-                                name="venue"
-                                id="venue"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Venue"
-                                autoFocus
-                                value={formData.name}
-                                onChange={e => handleChange("name", e.target.value)}
-                                readOnly={mode === "view"}
-                            />
                         </div>
+                    </form>
+                    <div className="full-width-horizontal-line"></div>
+                    <div className="venue-form-control-btn-group">
+                        {renderControlButtons()}
                     </div>
-                    <div className="general-form-input-group">
-                        <label htmlFor="phone" className="font-lg-semibold">Phone</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faPhone} className={`input-icon ${formData?.phone ? "red-icon" : ""}`} />
-                            <input type="text"
-                                name="phone"
-                                id="phone"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Phone"
-                                value={formData.phone}
-                                onChange={e => handleChange("phone", e.target.value)}
-                                readOnly={mode === "view"}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="new-venue-group">
-                    <div className="general-form-input-group">
-                        <label htmlFor="street" className="font-lg-semibold">Street</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.street ? "red-icon" : ""}`} />
-                            <input type="text"
-                                name="street"
-                                id="street"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Street"
-                                value={formData.street}
-                                onChange={e => handleChange("street", e.target.value)}
-                                readOnly={mode === "view"}
-                            />
-                        </div>
-                    </div>
-                    <div className="general-form-input-group">
-                        <label htmlFor="streetNumber" className="font-lg-semibold">Street Number</label>
-                        <div className="input-wrapper">
-                            <FontAwesomeIcon icon={faHashtag} className={`input-icon ${formData?.streetNumber ? "red-icon" : ""}`} />
-                            <input type="text"
-                                name="streetNumber"
-                                id="streetNumber"
-                                className="search-movies-input font-lg-regular"
-                                placeholder="Number"
-                                value={formData.streetNumber}
-                                onChange={e => handleChange("streetNumber", e.target.value)}
-                                readOnly={mode === "view"}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="general-form-input-group">
-                    <label htmlFor="çity" className="font-lg-semibold">City</label>
-                    <div className="input-wrapper">
-                        <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData.city ? "red-icon" : ""}`} />
-                        <Select<SelectOptionType, false>
-                            options={cityOptions}
-                            placeholder="Choose city"
-                            className="dropdown-menu-input"
-                            classNamePrefix="dropdown"
-                            isClearable={true}
-                            value={formData.city}
-                            onChange={(newValue) => handleChange("city", newValue!)}
-                            name="city"
-                            isDisabled={mode === "view"}
-                            isSearchable={false}
-                        />
-                    </div>
-                </div>
-            </form>
-            <div className="full-width-horizontal-line"></div>
-            <div className="venue-form-control-btn-group">
-                {renderControlButtons()}
-            </div>
+                </>
+            )}
         </div>
     );
 }

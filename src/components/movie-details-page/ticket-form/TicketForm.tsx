@@ -62,7 +62,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
             time: formData.time
         }
 
-        const projectionInstance = await ApiService.get<ProjectionInstance>("/projections/instance", params);
+        const projectionInstance = await ApiService.get<ProjectionInstance>("/projections/instances", params);
         navigate(`/projection/${projectionInstance.id}/reservations`, {state: {projectionInstance, movie}});
     }
 

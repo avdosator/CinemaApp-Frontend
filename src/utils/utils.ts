@@ -1,4 +1,5 @@
 import { DatePickerBtnType } from "../types/DatePickerBtn";
+import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../types/FormData";
 import { Seat } from "../types/Seat";
 
 // returns date in string format "YYYY-MM-DD"
@@ -32,4 +33,45 @@ export const calculateReservedSeatsPrice = (selectedSeats: Seat[], ticketPrices:
         const matchingPrice = ticketPrices.find(price => price.seatType.toLowerCase() === seat.type.toLowerCase());
         return total + (matchingPrice ? matchingPrice.price : 0);
     }, 0);
+};
+
+export const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+export const buildMovieBody = (generalFormData: GeneralFormData, detailsFormData: DetailsFormData, projectionsFormData: ProjectionsFormData[]) => {
+    const body = {
+        title: capitalize(generalFormData.title.trim()),
+        language: capitalize(generalFormData.language.trim()),
+        director: capitalize(generalFormData.director.trim()),
+        pgRating: capitalize(generalFormData.pgRating.trim()),
+        duration: Number(generalFormData.duration.split(" ")[0].trim()),
+        genreIds: generalFormData.genre.map(genre => genre.value),
+        trailer: generalFormData.trailer.trim(),
+        synopsis: capitalize(generalFormData.synopsis.trim()),
+        startDate: generalFormData.startDate,
+        endDate: generalFormData.endDate,
+        writers: detailsFormData.writersData,
+        photoUrls: detailsFormData.uploadedPhotoURLs,
+        coverPhotoUrl: detailsFormData.uploadedPhotoURLs[detailsFormData.coverPhotoIndex ?? 0],
+        cast: detailsFormData.castData,
+        projections: projectionsFormData.map(projection => ({
+            projectionTime: projection.time,
+            cityId: projection.city?.value,
+            venueId: projection.venue?.value,
+        })),
+    }
+    return body;
+}
+
+export const checkConflictingProjections = (projectionsFormData: ProjectionsFormData[]): boolean => {
+    const projectionSet = new Set();
+    for (const projection of projectionsFormData) {
+        if (projection.city && projection.venue && projection.time) {
+            const key = `${projection.city.value}-${projection.venue.value}-${projection.time}`;
+            if (projectionSet.has(key)) {
+                return true; // Conflicting projection found
+            }
+            projectionSet.add(key);
+        }
+    }
+    return false; // No conflicts
 };

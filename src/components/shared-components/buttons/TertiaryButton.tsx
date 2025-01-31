@@ -3,15 +3,13 @@ import "./TertiaryButton.css"
 type TertiaryButtonProps = {
     label: string,
     size: string,
-    onClick?: () => void,
-    color?: string
+    onClick?: () => void
 }
 
-export default function TertiaryButton({label, size, onClick, color}: TertiaryButtonProps) {
+export default function TertiaryButton({label, size, onClick}: TertiaryButtonProps) {
     const btnSize = size === "large" ? "tertiary-btn-lg font-lg-underline-semibold" : "tertiary-btn-sm font-sm-underline-semibold";
-    const style = color ? {color: color} : {}
     return (
-        <button className={`tertiary-btn ${btnSize}`} onClick={onClick} style={style} type="button">
+        <button className={`tertiary-btn ${btnSize}`} onClick={onClick}>
             {label}
         </button>
     )

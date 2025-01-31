@@ -1,1 +1,0 @@
-export type MovieTabType = "drafts" | "currently-showing" | "upcoming" | "archived";

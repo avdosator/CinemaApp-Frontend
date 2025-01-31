@@ -1,6 +1,6 @@
 import "./MovieRatingBadge.css"
 
-export default function MovieRatingBadge({ rating, label }: { rating: string | undefined, label: string }) {
+export default function MovieRatingBadge({ rating, label }: { rating: number | undefined, label: string }) {
     return (
         <div className="movie-rating-badge">
             <div className="star-icon">

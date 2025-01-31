@@ -48,10 +48,6 @@
     text-align: center;
 }
 
-.notify-me-btn:disabled {
-    background-color: #D0D5DD;
-}
-
 .signup-anchor {
     color: #1D2939;
     text-decoration: 0.5px solid underline;

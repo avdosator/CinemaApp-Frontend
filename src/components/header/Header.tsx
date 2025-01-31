@@ -6,11 +6,10 @@ import { useUser } from "../../context/UserContext";
 import UserActions from "./user-actions/UserActions";
 
 type HeaderProps = {
-    openAuthModal: (path?: string, state?: any) => void,
-    width: string
+    openAuthModal: (path?: string, state?: any) => void; 
 }
 
-export default function Header({ openAuthModal, width }: HeaderProps) {
+export default function Header({ openAuthModal }: HeaderProps) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const { currentUser } = useUser();
@@ -22,7 +21,7 @@ export default function Header({ openAuthModal, width }: HeaderProps) {
 
     return (
         <nav className="navbar">
-            <div className="navbar-content" style={{ width: width }}>
+            <div className="navbar-content">
                 <NavLink to="/home" >
                     <div className="logo">
                         <img src={logoNavbar} alt="" />

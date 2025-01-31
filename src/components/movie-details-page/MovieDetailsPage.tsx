@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import UpcomingMovieInfo from "./upcoming-movie-info/UpcomingMovieInfo";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
 
-export default function MovieDetailsPage({ openLoginForm }: { openLoginForm: (path?: string, state?: any) => void }) {
+export default function MovieDetailsPage() {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<Movie | null>(null);
     let [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,10 +29,6 @@ export default function MovieDetailsPage({ openLoginForm }: { openLoginForm: (pa
                 .catch(error => console.error("Error fetching movie", error));
         }
     }, [id]);
-
-    const isActive = (): boolean => {
-        return movie!.projections.some(projection => new Date(projection.startDate) <= new Date());
-    };
 
     return (
         isLoading ? (
@@ -51,7 +47,7 @@ export default function MovieDetailsPage({ openLoginForm }: { openLoginForm: (pa
                                     src={`https://www.youtube.com/embed/${movie.trailerUrl.slice(32)}`}
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     loading="eager"
-                                    style={{ borderRadius: "16px 0px 0px 16px", outline: "none" }}
+                                    style={{borderRadius:"16px 0px 0px 16px", outline: "none"}}
                                 >
                                 </iframe>
                             </div>
@@ -118,7 +114,12 @@ export default function MovieDetailsPage({ openLoginForm }: { openLoginForm: (pa
                                 </div>
                             </div>
                             <div className="ticket-container">
-                                {isActive() ? (<TicketForm movie={movie} />) : (<UpcomingMovieInfo title={movie.title} openLoginForm={openLoginForm} />)}
+                                {movie.projections.some(projection => projection.status === "active") ?
+                                    (<TicketForm movie={movie} />) :
+                                    movie.projections.some(projection => projection.status === "upcoming") ?
+                                        (< UpcomingMovieInfo title={movie.title} />) :
+                                        null
+                                }
                             </div>
                         </section>
                         <section className="movie-rating-container">

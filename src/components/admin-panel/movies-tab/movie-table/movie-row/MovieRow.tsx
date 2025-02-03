@@ -81,11 +81,15 @@ export default function MovieRow({
             <td>
                 {showCheckbox && <input type="checkbox" style={{ marginRight: "6px" }} />}
                 {(() => {
+                    if (!movie.photos || movie.photos.length === 0) {
+                        return <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />;
+                    }
+
                     const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
                     return coverPhoto ? (
                         <img src={coverPhoto.url} alt={movie.title} className="movie-table-row-img" />
                     ) : (
-                        <img src={placeholderImage} />
+                        <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />
                     );
                 })()}
                 {movie.title}

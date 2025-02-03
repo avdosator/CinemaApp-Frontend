@@ -194,7 +194,6 @@ export default function NewMovie() {
         await proceedSaveDraft(draftStatus);
     };
 
-
     const proceedSaveDraft = async (draftStatus: string) => {
         try {
             setIsLoading(true);
@@ -228,9 +227,9 @@ export default function NewMovie() {
             const jwt = localStorage.getItem("authToken");
             const headers = { "Authorization": `Bearer ${jwt}` };
 
-            if (createMovieBody.movieId) {
-                createMovieBody.id = createMovieBody.movieId;
-            }
+            // if (createMovieBody.movieId) {
+            //     createMovieBody.id = createMovieBody.movieId;
+            // }
 
             await ApiService.post<Movie>(`/movies?status=${draftStatus}`, createMovieBody, headers);
 

@@ -48,8 +48,12 @@ export default function MoviesPanel() {
 
     const fetchMovies = (tab: MovieTabType, page: number, size: number) => {
         setIsLoading(true);
-        const endpoint = tab === "currently-showing" ? "/movies/active" :
-            tab === "upcoming" ? "/movies/upcoming" : "";
+        const endpoint =
+        tab === "currently-showing" ? "/movies/active" :
+        tab === "upcoming" ? "/movies/upcoming" :
+        tab === "drafts" ? "/movies/drafts" :
+        tab === "archived" ? "/movies/archived" :
+        "";
         if (!endpoint) {
             setPageResponse(prev => ({ ...prev, content: [], empty: true }));
             setIsLoading(false);

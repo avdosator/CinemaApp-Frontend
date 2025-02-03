@@ -165,6 +165,84 @@ export default function NewMovie() {
         }
     };
 
+    const handleSaveDraft = async () => {
+        let draftStatus = "";
+
+        if (isGeneralFormComplete) draftStatus = "draft-1";
+        if (isDetailsFormComplete) draftStatus = "draft-2";
+        if (isProjectionsFormComplete) draftStatus = "draft-3";
+
+        if (!draftStatus) {
+            setDraftWarningModal({
+                show: true,
+                message: "You cannot save as a draft yet. Please complete at least Step 1.",
+                continueAction: null, // No continue button, only close
+            });
+            return;
+        }
+
+        if ((currentStep === 2 && !isDetailsFormComplete) || (currentStep === 3 && !isProjectionsFormComplete)) {
+            setDraftWarningModal({
+                show: true,
+                message: "If you save now, you will lose data from the current incomplete step.",
+                continueAction: () => proceedSaveDraft(draftStatus), // Allow user to confirm save
+            });
+            return;
+        }
+
+        // Proceed without modal if everything is fine
+        await proceedSaveDraft(draftStatus);
+    };
+
+
+    const proceedSaveDraft = async (draftStatus: string) => {
+        try {
+            setIsLoading(true);
+            setDraftWarningModal({ show: false, message: "", continueAction: null });
+
+            let uploadedPhotoUrls = detailsFormData.uploadedPhotoURLs;
+
+            // If saving draft-2 or draft-3, ensure photos are uploaded
+            if (draftStatus === "draft-2" || draftStatus === "draft-3") {
+                uploadedPhotoUrls = await handleUploadPhotos();
+                if (uploadedPhotoUrls.length === 0) {
+                    alert("Photo upload failed. Please try again.");
+                    setIsLoading(false);
+                    return;
+                }
+            }
+
+            // If saving draft-3, check for conflicting projections
+            if (draftStatus === "draft-3" && checkConflictingProjections(projectionsFormData)) {
+                setConflictingProjections(true);
+                setIsLoading(false);
+                return;
+            }
+
+            const createMovieBody = buildMovieBody(
+                generalFormData,
+                { ...detailsFormData, uploadedPhotoURLs: uploadedPhotoUrls },
+                projectionsFormData
+            );
+
+            const jwt = localStorage.getItem("authToken");
+            const headers = { "Authorization": `Bearer ${jwt}` };
+
+            if (createMovieBody.movieId) {
+                createMovieBody.id = createMovieBody.movieId;
+            }
+
+            await ApiService.post<Movie>(`/movies?status=${draftStatus}`, createMovieBody, headers);
+
+            setIsLoading(false);
+            navigate("/admin/movies/drafts");
+        } catch (error) {
+            setIsLoading(false);
+            console.error("Error saving draft:", error);
+        }
+    };
+
+
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (

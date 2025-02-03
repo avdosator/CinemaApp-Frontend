@@ -15,6 +15,7 @@ import { Movie } from "../../../types/Movie";
 import AddMoviePopUp from "./pop-up/AddMoviePopUp";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
+import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -24,6 +25,11 @@ export default function NewMovie() {
     const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false); // Every step is new form
     const [conflictingProjections, setConflictingProjections] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [draftWarningModal, setDraftWarningModal] = useState<{
+        show: boolean;
+        message: string;
+        continueAction: (() => void) | null;
+    }>({ show: false, message: "", continueAction: null });
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -150,9 +156,9 @@ export default function NewMovie() {
             const headers = { "Authorization": `Bearer ${jwt}` };
 
             // Step 4: Send the request to the backend
-            await ApiService.post<Movie>("/movies", createMovieBody, headers);
+            await ApiService.post<Movie>("/movies?status=active", createMovieBody, headers);
             setIsLoading(false);
-            navigate("/admin/movies/drafts");
+            navigate("/admin/movies/upcoming");
         } catch (error) {
             setIsLoading(false);
             console.error("Error adding movie:", error);
@@ -169,6 +175,15 @@ export default function NewMovie() {
             {conflictingProjections && (
                 <AddMoviePopUp heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
                     okayAction={setConflictingProjections}
+                />
+            )}
+
+            {draftWarningModal.show && (
+                <DraftMoviePopUp
+                    message={draftWarningModal.message}
+                    onConfirm={draftWarningModal.continueAction ? draftWarningModal.continueAction : undefined}
+                    onCancel={() => setDraftWarningModal({ show: false, message: "", continueAction: null })}
+                    cancelButtonText={draftWarningModal.continueAction ? "Cancel" : "OK"}
                 />
             )}
 
@@ -199,6 +214,7 @@ export default function NewMovie() {
                             isFinalStep={currentStep === 3}
                             isFormComplete={isProjectionsFormComplete && isDetailsFormComplete && isGeneralFormComplete}
                             handleAddMovie={handleAddMovie}
+                            handleSaveDraft={handleSaveDraft}
                         />
                     </>
                 )}

@@ -38,7 +38,7 @@ export default function MovieRow({
             }
         });
 
-        return venueSet.size > 0 ? Array.from(venueSet) : ["No venue"];
+        return venueSet.size > 0 ? Array.from(venueSet) : ["N/A"];
     };
 
     const renderVenuesColumn = (movie: Movie): string => {
@@ -95,11 +95,7 @@ export default function MovieRow({
                 {movie.title}
             </td>
             <td>
-                {movie.projections
-                    .map(projection =>
-                        `${formatProjectionDate(projection.startDate)} - ${formatProjectionDate(projection.endDate)}`
-                    )
-                    .join(", ")}
+                {`${formatProjectionDate(movie.projections[0].startDate)} - ${formatProjectionDate(movie.projections[0].endDate)}`}
             </td>
             <td>{renderVenuesColumn(movie)}</td>
             <td>

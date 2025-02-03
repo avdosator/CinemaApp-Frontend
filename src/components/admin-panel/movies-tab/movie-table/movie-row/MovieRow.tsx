@@ -3,6 +3,7 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { Movie } from "../../../../../types/Movie";
 import MovieStatusBadge from "../movie-status-badge/MovieStatusBadge";
 import { MovieTabType } from "../../../../../types/MovieTabType";
+import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
 
 type MovieRowProps = {
     movie: Movie;
@@ -29,11 +30,15 @@ export default function MovieRow({
 
     const getUniqueVenues = (movie: Movie): string[] => {
         const venueSet = new Set<string>();
+    
         movie.projections.forEach(projection => {
-            const venueName = projection.hall.venue.name.split(" ").slice(0, 2).join(" "); // Extracting first two words
-            venueSet.add(venueName);
+            if (projection.hall && projection.hall.venue) {
+                const venueName = projection.hall.venue.name.split(" ").slice(0, 2).join(" "); // Extracting first two words
+                venueSet.add(venueName);
+            }
         });
-        return Array.from(venueSet);
+    
+        return venueSet.size > 0 ? Array.from(venueSet) : ["No venue"];
     };
 
     const renderVenuesColumn = (movie: Movie): string => {
@@ -80,7 +85,7 @@ export default function MovieRow({
                     return coverPhoto ? (
                         <img src={coverPhoto.url} alt={movie.title} className="movie-table-row-img" />
                     ) : (
-                        <img src="https://placehold.co/40x40" />
+                        <img src={placeholderImage} />
                     );
                 })()}
                 {movie.title}

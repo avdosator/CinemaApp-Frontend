@@ -16,7 +16,10 @@ export default function MovieStatusBadge({ statusType, daysRemaining, draftStep 
             case "upcoming":
                 return daysRemaining === 1 ? `Coming in ${daysRemaining} day` : `Ending in ${daysRemaining} days`;
             case "drafts":
-                return `Step ${draftStep}/3 completed`;
+                if (draftStep === 1) return "Step 1/3";
+                if (draftStep === 2) return "Step 2/3";
+                if (draftStep === 3) return "Step 3/3";
+                return "Draft"; // Fallback for undefined draftStep
             case "archived":
                 return `Ended`;
         }

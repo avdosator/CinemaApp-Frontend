@@ -30,14 +30,14 @@ export default function MovieRow({
 
     const getUniqueVenues = (movie: Movie): string[] => {
         const venueSet = new Set<string>();
-    
+
         movie.projections.forEach(projection => {
             if (projection.hall && projection.hall.venue) {
                 const venueName = projection.hall.venue.name.split(" ").slice(0, 2).join(" "); // Extracting first two words
                 venueSet.add(venueName);
             }
         });
-    
+
         return venueSet.size > 0 ? Array.from(venueSet) : ["No venue"];
     };
 
@@ -101,10 +101,19 @@ export default function MovieRow({
             <td>
                 <MovieStatusBadge
                     statusType={activeTab}
-                    daysRemaining={activeTab === "currently-showing" || activeTab === "upcoming"
-                        ? calculateDaysRemaining(movie, activeTab)
-                        : undefined}
+                    daysRemaining={
+                        activeTab === "currently-showing" || activeTab === "upcoming"
+                            ? calculateDaysRemaining(movie, activeTab)
+                            : undefined
+                    }
+                    draftStep={
+                        movie.status === "draft-1" ? 1 :
+                            movie.status === "draft-2" ? 2 :
+                                movie.status === "draft-3" ? 3 :
+                                    undefined
+                    }
                 />
+
             </td>
             {showActions && (
                 <td>

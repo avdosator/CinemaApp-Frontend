@@ -1,9 +1,11 @@
+import "./MovieRow.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { Movie } from "../../../../../types/Movie";
 import MovieStatusBadge from "../movie-status-badge/MovieStatusBadge";
 import { MovieTabType } from "../../../../../types/MovieTabType";
 import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
+import { useState } from "react";
 
 type MovieRowProps = {
     movie: Movie;
@@ -18,6 +20,11 @@ export default function MovieRow({
     showActions = true,
     activeTab,
 }: MovieRowProps) {
+    const [isActionsElementOpened, setIsActionsElementOpened] = useState<boolean>(false);
+
+    const toggleActions = () => {
+        setIsActionsElementOpened((prev) => !prev);
+    };
 
     const formatProjectionDate = (date: Date | string): string => {
         const validDate = typeof date === "string" ? new Date(date) : date;
@@ -116,10 +123,30 @@ export default function MovieRow({
 
             </td>
             {showActions && (
-                <td>
-                    <button className="movie-table-action-button">
+                <td style={{ position: "relative", overflow: "visible" }}>
+                    <button className="movie-table-action-button" onClick={toggleActions}>
                         <FontAwesomeIcon icon={faEllipsis} />
                     </button>
+                    {isActionsElementOpened && (
+                        <div className="user-actions-dropdown-menu">
+                            {activeTab === "drafts" ? (
+                                <>
+                                    <button className="dropdown-item font-lg-regular">Edit</button>
+                                    <button className="dropdown-item font-lg-regular">Publish</button>
+                                    <button className="dropdown-item font-lg-regular">Archive</button>
+                                </>
+                            ) : activeTab === "upcoming" ? (
+                                <>
+                                    <button className="dropdown-item font-lg-regular">Move to Drafts</button>
+                                    <button className="dropdown-item font-lg-regular">Archive</button>
+                                </>
+                            ) : (
+                                <button className="dropdown-item font-lg-regular">Move to Drafts</button>
+
+                            )}
+
+                        </div>
+                    )}
                 </td>
             )}
         </tr>

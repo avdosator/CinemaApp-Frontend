@@ -77,6 +77,23 @@ export default function NewMovie() {
                 trailer: movie.trailerUrl,
                 synopsis: movie.synopsis
             });
+
+            // If it's draft-2 or draft-3, populate DetailsForm
+        if (movie.status === "draft-2" || movie.status === "draft-3") {
+           // Extract URLs from photos array
+           const uploadedPhotoURLs = movie.photos.map(photo => photo.url) || [];
+
+           // Find the index of the cover photo in the uploadedPhotoURLs array using coverPhotoId
+           const coverPhotoIndex = movie.photos.findIndex(photo => photo.id === movie.coverPhotoId);
+
+            setDetailsFormData({
+                writersData: movie.writers || [], // Ensure it's an array
+                castData: movie.actors || [], // Ensure it's an array
+                uploadedPhotos: [], // We can't populate File objects from backend
+                uploadedPhotoURLs: uploadedPhotoURLs,
+                coverPhotoIndex: coverPhotoIndex !== -1 ? coverPhotoIndex : null
+            });
+        }
         }
     }, [movie]);
 
@@ -96,7 +113,7 @@ export default function NewMovie() {
 
     // Validation Check Functions (Basic Example)
     const isGeneralFormComplete = Object.values(generalFormData).every(value => Array.isArray(value) ? value.length > 0 : !!value);
-    const isDetailsFormComplete = detailsFormData.writersData.length > 0 && detailsFormData.castData.length > 0 && detailsFormData.uploadedPhotos.length > 0 && detailsFormData.coverPhotoIndex !== null;
+    const isDetailsFormComplete = detailsFormData.writersData.length > 0 && detailsFormData.castData.length > 0 && (detailsFormData.uploadedPhotos.length > 0 || detailsFormData.uploadedPhotoURLs.length > 0) && detailsFormData.coverPhotoIndex !== null;
     const isProjectionsFormComplete = projectionsFormData.every(group => group.city && group.venue && group.time);
 
     const stepStatus = (step: AddMovieFormStep) => {
@@ -137,18 +154,20 @@ export default function NewMovie() {
         const uploadedPhotoUrls = await Promise.all(
             detailsFormData.uploadedPhotos.map(photo => uploadPhoto(photo).catch(() => null))
         ).then(results => results.filter(url => url !== null));
-
+    
         if (uploadedPhotoUrls.length > 0) {
             setDetailsFormData((prev) => ({
                 ...prev,
-                uploadedPhotoURLs: uploadedPhotoUrls,
+                uploadedPhotoURLs: [...prev.uploadedPhotoURLs, ...uploadedPhotoUrls], // Append new URLs to existing ones
+                uploadedPhotos: [] // Clear local file uploads after successful upload
             }));
         } else {
             alert("Photo upload failed. Please try again.");
         }
-
+    
         return uploadedPhotoUrls;
     };
+    
 
     const handleAddMovie = async () => {
         if (checkConflictingProjections(projectionsFormData)) {

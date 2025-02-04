@@ -44,6 +44,18 @@ export default function MovieRow({
             console.error(error);
         }
     }
+
+    const moveToDrafts = () => {
+        try {
+            ApiService.patch(`/movies/drafts/${movie.id}`)
+            .then(() => {
+                console.log("movie moved to drafts");
+                navigate("/admin/movies/drafts");
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
 
     const formatProjectionDate = (date: Date | string): string => {
@@ -161,7 +173,7 @@ export default function MovieRow({
                                     <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
                                 </>
                             ) : (
-                                <button className="dropdown-item font-lg-regular">Move to Drafts</button>
+                                <button className="dropdown-item font-lg-regular" onClick={moveToDrafts}>Move to Drafts</button>
 
                             )}
 

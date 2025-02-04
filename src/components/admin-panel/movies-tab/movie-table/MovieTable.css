@@ -1,3 +1,23 @@
+.group-actions-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    padding-top: 30px;
+}
+
+.group-actions-buttons button {
+    padding: 10px 20px;
+    border: 1px solid #F04438;
+    border-radius: 8px;
+    color: #F04438;
+}
+
+#publishGroupBtn {
+    border-color: #039855;
+    color: #039855;
+}
+
 .movie-table {
     width: 100%;
     border: 1px solid #E4E7EC;

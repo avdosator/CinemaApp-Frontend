@@ -13,27 +13,33 @@ type MovieTableProps = {
 export default function MovieTable({ movies, showCheckbox = true, showActions = true, activeTab }: MovieTableProps) {
 
     return (
-        <table className="movie-table">
-            <thead className="movie-table-heading">
-                <tr className="font-heading-caption">
-                    <th>Name</th>
-                    <th>Projection Date</th>
-                    <th>Venue</th>
-                    <th>Status</th>
-                    {showActions && <th className="action-column">Action</th>}
-                </tr>
-            </thead>
-            <tbody className="font-lg-regular">
-                {movies.map((movie) => (
-                    <MovieRow
-                        key={movie.id}
-                        movie={movie}
-                        showCheckbox={showCheckbox}
-                        showActions={showActions}
-                        activeTab={activeTab}
-                    />
-                ))}
-            </tbody>
-        </table>
+        <>
+            <div className="group-actions-buttons font-md-semibold">
+                <button>Archive</button>
+                <button id="publishGroupBtn">Publish</button>
+            </div>
+            <table className="movie-table">
+                <thead className="movie-table-heading">
+                    <tr className="font-heading-caption">
+                        <th>Name</th>
+                        <th>Projection Date</th>
+                        <th>Venue</th>
+                        <th>Status</th>
+                        {showActions && <th className="action-column">Action</th>}
+                    </tr>
+                </thead>
+                <tbody className="font-lg-regular">
+                    {movies.map((movie) => (
+                        <MovieRow
+                            key={movie.id}
+                            movie={movie}
+                            showCheckbox={showCheckbox}
+                            showActions={showActions}
+                            activeTab={activeTab}
+                        />
+                    ))}
+                </tbody>
+            </table>
+        </>
     );
 }

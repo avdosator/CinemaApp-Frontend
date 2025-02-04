@@ -207,7 +207,6 @@ export default function NewMovie() {
         return uploadedPhotoUrls.length > 0 ? [...detailsFormData.uploadedPhotoURLs, ...uploadedPhotoUrls] : detailsFormData.uploadedPhotoURLs;
     };
 
-
     const handleAddMovie = async () => {
         if (checkConflictingProjections(projectionsFormData)) {
             setConflictingProjections(true); // Show the popup
@@ -308,10 +307,6 @@ export default function NewMovie() {
 
             const jwt = localStorage.getItem("authToken");
             const headers = { "Authorization": `Bearer ${jwt}` };
-
-            // if (createMovieBody.movieId) {
-            //     createMovieBody.id = createMovieBody.movieId;
-            // }
 
             await ApiService.post<Movie>(`/movies?status=${draftStatus}`, createMovieBody, headers);
 

@@ -8,6 +8,7 @@ import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../../../../service/ApiService";
+import AddMoviePopUp from "../../../new-movie/pop-up/AddMoviePopUp";
 
 type MovieRowProps = {
     movie: Movie;
@@ -24,6 +25,10 @@ export default function MovieRow({
 }: MovieRowProps) {
     const navigate = useNavigate();
     const [isActionsElementOpened, setIsActionsElementOpened] = useState<boolean>(false);
+    const [movieNotComplete, setMovieNotComplete] = useState<boolean>(false);
+
+    const jwt = localStorage.getItem("authToken");
+    const headers = { "Authorization": `Bearer ${jwt}` };
 
     const toggleActions = () => {
         setIsActionsElementOpened((prev) => !prev);
@@ -35,11 +40,8 @@ export default function MovieRow({
 
     const archiveMovie = () => {
         try {
-            ApiService.patch(`/movies/archive/${movie.id}`)
-            .then(() => {
-                console.log("movie archived");
-                navigate("/admin/movies/archived");
-            });
+            ApiService.patch(`/movies/archive/${movie.id}`, {}, headers)
+                .then(() => navigate("/admin/movies/archived"));
         } catch (error) {
             console.error(error);
         }
@@ -47,16 +49,28 @@ export default function MovieRow({
 
     const moveToDrafts = () => {
         try {
-            ApiService.patch(`/movies/drafts/${movie.id}`)
-            .then(() => {
-                console.log("movie moved to drafts");
-                navigate("/admin/movies/drafts");
-            });
+            ApiService.patch(`/movies/drafts/${movie.id}`, {}, headers)
+                .then(() => navigate("/admin/movies/drafts"));
         } catch (error) {
             console.error(error);
         }
     }
-    
+
+    const publishMovie = () => {
+
+        if (movie.status !== "draft-3") {
+            setMovieNotComplete(true);
+            setIsActionsElementOpened(false);
+            return;
+        } else {
+            try {
+                ApiService.patch(`/movies/drafts/publish/${movie.id}`, {}, headers)
+                    .then(() => navigate("/admin/movies/upcoming"));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
 
     const formatProjectionDate = (date: Date | string): string => {
         const validDate = typeof date === "string" ? new Date(date) : date;
@@ -116,71 +130,78 @@ export default function MovieRow({
     };
 
     return (
-        <tr>
-            <td>
-                {showCheckbox && <input type="checkbox" style={{ marginRight: "6px" }} />}
-                {(() => {
-                    if (!movie.photos || movie.photos.length === 0) {
-                        return <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />;
-                    }
-
-                    const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
-                    return coverPhoto ? (
-                        <img src={coverPhoto.url} alt={movie.title} className="movie-table-row-img" />
-                    ) : (
-                        <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />
-                    );
-                })()}
-                {movie.title}
-            </td>
-            <td>
-                {`${formatProjectionDate(movie.projections[0].startDate)} - ${formatProjectionDate(movie.projections[0].endDate)}`}
-            </td>
-            <td>{renderVenuesColumn(movie)}</td>
-            <td>
-                <MovieStatusBadge
-                    statusType={activeTab}
-                    daysRemaining={
-                        activeTab === "currently-showing" || activeTab === "upcoming"
-                            ? calculateDaysRemaining(movie, activeTab)
-                            : undefined
-                    }
-                    draftStep={
-                        movie.status === "draft-1" ? 1 :
-                            movie.status === "draft-2" ? 2 :
-                                movie.status === "draft-3" ? 3 :
-                                    undefined
-                    }
+        <>
+            {movieNotComplete && (
+                <AddMoviePopUp heading="Publish Failed" text="Movies that are in progress cannot be published."
+                    okayAction={setMovieNotComplete}
                 />
-
-            </td>
-            {showActions && (
-                <td style={{ position: "relative", overflow: "visible" }}>
-                    <button className="movie-table-action-button" onClick={toggleActions}>
-                        <FontAwesomeIcon icon={faEllipsis} />
-                    </button>
-                    {isActionsElementOpened && (
-                        <div className="user-actions-dropdown-menu">
-                            {activeTab === "drafts" ? (
-                                <>
-                                    <button className="dropdown-item font-lg-regular" onClick={handleEditMovie}>Edit</button>
-                                    <button className="dropdown-item font-lg-regular">Publish</button>
-                                    <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
-                                </>
-                            ) : activeTab === "upcoming" ? (
-                                <>
-                                    <button className="dropdown-item font-lg-regular">Move to Drafts</button>
-                                    <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
-                                </>
-                            ) : (
-                                <button className="dropdown-item font-lg-regular" onClick={moveToDrafts}>Move to Drafts</button>
-
-                            )}
-
-                        </div>
-                    )}
-                </td>
             )}
-        </tr>
+            <tr>
+                <td>
+                    {showCheckbox && <input type="checkbox" style={{ marginRight: "6px" }} />}
+                    {(() => {
+                        if (!movie.photos || movie.photos.length === 0) {
+                            return <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />;
+                        }
+
+                        const coverPhoto = movie.photos.find(photo => photo.id === movie.coverPhotoId);
+                        return coverPhoto ? (
+                            <img src={coverPhoto.url} alt={movie.title} className="movie-table-row-img" />
+                        ) : (
+                            <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />
+                        );
+                    })()}
+                    {movie.title}
+                </td>
+                <td>
+                    {`${formatProjectionDate(movie.projections[0].startDate)} - ${formatProjectionDate(movie.projections[0].endDate)}`}
+                </td>
+                <td>{renderVenuesColumn(movie)}</td>
+                <td>
+                    <MovieStatusBadge
+                        statusType={activeTab}
+                        daysRemaining={
+                            activeTab === "currently-showing" || activeTab === "upcoming"
+                                ? calculateDaysRemaining(movie, activeTab)
+                                : undefined
+                        }
+                        draftStep={
+                            movie.status === "draft-1" ? 1 :
+                                movie.status === "draft-2" ? 2 :
+                                    movie.status === "draft-3" ? 3 :
+                                        undefined
+                        }
+                    />
+
+                </td>
+                {showActions && (
+                    <td style={{ position: "relative", overflow: "visible" }}>
+                        <button className="movie-table-action-button" onClick={toggleActions}>
+                            <FontAwesomeIcon icon={faEllipsis} />
+                        </button>
+                        {isActionsElementOpened && (
+                            <div className="user-actions-dropdown-menu">
+                                {activeTab === "drafts" ? (
+                                    <>
+                                        <button className="dropdown-item font-lg-regular" onClick={handleEditMovie}>Edit</button>
+                                        <button className="dropdown-item font-lg-regular" onClick={publishMovie}>Publish</button>
+                                        <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
+                                    </>
+                                ) : activeTab === "upcoming" ? (
+                                    <>
+                                        <button className="dropdown-item font-lg-regular" onClick={moveToDrafts}>Move to Drafts</button>
+                                        <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
+                                    </>
+                                ) : (
+                                    <button className="dropdown-item font-lg-regular" onClick={moveToDrafts}>Move to Drafts</button>
+
+                                )}
+
+                            </div>
+                        )}
+                    </td>
+                )}
+            </tr>
+        </>
     );
 }

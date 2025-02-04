@@ -17,6 +17,7 @@ import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
 import { format } from "date-fns";
+import { SelectOptionType } from "../../../types/SelectOptionType";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -65,6 +66,7 @@ export default function NewMovie() {
     useEffect(() => {
         if (movie) {
             // Populate GeneralForm (always exists in all drafts)
+            console.log(movie);
             setGeneralFormData({
                 title: movie.title,
                 language: movie.language,
@@ -79,21 +81,52 @@ export default function NewMovie() {
             });
 
             // If it's draft-2 or draft-3, populate DetailsForm
-        if (movie.status === "draft-2" || movie.status === "draft-3") {
-           // Extract URLs from photos array
-           const uploadedPhotoURLs = movie.photos.map(photo => photo.url) || [];
+            if (movie.status === "draft-2" || movie.status === "draft-3") {
+                // Extract URLs from photos array
+                const uploadedPhotoURLs = movie.photos.map(photo => photo.url) || [];
 
-           // Find the index of the cover photo in the uploadedPhotoURLs array using coverPhotoId
-           const coverPhotoIndex = movie.photos.findIndex(photo => photo.id === movie.coverPhotoId);
+                // Find the index of the cover photo in the uploadedPhotoURLs array using coverPhotoId
+                const coverPhotoIndex = movie.photos.findIndex(photo => photo.id === movie.coverPhotoId);
 
-            setDetailsFormData({
-                writersData: movie.writers || [], // Ensure it's an array
-                castData: movie.actors || [], // Ensure it's an array
-                uploadedPhotos: [], // We can't populate File objects from backend
-                uploadedPhotoURLs: uploadedPhotoURLs,
-                coverPhotoIndex: coverPhotoIndex !== -1 ? coverPhotoIndex : null
-            });
-        }
+                setDetailsFormData({
+                    writersData: movie.writers || [], // Ensure it's an array
+                    castData: movie.actors || [], // Ensure it's an array
+                    uploadedPhotos: [], // We can't populate File objects from backend
+                    uploadedPhotoURLs: uploadedPhotoURLs,
+                    coverPhotoIndex: coverPhotoIndex !== -1 ? coverPhotoIndex : null
+                });
+            }
+
+            if (movie.status === "draft-3") {
+                const projectionGroupsMap = new Map<string, ProjectionsFormData>();
+            
+                movie.projections.forEach(projection => {
+                    const venueOption: SelectOptionType = {
+                        value: projection.hall.venue.id,
+                        label: projection.hall.venue.name
+                    };
+            
+                    const cityOption: SelectOptionType = {
+                        value: projection.hall.venue.city.id,
+                        label: projection.hall.venue.city.name
+                    };
+            
+                    // Extract unique times from projectionInstances
+                    projection.projectionInstances.forEach(instance => {
+                        const key = `${cityOption.value}-${venueOption.value}-${instance.time}`;
+            
+                        if (!projectionGroupsMap.has(key)) {
+                            projectionGroupsMap.set(key, {
+                                city: cityOption,
+                                venue: venueOption,
+                                time: instance.time
+                            });
+                        }
+                    });
+                });
+            
+                setProjectionsFormData(Array.from(projectionGroupsMap.values()));
+            }
         }
     }, [movie]);
 
@@ -151,10 +184,16 @@ export default function NewMovie() {
     };
 
     const handleUploadPhotos = async (): Promise<string[]> => {
+
+        // If no new photos were uploaded, return the existing uploadedPhotoURLs
+        if (detailsFormData.uploadedPhotos.length === 0) {
+            return detailsFormData.uploadedPhotoURLs;
+        }
+
         const uploadedPhotoUrls = await Promise.all(
             detailsFormData.uploadedPhotos.map(photo => uploadPhoto(photo).catch(() => null))
         ).then(results => results.filter(url => url !== null));
-    
+
         if (uploadedPhotoUrls.length > 0) {
             setDetailsFormData((prev) => ({
                 ...prev,
@@ -164,10 +203,10 @@ export default function NewMovie() {
         } else {
             alert("Photo upload failed. Please try again.");
         }
-    
-        return uploadedPhotoUrls;
+
+        return uploadedPhotoUrls.length > 0 ? [...detailsFormData.uploadedPhotoURLs, ...uploadedPhotoUrls] : detailsFormData.uploadedPhotoURLs;
     };
-    
+
 
     const handleAddMovie = async () => {
         if (checkConflictingProjections(projectionsFormData)) {
@@ -258,11 +297,14 @@ export default function NewMovie() {
                 return;
             }
 
-            const createMovieBody = buildMovieBody(
-                generalFormData,
-                { ...detailsFormData, uploadedPhotoURLs: uploadedPhotoUrls },
-                projectionsFormData
-            );
+            const createMovieBody = {
+                ...(movie?.id && { movieId: movie.id }), // Send movieId only if editing
+                ...buildMovieBody(
+                    generalFormData,
+                    { ...detailsFormData, uploadedPhotoURLs: uploadedPhotoUrls },
+                    projectionsFormData
+                ),
+            };
 
             const jwt = localStorage.getItem("authToken");
             const headers = { "Authorization": `Bearer ${jwt}` };
@@ -280,7 +322,6 @@ export default function NewMovie() {
             console.error("Error saving draft:", error);
         }
     };
-
 
     return (
         <div className="add-movie-container">
@@ -335,8 +376,6 @@ export default function NewMovie() {
                         />
                     </>
                 )}
-
-
         </div>
     )
 }

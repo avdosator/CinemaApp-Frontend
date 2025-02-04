@@ -11,6 +11,7 @@
     border: 1px solid #F04438;
     border-radius: 8px;
     color: #F04438;
+    background-color: inherit;
 }
 
 #publishGroupBtn {

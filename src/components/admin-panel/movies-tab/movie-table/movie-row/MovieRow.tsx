@@ -14,7 +14,9 @@ type MovieRowProps = {
     movie: Movie;
     showCheckbox?: boolean;
     showActions?: boolean;
-    activeTab: MovieTabType
+    activeTab: MovieTabType,
+    isSelected: boolean,
+    onSelect: () => void
 };
 
 export default function MovieRow({
@@ -22,6 +24,8 @@ export default function MovieRow({
     showCheckbox = true,
     showActions = true,
     activeTab,
+    isSelected,
+    onSelect
 }: MovieRowProps) {
     const navigate = useNavigate();
     const [isActionsElementOpened, setIsActionsElementOpened] = useState<boolean>(false);
@@ -138,7 +142,12 @@ export default function MovieRow({
             )}
             <tr>
                 <td>
-                    {showCheckbox && <input type="checkbox" style={{ marginRight: "6px" }} />}
+                    {showCheckbox && <input
+                        type="checkbox"
+                        style={{ marginRight: "6px" }}
+                        checked={isSelected}
+                        onChange={onSelect}
+                    />}
                     {(() => {
                         if (!movie.photos || movie.photos.length === 0) {
                             return <img src={placeholderImage} alt="No image available" className="movie-table-row-img" />;

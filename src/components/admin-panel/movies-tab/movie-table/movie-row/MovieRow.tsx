@@ -7,6 +7,7 @@ import { MovieTabType } from "../../../../../types/MovieTabType";
 import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ApiService from "../../../../../service/ApiService";
 
 type MovieRowProps = {
     movie: Movie;
@@ -31,6 +32,18 @@ export default function MovieRow({
     const handleEditMovie = () => {
         navigate("/admin/movies/new-movie", { state: { movie } }); // Pass movie object
     };
+
+    const archiveMovie = () => {
+        try {
+            ApiService.patch(`/movies/archive/${movie.id}`)
+            .then(() => {
+                console.log("movie archived");
+                navigate("/admin/movies/archived");
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
 
     const formatProjectionDate = (date: Date | string): string => {
@@ -140,12 +153,12 @@ export default function MovieRow({
                                 <>
                                     <button className="dropdown-item font-lg-regular" onClick={handleEditMovie}>Edit</button>
                                     <button className="dropdown-item font-lg-regular">Publish</button>
-                                    <button className="dropdown-item font-lg-regular">Archive</button>
+                                    <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
                                 </>
                             ) : activeTab === "upcoming" ? (
                                 <>
                                     <button className="dropdown-item font-lg-regular">Move to Drafts</button>
-                                    <button className="dropdown-item font-lg-regular">Archive</button>
+                                    <button className="dropdown-item font-lg-regular" onClick={archiveMovie}>Archive</button>
                                 </>
                             ) : (
                                 <button className="dropdown-item font-lg-regular">Move to Drafts</button>

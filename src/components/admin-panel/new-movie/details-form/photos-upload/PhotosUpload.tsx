@@ -31,11 +31,26 @@ export default function PhotosUpload({ detailsFormData, setDetailsFormData }: Ph
     });
 
     const handleRemovePhoto = (index: number) => {
-        setDetailsFormData((prev) => ({
-            ...prev,
-            uploadedPhotos: prev.uploadedPhotos.filter((_, i) => i !== index),
-            coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
-        }));
+        setDetailsFormData((prev) => {
+            if (index < prev.uploadedPhotoURLs.length) {
+                // Removing from preloaded photos
+                const updatedURLs = prev.uploadedPhotoURLs.filter((_, i) => i !== index);
+                return {
+                    ...prev,
+                    uploadedPhotoURLs: updatedURLs,
+                    coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
+                };
+            } else {
+                // Removing from uploaded photos
+                const adjustedIndex = index - prev.uploadedPhotoURLs.length;
+                const updatedFiles = prev.uploadedPhotos.filter((_, i) => i !== adjustedIndex);
+                return {
+                    ...prev,
+                    uploadedPhotos: updatedFiles,
+                    coverPhotoIndex: prev.coverPhotoIndex === index ? null : prev.coverPhotoIndex
+                };
+            }
+        });
     };
 
     const handleSetCoverPhoto = (index: number) => {
@@ -48,7 +63,7 @@ export default function PhotosUpload({ detailsFormData, setDetailsFormData }: Ph
     return (
         <div>
             <label className="font-lg-semibold upload-photos-label">Upload Photos</label>
-            {detailsFormData.uploadedPhotos.length == 0
+            {detailsFormData.uploadedPhotos.length == 0 && detailsFormData.uploadedPhotoURLs.length == 0
                 ? (
                     <div style={{ marginBottom: "96px" }}>
                         <div className="upload-photos-container" {...getRootProps()}>
@@ -61,6 +76,29 @@ export default function PhotosUpload({ detailsFormData, setDetailsFormData }: Ph
                 )
                 : (
                     <div className="uploaded-photos-preview">
+                        {detailsFormData.uploadedPhotoURLs.map((url, index) => (
+                            <div key={`preloaded-${index}`} className="uploaded-photo-preview-item">
+                                <img src={url} className="uploaded-photo-thumbnail" />
+                                <div className="uploaded-photo-actions">
+                                    <label className="font-md-semibold">
+                                        <input
+                                            type="radio"
+                                            name="coverPhoto"
+                                            checked={detailsFormData.coverPhotoIndex === index}
+                                            onChange={() => handleSetCoverPhoto(index)}
+                                        />
+                                        Cover Photo
+                                    </label>
+                                    <button
+                                        type="button"
+                                        className="remove-photo-btn"
+                                        onClick={() => handleRemovePhoto(index)}
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} width={14} height={16} />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
                         {detailsFormData.uploadedPhotos.map((file, index) => (
                             <div key={index} className="uploaded-photo-preview-item">
                                 <img
@@ -92,7 +130,7 @@ export default function PhotosUpload({ detailsFormData, setDetailsFormData }: Ph
                         ))}
 
                         {/* Placeholders when less than 4 photos are added first time */}
-                        {Array.from({ length: 4 - detailsFormData.uploadedPhotos.length }).map((_, index) => (
+                        {Array.from({ length: 4 - (detailsFormData.uploadedPhotoURLs.length + detailsFormData.uploadedPhotos.length) }).map((_, index) => (
                             <PhotoPlaceholder
                                 key={`placeholder-${index}`}
                                 inputRef={placeholderRefs[index]}

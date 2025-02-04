@@ -6,6 +6,7 @@ import MovieStatusBadge from "../movie-status-badge/MovieStatusBadge";
 import { MovieTabType } from "../../../../../types/MovieTabType";
 import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type MovieRowProps = {
     movie: Movie;
@@ -20,11 +21,17 @@ export default function MovieRow({
     showActions = true,
     activeTab,
 }: MovieRowProps) {
+    const navigate = useNavigate();
     const [isActionsElementOpened, setIsActionsElementOpened] = useState<boolean>(false);
 
     const toggleActions = () => {
         setIsActionsElementOpened((prev) => !prev);
     };
+
+    const handleEditMovie = () => {
+        navigate("/admin/movies/new-movie", { state: { movie } }); // Pass movie object
+    };
+    
 
     const formatProjectionDate = (date: Date | string): string => {
         const validDate = typeof date === "string" ? new Date(date) : date;
@@ -131,7 +138,7 @@ export default function MovieRow({
                         <div className="user-actions-dropdown-menu">
                             {activeTab === "drafts" ? (
                                 <>
-                                    <button className="dropdown-item font-lg-regular">Edit</button>
+                                    <button className="dropdown-item font-lg-regular" onClick={handleEditMovie}>Edit</button>
                                     <button className="dropdown-item font-lg-regular">Publish</button>
                                     <button className="dropdown-item font-lg-regular">Archive</button>
                                 </>

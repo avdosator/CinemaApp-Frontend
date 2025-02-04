@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { DetailsFormData, AddMovieFormStep, GeneralFormData, ProjectionsFormData } from "../../../types/FormData";
 import DetailsForm from "./details-form/DetailsForm";
 import ProjectionsForm from "./projections-form/ProjectionsForm";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndicator";
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
@@ -16,11 +16,14 @@ import AddMoviePopUp from "./pop-up/AddMoviePopUp";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
+import { format } from "date-fns";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function NewMovie() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const movie: Movie | null = location.state?.movie || null;
     const [currentStep, setCurrentStep] = useState<AddMovieFormStep>(1);
     const [formNotFilledModal, setFormNotFilledModal] = useState<boolean>(false); // Every step is new form
     const [conflictingProjections, setConflictingProjections] = useState<boolean>(false);
@@ -58,6 +61,24 @@ export default function NewMovie() {
     const [projectionsFormData, setProjectionsFormData] = useState<ProjectionsFormData[]>([
         { city: null, venue: null, time: "" }
     ]);
+
+    useEffect(() => {
+        if (movie) {
+            // Populate GeneralForm (always exists in all drafts)
+            setGeneralFormData({
+                title: movie.title,
+                language: movie.language,
+                startDate: format(new Date(movie.projections[0].startDate), "yyyy-MM-dd"),
+                endDate: format(new Date(movie.projections[0].endDate), "yyyy-MM-dd"),
+                director: movie.director,
+                pgRating: movie.pgRating,
+                duration: movie.durationInMinutes.toString(),
+                genre: movie.genres.map(g => ({ value: g.id, label: g.name })),
+                trailer: movie.trailerUrl,
+                synopsis: movie.synopsis
+            });
+        }
+    }, [movie]);
 
     useEffect(() => {
         checkConflictingProjections(projectionsFormData);

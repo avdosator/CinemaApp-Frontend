@@ -31,6 +31,20 @@ export default function GeneralForm({ generalFormData: formData, setGeneralFormD
             .catch(error => console.error("Error fetching data:", error));
     }, [])
 
+    useEffect(() => {
+        if (formData.startDate && formData.endDate) {
+            setCalendarState([
+                {
+                    startDate: new Date(formData.startDate),
+                    endDate: new Date(formData.endDate),
+                    key: "selection",
+                }
+            ]);
+    
+            // Update displayed formatted date
+            setFormattedDateRange(`${format(new Date(formData.startDate), 'yyyy/MM/dd')} - ${format(new Date(formData.endDate), 'yyyy/MM/dd')}`);
+        }
+    }, [formData.startDate, formData.endDate]);
 
     const handleChange = (name: keyof GeneralFormData, value: string | SelectOptionType[]) => {
         setFormData((prevData) => ({

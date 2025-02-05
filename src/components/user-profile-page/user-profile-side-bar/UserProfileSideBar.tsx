@@ -7,7 +7,7 @@ type UserProfileSideBarProps = {
 
 export default function UserProfileSideBar({ selectPanel }: UserProfileSideBarProps) {
     const location = useLocation();
-    const activePanel = location.pathname.includes("personal-information") ? "personal-information" : "";
+    const activePanel = location.pathname.includes("personal-information") || location.pathname.includes("edit-profile")  ? "personal-information" : "";
 
     return (
         <div className="side-bar-container">

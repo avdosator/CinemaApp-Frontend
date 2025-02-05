@@ -5,6 +5,7 @@ import { Seat } from "../../../types/Seat"
 import BookingSummary from "./booking-summary/BookingSummary"
 import MakePayment from "./make-payment/MakePayment"
 import { Projection } from "../../../types/Projection"
+import { useEffect } from "react"
 
 type BuyTicketPageProps = {
     projectionInstance: ProjectionInstance,
@@ -15,6 +16,8 @@ type BuyTicketPageProps = {
 }
 
 export default function BuyTicketPage({ projectionInstance, movie, selectedSeats, totalPrice, projection }: BuyTicketPageProps) {
+    useEffect(() => window.scrollTo(0, 0), []);
+
     return (
         <div className="buy-ticket-page">
             <MakePayment projectionInstance={projectionInstance} movie={movie} selectedSeats={selectedSeats} totalPrice={totalPrice} />

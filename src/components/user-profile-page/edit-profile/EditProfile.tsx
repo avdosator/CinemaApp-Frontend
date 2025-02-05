@@ -6,22 +6,25 @@ import { faEarthEurope, faEnvelope, faLocationPin, faMagnifyingGlass } from "@fo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Select, { SingleValue } from "react-select";
 import { SelectOptionType } from "../../../types/SelectOptionType";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditProfileFormData } from "../../../types/FormData";
 import { City } from "../../../types/City";
 import ApiService from "../../../service/ApiService";
+import EditProfileControlButtonGroup from "./edit-profile-control-button-group/EditProfileControlButtonGroup";
 
 export default function EditProfile() {
     const { currentUser } = useUser();
     const [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     const [countryOptions] = useState<SelectOptionType[]>([{ value: "BiH", label: "Bosnia & Herzegovina" }]);
+    const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const [formData, setFormData] = useState<EditProfileFormData>({
         firstName: currentUser?.firstName ? currentUser.firstName : "",
         lastName: currentUser?.lastName ? currentUser.lastName : "",
         phone: currentUser?.phone ? currentUser.phone : "",
         email: currentUser?.email ? currentUser.email : "",
-        city: currentUser?.city ? {value: currentUser.city.id, label: currentUser.city.name} : null,
-        country: currentUser?.city ? {value: currentUser.city.country, label: currentUser.city.country} : null
+        city: currentUser?.city ? { value: currentUser.city.id, label: currentUser.city.name } : null,
+        country: currentUser?.city ? { value: currentUser.city.country, label: currentUser.city.country } : null
     });
 
     useEffect(() => {
@@ -34,7 +37,14 @@ export default function EditProfile() {
         } catch (error) {
             console.error(error);
         }
-    }, [])
+    }, []);
+
+    const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setUploadedPhoto(file);
+        }
+    };
 
     const handleChange = (name: keyof EditProfileFormData, value: string | SingleValue<SelectOptionType>) => {
         setFormData((prevData) => ({
@@ -49,11 +59,18 @@ export default function EditProfile() {
             <div className="edit-profile-container">
                 <div className="uploaded-photo-preview-item">
                     <img
-                        src={currentUser?.photo ? currentUser.photo.url : placeholderImage}
+                        src={uploadedPhoto ? URL.createObjectURL(uploadedPhoto) : currentUser?.photo ? currentUser.photo.url : placeholderImage}
                         className="uploaded-photo-thumbnail"
                     />
-                    <div className="upload-photo-btn-container">
+                    <div className="upload-photo-btn-container" onClick={() => fileInputRef.current?.click()}>
                         <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            style={{ display: "none" }}
+                            onChange={handlePhotoUpload}
+                        />
                     </div>
                 </div>
                 <div className="full-width-horizontal-line"></div>
@@ -75,7 +92,6 @@ export default function EditProfile() {
                                     />
                                 </div>
                             </div>
-
                             <div className="general-form-input-group">
                                 <label htmlFor="phone" className="font-lg-semibold">Phone</label>
                                 <div className="input-wrapper">
@@ -90,7 +106,6 @@ export default function EditProfile() {
                                     />
                                 </div>
                             </div>
-
                             <div className="general-form-input-group">
                                 <label htmlFor="city" className="font-lg-semibold">City</label>
                                 <div className="input-wrapper">
@@ -104,13 +119,13 @@ export default function EditProfile() {
                                         value={formData.city}
                                         onChange={(newValue) => handleChange("city", newValue)}
                                         name="city"
+                                        backspaceRemovesValue
                                     />
                                 </div>
                             </div>
 
                         </div>
                         <div className="right-part">
-
                             <div className="general-form-input-group">
                                 <label htmlFor="lastName" className="font-lg-semibold">Last Name</label>
                                 <div className="input-wrapper">
@@ -125,7 +140,6 @@ export default function EditProfile() {
                                     />
                                 </div>
                             </div>
-
                             <div className="general-form-input-group">
                                 <label htmlFor="email" className="font-lg-semibold">Email</label>
                                 <div className="input-wrapper">
@@ -140,7 +154,6 @@ export default function EditProfile() {
                                     />
                                 </div>
                             </div>
-
                             <div className="general-form-input-group">
                                 <label htmlFor="country" className="font-lg-semibold">Country</label>
                                 <div className="input-wrapper">
@@ -153,13 +166,16 @@ export default function EditProfile() {
                                         isClearable={true}
                                         value={formData.country}
                                         onChange={(newValue) => handleChange("country", newValue)}
-                                        name="genre"
+                                        name="country"
+                                        backspaceRemovesValue
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+                <div className="full-width-horizontal-line"></div>
+                <EditProfileControlButtonGroup />
             </div>
         </div>
     );

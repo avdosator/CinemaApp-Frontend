@@ -18,7 +18,7 @@ type NewBankCardFormType = {
 }
 
 type NewBankCardFormProps = {
-    projection: ProjectionInstance,
+    projectionInstance: ProjectionInstance,
     movie: Movie,
     selectedSeats: Seat[],
     totalPrice: number
@@ -37,7 +37,7 @@ const inputStyle = {
     },
 }
 
-export default function NewBankCardForm({ projection, movie, selectedSeats, totalPrice }: NewBankCardFormProps) {
+export default function NewBankCardForm({ projectionInstance, movie, selectedSeats, totalPrice }: NewBankCardFormProps) {
     const [cardDetails, setCardDetails] = useState({
         cardNumberError: null,
         expiryDateError: null,
@@ -76,7 +76,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats, tota
 
         const intentBody = {
             userId: currentUser?.id,
-            projectionInstanceId: projection.id,
+            projectionInstanceId: projectionInstance.id,
             selectedSeats: selectedSeats,
         };
 
@@ -99,7 +99,7 @@ export default function NewBankCardForm({ projection, movie, selectedSeats, tota
 
                 const createPaymentBody = {
                     userId: currentUser?.id,
-                    projectionInstanceId: projection.id,
+                    projectionInstanceId: projectionInstance.id,
                     selectedSeats: selectedSeats,
                     paymentIntentId: result.paymentIntent.id,
                     movieId: movie.id

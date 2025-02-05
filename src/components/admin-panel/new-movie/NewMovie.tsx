@@ -112,14 +112,14 @@ export default function NewMovie() {
                     };
             
                     // Extract unique times from projectionInstances
-                    projection.projectionInstances.forEach(instance => {
-                        const key = `${cityOption.value}-${venueOption.value}-${instance.time}`;
+                    projection.startTime.forEach(time => {
+                        const key = `${cityOption.value}-${venueOption.value}-${time}`;
             
                         if (!projectionGroupsMap.has(key)) {
                             projectionGroupsMap.set(key, {
                                 city: cityOption,
                                 venue: venueOption,
-                                time: instance.time
+                                time: time
                             });
                         }
                     });

@@ -8,13 +8,18 @@ import { Seat } from "../../types/Seat";
 import BuyTicketPage from "./buy-ticket-page/BuyTicketPage";
 import { TicketPrice } from "../../types/TicketPrice";
 import { calculateReservedSeatsPrice } from "../../utils/utils";
+import { Projection } from "../../types/Projection";
 
 const SESSION_DURATION = 300;
 
 export default function ReservationTicketPage() {
     const location = useLocation();
     const { projectionInstance, movie } = location.state;
+
+    console.log("📢 location.state:", location.state);
+
     const [projection, setProjection] = useState<ProjectionInstance>(projectionInstance);
+    const [projectionEntity, setProjectionEntity] = useState<Projection | null>(null);
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [remainingTime, setRemainingTime] = useState(SESSION_DURATION);
     const [showModal, setShowModal] = useState(false); // Modal visibility
@@ -22,20 +27,41 @@ export default function ReservationTicketPage() {
     const [ticketPrices, setTicketPrices] = useState<TicketPrice[]>([]);
 
     const totalPrice: number = calculateReservedSeatsPrice(selectedSeats, ticketPrices);
+    useEffect(() => {
+        console.log("🚀 useEffect triggered!");
+    }, []);
 
     useEffect(() => window.scrollTo(0, 0), []);
 
     useEffect(() => {
         const fetchTicketPrices = async () => {
             try {
+                console.log("fetching ticket prices");
                 const prices = await ApiService.get<TicketPrice[]>("/ticket-prices");
                 setTicketPrices(prices);
             } catch (error) {
                 console.error("Failed to fetch ticket prices:", error);
             }
         };
+
+        const fetchProjection = () => {
+            console.log("Fetching projection for ID:", projectionInstance.projectionId);
+
+            ApiService.get<Projection>(`/projections/${projectionInstance.projectionId}`)
+                .then(response => {
+                    console.log("Projection response:", response);
+                    setProjectionEntity(response);
+                })
+                .catch(error => {
+                    console.error("API call failed:", error);
+                });
+        }
+
         fetchTicketPrices();
+        fetchProjection();
     }, []);
+
+
 
     const refreshProjectionState = async () => {
         try {
@@ -118,12 +144,11 @@ export default function ReservationTicketPage() {
                 setSelectedSeats={setSelectedSeats}
                 proceedToBuyTicket={setStep}
                 totalPrice={totalPrice}
+                projection={projectionEntity}
             />)
                 :
-                (<BuyTicketPage projection={projection} movie={movie} selectedSeats={selectedSeats} totalPrice={totalPrice} />)
+                (<BuyTicketPage projectionInstance={projection} movie={movie} selectedSeats={selectedSeats} totalPrice={totalPrice} projection={projectionEntity!} />)
             }
-
         </div>
-
     )
 }

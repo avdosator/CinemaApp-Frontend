@@ -4,18 +4,23 @@ import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import { Seat } from "../../../../types/Seat"
 import { Venue } from "../../../../types/Venue"
 import VerticalLine from "../../../shared-components/divider/VerticalLine"
+import { useEffect, useState } from "react"
+import { Projection } from "../../../../types/Projection"
+import ApiService from "../../../../service/ApiService"
 
 type BookingSummaryProps = {
-    projection: ProjectionInstance,
+    projectionInstance: ProjectionInstance,
     movie: Movie,
     selectedSeats: Seat[],
-    totalPrice:number
+    totalPrice:number,
+    projection: Projection
 }
 
-export default function BookingSummary({ projection, movie, selectedSeats, totalPrice }: BookingSummaryProps) {
-
-    const venue: Venue = projection.projection.hall.venue;
-    const date = new Date(projection.date);
+export default function BookingSummary({ projectionInstance, movie, selectedSeats, totalPrice, projection }: BookingSummaryProps) {
+   
+    
+        const venue: Venue = projection!.hall.venue;
+    const date = new Date(projectionInstance.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
 
@@ -42,13 +47,13 @@ export default function BookingSummary({ projection, movie, selectedSeats, total
                 <div className="booking-summary-projection-details">
                     <div className="booking-summary-info-group">
                         <div className="font-lg-regular booking-summary-heading">Date and Time</div>
-                        <div className="font-lg-semibold booking-summary-info">{formattedDate} at {projection.time}</div>
+                        <div className="font-lg-semibold booking-summary-info">{formattedDate} at {projectionInstance.time}</div>
                     </div>
                     <div className="booking-summary-info-group">
                         <div className="font-lg-regular booking-summary-heading">Cinema Details</div>
-                        <div className="font-lg-semibold booking-summary-info">{venue.name}, {venue.street} {venue.streetNumber}, {venue.city.name} {venue.city.postalCode}</div>
+                        <div className="font-lg-semibold booking-summary-info">{venue!.name}, {venue!.street} {venue!.streetNumber}, {venue!.city.name} {venue!.city.postalCode}</div>
                     </div>
-                    <div className="font-lg-semibold booking-summary-info">{projection.projection.hall.name}</div>
+                    <div className="font-lg-semibold booking-summary-info">{projection?.hall.name}</div>
                     <div className="booking-summary-info-group">
                         <div className="font-lg-regular booking-summary-heading">Seat(s) Details</div>
                         <div className="font-lg-semibold booking-summary-info"><span className="font-lg-regular">Seat(s): </span>

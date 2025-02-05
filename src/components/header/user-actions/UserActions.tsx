@@ -31,6 +31,11 @@ export default function UserActions({ name }: { name: string }) {
         navigate("/admin");
     }
 
+    const goToProfilePage = () => {
+        toggleDropdown();
+        navigate("/user");
+    }
+
     return (
         <div className="navbar-actions">
             <div className="notification-btn">
@@ -50,6 +55,7 @@ export default function UserActions({ name }: { name: string }) {
                     {currentUser && currentUser.role === "ROLE_ADMIN" && (
                         <button className="dropdown-item font-lg-regular" style={{ color: "#101828" }} onClick={goToAdminPage}>Admin</button>
                     )}
+                    <button className="dropdown-item font-lg-regular" style={{ color: "#101828" }} onClick={goToProfilePage}>Profile</button>
                     <button className="dropdown-item font-lg-regular" onClick={handleLogout}>Log Out</button>
                 </div>
             )}

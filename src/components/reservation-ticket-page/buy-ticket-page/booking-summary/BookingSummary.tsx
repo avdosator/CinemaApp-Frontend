@@ -16,7 +16,6 @@ type BookingSummaryProps = {
 
 export default function BookingSummary({ projectionInstance, movie, selectedSeats, totalPrice, projection }: BookingSummaryProps) {
 
-
     const venue: Venue = projection.hall.venue;
     const date = new Date(projectionInstance.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };

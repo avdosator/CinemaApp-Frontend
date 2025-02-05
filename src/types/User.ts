@@ -1,4 +1,5 @@
 import { City } from "./City";
+import { Photo } from "./Photo";
 
 export type User = {
     id: string,
@@ -8,4 +9,5 @@ export type User = {
     phone: string,
     city: City,
     role: string,
+    photo: Photo
 }

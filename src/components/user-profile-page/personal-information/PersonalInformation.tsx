@@ -15,7 +15,7 @@ export default function PersonalInformation() {
             </div>
             <div className="personal-information-card">
                 <div>
-                    <img src={placeHolderImage} className="user-profile-img" alt="" />
+                    <img src={currentUser?.photo ? currentUser.photo.url : placeHolderImage} className="user-profile-img" alt="" />
                 </div>
                 <div className="personal-informations-container">
                     <h4 className="font-heading-h4">{currentUser && currentUser.firstName && currentUser.lastName ? `${currentUser.firstName} ${currentUser.lastName}` : "First and Lastname"}</h4>

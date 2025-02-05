@@ -1,0 +1,25 @@
+.edit-profile-control-button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.edit-profile-right-button-group {
+    display: flex;
+    gap: 16px;
+}
+
+.edit-profile-right-button-group button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #B22222;
+    color: #B22222;
+    background-color: inherit;
+}
+
+.edit-profile-right-button-group > button:nth-of-type(2) {
+    background-color: #B22222;
+    border: none;
+    color: #FCFCFD;
+}

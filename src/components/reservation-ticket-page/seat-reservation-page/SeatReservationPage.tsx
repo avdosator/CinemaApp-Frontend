@@ -8,6 +8,7 @@ import { ProjectionInstance } from "../../../types/ProjectionInstance";
 import { Movie } from "../../../types/Movie";
 import { Seat } from "../../../types/Seat";
 import { Projection } from "../../../types/Projection";
+import { Venue } from "../../../types/Venue";
 
 type SeatReservationPageProps = {
     projectionInstance: ProjectionInstance,
@@ -16,13 +17,12 @@ type SeatReservationPageProps = {
     setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>,
     proceedToBuyTicket: React.Dispatch<React.SetStateAction<"Seat Options" | "Payment Details">>,
     totalPrice: number,
-    projection: Projection | null
+    projection: Projection
 }
 
 export default function SeatReservationPage({ projectionInstance, movie, selectedSeats, setSelectedSeats, proceedToBuyTicket, totalPrice, projection }: SeatReservationPageProps) {
 
-    { console.log("in seatReservationpage", projection) };
-    //const venue: Venue = projection.hall.venue;
+    const venue: Venue = projection.hall.venue;
     const date = new Date(projectionInstance.date);
     const options: Intl.DateTimeFormatOptions = { weekday: "long", month: "short", day: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
@@ -47,12 +47,10 @@ export default function SeatReservationPage({ projectionInstance, movie, selecte
                     <h6 className="font-heading-h6">Booking Details</h6>
                     <div className="font-lg-regular">{formattedDate} at {projectionInstance.time}</div>
                     <div className="font-lg-regular">
-                        {projection?.hall.venue.name}, {projection?.hall.venue.street} {projection?.hall.venue.streetNumber},
-                        {projection?.hall.venue.city.name} {projection?.hall.venue.city.postalCode}
+                        {venue.name}, {venue.street} {venue.streetNumber},{venue.city.name} {venue.city.postalCode}
                     </div>
-                    <div className="font-lg-regular">{projection?.hall.name}</div>
+                    <div className="font-lg-regular">{projection.hall.name}</div>
                 </div>
-
             </div>
             <div className="seat-reservation-horizontal-line"></div>
             <div className="seat-reservation-ticket-container">

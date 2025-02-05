@@ -66,7 +66,6 @@ export default function NewMovie() {
     useEffect(() => {
         if (movie) {
             // Populate GeneralForm (always exists in all drafts)
-            console.log(movie);
             setGeneralFormData({
                 title: movie.title,
                 language: movie.language,
@@ -112,14 +111,14 @@ export default function NewMovie() {
                     };
             
                     // Extract unique times from projectionInstances
-                    projection.startTime.forEach(time => {
-                        const key = `${cityOption.value}-${venueOption.value}-${time}`;
+                    projection.projectionInstances.forEach(instance => {
+                        const key = `${cityOption.value}-${venueOption.value}-${instance.time}`;
             
                         if (!projectionGroupsMap.has(key)) {
                             projectionGroupsMap.set(key, {
                                 city: cityOption,
                                 venue: venueOption,
-                                time: time
+                                time: instance.time
                             });
                         }
                     });

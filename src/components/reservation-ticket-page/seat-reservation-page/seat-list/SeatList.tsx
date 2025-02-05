@@ -13,7 +13,6 @@ type SeatListProps = {
 }
 
 export default function SeatList({ projectionInstance, selectedSeats, setSelectedSeats, projection }: SeatListProps) {
-    console.log("projection is: ",projection);
     const [seats] = useState<Seat[]>(projection.hall.seats);
     const { seatReservations } = projectionInstance;
 
@@ -59,7 +58,6 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
             </div>
         );
     };
-
 
     return (
         <div className="seat-list-container">

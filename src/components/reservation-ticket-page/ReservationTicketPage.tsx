@@ -56,7 +56,7 @@ export default function ReservationTicketPage() {
 
     const refreshProjectionState = async () => {
         try {
-            const response = await ApiService.get<ProjectionInstance>(`/projections/instance/${projectionInstance.id}`);
+            const response = await ApiService.get<ProjectionInstance>(`/projections/instances/${projectionInstance.id}`);
             if (response !== null) setProjection(response);
             setSelectedSeats([]);
             setRemainingTime(SESSION_DURATION);

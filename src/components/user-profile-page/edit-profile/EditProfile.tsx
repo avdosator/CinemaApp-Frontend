@@ -11,6 +11,9 @@ import { EditProfileFormData } from "../../../types/FormData";
 import { City } from "../../../types/City";
 import ApiService from "../../../service/ApiService";
 import EditProfileControlButtonGroup from "./edit-profile-control-button-group/EditProfileControlButtonGroup";
+import axios from "axios";
+
+const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function EditProfile() {
     const { currentUser } = useUser();
@@ -18,6 +21,7 @@ export default function EditProfile() {
     const [countryOptions] = useState<SelectOptionType[]>([{ value: "BiH", label: "Bosnia & Herzegovina" }]);
     const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [newPhotoUrl, setNewPhotoUrl] = useState<string | null>(null);
     const [formData, setFormData] = useState<EditProfileFormData>({
         firstName: currentUser?.firstName ? currentUser.firstName : "",
         lastName: currentUser?.lastName ? currentUser.lastName : "",
@@ -52,6 +56,62 @@ export default function EditProfile() {
             [name]: value
         }));
     };
+
+    const uploadPhoto = async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("UPLOADCARE_PUB_KEY", UPLOADCARE_PUBLIC_KEY);
+
+        try {
+            const response = await axios.post("https://upload.uploadcare.com/base/", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            return `https://ucarecdn.com/${response.data.file}/`;
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            throw error;
+        }
+    };
+
+    const handleUpdateProfile = async () => {
+        let photoUrlToSend = currentUser?.photo?.url || null;
+
+        // If a new photo is selected, upload it first
+        if (uploadedPhoto) {
+            try {
+                photoUrlToSend = await uploadPhoto(uploadedPhoto);
+            } catch (error) {
+                console.error("Photo upload failed:", error);
+                alert("Failed to upload photo. Please try again.");
+                return;
+            }
+        }
+
+        const requestData: any = {
+            userId: currentUser?.id,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            phone: formData.phone,
+            email: formData.email,
+            cityId: formData.city?.value || null
+        };
+
+        // Include `photoUrl` only if it changed
+        if (photoUrlToSend !== currentUser?.photo?.url) {
+            requestData.photoUrl = photoUrlToSend;
+        }
+
+        const jwt = localStorage.getItem("authToken");
+        const headers = { "Authorization": `Bearer ${jwt}` };
+
+        try {
+            await ApiService.patch("/users/update-profile", requestData, headers);
+            alert("Profile updated successfully!");
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
+
 
     return (
         <div className="personal-information">
@@ -175,7 +235,7 @@ export default function EditProfile() {
                     </div>
                 </form>
                 <div className="full-width-horizontal-line"></div>
-                <EditProfileControlButtonGroup />
+                <EditProfileControlButtonGroup handleUpdateProfile={handleUpdateProfile} />
             </div>
         </div>
     );

@@ -12,16 +12,18 @@ import { City } from "../../../types/City";
 import ApiService from "../../../service/ApiService";
 import EditProfileControlButtonGroup from "./edit-profile-control-button-group/EditProfileControlButtonGroup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { User } from "../../../types/User";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
 export default function EditProfile() {
-    const { currentUser } = useUser();
+    const navigate = useNavigate();
+    const { currentUser, setCurrentUser } = useUser();
     const [cityOptions, setCityOptions] = useState<SelectOptionType[]>();
     const [countryOptions] = useState<SelectOptionType[]>([{ value: "BiH", label: "Bosnia & Herzegovina" }]);
     const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [newPhotoUrl, setNewPhotoUrl] = useState<string | null>(null);
     const [formData, setFormData] = useState<EditProfileFormData>({
         firstName: currentUser?.firstName ? currentUser.firstName : "",
         lastName: currentUser?.lastName ? currentUser.lastName : "",
@@ -88,7 +90,6 @@ export default function EditProfile() {
         }
 
         const requestData: any = {
-            userId: currentUser?.id,
             firstName: formData.firstName,
             lastName: formData.lastName,
             phone: formData.phone,
@@ -105,8 +106,9 @@ export default function EditProfile() {
         const headers = { "Authorization": `Bearer ${jwt}` };
 
         try {
-            await ApiService.patch("/users/update-profile", requestData, headers);
-            alert("Profile updated successfully!");
+            const updatedUser = await ApiService.patch<User>(`/users/${currentUser?.id}`, requestData, headers)
+            setCurrentUser(updatedUser);
+            navigate("/user/personal-information");
         } catch (error) {
             console.error("Error updating profile:", error);
         }

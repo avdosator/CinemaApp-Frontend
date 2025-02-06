@@ -53,3 +53,12 @@ export type DetailsFormData = {
 };
 
 export type AddMovieFormStep = 1 | 2 | 3;
+
+export type AddVenueFormData = {
+    name: string,
+    phone: string,
+    street: string,
+    streetNumber: string,
+    city: SelectOptionType,
+    photoUrl: string,
+}

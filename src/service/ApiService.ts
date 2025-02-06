@@ -29,6 +29,16 @@ export default class ApiService {
         }
     }
 
+    static async patch<T>(route: string, body: Object, headers: Record<string, string> = {}): Promise<T> {
+        try {
+            const response: AxiosResponse<T> = await this.axiosInstance.patch(route, body, { headers });
+            return response.data;
+        } catch (err) {
+            console.error("PATCH request failed", err);
+            throw err;
+        }
+    }
+
     static async delete<T>(route: string, headers: Record<string, string> = {}): Promise<T> {
         try {
             const response: AxiosResponse<T> = await this.axiosInstance.delete(route, { headers });

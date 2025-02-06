@@ -1,0 +1,22 @@
+.venues-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    padding-right: 0px;
+    gap: 6px;
+}
+
+.venues-panel-heading-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.venues-panel-heading {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}

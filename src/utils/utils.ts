@@ -1,6 +1,7 @@
 import { DatePickerBtnType } from "../types/DatePickerBtn";
-import { DetailsFormData, GeneralFormData, ProjectionsFormData } from "../types/FormData";
+import { AddVenueFormData, DetailsFormData, GeneralFormData, ProjectionsFormData } from "../types/FormData";
 import { Seat } from "../types/Seat";
+import { Venue } from "../types/Venue";
 
 // returns date in string format "YYYY-MM-DD"
 export const calculateDateString = (plusDays: number): string => {
@@ -75,3 +76,43 @@ export const checkConflictingProjections = (projectionsFormData: ProjectionsForm
     }
     return false; // No conflicts
 };
+
+export const initializeVenueFormData = (mode: "add" | "edit" | "view", venueFromState: Venue | null): AddVenueFormData => {
+    if (mode === "add") {
+        // Default values for "add" mode
+        return {
+            name: "",
+            phone: "",
+            street: "",
+            streetNumber: "",
+            city: { value: "", label: "" },
+            photoUrl: "",
+        };
+    }
+
+    if (venueFromState && (mode === "edit" || mode === "view")) {
+        // Use venue data for "edit" or "view" mode
+        return {
+            name: venueFromState.name,
+            phone: venueFromState.phone,
+            street: venueFromState.street,
+            streetNumber: venueFromState.streetNumber,
+            city: {
+                value: venueFromState.city.id,
+                label: venueFromState.city.name,
+            },
+            photoUrl: venueFromState.photo.url || "",
+        };
+    }
+
+    // Fallback for missing data
+    return {
+        name: "",
+        phone: "",
+        street: "",
+        streetNumber: "",
+        city: { value: "", label: "" },
+        photoUrl: "",
+    };
+};
+

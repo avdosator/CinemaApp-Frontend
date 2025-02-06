@@ -3,8 +3,8 @@ import "./MovieStatusBadge.css"
 
 type MovieStatusBadgeProps = {
     statusType: MovieTabType,
-    daysRemaining?: number;
-    draftStep?: 1 | 2 | 3;
+    daysRemaining?: number,
+    draftStep?: string
 };
 
 export default function MovieStatusBadge({ statusType, daysRemaining, draftStep }: MovieStatusBadgeProps) {
@@ -16,9 +16,9 @@ export default function MovieStatusBadge({ statusType, daysRemaining, draftStep 
             case "upcoming":
                 return daysRemaining === 1 ? `Coming in ${daysRemaining} day` : `Ending in ${daysRemaining} days`;
             case "drafts":
-                if (draftStep === 1) return "Step 1/3";
-                if (draftStep === 2) return "Step 2/3";
-                if (draftStep === 3) return "Step 3/3";
+                if (draftStep === "draft-1") return "Step 1/3";
+                if (draftStep === "draft-2") return "Step 2/3";
+                if (draftStep === "draft-3") return "Step 3/3";
                 return "Draft"; // Fallback for undefined draftStep
             case "archived":
                 return `Ended`;
@@ -27,7 +27,7 @@ export default function MovieStatusBadge({ statusType, daysRemaining, draftStep 
 
     const getPillColor = () => {
         if (statusType === "drafts") {
-            return draftStep === 3 ? "green-pill" : "yellow-pill";
+            return draftStep === "draft-3" ? "green-pill" : "yellow-pill";
         }
         if (statusType === "archived") {
             return "red-pill";

@@ -174,14 +174,8 @@ export default function MovieRow({
                                 ? calculateDaysRemaining(movie, activeTab)
                                 : undefined
                         }
-                        draftStep={
-                            movie.status === "draft-1" ? 1 :
-                                movie.status === "draft-2" ? 2 :
-                                    movie.status === "draft-3" ? 3 :
-                                        undefined
-                        }
+                        draftStep={movie.status}
                     />
-
                 </td>
                 {showActions && (
                     <td style={{ position: "relative", overflow: "visible" }}>

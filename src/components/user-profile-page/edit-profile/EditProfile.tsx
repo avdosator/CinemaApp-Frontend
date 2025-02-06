@@ -14,6 +14,7 @@ import EditProfileControlButtonGroup from "./edit-profile-control-button-group/E
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../../types/User";
+import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -24,6 +25,7 @@ export default function EditProfile() {
     const [countryOptions] = useState<SelectOptionType[]>([{ value: "BiH", label: "Bosnia & Herzegovina" }]);
     const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [formData, setFormData] = useState<EditProfileFormData>({
         firstName: currentUser?.firstName ? currentUser.firstName : "",
         lastName: currentUser?.lastName ? currentUser.lastName : "",
@@ -76,6 +78,7 @@ export default function EditProfile() {
     };
 
     const handleUpdateProfile = async () => {
+        setIsLoading(true);
         let photoUrlToSend = currentUser?.photo?.url || null;
 
         // If a new photo is selected, upload it first
@@ -111,6 +114,8 @@ export default function EditProfile() {
             navigate("/user/personal-information");
         } catch (error) {
             console.error("Error updating profile:", error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -136,127 +141,132 @@ export default function EditProfile() {
     return (
         <div className="personal-information">
             <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "10px" }}>Personal Information</h6>
-            <div className="edit-profile-container">
-                <div className="uploaded-photo-preview-item">
-                    <img
-                        src={uploadedPhoto ? URL.createObjectURL(uploadedPhoto) : currentUser?.photo ? currentUser.photo.url : placeholderImage}
-                        className="uploaded-photo-thumbnail"
-                    />
-                    <div className="upload-photo-btn-container" onClick={() => fileInputRef.current?.click()}>
-                        <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            style={{ display: "none" }}
-                            onChange={handlePhotoUpload}
-                        />
-                    </div>
-                </div>
-                <div className="full-width-horizontal-line"></div>
-                <form className="edit-profile-form">
-                    <div className="half-width-elements">
-                        <div className="left-part">
-                            <div className="general-form-input-group">
-                                <label htmlFor="firstName" className="font-lg-semibold">First Name</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${formData?.firstName ? "red-icon" : ""}`} />
-                                    <input type="text"
-                                        name="firstName"
-                                        id="firstName"
-                                        className="search-movies-input font-lg-regular"
-                                        placeholder="First Name"
-                                        autoFocus
-                                        value={formData.firstName}
-                                        onChange={e => handleChange("firstName", e.target.value)}
-                                    />
-                                </div>
+            {isLoading ? (
+                <LoadingIndicator />
+            )
+                : (
+                    <div className="edit-profile-container">
+                        <div className="uploaded-photo-preview-item">
+                            <img
+                                src={uploadedPhoto ? URL.createObjectURL(uploadedPhoto) : currentUser?.photo ? currentUser.photo.url : placeholderImage}
+                                className="uploaded-photo-thumbnail"
+                            />
+                            <div className="upload-photo-btn-container" onClick={() => fileInputRef.current?.click()}>
+                                <TertiaryButton label="Upload Photo" size="large" color="#FCFCFD" />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={fileInputRef}
+                                    style={{ display: "none" }}
+                                    onChange={handlePhotoUpload}
+                                />
                             </div>
-                            <div className="general-form-input-group">
-                                <label htmlFor="phone" className="font-lg-semibold">Phone</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${formData?.phone ? "red-icon" : ""}`} />
-                                    <input type="text"
-                                        name="phone"
-                                        id="phone"
-                                        className="search-movies-input font-lg-regular"
-                                        placeholder="Phone"
-                                        value={formData.phone}
-                                        onChange={e => handleChange("phone", e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="general-form-input-group">
-                                <label htmlFor="city" className="font-lg-semibold">City</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.city ? "red-icon" : ""}`} />
-                                    <Select<SelectOptionType, false>
-                                        options={cityOptions}
-                                        placeholder="Choose city"
-                                        className="dropdown-menu-input"
-                                        classNamePrefix="dropdown"
-                                        isClearable={true}
-                                        value={formData.city}
-                                        onChange={(newValue) => handleChange("city", newValue)}
-                                        name="city"
-                                        backspaceRemovesValue
-                                    />
-                                </div>
-                            </div>
+                        </div>
+                        <div className="full-width-horizontal-line"></div>
+                        <form className="edit-profile-form">
+                            <div className="half-width-elements">
+                                <div className="left-part">
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="firstName" className="font-lg-semibold">First Name</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${formData?.firstName ? "red-icon" : ""}`} />
+                                            <input type="text"
+                                                name="firstName"
+                                                id="firstName"
+                                                className="search-movies-input font-lg-regular"
+                                                placeholder="First Name"
+                                                autoFocus
+                                                value={formData.firstName}
+                                                onChange={e => handleChange("firstName", e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="phone" className="font-lg-semibold">Phone</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faMagnifyingGlass} className={`input-icon ${formData?.phone ? "red-icon" : ""}`} />
+                                            <input type="text"
+                                                name="phone"
+                                                id="phone"
+                                                className="search-movies-input font-lg-regular"
+                                                placeholder="Phone"
+                                                value={formData.phone}
+                                                onChange={e => handleChange("phone", e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="city" className="font-lg-semibold">City</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.city ? "red-icon" : ""}`} />
+                                            <Select<SelectOptionType, false>
+                                                options={cityOptions}
+                                                placeholder="Choose city"
+                                                className="dropdown-menu-input"
+                                                classNamePrefix="dropdown"
+                                                isClearable={true}
+                                                value={formData.city}
+                                                onChange={(newValue) => handleChange("city", newValue)}
+                                                name="city"
+                                                backspaceRemovesValue
+                                            />
+                                        </div>
+                                    </div>
 
-                        </div>
-                        <div className="right-part">
-                            <div className="general-form-input-group">
-                                <label htmlFor="lastName" className="font-lg-semibold">Last Name</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.lastName ? "red-icon" : ""}`} />
-                                    <input type="text"
-                                        name="lastName"
-                                        id="lastName"
-                                        className="search-movies-input font-lg-regular"
-                                        placeholder="Last Name"
-                                        value={formData.lastName}
-                                        onChange={e => handleChange("lastName", e.target.value)}
-                                    />
+                                </div>
+                                <div className="right-part">
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="lastName" className="font-lg-semibold">Last Name</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faLocationPin} className={`input-icon ${formData?.lastName ? "red-icon" : ""}`} />
+                                            <input type="text"
+                                                name="lastName"
+                                                id="lastName"
+                                                className="search-movies-input font-lg-regular"
+                                                placeholder="Last Name"
+                                                value={formData.lastName}
+                                                onChange={e => handleChange("lastName", e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="email" className="font-lg-semibold">Email</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faEnvelope} className={`input-icon ${formData?.email ? "red-icon" : ""}`} />
+                                            <input type="text"
+                                                name="email"
+                                                id="email"
+                                                className="search-movies-input font-lg-regular"
+                                                placeholder="Email"
+                                                value={formData.email}
+                                                onChange={e => handleChange("email", e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="general-form-input-group">
+                                        <label htmlFor="country" className="font-lg-semibold">Country</label>
+                                        <div className="input-wrapper">
+                                            <FontAwesomeIcon icon={faEarthEurope} className={`input-icon ${formData?.country ? "red-icon" : ""}`} />
+                                            <Select<SelectOptionType, false>
+                                                options={countryOptions}
+                                                placeholder="Select Country"
+                                                className="dropdown-menu-input"
+                                                classNamePrefix="dropdown"
+                                                isClearable={true}
+                                                value={formData.country}
+                                                onChange={(newValue) => handleChange("country", newValue)}
+                                                name="country"
+                                                backspaceRemovesValue
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="general-form-input-group">
-                                <label htmlFor="email" className="font-lg-semibold">Email</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faEnvelope} className={`input-icon ${formData?.email ? "red-icon" : ""}`} />
-                                    <input type="text"
-                                        name="email"
-                                        id="email"
-                                        className="search-movies-input font-lg-regular"
-                                        placeholder="Email"
-                                        value={formData.email}
-                                        onChange={e => handleChange("email", e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            <div className="general-form-input-group">
-                                <label htmlFor="country" className="font-lg-semibold">Country</label>
-                                <div className="input-wrapper">
-                                    <FontAwesomeIcon icon={faEarthEurope} className={`input-icon ${formData?.country ? "red-icon" : ""}`} />
-                                    <Select<SelectOptionType, false>
-                                        options={countryOptions}
-                                        placeholder="Select Country"
-                                        className="dropdown-menu-input"
-                                        classNamePrefix="dropdown"
-                                        isClearable={true}
-                                        value={formData.country}
-                                        onChange={(newValue) => handleChange("country", newValue)}
-                                        name="country"
-                                        backspaceRemovesValue
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        </form>
+                        <div className="full-width-horizontal-line"></div>
+                        <EditProfileControlButtonGroup handleUpdateProfile={handleUpdateProfile} deactivateProfile={deactivateProfile} />
                     </div>
-                </form>
-                <div className="full-width-horizontal-line"></div>
-                <EditProfileControlButtonGroup handleUpdateProfile={handleUpdateProfile} deactivateProfile={deactivateProfile} />
-            </div>
+                )}
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import { Hall } from "./Hall"
+import { ProjectionInstance } from "./ProjectionInstance"
 
 export type Projection = {
     id: string,
@@ -8,6 +9,7 @@ export type Projection = {
     endDate: Date,
     startTime: string[],
     status: string,
+    projectionInstances: ProjectionInstance[],
     createdAt: Date,
     updatedAt: Date
 }

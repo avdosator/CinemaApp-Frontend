@@ -29,7 +29,7 @@ export default class ApiService {
         }
     }
 
-    static async patch<T>(route: string, body: Object, headers: Record<string, string> = {}): Promise<T> {
+    static async patch<T>(route: string, body: Object = {}, headers: Record<string, string> = {}): Promise<T> {
         try {
             const response: AxiosResponse<T> = await this.axiosInstance.patch(route, body, { headers });
             return response.data;

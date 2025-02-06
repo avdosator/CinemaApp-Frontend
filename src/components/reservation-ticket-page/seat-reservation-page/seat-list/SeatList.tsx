@@ -3,15 +3,17 @@ import "./SeatList.css"
 import { Seat } from "../../../../types/Seat"
 import { ProjectionInstance } from "../../../../types/ProjectionInstance"
 import SeatComponent from "../seat/Seat"
+import { Projection } from "../../../../types/Projection"
 
 type SeatListProps = {
     projectionInstance: ProjectionInstance,
-    selectedSeats: Seat[]; // Array of selected seat IDs
-    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>; // Setter function for selectedSeats
+    selectedSeats: Seat[], // Array of selected seat IDs
+    setSelectedSeats: React.Dispatch<React.SetStateAction<Seat[]>>, // Setter function for selectedSeats
+    projection: Projection
 }
 
-export default function SeatList({ projectionInstance, selectedSeats, setSelectedSeats }: SeatListProps) {
-    const [seats] = useState<Seat[]>(projectionInstance.projection.hall.seats);
+export default function SeatList({ projectionInstance, selectedSeats, setSelectedSeats, projection }: SeatListProps) {
+    const [seats] = useState<Seat[]>(projection.hall.seats);
     const { seatReservations } = projectionInstance;
 
     const getSeatStatus = (seatId: string) => {
@@ -56,7 +58,6 @@ export default function SeatList({ projectionInstance, selectedSeats, setSelecte
             </div>
         );
     };
-
 
     return (
         <div className="seat-list-container">

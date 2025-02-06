@@ -16,6 +16,7 @@ export type Movie = {
     synopsis: string,
     trailerUrl: string,
     coverPhotoId: string,
+    status: string,
     genres: Genre[],
     projections: Projection[],
     photos: Photo[]

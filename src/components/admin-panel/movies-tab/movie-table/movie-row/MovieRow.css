@@ -1,0 +1,6 @@
+tr .user-actions-dropdown-menu {
+    position: absolute;
+    top: 90%; /* Positions it directly below the button */
+    right: 50%;
+    color: #101828;
+}

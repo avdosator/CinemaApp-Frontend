@@ -6,7 +6,9 @@ WORKDIR /app
 
 # Copy package.json and install dependencies
 COPY package*.json ./
-RUN npm install
+
+# Install dependencies and ensure `npx` is available
+RUN npm install -g npm@latest npx && npm install
 
 # Copy the source code into the container
 COPY . .

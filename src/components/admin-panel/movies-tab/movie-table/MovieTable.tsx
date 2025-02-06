@@ -4,7 +4,7 @@ import MovieRow from "./movie-row/MovieRow";
 import { MovieTabType } from "../../../../types/MovieTabType";
 import { useState } from "react";
 import ApiService from "../../../../service/ApiService";
-import AddMoviePopUp from "../../new-movie/pop-up/AddMoviePopUp";
+import InfoPopup from "../../new-movie/pop-up/InfoPopup";
 import { useNavigate } from "react-router-dom";
 
 type MovieTableProps = {
@@ -84,7 +84,7 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
     return (
         <>
             {allMoviesNotDraft3 && (
-                <AddMoviePopUp heading="Publish Failed" text="Movies that are in progress cannot be published."
+                <InfoPopup heading="Publish Failed" text="Movies that are in progress cannot be published."
                     okayAction={setAllMoviesNotDraft3}
                 />
             )}

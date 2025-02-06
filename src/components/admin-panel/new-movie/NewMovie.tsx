@@ -12,7 +12,7 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
-import AddMoviePopUp from "./pop-up/AddMoviePopUp";
+import InfoPopup from "./pop-up/InfoPopup";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
@@ -320,12 +320,12 @@ export default function NewMovie() {
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (
-                <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
                     okayAction={setFormNotFilledModal}
                 />
             )}
             {conflictingProjections && (
-                <AddMoviePopUp heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
+                <InfoPopup heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
                     okayAction={setConflictingProjections}
                 />
             )}

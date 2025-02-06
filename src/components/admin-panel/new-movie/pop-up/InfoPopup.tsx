@@ -1,10 +1,10 @@
-type AddMoviePopUpProps = {
+type InfoPopupProps = {
     heading: string,
     text: string,
     okayAction: (close: boolean) => void
 }
 
-export default function AddMoviePopUp({ heading, text, okayAction }: AddMoviePopUpProps) {
+export default function InfoPopup({ heading, text, okayAction }: InfoPopupProps) {
     return (
         <div className="session-expired-overlay">
             <div className="session-expired-modal">

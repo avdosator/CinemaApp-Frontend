@@ -114,6 +114,24 @@ export default function EditProfile() {
         }
     };
 
+    const deactivateProfile = () => {
+        const jwt = localStorage.getItem("authToken");
+        const headers = { "Authorization": `Bearer ${jwt}` };
+
+        try {
+            ApiService.delete(`/users/${currentUser?.id}`, headers)
+                .then(() => {
+                    localStorage.removeItem("userId");
+                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("authTokenExpiry");
+                    localStorage.removeItem("refreshToken");
+                    setCurrentUser(null);
+                    navigate("/home");
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="personal-information">
@@ -237,7 +255,7 @@ export default function EditProfile() {
                     </div>
                 </form>
                 <div className="full-width-horizontal-line"></div>
-                <EditProfileControlButtonGroup handleUpdateProfile={handleUpdateProfile} />
+                <EditProfileControlButtonGroup handleUpdateProfile={handleUpdateProfile} deactivateProfile={deactivateProfile} />
             </div>
         </div>
     );

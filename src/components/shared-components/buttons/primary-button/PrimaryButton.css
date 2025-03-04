@@ -8,3 +8,7 @@
     border-radius: 8px;
     border: none;
 }
+
+.primary-button:disabled {
+    background-color: #D0D5DD;
+}

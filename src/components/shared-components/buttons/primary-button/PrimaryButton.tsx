@@ -1,3 +1,5 @@
+import "./PrimaryButton.css"
+
 type PrimaryButtonProps = {
     label: string
 }

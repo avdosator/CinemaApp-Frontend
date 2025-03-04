@@ -14,6 +14,7 @@ import { DatePickerBtnType } from "../../../types/DatePickerBtn";
 import ApiService from "../../../service/ApiService";
 import { ProjectionInstance } from "../../../types/ProjectionInstance";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 export default function TicketForm({ movie }: { movie: Movie }) {
     const [formData, setFormData] = useState<MovieDetailsFormData>({ city: null, venue: null, date: new Date().toISOString().split('T')[0], time: "" });
@@ -134,20 +135,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
             <div className="ticket-btns-container">
                 <div className="horizontal-line"></div>
                 <div className="ticket-btns font-lg-semibold">
-                    <button
-                        className={isFormComplete ? "ticket-btn-reserve" : "ticket-btn-reserve-disabled"}
-                        disabled={!isFormComplete}
-                    >
-                        Reserve Ticket
-                    </button>
-                    <button
-                        className={isFormComplete ? "ticket-btn-buy" : "ticket-btn-buy-disabled"}
-                        disabled={!isFormComplete}
-                        type="submit"
-                        onClick={sendRequest}
-                    >
-                        Buy Ticket
-                    </button>
+                    <PrimaryButton label="Buy Ticket" onClick={sendRequest} isDisabled={!isFormComplete} isFullWidth={true} />
                 </div>
             </div>
         </form>

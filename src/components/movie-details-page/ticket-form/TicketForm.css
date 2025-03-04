@@ -41,37 +41,3 @@
     background-color: #E4E7EC;
     margin: 0px -24px 20px -24px;
 }
-
-.ticket-btns button {
-    /* width: 278px; */
-    width: 100%;
-    border-radius: 8px;
-    padding: 12px 20px;
-}
-
-.ticket-btn-reserve-disabled {
-    display: none;
-    border: 1px solid #D0D5DD;
-    background-color: #FCFCFD;
-    color: #D0D5DD;
-}
-
-.ticket-btn-buy-disabled {
-    background-color: #D0D5DD;
-    color: #FCFCFD;
-    border: none;
-}
-
-.ticket-btn-reserve {
-    display: none;
-    border: 1px solid #B22222;
-    color: #B22222;
-    background-color: #FCFCFD;
-}
-
-.ticket-btn-buy {
-    background-color: #B22222;
-    color: #FCFCFD;
-    border: none;
-}
-

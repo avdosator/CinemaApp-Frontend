@@ -1,0 +1,48 @@
+.personal-information {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    padding-right: 0px;
+    gap: 6px;
+}
+
+.personal-information-heading-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.personal-information-card {
+    width: 100%;
+    border: 1px solid #E4E7EC;
+    border-radius: 24px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+
+.user-profile-img {
+    width: 270px;
+    height: 260px;
+    border-radius: 16px;
+}
+
+.personal-informations-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.personal-informations-container h4 {
+    text-align: left;
+}
+
+.user-info-container {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}

@@ -62,3 +62,12 @@ export type AddVenueFormData = {
     city: SelectOptionType,
     photoUrl: string,
 }
+
+export type EditProfileFormData = {
+    firstName: string,
+    lastName: string,
+    phone: string,
+    email: string,
+    city: SelectOptionType | null,
+    country: SelectOptionType | null
+}

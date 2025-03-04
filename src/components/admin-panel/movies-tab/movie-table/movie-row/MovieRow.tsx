@@ -8,7 +8,7 @@ import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../../../../service/ApiService";
-import AddMoviePopUp from "../../../new-movie/pop-up/AddMoviePopUp";
+import InfoPopup from "../../../new-movie/pop-up/InfoPopup";
 
 type MovieRowProps = {
     movie: Movie;
@@ -136,7 +136,7 @@ export default function MovieRow({
     return (
         <>
             {movieNotComplete && (
-                <AddMoviePopUp heading="Publish Failed" text="Movies that are in progress cannot be published."
+                <InfoPopup heading="Publish Failed" text="Movies that are in progress cannot be published."
                     okayAction={setMovieNotComplete}
                 />
             )}
@@ -174,14 +174,8 @@ export default function MovieRow({
                                 ? calculateDaysRemaining(movie, activeTab)
                                 : undefined
                         }
-                        draftStep={
-                            movie.status === "draft-1" ? 1 :
-                                movie.status === "draft-2" ? 2 :
-                                    movie.status === "draft-3" ? 3 :
-                                        undefined
-                        }
+                        draftStep={movie.status}
                     />
-
                 </td>
                 {showActions && (
                     <td style={{ position: "relative", overflow: "visible" }}>

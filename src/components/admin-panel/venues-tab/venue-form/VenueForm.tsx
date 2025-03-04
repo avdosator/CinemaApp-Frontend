@@ -13,7 +13,7 @@ import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
-import AddMoviePopUp from "../../new-movie/pop-up/AddMoviePopUp";
+import InfoPopup from "../../new-movie/pop-up/InfoPopup";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
 
 type VenueFormProps = {
@@ -246,7 +246,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
             ) : (
                 <>
                     {formNotFilledModal && (
-                        <AddMoviePopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                        <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
                             okayAction={setFormNotFilledModal}
                         />
                     )}

@@ -16,6 +16,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import AdminPanelPage from './components/admin-panel/AdminPanelPage';
 import AdminRoutes from './routes/AdminRoutes';
+import UserProfilePage from './components/user-profile-page/UserProfilePage';
+import UserRoutes from './routes/UserRoutes';
 
 const STRIPE_PROMISE = loadStripe("pk_test_51QWObK005aH1ki3zlE396ntDW9qto4YWeDvPSEIDyvQoUioh6sSJjtvzplukio4b1EHd2kBxSZlPcmSIqcVi3DC500Purif1vc");
 
@@ -23,7 +25,7 @@ function App() {
 	const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
 	const [redirectInfo, setRedirectInfo] = useState<{ path: string; state?: any } | null>(null);
 	const location = useLocation();
-	const isAdminPage = location.pathname.startsWith("/admin");
+	const isAdminOrUserPage = location.pathname.startsWith("/admin") || location.pathname.startsWith("/user");
 
 	const openAuthModal = useCallback((path: string = "/", state: any = null): void => {
 		setRedirectInfo({ path, state }); // Store the route and state
@@ -41,8 +43,8 @@ function App() {
 				<MovieProvider>
 					<Elements stripe={STRIPE_PROMISE}>
 						<div className='app-container'>
-							<Header openAuthModal={openAuthModal} width={`${isAdminPage ? "95%" : "87%"}`} />
-							<div className={`${isAuthOpen ? "blurred-background" : ""} ${isAdminPage ? "admin-content" : "main-content"}`}>
+							<Header openAuthModal={openAuthModal} width={`${isAdminOrUserPage ? "95%" : "87%"}`} />
+							<div className={`${isAuthOpen ? "blurred-background" : ""} ${isAdminOrUserPage ? "admin-content" : "main-content"}`}>
 								<Routes>
 									<Route path='/' element={<HomePage />} />
 									<Route path='/home' element={<HomePage />} />
@@ -67,10 +69,21 @@ function App() {
 											</ProtectedRoute>
 										}
 									/>
+									<Route
+										path="/user/*"
+										element={
+											<ProtectedRoute openLoginForm={openAuthModal}>
+												<UserProfilePage />
+											</ProtectedRoute>
+										}
+									>
+										<Route path="*" element={<UserRoutes />} />
+									</Route>
+
 								</Routes>
 							</div>
 							{/* <Footer /> */}
-							{!isAdminPage && <Footer />}
+							{!isAdminOrUserPage && <Footer />}
 						</div>
 						{isAuthOpen && <AuthContainer closeAuthContainer={closeAuthModal} redirectInfo={redirectInfo} />}
 					</Elements>

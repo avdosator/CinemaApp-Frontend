@@ -1,7 +1,11 @@
-export default function PrimaryButton() {
+type PrimaryButtonProps = {
+    label: string
+}
+
+export default function PrimaryButton({label} : PrimaryButtonProps) {
     return (
-        <button>
-            
+        <button className="font-lg-semibold">
+            {label}
         </button>
     );
 }

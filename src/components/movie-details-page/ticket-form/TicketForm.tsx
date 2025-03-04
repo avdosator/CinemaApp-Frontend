@@ -64,7 +64,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
         }
 
         const projectionInstance = await ApiService.get<ProjectionInstance>("/projections/instances", params);
-        navigate(`/projection/${projectionInstance.id}/reservations`, {state: {projectionInstance, movie}});
+        navigate(`/projection/${projectionInstance.id}/reservations`, { state: { projectionInstance, movie } });
     }
 
     const handleFocus = (iconName: IconType): void => {
@@ -134,9 +134,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
             </div>
             <div className="ticket-btns-container">
                 <div className="horizontal-line"></div>
-                <div className="ticket-btns font-lg-semibold">
-                    <PrimaryButton label="Buy Ticket" onClick={sendRequest} isDisabled={!isFormComplete} isFullWidth={true} />
-                </div>
+                <PrimaryButton label="Buy Ticket" onClick={sendRequest} isDisabled={!isFormComplete} isFullWidth={true} />
             </div>
         </form>
     )

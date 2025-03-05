@@ -8,6 +8,7 @@ import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
 import { useUser } from "../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 type SignInFormType = {
     email: string,
@@ -67,7 +68,7 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
             success();
             setTimeout(() => {
                 closeAuthContainer();
-    
+
                 // Use redirectInfo here
                 if (redirectInfo) {
                     navigate(redirectInfo.path, { state: redirectInfo.state, replace: true });
@@ -150,7 +151,7 @@ export default function SignInForm({ switchToSignUpForm, forgotPassword, success
                     <CustomCheckbox checked={rememberMe} onChange={handleRememberMeChange} />
                     <button onClick={forgotPassword} className="no-style-link font-lg-semibold forgot-password-link">Forgot password?</button>
                 </div>
-                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign In</button>
+                <PrimaryButton label="Sign In" isDisabled={isSubmitting} isFullWidth={true} />
             </form>
             <div className="font-lg-regular" style={{ color: "#FCFCFD" }}>
                 <span>Don't have an account yet?</span>

@@ -2,7 +2,7 @@ import "./PrimaryButton.css"
 
 type PrimaryButtonProps = {
     label: string,
-    onClick: () => void,
+    onClick?: () => void,
     isDisabled: boolean,
     isFullWidth: boolean
 }

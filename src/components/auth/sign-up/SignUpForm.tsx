@@ -7,6 +7,7 @@ import ApiService from "../../../service/ApiService";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../../../types/User";
 import { useUser } from "../../../context/UserContext";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 type SignupFormType = {
     email: string,
@@ -161,7 +162,7 @@ export default function SignUpForm({ success }: SignUpFormProps) {
                     </div>
                     {errors.confirmPassword && <div className="font-sm-regular auth-error">{errors.confirmPassword.message}</div>}
                 </div>
-                <button type="submit" className="auth-form-btn font-lg-semibold" disabled={isSubmitting}>Sign Up</button>
+                <PrimaryButton label="Sign Up" isDisabled={isSubmitting} isFullWidth={true} />
             </form>
             {/* Add that --- or --- divider after implementing integration with google */}
             <div className="other-login-ways">

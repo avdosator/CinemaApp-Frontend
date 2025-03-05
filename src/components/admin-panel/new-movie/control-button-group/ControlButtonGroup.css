@@ -29,9 +29,3 @@
     color: #B22222;
     background-color: inherit;
 }
-
-.add-movie-control-btns > div > button:nth-of-type(2) {
-    background-color: #B22222;
-    border: none;
-    color: #FCFCFD;
-}

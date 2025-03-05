@@ -2,7 +2,8 @@ import "./AuthSuccess.css"
 import "../../movie-details-page/upcoming-movie-info/notification-drawing/NotificationDrawing.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconProp } from "@fortawesome/fontawesome-svg-core"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton"
 
 type AuthSuccessProps = {
     text: string,
@@ -12,6 +13,12 @@ type AuthSuccessProps = {
 }
 
 export default function AuthSuccess({ text, icon, btn = false, closeAuthContainer }: AuthSuccessProps) {
+    const navigate = useNavigate();
+
+    const seeMovies = () => {
+        closeAuthContainer!();
+        navigate("/movies/currently-showing");
+    }
     return (
         <div className="auth-form-container">
             <p className="font-md-regular password-reset-info">{text}</p>
@@ -29,11 +36,7 @@ export default function AuthSuccess({ text, icon, btn = false, closeAuthContaine
                     <FontAwesomeIcon icon={icon} className="successful-auth-icon" />
                 </div>
             </div>
-            {btn &&
-                (<Link onClick={() => closeAuthContainer!()} to="/movies/currently-showing" className="auth-form-btn no-style-link font-lg-semibold">
-                    See Movies
-                </Link>)
-            }
+            {btn && <PrimaryButton label="See Movies" isFullWidth={true} isDisabled={false} onClick={seeMovies} />}
         </div>
     )
 }

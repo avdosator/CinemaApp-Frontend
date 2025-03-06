@@ -36,7 +36,7 @@ export default function AuthSuccess({ text, icon, btn = false, closeAuthContaine
                     <FontAwesomeIcon icon={icon} className="successful-auth-icon" />
                 </div>
             </div>
-            {btn && <PrimaryButton label="See Movies" isFullWidth={true} isDisabled={false} onClick={seeMovies} />}
+            {btn && <PrimaryButton label="See Movies" isFullWidth={true} onClick={seeMovies} />}
         </div>
     )
 }

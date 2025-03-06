@@ -115,7 +115,11 @@ export default function MoviesPanel() {
                     </div>
 
                 </div>
-                <PrimaryButton label="Add Movie" onClick={() => navigate("/admin/movies/new-movie")} isDisabled={false} isFullWidth={false} />
+                <PrimaryButton
+                    label="Add Movie"
+                    onClick={() => navigate("/admin/movies/new-movie")}
+                    style={{ display: "flex", alignSelf: "flex-start", marginTop: "0px" }}
+                />
             </div>
             {isLoading ? (
                 <LoadingIndicator />

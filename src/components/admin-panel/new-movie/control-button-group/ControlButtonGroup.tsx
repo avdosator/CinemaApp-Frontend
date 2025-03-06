@@ -20,8 +20,8 @@ export default function ControlButtonGroup({ onNext, onBack, isBackDisabled, isF
             <div>
                 <button className="font-lg-semibold" onClick={handleSaveDraft}>Save to Drafts</button>
                 {isFinalStep && isFormComplete
-                    ? (<PrimaryButton label="Add Movie" onClick={handleAddMovie} isFullWidth={false} isDisabled={false} />)
-                    : (<PrimaryButton label="Continue" onClick={onNext} isFullWidth={false} isDisabled={!isFormComplete && isFinalStep} />)}
+                    ? (<PrimaryButton label="Add Movie" onClick={handleAddMovie} />)
+                    : (<PrimaryButton label="Continue" onClick={onNext} isDisabled={!isFormComplete && isFinalStep} />)}
             </div>
         </div>
     )

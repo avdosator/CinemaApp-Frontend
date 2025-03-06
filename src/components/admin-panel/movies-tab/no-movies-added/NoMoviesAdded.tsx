@@ -16,7 +16,7 @@ export default function NoMoviesAdded() {
             </div>
             <h6 className="font-heading-h6">No movies added</h6>
             <p className="font-lg-regular" style={{ color: "#667085" }}>You can add movie via Add Movie button</p>
-            <PrimaryButton label="Add Movie" isFullWidth={false} isDisabled={false} onClick={() => navigate("/admin/movies/new-movie")} />
+            <PrimaryButton label="Add Movie" onClick={() => navigate("/admin/movies/new-movie")} />
         </div>
     )
 }

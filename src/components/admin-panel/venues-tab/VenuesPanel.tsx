@@ -6,6 +6,7 @@ import { Venue } from "../../../types/Venue";
 import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 const PAGE_SIZE = 6;
 
@@ -47,7 +48,13 @@ export default function VenuesPanel() {
             <div className="venues-panel-heading-container">
                 <div className="venues-panel-heading">
                     <h6 className="font-heading-h6" style={{ color: "#1D2939" }}> {`Venues (${total})`}</h6>
-                    <button className="add-movie-btn font-lg-semibold" style={{ alignSelf: "flex-start" }} onClick={handleAddVenue}>Add Venue</button>
+                    <PrimaryButton
+                        label="Add Venue"
+                        onClick={handleAddVenue}
+                        isDisabled={false}
+                        isFullWidth={false}
+                        style={{ display: "flex", alignSelf: "flex-end", marginTop: "0px" }}
+                    />
                 </div>
                 <div className="full-width-horizontal-line"></div>
             </div>

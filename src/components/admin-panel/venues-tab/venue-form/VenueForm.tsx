@@ -217,13 +217,11 @@ export default function VenueForm({ mode }: VenueFormProps) {
         return mode === "add" ? (
             <>
                 <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
-                {/* <button className="add-movie-btn font-lg-semibold" onClick={createVenue}>Add Venue</button> */}
                 <PrimaryButton label="Add Venue" onClick={createVenue} style={{ marginTop: "0px" }} />
             </>
         ) : mode === "edit" ? (
             <>
                 <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
-                {/* <button className="add-movie-btn font-lg-semibold" onClick={updateVenue}>Save Changes</button> */}
                 <PrimaryButton label="Save Changes" onClick={updateVenue} style={{ marginTop: "0px" }} />
             </>
         ) : null;

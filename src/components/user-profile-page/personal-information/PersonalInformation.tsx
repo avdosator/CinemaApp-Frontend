@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { faEarthEurope, faEnvelope, faLocationPin, faPhone } from "@fortawesome/free-solid-svg-icons";
 import placeHolderImage from "./../../../assets/upload-photo-placeholder.jpg"
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 export default function PersonalInformation() {
     const { currentUser } = useUser();
@@ -13,7 +14,7 @@ export default function PersonalInformation() {
         <div className="personal-information">
             <div className="personal-information-heading-container">
                 <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "10px" }}>Personal Information</h6>
-                <button className="add-movie-btn font-lg-semibold" style={{ alignSelf: "flex-start" }} onClick={() => navigate("/user/edit-profile")}>Edit Profile</button>
+                <PrimaryButton label="Edit Profile" onClick={() => navigate("/user/edit-profile")} style={{ display: "flex", alignSelf: "flex-start", marginTop: "0px" }} />
             </div>
             <div className="personal-information-card">
                 <div>
@@ -36,7 +37,6 @@ export default function PersonalInformation() {
                     <div className="user-info-container font-lg-regular">
                         <FontAwesomeIcon width={16} height={24} color="#B22222" icon={faEarthEurope} />
                         {currentUser && currentUser.city ? currentUser.city.country : "Country"}
-
                     </div>
                 </div>
             </div>

@@ -15,6 +15,7 @@ import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
 import InfoPopup from "../../new-movie/pop-up/InfoPopup";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
@@ -228,12 +229,17 @@ export default function VenueForm({ mode }: VenueFormProps) {
 
     const renderHeadingButton = (): JSX.Element | null => {
         return mode === "view" ? (
-            <button
-                className="add-movie-btn font-lg-semibold"
+            // <button
+            //     className="add-movie-btn font-lg-semibold"
+            //     onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
+            // >
+            //     Edit Venue
+            // </button>
+            <PrimaryButton
+                label="Edit Venue"
                 onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
-            >
-                Edit Venue
-            </button>
+                style={{ display: "flex", alignSelf: "flex-end", marginTop: "0px" }}
+            />
         ) : mode === "edit" ? (
             <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue()} />
         ) : null;

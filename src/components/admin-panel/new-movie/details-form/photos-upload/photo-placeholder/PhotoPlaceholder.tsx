@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import placeholderImage from "../../../../../../assets/upload-photo-placeholder.jpg";
-import TertiaryButton from "../../../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../../../shared-components/buttons/tertiary-button/TertiaryButton";
 
 type PhotoPlaceholderProps = {
     inputRef: React.RefObject<HTMLInputElement>;

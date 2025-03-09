@@ -10,7 +10,7 @@ import { City } from "../../../../types/City";
 import { Venue } from "../../../../types/Venue";
 import { useLocation, useNavigate } from "react-router-dom";
 import { initializeVenueFormData } from "../../../../utils/utils";
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
 import InfoPopup from "../../new-movie/pop-up/InfoPopup";

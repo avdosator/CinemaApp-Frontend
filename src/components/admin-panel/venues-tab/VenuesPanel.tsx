@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TertiaryButton from "../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../shared-components/buttons/tertiary-button/TertiaryButton";
 import AdminPanelVenueList from "./venue-list/AdminPanelVenueList";
 import "./VenuesPanel.css"
 import { Venue } from "../../../types/Venue";

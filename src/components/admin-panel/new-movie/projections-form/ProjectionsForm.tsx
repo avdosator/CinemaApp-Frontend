@@ -10,7 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProjectionsFormData } from "../../../../types/FormData";
 import ProjectionGroup from "./projection-group/ProjectionGroup";
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],

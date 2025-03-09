@@ -1,5 +1,5 @@
 import "./EditProfileControlButtonGroup.css"
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 

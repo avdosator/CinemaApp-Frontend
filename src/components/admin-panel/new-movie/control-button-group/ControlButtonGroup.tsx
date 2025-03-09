@@ -1,5 +1,5 @@
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import "./ControlButtonGroup.css"
 
 type ControlButtonGroupProps = {

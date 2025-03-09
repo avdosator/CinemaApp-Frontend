@@ -3,7 +3,7 @@ import { Movie } from "../../types/Movie"
 import ApiService from "../../service/ApiService";
 import { PageResponse } from "../../types/PageResponse";
 import UpcomingMoviesList from "./upcoming-movies-list/UpcomingMoviesList";
-import TertiaryButton from "../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../shared-components/buttons/tertiary-button/TertiaryButton";
 import { SelectOptionType } from "../../types/SelectOptionType";
 import { calculateDateString } from "../../utils/utils";
 import { UpcomingMoviesFormData } from "../../types/FormData";

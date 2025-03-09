@@ -1,6 +1,6 @@
 import "./EditProfile.css"
 import { useUser } from "../../../context/UserContext";
-import TertiaryButton from "../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../shared-components/buttons/tertiary-button/TertiaryButton";
 import placeholderImage from "./../../../assets/upload-photo-placeholder.jpg"
 import { faEarthEurope, faEnvelope, faLocationPin, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

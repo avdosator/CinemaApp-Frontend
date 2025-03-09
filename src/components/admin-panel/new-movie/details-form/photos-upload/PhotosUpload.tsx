@@ -1,7 +1,7 @@
 import "./PhotosUpload.css"
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TertiaryButton from "../../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import PhotoPlaceholder from "./photo-placeholder/PhotoPlaceholder";
 import { useRef } from "react";
 import { DetailsFormData } from "../../../../../types/FormData";

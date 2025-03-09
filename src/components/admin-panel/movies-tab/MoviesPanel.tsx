@@ -118,7 +118,7 @@ export default function MoviesPanel() {
                 <PrimaryButton
                     label="Add Movie"
                     onClick={() => navigate("/admin/movies/new-movie")}
-                    style={{ display: "flex", alignSelf: "flex-start", marginTop: "0px" }}
+                    style={{ display: "flex", alignSelf: "flex-start" }}
                 />
             </div>
             {isLoading ? (

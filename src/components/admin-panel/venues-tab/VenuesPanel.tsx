@@ -51,7 +51,7 @@ export default function VenuesPanel() {
                     <PrimaryButton
                         label="Add Venue"
                         onClick={handleAddVenue}
-                        style={{ display: "flex", alignSelf: "flex-end", marginTop: "0px" }}
+                        style={{ display: "flex", alignSelf: "flex-end" }}
                     />
                 </div>
                 <div className="full-width-horizontal-line"></div>

@@ -15,7 +15,7 @@ export default function EditProfileControlButtonGroup({ handleUpdateProfile, dea
             <TertiaryButton label="Deactivate My Account" size="large" onClick={deactivateProfile} />
             <div className="edit-profile-right-button-group font-lg-semibold">
                 <button onClick={() => navigate("/user/personal-information")}>Cancel</button>
-                <PrimaryButton label="Save Changes" onClick={handleUpdateProfile} style={{ marginTop: "0px" }} />
+                <PrimaryButton label="Save Changes" onClick={handleUpdateProfile} />
             </div>
         </div>
     );

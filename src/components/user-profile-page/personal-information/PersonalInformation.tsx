@@ -14,7 +14,7 @@ export default function PersonalInformation() {
         <div className="personal-information">
             <div className="personal-information-heading-container">
                 <h6 className="font-heading-h6" style={{ color: "#1D2939", marginBottom: "10px" }}>Personal Information</h6>
-                <PrimaryButton label="Edit Profile" onClick={() => navigate("/user/edit-profile")} style={{ display: "flex", alignSelf: "flex-start", marginTop: "0px" }} />
+                <PrimaryButton label="Edit Profile" onClick={() => navigate("/user/edit-profile")} style={{ display: "flex", alignSelf: "flex-start" }} />
             </div>
             <div className="personal-information-card">
                 <div>

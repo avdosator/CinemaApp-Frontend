@@ -1,3 +1,4 @@
+import "./SecondaryButton.css"
 import { CSSProperties } from "react";
 
 type SecondaryButtonProps = {
@@ -10,7 +11,7 @@ type SecondaryButtonProps = {
 export default function SecondaryButton({ label, onClick, isDisabled = false, style }: SecondaryButtonProps) {
     return (
         <button
-            className="primary-button font-lg-semibold"
+            className="secondary-button font-lg-semibold"
             onClick={onClick}
             disabled={isDisabled}
             style={style}

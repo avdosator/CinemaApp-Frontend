@@ -16,6 +16,7 @@ import axios from "axios";
 import InfoPopup from "../../new-movie/pop-up/InfoPopup";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
+import SecondaryButton from "../../../shared-components/buttons/secondary-button/SecondaryButton";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
@@ -216,12 +217,12 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
                 <PrimaryButton label="Add Venue" onClick={createVenue} />
             </>
         ) : mode === "edit" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
                 <PrimaryButton label="Save Changes" onClick={updateVenue} />
             </>
         ) : null;

@@ -1,4 +1,5 @@
 import { Seat } from "../../../../types/Seat"
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 import "./ChosenSeats.css"
 
 type ChosenSeatsProps = {
@@ -31,13 +32,13 @@ export default function ChosenSeats({ selectedSeats, proceedToBuyTicket, totalPr
                     </h6>
                 </div>
             )}
-            <button
-                className={`font-lg-semibold continue-payment-btn ${areSelectedSeatsEmpty ? "continue-payment-btn-disabled" : ""}`}
-                disabled={areSelectedSeatsEmpty}
+            <PrimaryButton
+                label="Continue to Payment"
                 onClick={() => proceedToBuyTicket("Payment Details")}
-            >
-                Continue to Payment
-            </button>
+                isDisabled={areSelectedSeatsEmpty}
+                isFullWidth={true}
+                style={{ marginTop: "auto" }}
+            />
         </div>
     )
 }

@@ -2,6 +2,7 @@ import "./NoMoviesAdded.css"
 import { faFilm } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 
 export default function NoMoviesAdded() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function NoMoviesAdded() {
             </div>
             <h6 className="font-heading-h6">No movies added</h6>
             <p className="font-lg-regular" style={{ color: "#667085" }}>You can add movie via Add Movie button</p>
-            <button className="add-movie-btn font-lg-semibold" id="addMovieBtn2" onClick={() => navigate("/admin/movies/new-movie")}>Add Movie</button>
+            <PrimaryButton label="Add Movie" onClick={() => navigate("/admin/movies/new-movie")} />
         </div>
     )
 }

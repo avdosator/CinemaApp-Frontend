@@ -14,3 +14,7 @@
 .tertiary-btn-sm {
     padding: 8px 16px;
 }
+
+.tertiary-btn:disabled {
+    color: #D0D5DD;
+}

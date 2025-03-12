@@ -10,6 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProjectionsFormData } from "../../../../types/FormData";
 import ProjectionGroup from "./projection-group/ProjectionGroup";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],
@@ -38,7 +39,7 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
     const filterVenuesByCity = (cityId: string | null): SelectOptionType[] => {
         if (!cityId) return [];
         return allVenues
-            .filter(venue => venue.city.id.toString() === cityId) 
+            .filter(venue => venue.city.id.toString() === cityId)
             .map(venue => ({ value: venue.id, label: venue.name }));
     };
 
@@ -130,22 +131,21 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
                         key={index}
                         formData={group}
                         cityOptions={cityOptions}
-                        venueOptions={filterVenuesByCity(group.city?.value ?? null)} 
+                        venueOptions={filterVenuesByCity(group.city?.value ?? null)}
                         onChange={(field, value) => handleProjectionsChange(index, field, value)}
                         onDelete={() => askForDeletion(index)}
                         errorMessage={errorMessages[index]}
                         isOnly={projectionsFormData.length === 1}
                     />
                 ))}
-                <button
-                    className="projection-form-add-btn"
+                <TertiaryButton
+                    label="Add Projection"
+                    size="large"
                     onClick={handleAddProjectionGroup}
-                    disabled={!isLastGroupFilled()}
-                    type="button"
-                >
-                    <FontAwesomeIcon icon={faPlus} height={24} />
-                    <span className="font-lg-underline-semibold">Add Projection</span>
-                </button>
+                    isDisabled={!isLastGroupFilled()}
+                    icon={<FontAwesomeIcon icon={faPlus} height={24} />}
+                    style={{ display: "block", margin: "0 auto", marginTop: "32px" }}
+                />
             </form>
         </>
     )

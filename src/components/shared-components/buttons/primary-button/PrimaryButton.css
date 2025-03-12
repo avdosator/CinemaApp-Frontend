@@ -1,0 +1,13 @@
+.primary-button {
+    text-align: center;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #B22222;
+    color: #FCFCFD;
+    border-radius: 8px;
+    border: none;
+}
+
+.primary-button:disabled {
+    background-color: #D0D5DD;
+}

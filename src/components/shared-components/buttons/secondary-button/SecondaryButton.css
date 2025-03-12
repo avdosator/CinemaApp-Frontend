@@ -1,0 +1,9 @@
+.secondary-button {
+    text-align: center;
+    /* width: 100%; */
+    padding: 12px 20px;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+    color: #B22222;
+    background-color: inherit;
+}

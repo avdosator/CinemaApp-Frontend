@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import TertiaryButton from "../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../shared-components/buttons/tertiary-button/TertiaryButton";
 import AdminPanelVenueList from "./venue-list/AdminPanelVenueList";
 import "./VenuesPanel.css"
 import { Venue } from "../../../types/Venue";
 import ApiService from "../../../service/ApiService";
 import { PageResponse } from "../../../types/PageResponse";
 import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 const PAGE_SIZE = 6;
 
@@ -47,7 +48,11 @@ export default function VenuesPanel() {
             <div className="venues-panel-heading-container">
                 <div className="venues-panel-heading">
                     <h6 className="font-heading-h6" style={{ color: "#1D2939" }}> {`Venues (${total})`}</h6>
-                    <button className="add-movie-btn font-lg-semibold" style={{ alignSelf: "flex-start" }} onClick={handleAddVenue}>Add Venue</button>
+                    <PrimaryButton
+                        label="Add Venue"
+                        onClick={handleAddVenue}
+                        style={{ display: "flex", alignSelf: "flex-end" }}
+                    />
                 </div>
                 <div className="full-width-horizontal-line"></div>
             </div>

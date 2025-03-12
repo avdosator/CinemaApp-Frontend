@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import type { PricingOption } from "../../types/PricingOption";
 import "./PricingOption.css"
+import PrimaryButton from "../shared-components/buttons/primary-button/PrimaryButton";
+import SecondaryButton from "../shared-components/buttons/secondary-button/SecondaryButton";
 
 export default function PricingOption({ seatType, price, features }: PricingOption) {
+    const navigate = useNavigate();
     const isLoveSeat = seatType === "Love";
 
     return (
@@ -24,7 +27,8 @@ export default function PricingOption({ seatType, price, features }: PricingOpti
                 </ul>
             </div>
             <div className="pricing-btn-container">
-                <Link to="/movies/currently-showing" className="explore-movies-btn no-style-link">Explore Movies</Link>
+                {isLoveSeat ? (<PrimaryButton label="Explore Movies" onClick={() => navigate("/movies/currently-showing")} />)
+                    : (<SecondaryButton label="Explore Movies" onClick={() => navigate("/movies/currently-showing")} />)}
             </div>
         </div>
     );

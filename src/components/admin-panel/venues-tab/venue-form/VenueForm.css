@@ -43,11 +43,3 @@
     justify-content: end;
     padding-bottom: 200px;
 }
-
-.venue-form-cancel-btn {
-    background-color: inherit;
-    color: #B22222;
-    border: 1px solid #B22222;
-    padding: 12px 20px;
-    border-radius: 8px;
-}

@@ -1,5 +1,5 @@
 import "./BankCard.css"
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 
 type BankCardProps = {
     cardType: string

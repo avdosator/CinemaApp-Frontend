@@ -1,3 +1,6 @@
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
+import SecondaryButton from "../../../shared-components/buttons/secondary-button/SecondaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import "./ControlButtonGroup.css"
 
 type ControlButtonGroupProps = {
@@ -14,12 +17,12 @@ export default function ControlButtonGroup({ onNext, onBack, isBackDisabled, isF
 
     return (
         <div className="add-movie-control-btns">
-            <button className="font-lg-underline-semibold" onClick={onBack} disabled={isBackDisabled}>Back</button>
+            <TertiaryButton label="Back" size="large" onClick={onBack} isDisabled={isBackDisabled} />
             <div>
-                <button className="font-lg-semibold" onClick={handleSaveDraft}>Save to Drafts</button>
+                <SecondaryButton label="Save to Drafts" onClick={handleSaveDraft} style={{ marginRight: "16px" }} />
                 {isFinalStep && isFormComplete
-                    ? (<button className="font-lg-semibold" onClick={handleAddMovie} > Add Movie</button>)
-                    : (<button className="font-lg-semibold" onClick={onNext} id="continueBtn" disabled={!isFormComplete && isFinalStep}>Continue</button>)}
+                    ? (<PrimaryButton label="Add Movie" onClick={handleAddMovie} />)
+                    : (<PrimaryButton label="Continue" onClick={onNext} isDisabled={!isFormComplete && isFinalStep} />)}
             </div>
         </div>
     )

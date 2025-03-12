@@ -21,18 +21,3 @@
     display: inline-block;
     color: #1D2939;
 }
-
-.continue-payment-btn {
-    margin-top: auto;
-    outline: none;
-    border: none;
-    background-color: #B22222;
-    padding: 12px 20px;
-    border-radius: 8px;
-    color: #FCFCFD;
-    text-align: center;
-}
-
-.continue-payment-btn-disabled {
-    background-color: #D0D5DD;
-}

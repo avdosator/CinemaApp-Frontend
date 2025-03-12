@@ -10,6 +10,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import UnsuccessfulPaymentNotification from "./UnsuccessfulPaymentNotification"
 import SuccessfulPaymentNotification from "./SuccessfulPaymentNotification"
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -158,13 +159,11 @@ export default function NewBankCardForm({ projectionInstance, movie, selectedSea
                         {renderError(cardDetails.cvvError)}
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className={`font-lg-semibold new-bank-card-btn ${!isFormValid || isSubmitting ? "new-bank-card-btn-disabled" : ""}`}
-                    disabled={!isFormValid || isSubmitting}
-                >
-                    Make Payment - {totalPrice} BAM
-                </button>
+                <PrimaryButton
+                    label={`Make Payment - ${totalPrice} BAM`}
+                    isDisabled={!isFormValid || isSubmitting}
+                    isFullWidth={true}
+                />
             </form>
         </div>
     )

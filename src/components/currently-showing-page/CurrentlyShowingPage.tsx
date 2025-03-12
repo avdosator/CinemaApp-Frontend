@@ -1,7 +1,7 @@
 import "./CurrentlyShowingPage.css"
 import MovieCardBigList from "./movie-card-big-list/MovieCardBigList";
 import CurrentlyShowingForm from "./currently-showing-form/CurrentlyShowingForm";
-import TertiaryButton from "../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../shared-components/buttons/tertiary-button/TertiaryButton";
 import { useEffect, useState } from "react";
 import { Movie } from "../../types/Movie";
 import ApiService from "../../service/ApiService";

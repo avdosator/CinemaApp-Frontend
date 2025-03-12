@@ -1,6 +1,6 @@
 import "./NoMoviesPreview.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TertiaryButton from "../buttons/TertiaryButton";
+import TertiaryButton from "../buttons/tertiary-button/TertiaryButton";
 import { faFilm } from "@fortawesome/free-solid-svg-icons"
 import { useLocation, useNavigate } from "react-router-dom";
 

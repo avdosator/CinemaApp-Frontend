@@ -9,6 +9,7 @@ import LoadingIndicator from "../../shared-components/loading-indicator/LoadingI
 import MovieTable from "./movie-table/MovieTable";
 import { MovieTabType } from "../../../types/MovieTabType";
 import PaginationBig from "../../shared-components/pagination/pagination-big/PaginationBig";
+import PrimaryButton from "../../shared-components/buttons/primary-button/PrimaryButton";
 
 export default function MoviesPanel() {
     const location = useLocation();
@@ -114,7 +115,11 @@ export default function MoviesPanel() {
                     </div>
 
                 </div>
-                <button className="add-movie-btn font-lg-semibold" id="addMovieBtn1" onClick={() => navigate("/admin/movies/new-movie")}>Add Movie</button>
+                <PrimaryButton
+                    label="Add Movie"
+                    onClick={() => navigate("/admin/movies/new-movie")}
+                    style={{ display: "flex", alignSelf: "flex-start" }}
+                />
             </div>
             {isLoading ? (
                 <LoadingIndicator />

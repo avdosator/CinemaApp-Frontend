@@ -10,11 +10,13 @@ import { City } from "../../../../types/City";
 import { Venue } from "../../../../types/Venue";
 import { useLocation, useNavigate } from "react-router-dom";
 import { initializeVenueFormData } from "../../../../utils/utils";
-import TertiaryButton from "../../../shared-components/buttons/TertiaryButton";
+import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
 import InfoPopup from "../../new-movie/pop-up/InfoPopup";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
+import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
+import SecondaryButton from "../../../shared-components/buttons/secondary-button/SecondaryButton";
 
 type VenueFormProps = {
     mode: "add" | "edit" | "view";
@@ -215,25 +217,24 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
-                <button className="add-movie-btn font-lg-semibold" onClick={createVenue}>Add Venue</button>
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
+                <PrimaryButton label="Add Venue" onClick={createVenue} />
             </>
         ) : mode === "edit" ? (
             <>
-                <button className="venue-form-cancel-btn font-lg-semibold" onClick={() => navigate("/admin/venues")}>Cancel</button>
-                <button className="add-movie-btn font-lg-semibold" onClick={updateVenue}>Save Changes</button>
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
+                <PrimaryButton label="Save Changes" onClick={updateVenue} />
             </>
         ) : null;
     }
 
     const renderHeadingButton = (): JSX.Element | null => {
         return mode === "view" ? (
-            <button
-                className="add-movie-btn font-lg-semibold"
+            <PrimaryButton
+                label="Edit Venue"
                 onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
-            >
-                Edit Venue
-            </button>
+                style={{ display: "flex", alignSelf: "flex-end" }}
+            />
         ) : mode === "edit" ? (
             <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue()} />
         ) : null;

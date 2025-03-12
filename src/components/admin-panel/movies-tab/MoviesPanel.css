@@ -37,15 +37,3 @@
     background-color: #B22222;
     transition: transform 0.3s ease, width 0.3s ease;
 }
-
-.add-movie-btn {
-    border: none;
-    background-color: #B22222;
-    color: #FCFCFD;
-    padding: 12px 20px;
-    border-radius: 8px;
-}
-
-#addMovieBtn1 {
-    align-self: flex-start;
-}

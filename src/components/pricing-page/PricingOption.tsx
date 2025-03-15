@@ -28,7 +28,7 @@ export default function PricingOption({ seatType, price, features }: PricingOpti
             </div>
             <div className="pricing-btn-container">
                 {isLoveSeat ? (<PrimaryButton label="Explore Movies" onClick={() => navigate("/movies/currently-showing")} size="large" />)
-                    : (<SecondaryButton label="Explore Movies" onClick={() => navigate("/movies/currently-showing")} />)}
+                    : (<SecondaryButton label="Explore Movies" onClick={() => navigate("/movies/currently-showing")} size="large" />)}
             </div>
         </div>
     );

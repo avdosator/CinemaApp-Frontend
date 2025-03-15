@@ -217,12 +217,12 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (
             <>
-                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} size="large" />
                 <PrimaryButton label="Add Venue" onClick={createVenue} size="large" />
             </>
         ) : mode === "edit" ? (
             <>
-                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} size="large" />
                 <PrimaryButton label="Save Changes" onClick={updateVenue} size="large" />
             </>
         ) : null;

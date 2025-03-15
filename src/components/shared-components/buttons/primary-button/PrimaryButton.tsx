@@ -6,14 +6,15 @@ type PrimaryButtonProps = {
     onClick?: () => void,
     isDisabled?: boolean,
     isFullWidth?: boolean,
-    style?: CSSProperties
+    style?: CSSProperties,
+    size: "small" | "large"
 }
 
-export default function PrimaryButton({ label, onClick, isDisabled = false, isFullWidth = false, style }: PrimaryButtonProps) {
+export default function PrimaryButton({ label, onClick, isDisabled = false, isFullWidth = false, style, size }: PrimaryButtonProps) {
     const combinedStyle: CSSProperties = { ...style, width: isFullWidth ? "100%" : "auto" };
     return (
         <button
-            className="primary-button font-lg-semibold"
+            className={size === "small" ? "font-sm-semibold" : "font-lg-semibold"}
             onClick={onClick}
             disabled={isDisabled}
             style={combinedStyle}

@@ -1,4 +1,15 @@
-.primary-button {
+.primary-button-small {
+    text-align: center;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #B22222;
+    color: #FCFCFD;
+    border-radius: 8px;
+    border: none;
+    align-self: end;
+}
+
+.primary-button-large {
     text-align: center;
     width: 100%;
     padding: 12px 20px;
@@ -8,6 +19,7 @@
     border: none;
 }
 
-.primary-button:disabled {
+.primary-button-small:disabled,
+.primary-button-small:disabled {
     background-color: #D0D5DD;
 }

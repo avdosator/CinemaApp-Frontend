@@ -163,6 +163,8 @@ export default function NewBankCardForm({ projectionInstance, movie, selectedSea
                     label={`Make Payment - ${totalPrice} BAM`}
                     isDisabled={!isFormValid || isSubmitting}
                     isFullWidth={true}
+                    size="large"
+                    style={{marginTop: "64px"}}
                 />
             </form>
         </div>

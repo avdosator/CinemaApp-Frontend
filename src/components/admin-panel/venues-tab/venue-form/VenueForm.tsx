@@ -218,12 +218,12 @@ export default function VenueForm({ mode }: VenueFormProps) {
         return mode === "add" ? (
             <>
                 <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
-                <PrimaryButton label="Add Venue" onClick={createVenue} />
+                <PrimaryButton label="Add Venue" onClick={createVenue} size="large" />
             </>
         ) : mode === "edit" ? (
             <>
                 <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
-                <PrimaryButton label="Save Changes" onClick={updateVenue} />
+                <PrimaryButton label="Save Changes" onClick={updateVenue} size="large" />
             </>
         ) : null;
     }
@@ -234,6 +234,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 label="Edit Venue"
                 onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
                 style={{ display: "flex", alignSelf: "flex-end" }}
+                size="large"
             />
         ) : mode === "edit" ? (
             <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue()} />

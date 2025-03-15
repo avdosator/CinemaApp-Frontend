@@ -38,6 +38,7 @@ export default function ChosenSeats({ selectedSeats, proceedToBuyTicket, totalPr
                 isDisabled={areSelectedSeatsEmpty}
                 isFullWidth={true}
                 style={{ marginTop: "auto" }}
+                size="large"
             />
         </div>
     )

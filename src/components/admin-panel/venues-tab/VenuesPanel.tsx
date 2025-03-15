@@ -52,6 +52,7 @@ export default function VenuesPanel() {
                         label="Add Venue"
                         onClick={handleAddVenue}
                         style={{ display: "flex", alignSelf: "flex-end" }}
+                        size="large"
                     />
                 </div>
                 <div className="full-width-horizontal-line"></div>

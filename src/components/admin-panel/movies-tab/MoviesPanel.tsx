@@ -119,6 +119,7 @@ export default function MoviesPanel() {
                     label="Add Movie"
                     onClick={() => navigate("/admin/movies/new-movie")}
                     style={{ display: "flex", alignSelf: "flex-start" }}
+                    size="large"
                 />
             </div>
             {isLoading ? (

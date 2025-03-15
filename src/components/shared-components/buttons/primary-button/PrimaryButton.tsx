@@ -14,7 +14,7 @@ export default function PrimaryButton({ label, onClick, isDisabled = false, isFu
     const combinedStyle: CSSProperties = { ...style, width: isFullWidth ? "100%" : "auto" };
     return (
         <button
-            className={size === "small" ? "font-sm-semibold" : "font-lg-semibold"}
+            className={size === "small" ? "font-sm-semibold primary-button-small" : "font-lg-semibold primary-button-large"}
             onClick={onClick}
             disabled={isDisabled}
             style={combinedStyle}

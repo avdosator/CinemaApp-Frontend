@@ -21,8 +21,8 @@ export default function ControlButtonGroup({ onNext, onBack, isBackDisabled, isF
             <div>
                 <SecondaryButton label="Save to Drafts" onClick={handleSaveDraft} style={{ marginRight: "16px" }} />
                 {isFinalStep && isFormComplete
-                    ? (<PrimaryButton label="Add Movie" onClick={handleAddMovie} />)
-                    : (<PrimaryButton label="Continue" onClick={onNext} isDisabled={!isFormComplete && isFinalStep} />)}
+                    ? (<PrimaryButton label="Add Movie" onClick={handleAddMovie} size="large" />)
+                    : (<PrimaryButton label="Continue" onClick={onNext} isDisabled={!isFormComplete && isFinalStep} size="large" />)}
             </div>
         </div>
     )

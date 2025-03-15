@@ -20,6 +20,6 @@
 }
 
 .primary-button-small:disabled,
-.primary-button-small:disabled {
+.primary-button-large:disabled {
     background-color: #D0D5DD;
 }

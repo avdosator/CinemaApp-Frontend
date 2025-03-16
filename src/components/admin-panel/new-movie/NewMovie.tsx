@@ -34,6 +34,7 @@ export default function NewMovie() {
         message: string;
         continueAction: (() => void) | null;
     }>({ show: false, message: "", continueAction: null });
+    const [popupMessage, setPopupMessage] = useState<{ heading: string, text: string } | null>(null);
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -98,22 +99,22 @@ export default function NewMovie() {
 
             if (movie.status === "draft-3") {
                 const projectionGroupsMap = new Map<string, ProjectionsFormData>();
-            
+
                 movie.projections.forEach(projection => {
                     const venueOption: SelectOptionType = {
                         value: projection.hall.venue.id,
                         label: projection.hall.venue.name
                     };
-            
+
                     const cityOption: SelectOptionType = {
                         value: projection.hall.venue.city.id,
                         label: projection.hall.venue.city.name
                     };
-            
+
                     // Extract unique times from projectionInstances
                     projection.projectionInstances.forEach(instance => {
                         const key = `${cityOption.value}-${venueOption.value}-${instance.time}`;
-            
+
                         if (!projectionGroupsMap.has(key)) {
                             projectionGroupsMap.set(key, {
                                 city: cityOption,
@@ -123,7 +124,7 @@ export default function NewMovie() {
                         }
                     });
                 });
-            
+
                 setProjectionsFormData(Array.from(projectionGroupsMap.values()));
             }
         }
@@ -200,7 +201,7 @@ export default function NewMovie() {
                 uploadedPhotos: [] // Clear local file uploads after successful upload
             }));
         } else {
-            alert("Photo upload failed. Please try again.");
+            setPopupMessage({ heading: "Error!", text: "Photo upload failed. Please try again." });
         }
 
         return uploadedPhotoUrls.length > 0 ? [...detailsFormData.uploadedPhotoURLs, ...uploadedPhotoUrls] : detailsFormData.uploadedPhotoURLs;
@@ -219,7 +220,7 @@ export default function NewMovie() {
 
             // Step 3: Check if uploadedPhotoURLs and coverPhotoIndex are correctly set
             if (uploadedPhotoUrls.length === 0 || detailsFormData.coverPhotoIndex === null) {
-                alert("Please upload photos and select a cover photo.");
+                setPopupMessage({ heading: "Warning!", text: "Please upload photos and select a cover photo." })
                 return;
             }
 
@@ -282,7 +283,7 @@ export default function NewMovie() {
             if (draftStatus === "draft-2" || draftStatus === "draft-3") {
                 uploadedPhotoUrls = await handleUploadPhotos();
                 if (uploadedPhotoUrls.length === 0) {
-                    alert("Photo upload failed. Please try again.");
+                    setPopupMessage({ heading: "Error", text: "Photo upload failed. Please try again" })
                     setIsLoading(false);
                     return;
                 }
@@ -329,6 +330,9 @@ export default function NewMovie() {
                     okayAction={setConflictingProjections}
                 />
             )}
+
+            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} okayAction={() => setPopupMessage(null)} />)}
+
 
             {draftWarningModal.show && (
                 <DraftMoviePopUp

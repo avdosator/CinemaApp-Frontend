@@ -10,6 +10,7 @@ import { TicketPrice } from "../../types/TicketPrice";
 import { calculateReservedSeatsPrice } from "../../utils/utils";
 import { Projection } from "../../types/Projection";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
+import InfoPopup from "../admin-panel/new-movie/pop-up/InfoPopup";
 
 const SESSION_DURATION = 300;
 
@@ -104,16 +105,7 @@ export default function ReservationTicketPage() {
     return (
         <div className="seat-reservation-container">
             {showModal && (
-                <>
-                    <div className="session-expired-overlay"></div>
-                    <div className="session-expired-modal">
-                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Session Expired</h6>
-                        <p className="font-md-regular" style={{ color: "#667085" }}>Your session expired and seats have been refreshed and updated.</p>
-                        <div className="session-expired-footer">
-                            <button className="font-sm-semibold session-expired-btn" onClick={handleOkayClick}>Okay</button>
-                        </div>
-                    </div>
-                </>
+                <InfoPopup heading="Session Expired" text="Your session expired and seats have been refreshed and updated." okayAction={handleOkayClick} />
             )}
 
             <div className="seat-reservation-heading-container">

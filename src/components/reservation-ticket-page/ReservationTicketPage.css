@@ -95,12 +95,3 @@
     align-self: flex-end;
     justify-content: end;
 }
-
-.session-expired-btn {
-    color: #FCFCFD;
-    background-color: #B22222;
-    outline: none;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-}

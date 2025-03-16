@@ -10,7 +10,7 @@ import { TicketPrice } from "../../types/TicketPrice";
 import { calculateReservedSeatsPrice } from "../../utils/utils";
 import { Projection } from "../../types/Projection";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
-import InfoPopup from "../admin-panel/new-movie/pop-up/InfoPopup";
+import InfoPopup from "../shared-components/pop-up/info-pop-up/InfoPopup";
 
 const SESSION_DURATION = 300;
 

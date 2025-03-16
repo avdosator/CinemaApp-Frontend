@@ -8,7 +8,7 @@ import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../../../../service/ApiService";
-import InfoPopup from "../../../new-movie/pop-up/InfoPopup";
+import InfoPopup from "../../../../shared-components/pop-up/info-pop-up/InfoPopup";
 
 type MovieRowProps = {
     movie: Movie;

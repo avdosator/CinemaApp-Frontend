@@ -5,7 +5,7 @@ type DraftMoviePopUpProps = {
     cancelButtonText?: string
 };
 
-export default function DraftMoviePopUp({ message, onConfirm, onCancel, cancelButtonText = "Cancel" }: DraftMoviePopUpProps) {
+export default function DraftMoviePopup({ message, onConfirm, onCancel, cancelButtonText = "Cancel" }: DraftMoviePopUpProps) {
     return (
         <div className="session-expired-overlay">
             <div className="session-expired-modal">

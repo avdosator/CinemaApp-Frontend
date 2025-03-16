@@ -4,7 +4,7 @@ import MovieRow from "./movie-row/MovieRow";
 import { MovieTabType } from "../../../../types/MovieTabType";
 import { useState } from "react";
 import ApiService from "../../../../service/ApiService";
-import InfoPopup from "../../new-movie/pop-up/InfoPopup";
+import InfoPopup from "../../../shared-components/pop-up/info-pop-up/InfoPopup";
 import { useNavigate } from "react-router-dom";
 
 type MovieTableProps = {

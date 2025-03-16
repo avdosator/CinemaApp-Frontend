@@ -1,4 +1,4 @@
-import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
+import PrimaryButton from "../../buttons/primary-button/PrimaryButton";
 
 type InfoPopupProps = {
     heading: string,

@@ -12,12 +12,12 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
-import InfoPopup from "./pop-up/InfoPopup";
+import InfoPopup from "../../shared-components/pop-up/info-pop-up/InfoPopup";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
-import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
 import { format } from "date-fns";
 import { SelectOptionType } from "../../../types/SelectOptionType";
+import DraftMoviePopup from "../../shared-components/pop-up/draft-movie-pop-up/DraftMoviePopup";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -333,9 +333,8 @@ export default function NewMovie() {
 
             {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} okayAction={() => setPopupMessage(false)} />)}
 
-
             {draftWarningModal.show && (
-                <DraftMoviePopUp
+                <DraftMoviePopup
                     message={draftWarningModal.message}
                     onConfirm={draftWarningModal.continueAction ? draftWarningModal.continueAction : undefined}
                     onCancel={() => setDraftWarningModal({ show: false, message: "", continueAction: null })}

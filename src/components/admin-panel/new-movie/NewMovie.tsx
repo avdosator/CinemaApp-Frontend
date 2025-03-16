@@ -34,7 +34,7 @@ export default function NewMovie() {
         message: string;
         continueAction: (() => void) | null;
     }>({ show: false, message: "", continueAction: null });
-    const [popupMessage, setPopupMessage] = useState<{ heading: string, text: string } | null>(null);
+    const [popupMessage, setPopupMessage] = useState<{ heading: string, text: string } | false>(false);
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -331,7 +331,7 @@ export default function NewMovie() {
                 />
             )}
 
-            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} okayAction={() => setPopupMessage(null)} />)}
+            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} okayAction={() => setPopupMessage(false)} />)}
 
 
             {draftWarningModal.show && (

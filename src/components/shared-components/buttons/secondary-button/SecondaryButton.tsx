@@ -5,13 +5,14 @@ type SecondaryButtonProps = {
     label: string,
     onClick?: () => void,
     isDisabled?: boolean,
-    style?: CSSProperties
+    style?: CSSProperties,
+    size: "small" | "large"
 }
 
-export default function SecondaryButton({ label, onClick, isDisabled = false, style }: SecondaryButtonProps) {
+export default function SecondaryButton({ label, onClick, isDisabled = false, style, size }: SecondaryButtonProps) {
     return (
         <button
-            className="secondary-button font-lg-semibold"
+        className={size === "small" ? "font-sm-semibold secondary-button-small" : "font-lg-semibold secondary-button-large"}
             onClick={onClick}
             disabled={isDisabled}
             style={style}

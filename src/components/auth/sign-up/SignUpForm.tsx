@@ -162,7 +162,7 @@ export default function SignUpForm({ success }: SignUpFormProps) {
                     </div>
                     {errors.confirmPassword && <div className="font-sm-regular auth-error">{errors.confirmPassword.message}</div>}
                 </div>
-                <PrimaryButton label="Sign Up" isDisabled={isSubmitting} isFullWidth={true} />
+                <PrimaryButton label="Sign Up" isDisabled={isSubmitting} isFullWidth={true} size="large" />
             </form>
             {/* Add that --- or --- divider after implementing integration with google */}
             <div className="other-login-ways">

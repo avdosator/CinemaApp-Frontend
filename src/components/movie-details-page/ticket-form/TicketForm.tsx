@@ -134,7 +134,7 @@ export default function TicketForm({ movie }: { movie: Movie }) {
             </div>
             <div className="ticket-btns-container">
                 <div className="horizontal-line"></div>
-                <PrimaryButton label="Buy Ticket" onClick={sendRequest} isDisabled={!isFormComplete} isFullWidth={true} />
+                <PrimaryButton label="Buy Ticket" onClick={sendRequest} isDisabled={!isFormComplete} isFullWidth={true} size="large" />
             </div>
         </form>
     )

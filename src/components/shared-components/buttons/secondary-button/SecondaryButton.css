@@ -1,9 +1,19 @@
-.secondary-button {
+.secondary-button-small {
+    text-align: center;
+    padding: 12px 20px;
+    background-color: inherit;
+    color: #B22222;
+    border: 1px solid #B22222;
+    border-radius: 8px;
+    align-self: end;
+}
+
+.secondary-button-large {
     text-align: center;
     /* width: 100%; */
     padding: 12px 20px;
+    background-color: inherit;
+    color: #B22222;
     border: 1px solid #B22222;
     border-radius: 8px;
-    color: #B22222;
-    background-color: inherit;
 }

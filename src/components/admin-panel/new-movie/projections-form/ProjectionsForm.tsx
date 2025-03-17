@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProjectionsFormData } from "../../../../types/FormData";
 import ProjectionGroup from "./projection-group/ProjectionGroup";
 import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
+import TwoBtnPopUp from "../../../shared-components/pop-up/two-btn-pop-up/TwoBtnPopUp";
 
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],
@@ -107,25 +108,17 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
     return (
         <>
             {isModalVisible && (
-                <div className="session-expired-overlay">
-                    <div className="session-expired-modal">
-                        <h6 className="font-heading-h6" style={{ color: "#101828" }}>Delete Projection</h6>
-                        <p className="font-md-regular" style={{ color: "#667085" }}>
-                            Are you sure you want to delete this projection?
-                        </p>
-                        <div className="session-expired-footer" style={{ gap: "8px" }}>
-                            <button className="font-sm-semibold payment-back-to-home-btn" onClick={() => setIsModalVisible(false)}>
-                                Cancel
-                            </button>
-                            <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={confirmDeletion}>
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <TwoBtnPopUp
+                    heading="Delete Projection"
+                    text="Are you sure you want to delete this projection?"
+                    secondaryBtnAction={() => setIsModalVisible(false)}
+                    secondaryBtnText="Cancel"
+                    primaryBtnAction={confirmDeletion}
+                    primaryBtnText="Delete"
+                />
             )}
-            <form className="projections-form">
 
+            <form className="projections-form">
                 {projectionsFormData.map((group, index) => (
                     <ProjectionGroup
                         key={index}

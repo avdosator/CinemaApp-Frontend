@@ -12,12 +12,12 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
-import InfoPopup from "./pop-up/InfoPopup";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
-import DraftMoviePopUp from "./pop-up/DraftMoviePopUp";
 import { format } from "date-fns";
 import { SelectOptionType } from "../../../types/SelectOptionType";
+import DraftMoviePopup from "../../shared-components/pop-up/draft-movie-pop-up/DraftMoviePopup";
+import OneBtnPopUp from "../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -34,6 +34,7 @@ export default function NewMovie() {
         message: string;
         continueAction: (() => void) | null;
     }>({ show: false, message: "", continueAction: null });
+    const [popupMessage, setPopupMessage] = useState<{ heading: string, text: string } | false>(false);
 
     // GeneralForm state 
     let [generalFormData, setGeneralFormData] = useState<GeneralFormData>({
@@ -98,22 +99,22 @@ export default function NewMovie() {
 
             if (movie.status === "draft-3") {
                 const projectionGroupsMap = new Map<string, ProjectionsFormData>();
-            
+
                 movie.projections.forEach(projection => {
                     const venueOption: SelectOptionType = {
                         value: projection.hall.venue.id,
                         label: projection.hall.venue.name
                     };
-            
+
                     const cityOption: SelectOptionType = {
                         value: projection.hall.venue.city.id,
                         label: projection.hall.venue.city.name
                     };
-            
+
                     // Extract unique times from projectionInstances
                     projection.projectionInstances.forEach(instance => {
                         const key = `${cityOption.value}-${venueOption.value}-${instance.time}`;
-            
+
                         if (!projectionGroupsMap.has(key)) {
                             projectionGroupsMap.set(key, {
                                 city: cityOption,
@@ -123,7 +124,7 @@ export default function NewMovie() {
                         }
                     });
                 });
-            
+
                 setProjectionsFormData(Array.from(projectionGroupsMap.values()));
             }
         }
@@ -200,7 +201,7 @@ export default function NewMovie() {
                 uploadedPhotos: [] // Clear local file uploads after successful upload
             }));
         } else {
-            alert("Photo upload failed. Please try again.");
+            setPopupMessage({ heading: "Error!", text: "Photo upload failed. Please try again." });
         }
 
         return uploadedPhotoUrls.length > 0 ? [...detailsFormData.uploadedPhotoURLs, ...uploadedPhotoUrls] : detailsFormData.uploadedPhotoURLs;
@@ -219,7 +220,7 @@ export default function NewMovie() {
 
             // Step 3: Check if uploadedPhotoURLs and coverPhotoIndex are correctly set
             if (uploadedPhotoUrls.length === 0 || detailsFormData.coverPhotoIndex === null) {
-                alert("Please upload photos and select a cover photo.");
+                setPopupMessage({ heading: "Warning!", text: "Please upload photos and select a cover photo." })
                 return;
             }
 
@@ -282,7 +283,7 @@ export default function NewMovie() {
             if (draftStatus === "draft-2" || draftStatus === "draft-3") {
                 uploadedPhotoUrls = await handleUploadPhotos();
                 if (uploadedPhotoUrls.length === 0) {
-                    alert("Photo upload failed. Please try again.");
+                    setPopupMessage({ heading: "Error", text: "Photo upload failed. Please try again" })
                     setIsLoading(false);
                     return;
                 }
@@ -320,22 +321,24 @@ export default function NewMovie() {
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (
-                <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                    okayAction={setFormNotFilledModal}
+                <OneBtnPopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                    onBtnClick={() => setFormNotFilledModal(false)}
                 />
             )}
             {conflictingProjections && (
-                <InfoPopup heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
-                    okayAction={setConflictingProjections}
+                <OneBtnPopUp heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
+                    onBtnClick={() => setConflictingProjections(false)}
                 />
             )}
 
+            {popupMessage && (<OneBtnPopUp heading={popupMessage.heading} text={popupMessage.text} onBtnClick={() => setPopupMessage(false)} />)}
+
             {draftWarningModal.show && (
-                <DraftMoviePopUp
+                <DraftMoviePopup
                     message={draftWarningModal.message}
                     onConfirm={draftWarningModal.continueAction ? draftWarningModal.continueAction : undefined}
                     onCancel={() => setDraftWarningModal({ show: false, message: "", continueAction: null })}
-                    cancelButtonText={draftWarningModal.continueAction ? "Cancel" : "OK"}
+                    cancelButtonText={draftWarningModal.continueAction ? "Cancel" : "Okay"}
                 />
             )}
 

@@ -13,7 +13,7 @@ import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
-import InfoPopup from "../../new-movie/pop-up/InfoPopup";
+import InfoPopup from "../../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 import SecondaryButton from "../../../shared-components/buttons/secondary-button/SecondaryButton";
@@ -217,13 +217,13 @@ export default function VenueForm({ mode }: VenueFormProps) {
     const renderControlButtons = (): JSX.Element | null => {
         return mode === "add" ? (
             <>
-                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
-                <PrimaryButton label="Add Venue" onClick={createVenue} />
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} size="large" />
+                <PrimaryButton label="Add Venue" onClick={createVenue} size="large" />
             </>
         ) : mode === "edit" ? (
             <>
-                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} />
-                <PrimaryButton label="Save Changes" onClick={updateVenue} />
+                <SecondaryButton label="Cancel" onClick={() => navigate("/admin/venues")} size="large" />
+                <PrimaryButton label="Save Changes" onClick={updateVenue} size="large" />
             </>
         ) : null;
     }
@@ -234,6 +234,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 label="Edit Venue"
                 onClick={() => navigate(`/admin/venues/${venueFromState?.id}/edit`, { state: { venue: venueFromState } })}
                 style={{ display: "flex", alignSelf: "flex-end" }}
+                size="large"
             />
         ) : mode === "edit" ? (
             <TertiaryButton label="Delete Venue" size="large" onClick={() => deleteVenue()} />
@@ -248,7 +249,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 <>
                     {formNotFilledModal && (
                         <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                            okayAction={setFormNotFilledModal}
+                            onBtnClick={setFormNotFilledModal}
                         />
                     )}
                     <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>

@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProjectionsFormData } from "../../../../types/FormData";
 import ProjectionGroup from "./projection-group/ProjectionGroup";
 import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
-import DeleteProjectionPopup from "../../../shared-components/pop-up/delete-projection-pop-up/DeleteProjectionPopup";
+import TwoBtnPopUp from "../../../shared-components/pop-up/two-btn-pop-up/TwoBtnPopUp";
 
 type ProjectionsFormProps = {
     projectionsFormData: ProjectionsFormData[],
@@ -108,11 +108,13 @@ export default function ProjectionsForm({ projectionsFormData, setProjectionsFor
     return (
         <>
             {isModalVisible && (
-                <DeleteProjectionPopup
+                <TwoBtnPopUp
                     heading="Delete Projection"
                     text="Are you sure you want to delete this projection?"
-                    cancelAction={() => setIsModalVisible(false)}
-                    deleteAction={confirmDeletion}
+                    secondaryBtnAction={() => setIsModalVisible(false)}
+                    secondaryBtnText="Cancel"
+                    primaryBtnAction={confirmDeletion}
+                    primaryBtnText="Delete"
                 />
             )}
 

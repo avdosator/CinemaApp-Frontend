@@ -8,9 +8,8 @@ import ApiService from "../../../../service/ApiService"
 import { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import UnsuccessfulPaymentNotification from "./UnsuccessfulPaymentNotification"
-import SuccessfulPaymentNotification from "./SuccessfulPaymentNotification"
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton"
+import OneBtnPopUp from "../../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp"
 
 type NewBankCardFormType = {
     cardNumber: string,
@@ -123,8 +122,20 @@ export default function NewBankCardForm({ projectionInstance, movie, selectedSea
 
     return (
         <div id="new-card-form-container">
-            {successfulPayment && (<SuccessfulPaymentNotification redirectToHomePage={redirectToHomePage} />)}
-            {unsuccessfulPayment && (<UnsuccessfulPaymentNotification errorMessage={errorMessage} tryAgain={() => setUnsuccessfulPayment(false)} />)}
+            {successfulPayment && (<OneBtnPopUp
+                heading="Payment Successful!"
+                text="The receipt and ticket have been sent to your email. You may download them immediately, or retrieve them later from your User Profile."
+                onBtnClick={redirectToHomePage}
+                btnText="Back to Home"
+            />
+            )}
+            {unsuccessfulPayment && (<OneBtnPopUp
+                heading="Payment Unsuccessful!"
+                text={errorMessage}
+                onBtnClick={() => setUnsuccessfulPayment(false)}
+                btnText="Try Again"
+            />
+            )}
             <form className="font-lg-regular new-bank-card-form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="add-new-card-form-input-group">
                     <label htmlFor="cardNumber" className="new-bank-card-form-label font-lg-semibold">Card Number</label>
@@ -164,7 +175,7 @@ export default function NewBankCardForm({ projectionInstance, movie, selectedSea
                     isDisabled={!isFormValid || isSubmitting}
                     isFullWidth={true}
                     size="large"
-                    style={{marginTop: "64px"}}
+                    style={{ marginTop: "64px" }}
                 />
             </form>
         </div>

@@ -1,3 +1,5 @@
+import PrimaryButton from "../../buttons/primary-button/PrimaryButton";
+
 type DraftMoviePopUpProps = {
     message: string,
     onConfirm?: () => void,
@@ -9,17 +11,11 @@ export default function DraftMoviePopup({ message, onConfirm, onCancel, cancelBu
     return (
         <div className="pop-up-overlay">
             <div className="pop-up-modal">
-                <h6 className="font-heading-h6" style={{ color: "#101828" }}>Warning!</h6>
-                <p className="font-md-regular" style={{ color: "#667085" }}> {message}</p>
+                <h6 className="font-heading-h6">Warning!</h6>
+                <p className="font-md-regular"> {message}</p>
                 <div className="pop-up-footer">
-                    {onConfirm && (
-                        <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={onConfirm}>
-                            Continue
-                        </button>
-                    )}
-                    <button className="font-sm-semibold new-bank-card-btn" style={{ width: "auto" }} onClick={onCancel}>
-                        {cancelButtonText}
-                    </button>
+                    {onConfirm && (<PrimaryButton label="Continue" onClick={onConfirm} size="small" />)}
+                    <PrimaryButton label={cancelButtonText} onClick={onCancel} size="small" />
                 </div>
             </div>
         </div>

@@ -9,7 +9,6 @@
     box-shadow: 0px 1px 2px -2px #34405414, 0px 1px 3px -1px #34405414;
     background-color: #FFFFFF;
     padding: 32px;
-    z-index: 1000; /* Ensure it appears on top */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -33,4 +32,12 @@
     align-self: flex-end;
     justify-content: end;
     gap: 8px;
+}
+
+.pop-up-modal h6 {
+    color: #101828;
+}
+
+.pop-up-modal p {
+    color: #667085;
 }

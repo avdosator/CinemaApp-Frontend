@@ -12,12 +12,12 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
-import InfoPopup from "../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import { format } from "date-fns";
 import { SelectOptionType } from "../../../types/SelectOptionType";
 import DraftMoviePopup from "../../shared-components/pop-up/draft-movie-pop-up/DraftMoviePopup";
+import OneBtnPopUp from "../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 
 const UPLOADCARE_PUBLIC_KEY = import.meta.env.VITE_UPLOADCARE_PUBLIC_KEY;
 
@@ -321,17 +321,17 @@ export default function NewMovie() {
     return (
         <div className="add-movie-container">
             {formNotFilledModal && (
-                <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                    onBtnClick={setFormNotFilledModal}
+                <OneBtnPopUp heading="Form Not Completed" text="Please complete all required fields before proceeding."
+                    onBtnClick={() => setFormNotFilledModal(false)}
                 />
             )}
             {conflictingProjections && (
-                <InfoPopup heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
-                    onBtnClick={setConflictingProjections}
+                <OneBtnPopUp heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
+                    onBtnClick={() => setConflictingProjections(false)}
                 />
             )}
 
-            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} onBtnClick={() => setPopupMessage(false)} />)}
+            {popupMessage && (<OneBtnPopUp heading={popupMessage.heading} text={popupMessage.text} onBtnClick={() => setPopupMessage(false)} />)}
 
             {draftWarningModal.show && (
                 <DraftMoviePopup

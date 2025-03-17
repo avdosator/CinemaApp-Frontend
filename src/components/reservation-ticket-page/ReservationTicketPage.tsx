@@ -10,7 +10,7 @@ import { TicketPrice } from "../../types/TicketPrice";
 import { calculateReservedSeatsPrice } from "../../utils/utils";
 import { Projection } from "../../types/Projection";
 import LoadingIndicator from "../shared-components/loading-indicator/LoadingIndicator";
-import InfoPopup from "../shared-components/pop-up/info-pop-up/InfoPopup";
+import InfoPopup from "../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 
 const SESSION_DURATION = 300;
 
@@ -105,7 +105,7 @@ export default function ReservationTicketPage() {
     return (
         <div className="seat-reservation-container">
             {showModal && (
-                <InfoPopup heading="Session Expired" text="Your session expired and seats have been refreshed and updated." okayAction={handleOkayClick} />
+                <InfoPopup heading="Session Expired" text="Your session expired and seats have been refreshed and updated." onBtnClick={handleOkayClick} />
             )}
 
             <div className="seat-reservation-heading-container">

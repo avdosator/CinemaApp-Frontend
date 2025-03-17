@@ -4,7 +4,7 @@ import MovieRow from "./movie-row/MovieRow";
 import { MovieTabType } from "../../../../types/MovieTabType";
 import { useState } from "react";
 import ApiService from "../../../../service/ApiService";
-import InfoPopup from "../../../shared-components/pop-up/info-pop-up/InfoPopup";
+import InfoPopup from "../../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 import { useNavigate } from "react-router-dom";
 
 type MovieTableProps = {
@@ -85,7 +85,7 @@ export default function MovieTable({ movies, showCheckbox = true, showActions = 
         <>
             {allMoviesNotDraft3 && (
                 <InfoPopup heading="Publish Failed" text="Movies that are in progress cannot be published."
-                    okayAction={setAllMoviesNotDraft3}
+                    onBtnClick={setAllMoviesNotDraft3}
                 />
             )}
             {/* Group Action Buttons - Only show when at least one checkbox is selected */}

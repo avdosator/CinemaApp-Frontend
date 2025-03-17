@@ -8,7 +8,7 @@ import placeholderImage from "../../../../../assets/upload-photo-placeholder.jpg
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../../../../service/ApiService";
-import InfoPopup from "../../../../shared-components/pop-up/info-pop-up/InfoPopup";
+import InfoPopup from "../../../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 
 type MovieRowProps = {
     movie: Movie;
@@ -137,7 +137,7 @@ export default function MovieRow({
         <>
             {movieNotComplete && (
                 <InfoPopup heading="Publish Failed" text="Movies that are in progress cannot be published."
-                    okayAction={setMovieNotComplete}
+                    onBtnClick={setMovieNotComplete}
                 />
             )}
             <tr>

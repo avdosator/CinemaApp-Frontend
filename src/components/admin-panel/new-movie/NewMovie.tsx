@@ -12,7 +12,7 @@ import AddMovieStepIndicator from "./add-movie-step-indicator/AddMovieStepIndica
 import ApiService from "../../../service/ApiService";
 import { buildMovieBody, checkConflictingProjections } from "../../../utils/utils";
 import { Movie } from "../../../types/Movie";
-import InfoPopup from "../../shared-components/pop-up/info-pop-up/InfoPopup";
+import InfoPopup from "../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 import axios from "axios";
 import LoadingIndicator from "../../shared-components/loading-indicator/LoadingIndicator";
 import { format } from "date-fns";
@@ -322,23 +322,23 @@ export default function NewMovie() {
         <div className="add-movie-container">
             {formNotFilledModal && (
                 <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                    okayAction={setFormNotFilledModal}
+                    onBtnClick={setFormNotFilledModal}
                 />
             )}
             {conflictingProjections && (
                 <InfoPopup heading="Movie Cannot be Added" text="Movie that has conflicting projection time cannot be added."
-                    okayAction={setConflictingProjections}
+                    onBtnClick={setConflictingProjections}
                 />
             )}
 
-            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} okayAction={() => setPopupMessage(false)} />)}
+            {popupMessage && (<InfoPopup heading={popupMessage.heading} text={popupMessage.text} onBtnClick={() => setPopupMessage(false)} />)}
 
             {draftWarningModal.show && (
                 <DraftMoviePopup
                     message={draftWarningModal.message}
                     onConfirm={draftWarningModal.continueAction ? draftWarningModal.continueAction : undefined}
                     onCancel={() => setDraftWarningModal({ show: false, message: "", continueAction: null })}
-                    cancelButtonText={draftWarningModal.continueAction ? "Cancel" : "OK"}
+                    cancelButtonText={draftWarningModal.continueAction ? "Cancel" : "Okay"}
                 />
             )}
 

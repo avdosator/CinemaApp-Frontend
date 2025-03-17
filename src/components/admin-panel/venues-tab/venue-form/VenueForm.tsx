@@ -13,7 +13,7 @@ import { initializeVenueFormData } from "../../../../utils/utils";
 import TertiaryButton from "../../../shared-components/buttons/tertiary-button/TertiaryButton";
 import placeholderImage from "../../../../assets/upload-photo-placeholder.jpg";
 import axios from "axios";
-import InfoPopup from "../../../shared-components/pop-up/info-pop-up/InfoPopup";
+import InfoPopup from "../../../shared-components/pop-up/one-btn-pop-up/OneBtnPopUp";
 import LoadingIndicator from "../../../shared-components/loading-indicator/LoadingIndicator";
 import PrimaryButton from "../../../shared-components/buttons/primary-button/PrimaryButton";
 import SecondaryButton from "../../../shared-components/buttons/secondary-button/SecondaryButton";
@@ -249,7 +249,7 @@ export default function VenueForm({ mode }: VenueFormProps) {
                 <>
                     {formNotFilledModal && (
                         <InfoPopup heading="Form Not Completed" text="Please complete all required fields before proceeding."
-                            okayAction={setFormNotFilledModal}
+                            onBtnClick={setFormNotFilledModal}
                         />
                     )}
                     <div className="venues-panel-heading" style={{ marginBottom: "0px" }}>
